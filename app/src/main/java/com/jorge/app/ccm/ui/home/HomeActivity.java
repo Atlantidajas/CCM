@@ -1,14 +1,19 @@
 package com.jorge.app.ccm.ui.home;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jorge.app.ccm.R;
@@ -66,4 +71,63 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate( R.menu.home_toolbar, menu );
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == R.id.disconnectButton ) {//<-- Cierra sesion de usuario y el programa
+            this.revokeAccess();
+            finish();//<-- Cierra app
+        }
+
+        if ( id == R.id.signOutButtonToolbar ) {//<-- Cierra el programa
+            this.signOut();
+            moveTaskToBack(true); //<-- Minimiza app
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
+    }
+
+    /**
+     * Solo cierra sesión
+     */
+    private void signOut() {
+        // Firebase sign out
+        firebaseAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateUI(null);
+                    }
+                });
+    }
+
+    /**
+     * Revoca y cierra sesión
+     */
+    private void revokeAccess() {
+        // Firebase sign out
+        firebaseAuth.signOut();
+
+        // Google revoke access
+        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateUI(null);
+                    }
+                });
+    }
+
+
 }

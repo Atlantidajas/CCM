@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Car control manager</string>
 
+
+    <!-- Activity Main -->
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
+
     <!--  Activity Home-->
+    <!-- Toolbar Home -->
+    <string name="signOutButtonToolbar_title">SignOut Session</string>
+    <string name="disconnectButton_title">Close application</string>
     <string name="textViex_activity_Home">Estoy en home Activity</string>
 
 
