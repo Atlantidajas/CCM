@@ -7,12 +7,23 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
-
     <!--  Activity Home-->
     <!-- Toolbar Home -->
     <string name="signOutButtonToolbar_title">SignOut Session</string>
     <string name="disconnectButton_title">Close application</string>
     <string name="textViex_activity_Home">Estoy en home Activity</string>
+
+    <!-- Activity Vehicles_List -->
+    <string name="registrationNumber">Registration number</string>
+    <string name="brand">Registration brand</string>
+    <string name="buttonRegistreVehicle">Registration vehicle</string>
+
+
+    <!-- ControllerVehicles -->
+    <!-- Alert Notices -->
+    <string name="alert_title_notice">Notice</string>
+    <string name="alert_message_a_license_plate_already_exists">There is already a vehicle with that registration</string>
+    <string name="alert_positive_button">Aceptar</string>
 
 
 </resources>

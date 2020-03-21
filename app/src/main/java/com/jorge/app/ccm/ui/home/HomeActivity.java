@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.jorge.app.ccm.FullscreenActivity;
 import com.jorge.app.ccm.R;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -28,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jorge.app.ccm.ui.user.UserLoginActivity;
+import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -36,11 +39,21 @@ public class HomeActivity extends AppCompatActivity {
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private String nameUser;
+    private Button buttonLinkVehicles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        buttonLinkVehicles = findViewById(R.id.button_link_vehicles);
+        buttonLinkVehicles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent (HomeActivity.this, VehiclesListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         firebaseAuth = FirebaseAuth.getInstance();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
