@@ -3,6 +3,7 @@ package com.jorge.app.ccm.ui.vehicles;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.controllers.ControllerVehicles;
+import com.jorge.app.ccm.controllers.ControllerVehicles;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,12 +38,6 @@ public class VehiclesListActivity extends AppCompatActivity {
         this.controllerVehicles = new ControllerVehicles();
         //readVehicleForReference("1234HFT");
         readVehicles();
-
-        controllerVehicles.writeNewVehicle( R.mipmap.ic_launcher_logo_brand_ford,
-                "5344CHY",
-                "Ford",
-                "Cambiado",
-                this );
     }
 
     @Override
@@ -50,14 +46,13 @@ public class VehiclesListActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if ( id == R.id.resgistreVehicle ) {//<-- Crear vehículo
-
-            // Pendiente de colocar llamada a función
+            Intent intent= new Intent (VehiclesListActivity.this, RegistreVehicleActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).

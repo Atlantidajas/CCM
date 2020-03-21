@@ -2,6 +2,7 @@ package com.jorge.app.ccm.ui.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -21,18 +21,14 @@ import com.jorge.app.ccm.FullscreenActivity;
 import com.jorge.app.ccm.R;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.jorge.app.ccm.ui.user.UserLoginActivity;
+import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
+
+import com.jorge.app.ccm.ui.vehicles.RegistreVehicleActivity;
 import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth firebaseAuth;
@@ -50,8 +46,13 @@ public class HomeActivity extends AppCompatActivity {
         buttonLinkVehicles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent (HomeActivity.this, VehiclesListActivity.class);
-                startActivity(intent);
+               Intent intent= new Intent (HomeActivity.this, RegistreVehicleActivity.class);
+               startActivity(intent);
+
+                /*confirmAlertDialog(R.string.title_alert_dialog,
+                        R.string.message_identical_record_alert_dialog,
+                        R.string.button_positive_alert_dialog,
+                        false);*/
             }
         });
 
@@ -90,7 +91,6 @@ public class HomeActivity extends AppCompatActivity {
         getMenuInflater().inflate( R.menu.home_toolbar, menu );
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -142,5 +142,24 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
+    // Implementación Interface en clase para NoticeDialogofrgments
+    public void confirmAlertDialog( int title, int message, int textButtonPositive, boolean cancelable ) {
 
+        DialogFragment newFragment = new NoticeDialogFragment( title, message, textButtonPositive, cancelable);
+        newFragment.show( getSupportFragmentManager(), "RegistreVehicleActivity");
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+        Intent intent= new Intent (HomeActivity.this, FullscreenActivity.class);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
 }

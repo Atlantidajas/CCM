@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.controllers;
+package com.jorge.app.ccm.controllers;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -60,7 +60,7 @@ public class ControllerVehicles {
                         });
                         alerta.show();
                     }
-                    } else {
+                } else {
 
                     Vehicle vehicle = new Vehicle( logoVehicle,
                             registrationNumber,
@@ -68,8 +68,8 @@ public class ControllerVehicles {
                             model );
 
                     databaseRfVehicles.child( registrationNumber ).setValue(vehicle);
-                        Toast.makeText( context , "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText( context , "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

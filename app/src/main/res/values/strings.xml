@@ -23,7 +23,13 @@
 
     <!-- Fin Activity Vehicles_List -->
 
-
+    <!-- AlertDialog -->
+    <string name="prueba">Prueba de crear nuevo vehículo</string>
+    <string name="title_alert_dialog">Notice</string>
+    <string name="vehicle_registration_not_carried_out">There is already a vehicle registered with that registration</string>
+    <string name="vehicle_registration_yes_carried_out">Vehicle registration has been successfully completed</string>
+    <string name="button_positive_alert_dialog">Aceptar</string>
+    <string name="button_negative_alert_dialog">Cancelar</string>
 
 
     <!-- ControllerVehicles -->
