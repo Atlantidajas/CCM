@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1049422829454",
+    "firebase_url": "https://car-control-manager-901fe.firebaseio.com",
+    "project_id": "car-control-manager-901fe",
+    "storage_bucket": "car-control-manager-901fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049422829454:android:24b61b6ab99374815bf6df",
+        "android_client_info": {
+          "package_name": "com.jorge.app.ccm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049422829454-bg0nr529krduageg6act5o2id1j5tnaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jorge.app.ccm",
+            "certificate_hash": "13f1faaf6b396b9f9c3d2e9aef664915aa0def47"
+          }
+        },
+        {
+          "client_id": "1049422829454-utum6dfndc83hvtqmns2dkhml9951021.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzMtFOsjBX0COb2J2YmEZ6HVifU1eoRCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049422829454-utum6dfndc83hvtqmns2dkhml9951021.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
