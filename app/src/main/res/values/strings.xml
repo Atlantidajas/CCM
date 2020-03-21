@@ -18,6 +18,13 @@
     <string name="brand">Registration brand</string>
     <string name="buttonRegistreVehicle">Registration vehicle</string>
 
+    <!-- Toolbar Home -->
+    <string name="resgistreVehicle_title">Create new vehicle</string>
+
+    <!-- Fin Activity Vehicles_List -->
+
+
+
 
     <!-- ControllerVehicles -->
     <!-- Alert Notices -->

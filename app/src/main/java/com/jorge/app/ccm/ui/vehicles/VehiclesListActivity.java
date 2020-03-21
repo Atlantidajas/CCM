@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,6 +42,25 @@ public class VehiclesListActivity extends AppCompatActivity {
                 "Ford",
                 "Cambiado",
                 this );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate( R.menu.vehicles_toolbar, menu );
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == R.id.resgistreVehicle ) {//<-- Crear vehículo
+
+            // Pendiente de colocar llamada a función
+        }
+
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
     public void readVehicleForReference( String refence ) {
