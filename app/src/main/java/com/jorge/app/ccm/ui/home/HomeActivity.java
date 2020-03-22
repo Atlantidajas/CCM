@@ -3,14 +3,12 @@ package com.jorge.app.ccm.ui.home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,13 +17,9 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jorge.app.ccm.FullscreenActivity;
 import com.jorge.app.ccm.R;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-
 import com.google.firebase.auth.FirebaseUser;
 import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
-
-import com.jorge.app.ccm.ui.vehicles.RegistreVehicleActivity;
 import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
 public class HomeActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
@@ -138,12 +132,11 @@ public class HomeActivity extends AppCompatActivity implements NoticeDialogFragm
     }
 
     // Implementación Interface en clase para NoticeDialogofrgments
-    public void confirmAlertDialog( int title, int message, int textButtonPositive, boolean cancelable ) {
+    private void confirmAlertDialog( int title, int message, int textButtonPositive, boolean cancelable ) {
 
         DialogFragment newFragment = new NoticeDialogFragment( title, message, textButtonPositive, cancelable);
         newFragment.show( getSupportFragmentManager(), "RegistreVehicleActivity");
     }
-
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {

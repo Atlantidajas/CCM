@@ -13,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,8 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
     private ControllerVehicles controllerVehicles;
     private TextView textView;
     private ListView listView;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +42,18 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
         //Connect
         this.controllerVehicles = new ControllerVehicles();
+        firebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         //readVehicleForReference("1234HFT");
-        readVehicles();
+
 
         Vehicle vehiculoPrueba = new Vehicle( R.mipmap.ic_launcher_logo_brand_dacia,
-                "1",
+                "7",
                 "Dacia",
                 "Loguen" );
 
         registryNewVehicle( vehiculoPrueba);
+        readVehicles();
 
     }
 
@@ -117,8 +124,6 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
     }
 
-
-
     public void confirmAlertDialog( int title, int message, int textButtonPositive, boolean cancelable ) {
         DialogFragment newFragment = new NoticeDialogFragment( title, message, textButtonPositive, cancelable);
         newFragment.show(getSupportFragmentManager(), "VehiclesListActivity");
@@ -128,38 +133,37 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
     public void onDialogPositiveClick(DialogFragment dialog) {
         //Al construir NoticeDialogFragment con solo botón positivo no va hacer falta
         // este método pero es obigatorio su nombramiento por ser implementado mediante interface en esta clase.
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
         Intent intent= new Intent ( getApplicationContext(), VehiclesListActivity.class);
         startActivity(intent);
     }
 
-    public void registryNewVehicle( Vehicle vehicle ){
-        int resultOpeWrite = 2;
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
 
+    }
+
+    public void registryNewVehicle( Vehicle vehicle ){
+        int resultOpeWrite = 10;
         resultOpeWrite = this.controllerVehicles.writeNewVehicle( vehicle );
 
-        if( resultOpeWrite == 1 ){
+        if( resultOpeWrite == 0 ){
             this.confirmAlertDialog( R.string.alert_title_notice,
                     R.string.registration_yes_carried_out,
                     R.string.alert_positive_button,
                     false );
         }
-        if( resultOpeWrite == 0 ){
+        if( resultOpeWrite == 1 ){
             this.confirmAlertDialog( R.string.alert_title_notice,
                     R.string.registration_not_carried_out,
                     R.string.alert_positive_button,
                     false );
         }
+
         if( resultOpeWrite == 2 ){
             this.confirmAlertDialog( R.string.alert_title_notice,
                     R.string.error_inesperado,
                     R.string.alert_positive_button,
                     false );
         }
-
-        System.out.println( "********************************" + resultOpeWrite + "***********************************************" );
     }
 }
