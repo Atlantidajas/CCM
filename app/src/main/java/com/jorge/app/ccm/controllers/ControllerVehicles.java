@@ -40,7 +40,7 @@ public class ControllerVehicles {
         return vehicleRf = this.databaseRfVehicles;
     }
 
-    public int writeNewVehicle(final Vehicle vehicle ) {
+    public void writeNewVehicle(final Vehicle vehicle ) {
 
         DatabaseReference vehicles = this.databaseRfVehicles.child( vehicle.getRegistrationNumber() );
         vehicles.addValueEventListener(new ValueEventListener() {
@@ -49,32 +49,25 @@ public class ControllerVehicles {
 
                 if (dataSnapshot.exists()) {
                     String resut = String.valueOf( dataSnapshot.child("registrationNumber").getValue() );
-
-                    String resutRegistre = String.valueOf( vehicle.getRegistrationNumber() );
-                    //Compara la matricula introducida con las que existe en la base de datos.
-                    if ( resut == resutRegistre ){
-
-                        resultOperationWrite = 1;
-                        Vehicle newVehicle = new Vehicle( vehicle.getLogoVehicle(),
-                                vehicle.getRegistrationNumber(),
-                                vehicle.getBrand(),
-                                vehicle.getModel() );
-
-                        databaseRfVehicles.child( vehicle.getRegistrationNumber() ).setValue(newVehicle);
+                    if( resut.equals( vehicle.getRegistrationNumber() ) ){
+                       resultOperationWrite = 0;
+                       return;
                     }
-                    if ( resut != vehicle.getRegistrationNumber() ){
-                        resultOperationWrite = 0;
+                    resultOperationWrite = 1;
+                    return;
 
-                    }
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 resultOperationWrite = 2;
+                return;
             }
         });
-        return resultOperationWrite;
+
     }
 
-
+    public int getResultOperationWrite() {
+        return resultOperationWrite;
+    }
 }

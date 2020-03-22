@@ -32,8 +32,7 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
     private ControllerVehicles controllerVehicles;
     private TextView textView;
     private ListView listView;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +41,6 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
         //Connect
         this.controllerVehicles = new ControllerVehicles();
-        firebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         //readVehicleForReference("1234HFT");
 
 
@@ -143,8 +140,9 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
     }
 
     public void registryNewVehicle( Vehicle vehicle ){
-        int resultOpeWrite = 10;
-        resultOpeWrite = this.controllerVehicles.writeNewVehicle( vehicle );
+
+         this.controllerVehicles.writeNewVehicle( vehicle );
+        int resultOpeWrite =  this.controllerVehicles.getResultOperationWrite();
 
         if( resultOpeWrite == 0 ){
             this.confirmAlertDialog( R.string.alert_title_notice,

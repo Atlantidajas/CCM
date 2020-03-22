@@ -43,13 +43,9 @@ import com.jorge.app.ccm.ui.home.HomeActivity;
 
 public class UserLoginActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "HomeActivity";
     private static final int RC_SIGN_IN = 9001;
-
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
-
     private GoogleSignInClient mGoogleSignInClient;
 
     @Override

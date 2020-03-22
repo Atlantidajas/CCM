@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity implements NoticeDialogFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        firebaseAuth = FirebaseAuth.getInstance();
 
         buttonLinkVehicles = findViewById(R.id.button_link_vehicles);
         buttonLinkVehicles.setOnClickListener(new View.OnClickListener() {
@@ -44,9 +45,6 @@ public class HomeActivity extends AppCompatActivity implements NoticeDialogFragm
                startActivity(intent);
             }
         });
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // [START config_signin]
         // Configure Google Sign In
