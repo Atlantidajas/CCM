@@ -16,13 +16,6 @@ public class RegistreVehicleActivity extends AppCompatActivity implements Notice
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registre_vehicle);
-
-        ControllerVehicles registreVevicle = new ControllerVehicles();
-        registreVevicle.writeNewVehicle( R.mipmap.ic_launcher_logo_brand_ford,
-                "5344CHY",
-                "Ford",
-                "Cambiado", getApplicationContext());
-
     }
 
     public void confirmAlertDialog( int title, int message, int textButtonPositive, int textButtonNegative, boolean cancelable ) {

@@ -2,6 +2,7 @@ package com.jorge.app.ccm.ui.vehicles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,12 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicles;
+import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
 
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class VehiclesListActivity extends AppCompatActivity {
+public class VehiclesListActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     private ControllerVehicles controllerVehicles;
     private TextView textView;
@@ -38,24 +40,14 @@ public class VehiclesListActivity extends AppCompatActivity {
         this.controllerVehicles = new ControllerVehicles();
         //readVehicleForReference("1234HFT");
         readVehicles();
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate( R.menu.vehicles_toolbar, menu );
-        return true;
-    }
+        Vehicle vehiculoPrueba = new Vehicle( R.mipmap.ic_launcher_logo_brand_dacia,
+                "1",
+                "Dacia",
+                "Loguen" );
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        registryNewVehicle( vehiculoPrueba);
 
-        if ( id == R.id.resgistreVehicle ) {//<-- Crear vehículo
-            Intent intent= new Intent (VehiclesListActivity.this, RegistreVehicleActivity.class);
-            startActivity(intent);
-        }
-
-        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
     public void readVehicleForReference( String refence ) {
@@ -123,5 +115,51 @@ public class VehiclesListActivity extends AppCompatActivity {
         }
 
 
+    }
+
+
+
+    public void confirmAlertDialog( int title, int message, int textButtonPositive, boolean cancelable ) {
+        DialogFragment newFragment = new NoticeDialogFragment( title, message, textButtonPositive, cancelable);
+        newFragment.show(getSupportFragmentManager(), "VehiclesListActivity");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        //Al construir NoticeDialogFragment con solo botón positivo no va hacer falta
+        // este método pero es obigatorio su nombramiento por ser implementado mediante interface en esta clase.
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        Intent intent= new Intent ( getApplicationContext(), VehiclesListActivity.class);
+        startActivity(intent);
+    }
+
+    public void registryNewVehicle( Vehicle vehicle ){
+        int resultOpeWrite = 2;
+
+        resultOpeWrite = this.controllerVehicles.writeNewVehicle( vehicle );
+
+        if( resultOpeWrite == 1 ){
+            this.confirmAlertDialog( R.string.alert_title_notice,
+                    R.string.registration_yes_carried_out,
+                    R.string.alert_positive_button,
+                    false );
+        }
+        if( resultOpeWrite == 0 ){
+            this.confirmAlertDialog( R.string.alert_title_notice,
+                    R.string.registration_not_carried_out,
+                    R.string.alert_positive_button,
+                    false );
+        }
+        if( resultOpeWrite == 2 ){
+            this.confirmAlertDialog( R.string.alert_title_notice,
+                    R.string.error_inesperado,
+                    R.string.alert_positive_button,
+                    false );
+        }
+
+        System.out.println( "********************************" + resultOpeWrite + "***********************************************" );
     }
 }

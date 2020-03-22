@@ -101,7 +101,7 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toggle();
-                Intent intent= new Intent (FullscreenActivity.this, UserLoginActivity.class);
+                Intent intent= new Intent (FullscreenActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

@@ -46,13 +46,8 @@ public class HomeActivity extends AppCompatActivity implements NoticeDialogFragm
         buttonLinkVehicles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent= new Intent (HomeActivity.this, RegistreVehicleActivity.class);
+               Intent intent= new Intent (HomeActivity.this, VehiclesListActivity.class);
                startActivity(intent);
-
-                /*confirmAlertDialog(R.string.title_alert_dialog,
-                        R.string.message_identical_record_alert_dialog,
-                        R.string.button_positive_alert_dialog,
-                        false);*/
             }
         });
 

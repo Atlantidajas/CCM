@@ -1,8 +1,7 @@
 package com.jorge.app.ccm.controllers;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,13 +11,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
 
 public class ControllerVehicles {
 
     private DatabaseReference databaseRfVehicles;
     private DatabaseReference vehicleRf;
+    private int resultOperationWrite;
 
     public ControllerVehicles() {
         databaseRfVehicles = FirebaseDatabase.getInstance().getReference("Vehicles");
@@ -36,44 +35,40 @@ public class ControllerVehicles {
         return vehicleRf = this.databaseRfVehicles;
     }
 
-    public void writeNewVehicle(final int logoVehicle, final String registrationNumber, final String brand, final String model, final Context context) {
+    public int writeNewVehicle(final Vehicle vehicle ) {
 
-        DatabaseReference vehicles = this.databaseRfVehicles.child( registrationNumber );
+        DatabaseReference vehicles = this.databaseRfVehicles.child( vehicle.getRegistrationNumber() );
         vehicles.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String resut = String.valueOf( dataSnapshot.child("registrationNumber").getValue() );
 
+
                     //Compara la matricula introducida con las que existe en la base de datos.
-                    if ( resut.equals( registrationNumber ) ){
+                    if ( resut.equals( vehicle.getRegistrationNumber()) ){
 
-                        final AlertDialog.Builder alerta = new AlertDialog.Builder(context);
-                        alerta.setTitle(R.string.alert_title_notice);
-                        alerta.setMessage(R.string.alert_message_a_license_plate_already_exists);
-                        alerta.setCancelable(false);
-                        alerta.setPositiveButton(R.string.alert_positive_button, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                        System.out.println("*******************************************************************");
+                        System.out.println(resut);
+                        System.out.println("*******************************************************************");
+                        resultOperationWrite = 0;
 
-                            }
-                        });
-                        alerta.show();
                     }
                 } else {
 
-                    Vehicle vehicle = new Vehicle( logoVehicle,
-                            registrationNumber,
-                            brand,
-                            model );
+                    Vehicle newVehicle = new Vehicle( vehicle.getLogoVehicle(),
+                            vehicle.getRegistrationNumber(),
+                            vehicle.getBrand(),
+                            vehicle.getModel() );
 
-                    databaseRfVehicles.child( registrationNumber ).setValue(vehicle);
-                    Toast.makeText( context , "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
+                    databaseRfVehicles.child( vehicle.getRegistrationNumber() ).setValue(newVehicle);
+                    resultOperationWrite = 1;
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+        return resultOperationWrite;
     }
 }
