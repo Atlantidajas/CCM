@@ -7,6 +7,7 @@ import androidx.fragment.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -44,14 +45,14 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
         //readVehicleForReference("1234HFT");
 
 
-        Vehicle vehiculoPrueba = new Vehicle( R.mipmap.ic_launcher_logo_brand_dacia,
-                "7",
-                "Dacia",
-                "Loguen" );
+        Vehicle vehiculoPrueba = new Vehicle(
+                R.mipmap.ic_launcher_logo_brand_ford,
+                "8",
+                "Ford",
+                "Fiesta" );
 
-        registryNewVehicle( vehiculoPrueba);
+        writeNewVehicle( vehiculoPrueba);
         readVehicles();
-
     }
 
     public void readVehicleForReference( String refence ) {
@@ -139,12 +140,11 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
     }
 
-    public void registryNewVehicle( Vehicle vehicle ){
+    public void writeNewVehicle( Vehicle vehicle ){
 
          this.controllerVehicles.writeNewVehicle( vehicle );
-        int resultOpeWrite =  this.controllerVehicles.getResultOperationWrite();
 
-        if( resultOpeWrite == 0 ){
+       /*if( resultOpeWrite == 0 ){
             this.confirmAlertDialog( R.string.alert_title_notice,
                     R.string.registration_yes_carried_out,
                     R.string.alert_positive_button,
@@ -162,6 +162,6 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
                     R.string.error_inesperado,
                     R.string.alert_positive_button,
                     false );
-        }
+        }*/
     }
 }
