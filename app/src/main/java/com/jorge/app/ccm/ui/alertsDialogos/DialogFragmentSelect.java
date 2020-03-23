@@ -8,9 +8,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 
-public class RegistryVehiclesBrandsDialogFragment extends DialogFragment {
+public class DialogFragmentSelect extends DialogFragment {
 
-    private RegistryVehiclesBrandsDialogFragment.RegistryVehiclesBrandsDialogListener listener;
+    private DialogFragmentSelect.RegistryVehiclesBrandsDialogListener listener;
     private int title;
     private String items[];
     private boolean cancelable;
@@ -19,9 +19,9 @@ public class RegistryVehiclesBrandsDialogFragment extends DialogFragment {
     /*
      * Constructor para dos botones en RegistryVehiclesBrandsDialogFragment tanto positivo como negativo
      */
-    public RegistryVehiclesBrandsDialogFragment(int title,
-                                                final String items[],
-                                                boolean cancelable) {
+    public DialogFragmentSelect(int title,
+                                final String items[],
+                                boolean cancelable) {
         this.title = title;
         this.items = items;
         this.cancelable = cancelable;
@@ -58,7 +58,7 @@ public class RegistryVehiclesBrandsDialogFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
                                 setItemResult( item);
-                                listener.onDialogItemClick(RegistryVehiclesBrandsDialogFragment.this);
+                                listener.onDialogItemClick(DialogFragmentSelect.this);
                             }
                         });
 
