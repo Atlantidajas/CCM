@@ -13,6 +13,8 @@ public class DialogFragmentSelect extends DialogFragment {
     private DialogFragmentSelect.DialogFragmentListener listener;
     private int title;
     private String items[];
+    private int textButtonPositive;
+    private int textButtonNegative;
     private boolean cancelable;
     private int itemResult;
 
@@ -21,9 +23,24 @@ public class DialogFragmentSelect extends DialogFragment {
      */
     public DialogFragmentSelect(int title,
                                 final String items[],
+                                int textButtonPositive,
+                                int textButtonNegative,
                                 boolean cancelable) {
         this.title = title;
         this.items = items;
+        this.textButtonPositive = textButtonPositive;
+        this.textButtonNegative = textButtonNegative;
+        this.cancelable = cancelable;
+    }
+
+    public DialogFragmentSelect(int title,
+                                final String items[],
+                                int textButtonPositive,
+                                boolean cancelable) {
+        this.title = title;
+        this.items = items;
+        this.textButtonPositive = textButtonPositive;
+        this.textButtonNegative = 0;
         this.cancelable = cancelable;
     }
 
@@ -32,6 +49,8 @@ public class DialogFragmentSelect extends DialogFragment {
      * */
     public interface DialogFragmentListener {
         public void onDialogItemClick(DialogFragment dialog);
+        public void onDialogFragmentSelectPositiveClick(DialogFragment dialog);
+        public void onDialogFragmentSelectNegativeClick(DialogFragment dialog);
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
@@ -59,7 +78,22 @@ public class DialogFragmentSelect extends DialogFragment {
                                 setItemResult( item);
                                 listener.onDialogItemClick(DialogFragmentSelect.this);
                             }
-                        });
+                        })
+                .setPositiveButton( this.textButtonPositive, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Send the positive button event back to the host activity
+                        listener.onDialogFragmentSelectPositiveClick(DialogFragmentSelect.this);
+                    }
+                });
+                // Si utilizo constructor sin el botón negatico no lo crea
+                if( this.textButtonNegative != 0 ){
+                    builder.setNegativeButton( this.textButtonNegative, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Send the negative button event back to the host activity
+                            listener.onDialogFragmentSelectNegativeClick(DialogFragmentSelect.this);
+                        }
+                    });
+        }
 
         return builder.create();
     }

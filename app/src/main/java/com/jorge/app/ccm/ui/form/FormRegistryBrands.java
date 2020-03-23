@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehicles;
+package com.jorge.app.ccm.ui.form;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,14 +10,22 @@ public class FormRegistryBrands extends DialogFragment implements DialogFragment
     private DialogFragmentSelect dialogFragmentSelect;
     private int title;
     final String items[];
+    private int textButtonPositive;
+    private int textButtonNegative;
     private boolean cancelable;
     private int itemResultSelect;
 
     public FormRegistryBrands(FragmentManager fragmentManager, String items[]) {
-        this.title = R.string.title_dialog_fragmen_registre_vehicles_list_brands;
+        this.title = R.string.form_registry_brans_title;
         this.cancelable = false;
         this.items = items;
-        this.dialogFragmentSelect = new DialogFragmentSelect(this.title, this.items, this.cancelable);
+        this.textButtonPositive = R.string.form_registry_brans_button_next;
+        this.textButtonNegative = R.string.form_registry_brans_button_return;
+        this.dialogFragmentSelect = new DialogFragmentSelect(this.title,
+                this.items,
+                this.textButtonPositive,
+                this.textButtonNegative,
+                this.cancelable);
         this.dialogFragmentSelect.show( fragmentManager, "RegistreVehicleActivity");
         this.itemResultSelect = this.dialogFragmentSelect.getItemResult();
 
@@ -35,8 +43,22 @@ public class FormRegistryBrands extends DialogFragment implements DialogFragment
         return this.items[id];
     }
 
+
+    //---- Interface (Implementada)
+    // Implemento para obligar a implementar cuando se cree el objeto
     @Override
     public void onDialogItemClick(DialogFragment dialog) {
+    }
+
+    // Implemento para obligar a implementar cuando se cree el objeto
+    @Override
+    public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
+        // Pendiente de colocar lo que desea que haga al pulsar onclik
+    }
+
+    // Implemento para obligar a implementar cuando se cree el objeto
+    @Override
+    public void onDialogFragmentSelectNegativeClick(DialogFragment dialog) {
         // Pendiente de colocar lo que desea que haga al pulsar onclik
     }
 

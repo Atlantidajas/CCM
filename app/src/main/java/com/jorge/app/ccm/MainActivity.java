@@ -6,17 +6,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.jorge.app.ccm.ui.home.HomeActivity;
 import com.jorge.app.ccm.ui.user.UserLoginActivity;
 
-public class FullscreenActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
@@ -97,15 +94,10 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toggle();
-                Intent intent= new Intent (FullscreenActivity.this, UserLoginActivity.class);
+                Intent intent= new Intent (MainActivity.this, UserLoginActivity.class);
                 startActivity(intent);
             }
         });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override

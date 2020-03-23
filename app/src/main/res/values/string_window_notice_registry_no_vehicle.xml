@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Window Notice No RegistryVehicle -->
+    <string name="window_notice_registry_no_vehicle_title">Notice</string>
+    <string name="window_notice_registry_no_vehicle_message">There is already a record with that license plate</string>
+    <string name="window_notice_registry_no_vehicle_button_aceptar">Aceptar</string>
+</resources>

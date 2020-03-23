@@ -8,6 +8,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,11 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentNotice;
+import com.jorge.app.ccm.ui.form.WindowsNoticeNoRegistryVehicle;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
 
 import java.util.EventListener;
 
-public class ControllerVehicles {
+public class ControllerVehicles extends AppCompatActivity {
 
     private DatabaseReference databaseRfVehicles;
     private DatabaseReference vehicleRf;
@@ -53,9 +57,7 @@ public class ControllerVehicles {
 
                     //Compara la matricula introducida con las que existe en la base de datos.
                     if ( resut.equals( vehicle.getRegistrationNumber() ) ){
-
-                       System.out.println("----------------------------Result : >" + resut);
-                        System.out.println("---------------------------Matrícula : >" + vehicle.getRegistrationNumber());
+                       // WindowsNoticeNoRegistryVehicle winNoRegistreNumber = new WindowsNoticeNoRegistryVehicle( getSupportFragmentManager() );
                     }
                 } else {
 

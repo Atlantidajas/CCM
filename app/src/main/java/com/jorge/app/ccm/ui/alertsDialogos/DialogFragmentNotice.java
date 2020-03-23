@@ -7,9 +7,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import com.jorge.app.ccm.ui.vehicles.RegistreVehicleActivity;
 
-public class NoticeDialogFragment extends DialogFragment {
+public class DialogFragmentNotice extends DialogFragment {
 
     private NoticeDialogListener listener;
     private int title;
@@ -21,7 +20,7 @@ public class NoticeDialogFragment extends DialogFragment {
     /*
      * Constructor para dos botones en DialogoFragment tanto positivo como negativo
      */
-    public NoticeDialogFragment(int title, int message, int textButtonPositive, int textButtonNegative, boolean cancelable) {
+    public DialogFragmentNotice(int title, int message, int textButtonPositive, int textButtonNegative, boolean cancelable) {
         this.title = title;
         this.message = message;
         this.textButtonPositive = textButtonPositive;
@@ -32,7 +31,7 @@ public class NoticeDialogFragment extends DialogFragment {
     /**
      * Constructor para solo botón positivo en DialogoFragment.
      */
-    public NoticeDialogFragment(int title, int message, int textButtonPositive, boolean cancelable) {
+    public DialogFragmentNotice(int title, int message, int textButtonPositive, boolean cancelable) {
         this.title = title;
         this.message = message;
         this.textButtonPositive = textButtonPositive;
@@ -79,7 +78,7 @@ public class NoticeDialogFragment extends DialogFragment {
                 .setPositiveButton( this.textButtonPositive, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Send the positive button event back to the host activity
-                        listener.onDialogPositiveClick(NoticeDialogFragment.this);
+                        listener.onDialogPositiveClick(DialogFragmentNotice.this);
                     }
                 });
                 // Si utilizo constructor sin el botón negatico no lo crea
@@ -87,7 +86,7 @@ public class NoticeDialogFragment extends DialogFragment {
                     builder.setNegativeButton( this.textButtonNegative, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // Send the negative button event back to the host activity
-                            listener.onDialogNegativeClick(NoticeDialogFragment.this);
+                            listener.onDialogNegativeClick(DialogFragmentNotice.this);
                         }
                     });
                 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Toolbar Vehicles_List -->
+    <string name="toolbar_vehicle_list_button_resgistreVehicle_title"></string>
+
+    <!-- Toolbar Vehicles -->
+    <string name="toolbar_button_sign_out_title">SignOut Session</string>
+    <string name="toolbar_button_disconnect_title">Close application</string>
+</resources>

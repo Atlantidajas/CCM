@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -19,12 +18,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicles;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
-import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
+import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentNotice;
+import com.jorge.app.ccm.ui.form.FormRegistryBrands;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class VehiclesListActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener, DialogFragmentSelect.DialogFragmentListener {
+public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.NoticeDialogListener,
+        DialogFragmentSelect.DialogFragmentListener {
 
     private ControllerVehicles controllerVehicles;
     private TextView textView;
@@ -39,17 +40,6 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
         //Connect
         this.controllerVehicles = new ControllerVehicles();
         //readVehicleForReference("1234HFT");
-
-        Resources res =getResources();
-        Drawable drawable = res.getDrawable(R.mipmap.ic_launcher_logo_brand_alfa_romeo);
-        System.out.println( "Recurso" + drawable + "************************");
-        System.out.println( "Recurso" + drawable + "************************");
-        System.out.println( "Recurso" + drawable + "************************");
-        System.out.println( "Recurso" + drawable + "************************");
-        System.out.println( "Recurso" + drawable + "************************");
-        System.out.println( "Recurso" + drawable + "************************");
-        System.out.println( "Recurso" + drawable + "************************");
-
 
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_seat,
@@ -137,7 +127,7 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
     }
 
     public void confirmNoticeDialogFragment( int title, int message, int textButtonPositive, boolean cancelable ) {
-        DialogFragment newFragment = new NoticeDialogFragment( title, message, textButtonPositive, cancelable);
+        DialogFragment newFragment = new DialogFragmentNotice( title, message, textButtonPositive, cancelable);
         newFragment.show(getSupportFragmentManager(), "NoticeDialogListener");
     }
 
@@ -190,8 +180,18 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
     //Onclik sobre item de FormRegistryBrands
     @Override
     public void onDialogItemClick(DialogFragment dialog) {
-        System.out.println( "Item pulsado: " + this.formRegistryBrands.getItemResult() );
-        System.out.println( "Texto pulsado: " + this.formRegistryBrands.textItem(this.formRegistryBrands.getItemResult() ) );
+        //System.out.println( "Item pulsado: " + this.formRegistryBrands.getItemResult() );
+        //System.out.println( "Texto pulsado: " + this.formRegistryBrands.textItem(this.formRegistryBrands.getItemResult() ) );
 
+    }
+
+    @Override
+    public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
+        //System.out.println("Pulsado siguiente >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
+
+    @Override
+    public void onDialogFragmentSelectNegativeClick(DialogFragment dialog) {
+        //System.out.println("Pulsado atras <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     }
 }
