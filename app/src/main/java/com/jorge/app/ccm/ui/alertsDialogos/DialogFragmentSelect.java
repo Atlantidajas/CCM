@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class DialogFragmentSelect extends DialogFragment {
 
-    private DialogFragmentSelect.RegistryVehiclesBrandsDialogListener listener;
+    private DialogFragmentSelect.DialogFragmentListener listener;
     private int title;
     private String items[];
     private boolean cancelable;
@@ -30,9 +30,8 @@ public class DialogFragmentSelect extends DialogFragment {
     /*
      * Interface para asegurarme de la implenetación de los métodos
      * */
-    public interface RegistryVehiclesBrandsDialogListener {
+    public interface DialogFragmentListener {
         public void onDialogItemClick(DialogFragment dialog);
-
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
@@ -42,7 +41,7 @@ public class DialogFragmentSelect extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            listener = (RegistryVehiclesBrandsDialogListener) context;
+            listener = (DialogFragmentListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
 

@@ -41,7 +41,7 @@
     <string name="alert_positive_button">Aceptar</string>
 
     <!-- Registre Vehicle Dialog frgment -->
-    <string name="title_dialog_fragmen_registre_vehicles_list_brands">Seleccione una marca</string>
+    <string name="title_dialog_fragmen_registre_vehicles_list_brands">Select vehicle brand</string>
 
 
 </resources>

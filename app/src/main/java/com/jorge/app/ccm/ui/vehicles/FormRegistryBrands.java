@@ -5,61 +5,21 @@ import androidx.fragment.app.FragmentManager;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
 
-public class FormRegistryBrands extends DialogFragment implements DialogFragmentSelect.RegistryVehiclesBrandsDialogListener{
+public class FormRegistryBrands extends DialogFragment implements DialogFragmentSelect.DialogFragmentListener{
 
     private DialogFragmentSelect dialogFragmentSelect;
     private int title;
-    final String items[] = {"Alfa Romero",
-            "Audi",
-            "BMW",
-            "Cadillac",
-            "Citroën",
-            "Dacia",
-            "Daewoo",
-            "Fiat",
-            "Ford",
-            "Honda",
-            "Hyunda",
-            "Infiniti",
-            "Isuzu",
-            "Iveco",
-            "Jaguar",
-            "Jeep",
-            "Kia",
-            "Lada",
-            "Lancia",
-            "Lexus",
-            "Lotus",
-            "Mazda",
-            "Mercedes",
-            "Mini",
-            "Mitsubishi",
-            "Nissan",
-            "Opel",
-            "Peugeot",
-            "Renault",
-            "Rober",
-            "Saab",
-            "Sangyoung",
-            "Saet",
-            "Skoda",
-            "Smart",
-            "Subaru",
-            "Suzuki",
-            "Tata",
-            "Tesla",
-            "Toyota",
-            "Volkswagen",
-            "Volvo" };
+    final String items[];
     private boolean cancelable;
     private int itemResultSelect;
 
-    public FormRegistryBrands(FragmentManager fragmentManager) {
+    public FormRegistryBrands(FragmentManager fragmentManager, String items[]) {
         this.title = R.string.title_dialog_fragmen_registre_vehicles_list_brands;
         this.cancelable = false;
-        this.dialogFragmentSelect = new DialogFragmentSelect(title, items, cancelable);
-        this.itemResultSelect = this.dialogFragmentSelect.getItemResult();//<-- El resultado la selección
-        this.dialogFragmentSelect.show( fragmentManager, "VehiclesListActivity");
+        this.items = items;
+        this.dialogFragmentSelect = new DialogFragmentSelect(this.title, this.items, this.cancelable);
+        this.dialogFragmentSelect.show( fragmentManager, "RegistreVehicleActivity");
+        this.itemResultSelect = this.dialogFragmentSelect.getItemResult();
 
     }
 
@@ -88,7 +48,10 @@ public class FormRegistryBrands extends DialogFragment implements DialogFragment
     }
 
     public int getItemResult() {
-        return itemResultSelect;
+        return itemResultSelect = this.dialogFragmentSelect.getItemResult();
+    }
+    public String textItem(int id){
+        return this.items[id];
     }
 
     @Override

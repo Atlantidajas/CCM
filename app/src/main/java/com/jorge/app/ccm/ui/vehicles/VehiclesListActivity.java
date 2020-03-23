@@ -16,21 +16,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicles;
-import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
-
+import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class VehiclesListActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
+public class VehiclesListActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener, DialogFragmentSelect.DialogFragmentListener {
 
     private ControllerVehicles controllerVehicles;
     private TextView textView;
     private ListView listView;
     private FormRegistryBrands formRegistryBrands;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +47,7 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
         writeNewVehicle( vehiculoPrueba);
         readVehicles();
-        showFormRegistryBrands();//<-- Muestra el FialogFrgment Formulario de Marcas
-        System.out.println("*******************************************************************************************");
-        System.out.println( "Botón pulsado en formulario de marca registro" + this.formRegistryBrands.getItemResult() );
-        System.out.println("*******************************************************************************************");
+        getFormRegistryBrands();//<-- Muestra el FialogFrgment Formulario de Marcas
 
         /*confirmNoticeDialogFragment(R.string.title_alert_dialog,
                                     R.string.alert_message_a_license_plate_already_exists,
@@ -173,8 +167,63 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
         }*/
     }
 
-    public void showFormRegistryBrands(){
-        this.formRegistryBrands = new FormRegistryBrands(getSupportFragmentManager());
+
+    public FormRegistryBrands getFormRegistryBrands(){
+        final String brans[] = {"Alfa Romero",
+                "Audi",
+                "BMW",
+                "Cadillac",
+                "Citroën",
+                "Dacia",
+                "Daewoo",
+                "Fiat",
+                "Ford",
+                "Honda",
+                "Hyunda",
+                "Infiniti",
+                "Isuzu",
+                "Iveco",
+                "Jaguar",
+                "Jeep",
+                "Kia",
+                "Lada",
+                "Lancia",
+                "Lexus",
+                "Lotus",
+                "Mazda",
+                "Mercedes",
+                "Mini",
+                "Mitsubishi",
+                "Nissan",
+                "Opel",
+                "Peugeot",
+                "Renault",
+                "Rober",
+                "Saab",
+                "Sangyoung",
+                "Saet",
+                "Skoda",
+                "Smart",
+                "Subaru",
+                "Suzuki",
+                "Tata",
+                "Tesla",
+                "Toyota",
+                "Volkswagen",
+                "Volvo" };
+
+        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), brans );
+        return formRegistryBrands;
     }
 
+
+    //Onclik sobre item de FormRegistryBrands
+    @Override
+    public void onDialogItemClick(DialogFragment dialog) {
+        int idSelect = this.formRegistryBrands.getItemResult();
+        String brandSelect = this.formRegistryBrands.textItem(idSelect);
+        System.out.println("**********************************************************************************");
+        System.out.println("*************" + brandSelect  + "************************************************");
+        System.out.println("**********************************************************************************");
+    }
 }
