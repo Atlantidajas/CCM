@@ -4,18 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,16 +17,21 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicles;
 import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
+import com.jorge.app.ccm.ui.alertsDialogos.RegistryVehiclesBrandsDialogFragment;
 
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class VehiclesListActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
+public class VehiclesListActivity extends AppCompatActivity
+        implements NoticeDialogFragment.NoticeDialogListener,
+        RegistryVehiclesBrandsDialogFragment.RegistryVehiclesBrandsDialogListener {
 
     private ControllerVehicles controllerVehicles;
     private TextView textView;
     private ListView listView;
+    private int resultado;
+    private RegistryVehiclesBrandsDialogFragment registryVehiclesBrandsDialogFragment;
 
 
     @Override
@@ -53,6 +52,17 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
         writeNewVehicle( vehiculoPrueba);
         readVehicles();
+        /*confirmNoticeDialogFragment(R.string.title_alert_dialog,
+                                    R.string.alert_message_a_license_plate_already_exists,
+                                    R.string.button_positive_alert_dialog, false );*/
+        registryVehiclesBrandsDialogFragment  = onDialogFrgmentRegistryVehiclesbrands();
+        System.out.println( "***************************************************************************");
+        System.out.println( "" + registryVehiclesBrandsDialogFragment.getItemResult() + "********************************");
+        System.out.println( "***************************************************************************");
+
+
+
+
     }
 
     public void readVehicleForReference( String refence ) {
@@ -109,7 +119,10 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
             listIntemVehicles.add( new Vehicle( dataSnapshots.next() ) );
         }while (dataSnapshots.hasNext());
 
-        final AdapterVehicle arrayAdapter = new AdapterVehicle( getApplicationContext(), R.id.imageView_image_item_vehicles, listIntemVehicles );
+        AdapterVehicle arrayAdapter = new AdapterVehicle(
+                getApplicationContext(),
+                R.id.imageView_image_item_vehicles,
+                listIntemVehicles );
         this.textView = this.findViewById(R.id.textView_vehicles);
         this.listView = this.findViewById(R.id.listView_vehicles);
 
@@ -119,20 +132,18 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
             listView.setAdapter(arrayAdapter);
         }
 
-
     }
 
-    public void confirmAlertDialog( int title, int message, int textButtonPositive, boolean cancelable ) {
+    public void confirmNoticeDialogFragment( int title, int message, int textButtonPositive, boolean cancelable ) {
         DialogFragment newFragment = new NoticeDialogFragment( title, message, textButtonPositive, cancelable);
-        newFragment.show(getSupportFragmentManager(), "VehiclesListActivity");
+        newFragment.show(getSupportFragmentManager(), "NoticeDialogListener");
     }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         //Al construir NoticeDialogFragment con solo botón positivo no va hacer falta
         // este método pero es obigatorio su nombramiento por ser implementado mediante interface en esta clase.
-        Intent intent= new Intent ( getApplicationContext(), VehiclesListActivity.class);
-        startActivity(intent);
+
     }
 
     @Override
@@ -164,4 +175,65 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
                     false );
         }*/
     }
+
+    public RegistryVehiclesBrandsDialogFragment onDialogFrgmentRegistryVehiclesbrands(){
+        final String items[] = {"Alfa Romero",
+                "Audi",
+                "BMW",
+                "Cadillac",
+                "Citroën",
+                "Dacia",
+                "Daewoo",
+                "Fiat",
+                "Ford",
+                "Honda",
+                "Hyunda",
+                "Infiniti",
+                "Isuzu",
+                "Iveco",
+                "Jaguar",
+                "Jeep",
+                "Kia",
+                "Lada",
+                "Lancia",
+                "Lexus",
+                "Lotus",
+                "Mazda",
+                "Mercedes",
+                "Mini",
+                "Mitsubishi",
+                "Nissan",
+                "Opel",
+                "Peugeot",
+                "Renault",
+                "Rober",
+                "Saab",
+                "Sangyoung",
+                "Saet",
+                "Skoda",
+                "Smart",
+                "Subaru",
+                "Suzuki",
+                "Tata",
+                "Tesla",
+                "Toyota",
+                "Volkswagen",
+                "Volvo" };
+
+
+
+        RegistryVehiclesBrandsDialogFragment newFragment = new RegistryVehiclesBrandsDialogFragment(
+        R.string.title_dialog_fragmen_registre_vehicles_list_brands, items, true);
+        newFragment.show(getSupportFragmentManager(), "RegistryVehiclesBrandsDialogFragment");
+        return newFragment;
+    }
+
+
+    @Override
+    public void onDialogItemClick(DialogFragment dialog) {
+        System.out.println( "------------------**------>" + this.registryVehiclesBrandsDialogFragment.getItemResult() + "<-----------------" );
+    }
+
+
+
 }

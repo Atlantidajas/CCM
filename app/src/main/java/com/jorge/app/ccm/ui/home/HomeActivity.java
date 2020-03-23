@@ -15,14 +15,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
-import com.jorge.app.ccm.FullscreenActivity;
 import com.jorge.app.ccm.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.firebase.auth.FirebaseUser;
-import com.jorge.app.ccm.ui.alertsDialogos.NoticeDialogFragment;
 import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
-public class HomeActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
+public class HomeActivity extends AppCompatActivity  {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth firebaseAuth;
@@ -129,23 +127,5 @@ public class HomeActivity extends AppCompatActivity implements NoticeDialogFragm
                 });
     }
 
-    // Implementación Interface en clase para NoticeDialogofrgments
-    private void confirmAlertDialog( int title, int message, int textButtonPositive, boolean cancelable ) {
 
-        DialogFragment newFragment = new NoticeDialogFragment( title, message, textButtonPositive, cancelable);
-        newFragment.show( getSupportFragmentManager(), "RegistreVehicleActivity");
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-
-        Intent intent= new Intent (HomeActivity.this, FullscreenActivity.class);
-        startActivity(intent);
-
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-
-    }
 }

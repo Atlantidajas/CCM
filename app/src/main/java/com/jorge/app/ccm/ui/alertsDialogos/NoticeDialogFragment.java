@@ -11,7 +11,7 @@ import com.jorge.app.ccm.ui.vehicles.RegistreVehicleActivity;
 
 public class NoticeDialogFragment extends DialogFragment {
 
-    NoticeDialogListener listener;
+    private NoticeDialogListener listener;
     private int title;
     private int message;
     private int textButtonPositive;
@@ -64,7 +64,7 @@ public class NoticeDialogFragment extends DialogFragment {
             listener = (NoticeDialogListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(RegistreVehicleActivity.class.toString()
+            throw new ClassCastException(NoticeDialogListener.class.toString()
                     + " must implement NoticeDialogListener");
         }
     }
