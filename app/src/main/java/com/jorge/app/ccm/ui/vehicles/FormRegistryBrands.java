@@ -23,33 +23,14 @@ public class FormRegistryBrands extends DialogFragment implements DialogFragment
 
     }
 
-    public void setTitle(int title) {
-        this.title = title;
-    }
-
-    public void setCancelable(boolean cancelable) {
-        this.cancelable = cancelable;
-    }
-
-    public void setItemResult(int itemResult) {
-        this.itemResultSelect = itemResult;
-    }
-
-    public int getTitle() {
-        return title;
-    }
-
     public String[] getItems() {
         return items;
-    }
-
-    public boolean isCancelable() {
-        return cancelable;
     }
 
     public int getItemResult() {
         return itemResultSelect = this.dialogFragmentSelect.getItemResult();
     }
+
     public String textItem(int id){
         return this.items[id];
     }

@@ -220,10 +220,8 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
     //Onclik sobre item de FormRegistryBrands
     @Override
     public void onDialogItemClick(DialogFragment dialog) {
-        int idSelect = this.formRegistryBrands.getItemResult();
-        String brandSelect = this.formRegistryBrands.textItem(idSelect);
-        System.out.println("**********************************************************************************");
-        System.out.println("*************" + brandSelect  + "************************************************");
-        System.out.println("**********************************************************************************");
+        System.out.println( "Item pulsado: " + this.formRegistryBrands.getItemResult() );
+        System.out.println( "Texto pulsado: " + this.formRegistryBrands.textItem(this.formRegistryBrands.getItemResult() ) );
+
     }
 }
