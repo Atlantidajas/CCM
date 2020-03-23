@@ -1,6 +1,8 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,8 @@ public class AdapterVehicle extends BaseAdapter {
 
         ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
         imageView_image.setImageResource( vehicle.getLogoVehicle() );
+
+
 
         TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_vehicles );
         textView_registrationNumber.setText( vehicle.getRegistrationNumber() );

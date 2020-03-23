@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -39,11 +40,22 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
         this.controllerVehicles = new ControllerVehicles();
         //readVehicleForReference("1234HFT");
 
+        Resources res =getResources();
+        Drawable drawable = res.getDrawable(R.mipmap.ic_launcher_logo_brand_alfa_romeo);
+        System.out.println( "Recurso" + drawable + "************************");
+        System.out.println( "Recurso" + drawable + "************************");
+        System.out.println( "Recurso" + drawable + "************************");
+        System.out.println( "Recurso" + drawable + "************************");
+        System.out.println( "Recurso" + drawable + "************************");
+        System.out.println( "Recurso" + drawable + "************************");
+        System.out.println( "Recurso" + drawable + "************************");
+
+
         Vehicle vehiculoPrueba = new Vehicle(
-                R.mipmap.ic_launcher_logo_brand_ford,
-                "8",
-                "Ford",
-                "Fiesta" );
+                R.mipmap.ic_launcher_logo_brand_seat,
+                "1",
+                "Seat",
+                "Ibiza" );
 
         writeNewVehicle( vehiculoPrueba);
         readVehicles();
@@ -168,52 +180,9 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
 
     public FormRegistryBrands getFormRegistryBrands(){
-        final String manufacturers[] = {"Alfa Romero",
-                "Audi",
-                "BMW",
-                "Cadillac",
-                "Citroën",
-                "Dacia",
-                "Daewoo",
-                "Fiat",
-                "Ford",
-                "Honda",
-                "Hyunda",
-                "Infiniti",
-                "Isuzu",
-                "Iveco",
-                "Jaguar",
-                "Jeep",
-                "Kia",
-                "Lada",
-                "Lancia",
-                "Lexus",
-                "Lotus",
-                "Mazda",
-                "Mercedes",
-                "Mini",
-                "Mitsubishi",
-                "Nissan",
-                "Opel",
-                "Peugeot",
-                "Renault",
-                "Rober",
-                "Saab",
-                "Sangyoung",
-                "Saet",
-                "Skoda",
-                "Smart",
-                "Subaru",
-                "Suzuki",
-                "Tata",
-                "Tesla",
-                "Toyota",
-                "Volkswagen",
-                "Volvo" };
-
         Resources res = getResources();
-        //String[] manufacturers = res.getStringArray(R.array.manufacturers);
-        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), manufacturers );
+        String[] manufactures = res.getStringArray(R.array.manufactures);
+        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), manufactures );
         return formRegistryBrands;
     }
 
