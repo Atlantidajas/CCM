@@ -15,12 +15,10 @@ import java.util.ArrayList;
 public class AdapterVehicle extends BaseAdapter {
 
     private Context context;
-    private int resorce;
     private ArrayList<Vehicle> vehicles;
 
-    public AdapterVehicle(Context context, int resorce, ArrayList<Vehicle> vehicles) {
+    public AdapterVehicle(Context context, ArrayList<Vehicle> vehicles) {
         this.context = context;
-        this.resorce = resorce;
         this.vehicles = vehicles;
     }
 
@@ -42,21 +40,21 @@ public class AdapterVehicle extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Vehicle inten = (Vehicle) getItem(position);
+        Vehicle vehicle = (Vehicle) getItem(position);
 
-        convertView = LayoutInflater.from( context ).inflate(R.layout.item_list_view_vehicles, null );
+        convertView = LayoutInflater.from( context ).inflate(R.layout.item_list_view_vehicles, parent, false );
 
-        ImageView imageView_image = convertView.findViewById( this.resorce );
-        imageView_image.setImageResource( inten.getLogoVehicle() );
+        ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
+        imageView_image.setImageResource( vehicle.getLogoVehicle() );
 
         TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_vehicles );
-        textView_registrationNumber.setText( inten.getRegistrationNumber() );
+        textView_registrationNumber.setText( vehicle.getRegistrationNumber() );
 
         TextView textView_brand = convertView.findViewById( R.id.textView_brand_item_vehicles );
-        textView_brand.setText( inten.getBrand() );
+        textView_brand.setText( vehicle.getBrand() );
 
         TextView textView_model = convertView.findViewById( R.id.textView_model_item_vehicles );
-        textView_model.setText( inten.getModel() );
+        textView_model.setText( vehicle.getModel() );
 
         return convertView;
     }

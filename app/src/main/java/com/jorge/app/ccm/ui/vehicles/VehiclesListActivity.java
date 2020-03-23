@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -37,7 +38,6 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
         //Connect
         this.controllerVehicles = new ControllerVehicles();
         //readVehicleForReference("1234HFT");
-
 
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_ford,
@@ -112,7 +112,6 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
         AdapterVehicle arrayAdapter = new AdapterVehicle(
                 getApplicationContext(),
-                R.id.imageView_image_item_vehicles,
                 listIntemVehicles );
         this.textView = this.findViewById(R.id.textView_vehicles);
         this.listView = this.findViewById(R.id.listView_vehicles);
@@ -169,7 +168,7 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
 
 
     public FormRegistryBrands getFormRegistryBrands(){
-        final String brans[] = {"Alfa Romero",
+        final String manufacturers[] = {"Alfa Romero",
                 "Audi",
                 "BMW",
                 "Cadillac",
@@ -212,7 +211,9 @@ public class VehiclesListActivity extends AppCompatActivity implements NoticeDia
                 "Volkswagen",
                 "Volvo" };
 
-        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), brans );
+        Resources res = getResources();
+        //String[] manufacturers = res.getStringArray(R.array.manufacturers);
+        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), manufacturers );
         return formRegistryBrands;
     }
 
