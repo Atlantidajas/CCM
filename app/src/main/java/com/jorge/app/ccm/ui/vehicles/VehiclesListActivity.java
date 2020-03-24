@@ -20,6 +20,8 @@ import com.jorge.app.ccm.controllers.ControllerVehicles;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.FormRegistryBrands;
+import com.jorge.app.ccm.ui.form.WindowsNoticeNoRegistryVehicle;
+import com.jorge.app.ccm.ui.form.WindowsNoticeYesRegistryVehicle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,11 +45,11 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_fiat,
-                "6",
+                "26",
                 "Fiat",
                 "Punto" );
 
-        readVehiclePrueba( vehiculoPrueba );
+        writeNewVehicle( vehiculoPrueba );
         readVehicles();
         //getFormRegistryBrands();//<-- Muestra el FialogFrgment Formulario de Marcas
 
@@ -143,13 +145,20 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
     }
 
-    public void readVehiclePrueba( Vehicle vehicle ){
-      controllerVehicles.writeNewVehicle( vehicle );
+    public void writeNewVehicle( Vehicle vehicle ){
+      String value = controllerVehicles.writeNewVehicle( vehicle );
+      System.out.println(value + "<---------------------------------------------------------------------------------");
+      //result( resultOperating );
+    }
+    public void result( Boolean resultOperating){
+        if( resultOperating == true){
 
+            WindowsNoticeYesRegistryVehicle windowsRegistryOK = new WindowsNoticeYesRegistryVehicle(getSupportFragmentManager());
+        }
+        if( resultOperating == false ){
+            WindowsNoticeNoRegistryVehicle windowsRegistryNo = new WindowsNoticeNoRegistryVehicle(getSupportFragmentManager());
 
-
-
-
+        }
     }
 
 

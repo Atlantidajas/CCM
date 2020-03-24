@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Window Notice No RegistryVehicle -->
+    <string name="window_notice_registry_no_vehicle_title">Notice</string>
+    <string name="window_notice_registry_no_vehicle_message">There is a vehicle with that registration</string>
+    <string name="window_notice_registry_no_vehicle_button_aceptar">Aceptar</string>
+
+    <!-- Window Notice Yes RegistryVehicle -->
+    <string name="window_notice_registry_yes_vehicle_title">Notice</string>
+    <string name="window_notice_registry_yes_vehicle_message">Registration made</string>
+    <string name="window_notice_registry_yes_vehicle_button_aceptar">Aceptar</string>
+</resources>
