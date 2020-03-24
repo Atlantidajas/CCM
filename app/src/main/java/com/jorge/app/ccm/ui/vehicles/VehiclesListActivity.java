@@ -42,14 +42,14 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
         //readVehicleForReference("1234HFT");
 
         Vehicle vehiculoPrueba = new Vehicle(
-                R.mipmap.ic_launcher_logo_brand_seat,
-                "1",
-                "Seat",
-                "Ibiza" );
+                R.mipmap.ic_launcher_logo_brand_fiat,
+                "6",
+                "Fiat",
+                "Punto" );
 
-        writeNewVehicle( vehiculoPrueba);
+        readVehiclePrueba( vehiculoPrueba );
         readVehicles();
-        getFormRegistryBrands();//<-- Muestra el FialogFrgment Formulario de Marcas
+        //getFormRegistryBrands();//<-- Muestra el FialogFrgment Formulario de Marcas
 
         /*confirmNoticeDialogFragment(R.string.title_alert_dialog,
                                     R.string.alert_message_a_license_plate_already_exists,
@@ -143,29 +143,13 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
     }
 
-    public void writeNewVehicle( Vehicle vehicle ){
+    public void readVehiclePrueba( Vehicle vehicle ){
+      controllerVehicles.writeNewVehicle( vehicle );
 
-         this.controllerVehicles.writeNewVehicle( vehicle );
 
-       /*if( resultOpeWrite == 0 ){
-            this.confirmAlertDialog( R.string.alert_title_notice,
-                    R.string.registration_yes_carried_out,
-                    R.string.alert_positive_button,
-                    false );
-        }
-        if( resultOpeWrite == 1 ){
-            this.confirmAlertDialog( R.string.alert_title_notice,
-                    R.string.registration_not_carried_out,
-                    R.string.alert_positive_button,
-                    false );
-        }
 
-        if( resultOpeWrite == 2 ){
-            this.confirmAlertDialog( R.string.alert_title_notice,
-                    R.string.error_inesperado,
-                    R.string.alert_positive_button,
-                    false );
-        }*/
+
+
     }
 
 

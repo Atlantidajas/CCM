@@ -4,6 +4,7 @@ package com.jorge.app.ccm.controllers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class ControllerVehicles extends AppCompatActivity {
 
     private DatabaseReference databaseRfVehicles;
     private DatabaseReference vehicleRf;
+    private boolean operatingResult;
 
     public ControllerVehicles() {
         databaseRfVehicles = FirebaseDatabase.getInstance().getReference("Vehicles");
@@ -48,32 +50,30 @@ public class ControllerVehicles extends AppCompatActivity {
 
     public void writeNewVehicle( final Vehicle vehicle) {
 
-        DatabaseReference vehicles = this.databaseRfVehicles.child( vehicle.getRegistrationNumber() );
-        vehicles.addValueEventListener(new ValueEventListener() {
+
+        final DatabaseReference vehiclesDB = this.databaseRfVehicles;
+
+        vehiclesDB.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String resut = String.valueOf( dataSnapshot.child("registrationNumber").getValue() );
+            public void onDataChange(DataSnapshot dataSnapshotVehicles) {
 
-                    //Compara la matricula introducida con las que existe en la base de datos.
-                    if ( resut.equals( vehicle.getRegistrationNumber() ) ){
-                       // WindowsNoticeNoRegistryVehicle winNoRegistreNumber = new WindowsNoticeNoRegistryVehicle( getSupportFragmentManager() );
-                    }
-                } else {
-
-                    databaseRfVehicles.child( vehicle.getRegistrationNumber() ).setValue(vehicle);
-                    Vehicle vehicleIn = new Vehicle(
-                            vehicle.getLogoVehicle(),
-                            vehicle.getRegistrationNumber(),
-                            vehicle.getBrand(),
-                            vehicle.getModel());
-
-                    databaseRfVehicles.child( vehicle.getRegistrationNumber() ).setValue(vehicleIn);
-
-                }
+                // Get Post object and use the values to update the UI
+                Vehicle post = dataSnapshotVehicles.getValue(Vehicle.class);
+                // [START_EXCLUDE]
+                vehicle.setRegistrationNumber( post.getRegistrationNumber() );
+                vehicle.setLogoVehicle(post.getLogoVehicle());
+                vehicle.setBrand(post.getBrand());
+                vehicle.setModel(post.getModel());
+                // [END_EXCLUDE]
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Getting Post failed, log a message
+
+                System.out.println( databaseError.getMessage() );
+
+
+                // [END_EXCLUDE]
             }
         });
     }
