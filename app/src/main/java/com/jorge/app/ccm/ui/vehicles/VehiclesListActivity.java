@@ -45,7 +45,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_fiat,
-                "26",
+                "27",
                 "Fiat",
                 "Punto" );
 
@@ -146,13 +146,11 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
     }
 
     public void writeNewVehicle( Vehicle vehicle ){
-      String value = controllerVehicles.writeNewVehicle( vehicle );
-      System.out.println(value + "<---------------------------------------------------------------------------------");
-      //result( resultOperating );
+        boolean resultOperating = controllerVehicles.writeNewVehicle( vehicle );
+        result( resultOperating );
     }
     public void result( Boolean resultOperating){
         if( resultOperating == true){
-
             WindowsNoticeYesRegistryVehicle windowsRegistryOK = new WindowsNoticeYesRegistryVehicle(getSupportFragmentManager());
         }
         if( resultOperating == false ){
