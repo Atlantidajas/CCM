@@ -49,6 +49,8 @@ public class AdapterVehicle extends BaseAdapter {
         ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
         imageView_image.setImageResource( vehicle.getLogoVehicle() );
 
+
+
         TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_vehicles );
         textView_registrationNumber.setText( vehicle.getRegistrationNumber() );
 
