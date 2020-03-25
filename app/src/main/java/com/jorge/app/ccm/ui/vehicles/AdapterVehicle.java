@@ -1,6 +1,8 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +21,10 @@ public class AdapterVehicle extends BaseAdapter {
 
     private Context context;
     private ArrayList<Vehicle> vehicles;
-    TextView textView;
-    ListView listView;
 
-
-
-    public AdapterVehicle(Context context) {
+    public AdapterVehicle(Context context, ArrayList<Vehicle> vehicles) {
         this.context = context;
         this.vehicles = vehicles;
-
     }
 
     @Override
@@ -67,27 +64,25 @@ public class AdapterVehicle extends BaseAdapter {
         return convertView;
     }
 
-    public void setArrayAdapter(DataSnapshot dataSnapshot ){
+
+    private void setArrayAdapter(DataSnapshot dataSnapshot, TextView textView, ListView listView){
 
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
-        ArrayList<Vehicle> listIntemVehicles = listIntemVehicles = new ArrayList<Vehicle>();
+        ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
 
         do{
             listIntemVehicles.add( new Vehicle( dataSnapshots.next() ) );
         }while (dataSnapshots.hasNext());
 
-        TextView textView =  this.textView.findViewById(R.id.textView_vehicles);
-        ListView listView = this.listView.findViewById(R.id.listView_vehicles);
+        AdapterVehicle arrayAdapter = new AdapterVehicle(
+                context,
+                listIntemVehicles );
 
-
-
-        if ( this.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
+        if ( arrayAdapter.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
             textView.setText( "No hay vehículos en la lista" );
         }else{
-            listView.setAdapter(this);
+            listView.setAdapter(arrayAdapter);
         }
 
     }
-
-
 }

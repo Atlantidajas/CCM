@@ -17,15 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
-import com.jorge.app.ccm.controllers.ControllerVehicles;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.FormRegistryBrands;
 import com.jorge.app.ccm.ui.form.WindowsNoticeNoRegistryVehicle;
 import com.jorge.app.ccm.ui.form.WindowsNoticeYesRegistryVehicle;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+
 
 public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.NoticeDialogListener,
         DialogFragmentSelect.DialogFragmentListener {
@@ -33,11 +31,16 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
     private Controller controllerVehicles;
     private AdapterVehicle arrayAdapterVehicle;
     private FormRegistryBrands formRegistryBrands;
+    TextView textView;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles_list);
+
+        this.textView = this.findViewById(R.id.textView_vehicles);
+        this.listView = this.findViewById(R.id.listView_vehicles);
 
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication());
 
