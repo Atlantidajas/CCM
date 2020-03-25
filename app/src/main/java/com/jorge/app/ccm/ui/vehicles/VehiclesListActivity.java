@@ -24,6 +24,9 @@ import com.jorge.app.ccm.ui.form.WindowsNoticeNoRegistryVehicle;
 import com.jorge.app.ccm.ui.form.WindowsNoticeYesRegistryVehicle;
 
 
+/**
+ * @author Jorge.HL
+ */
 
 public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.NoticeDialogListener,
         DialogFragmentSelect.DialogFragmentListener {
@@ -31,18 +34,18 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
     private Controller controllerVehicles;
     private AdapterVehicle arrayAdapterVehicle;
     private FormRegistryBrands formRegistryBrands;
-    TextView textView;
-    ListView listView;
+    private TextView textView;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles_list);
+        textView = findViewById(R.id.textView_vehicles);
+        listView = findViewById(R.id.listView_vehicles);
 
-        this.textView = this.findViewById(R.id.textView_vehicles);
-        this.listView = this.findViewById(R.id.listView_vehicles);
-
-        this.arrayAdapterVehicle = new AdapterVehicle( getApplication());
+        //Inizializao Adapter para mostrar lista de vehículos
+        this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
 
         controllerVehicles = new Controller("Vehicles");
 
@@ -53,19 +56,14 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
                 "Punto" );
         readVehicles();
 
-        //controllerVehicles.writeNewRegistry(vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba);
-
-
     }
-
 
     public void readVehicles() {
         //Lamada función buscar vehículos
-        DatabaseReference vehicles = controllerVehicles.getDatabaseReference();
-        vehicles.addValueEventListener(new ValueEventListener() {
+        DatabaseReference vehiclesDatabaseReference = controllerVehicles.getDatabaseReference();
+        vehiclesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 if (dataSnapshot.exists()) {
                     arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
                 }
@@ -73,7 +71,6 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
                     Toast.makeText(getApplicationContext(), "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

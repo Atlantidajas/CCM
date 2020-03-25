@@ -17,24 +17,32 @@ import com.jorge.app.ccm.R;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * @author Jorge.HL
+ */
+
+
 public class AdapterVehicle extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Vehicle> vehicles;
+    ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
+    private TextView textView;
+    private ListView listView;
 
-    public AdapterVehicle(Context context, ArrayList<Vehicle> vehicles) {
+    public AdapterVehicle(Context context, TextView textView, ListView listView) {
         this.context = context;
-        this.vehicles = vehicles;
+        this.textView = textView;
+        this.listView = listView;
     }
 
     @Override
     public int getCount() {
-        return vehicles.size();
+        return listIntemVehicles.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return vehicles.get( position );
+        return listIntemVehicles.get( position );
     }
 
     @Override
@@ -64,25 +72,21 @@ public class AdapterVehicle extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * @Jorge.HL
+     */
 
-    private void setArrayAdapter(DataSnapshot dataSnapshot, TextView textView, ListView listView){
+    public void setArrayAdapter(DataSnapshot dataSnapshot){
 
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
-        ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
-
         do{
             listIntemVehicles.add( new Vehicle( dataSnapshots.next() ) );
         }while (dataSnapshots.hasNext());
 
-        AdapterVehicle arrayAdapter = new AdapterVehicle(
-                context,
-                listIntemVehicles );
-
-        if ( arrayAdapter.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
+        if ( this.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
             textView.setText( "No hay vehículos en la lista" );
         }else{
-            listView.setAdapter(arrayAdapter);
+            listView.setAdapter(this);
         }
-
     }
 }
