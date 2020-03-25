@@ -27,7 +27,8 @@ import com.jorge.app.ccm.ui.form.WindowsNoticeYesRegistryVehicle;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class VehiclesListActivity extends AppCompatActivity {
+public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.NoticeDialogListener,
+        DialogFragmentSelect.DialogFragmentListener {
 
     private Controller controllerVehicles;
     private TextView textView;
@@ -39,19 +40,99 @@ public class VehiclesListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles_list);
 
-        //Connect
-        controllerVehicles = new Controller("Vehicles");
-
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_fiat,
-                "46",
+                "47",
                 "Fiat",
                 "Punto" );
 
-        controllerVehicles.chekRegistration( vehiculoPrueba.getRegistrationNumber() );
+        controllerVehicles.writeNewRegistry(vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba);
 
 
     }
 
 
+
+    public void readVehicles() {
+        //Lamada función buscar vehículos
+        DatabaseReference vehicles = controllerVehicles.getVehicle();
+        vehicles.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    AdapterVehicle adapterVehicle = new AdapterVehicle( getApplication(),  )
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
+    public void confirmNoticeDialogFragment( int title, int message, int textButtonPositive, boolean cancelable ) {
+        DialogFragment newFragment = new DialogFragmentNotice( title, message, textButtonPositive, cancelable);
+        newFragment.show(getSupportFragmentManager(), "NoticeDialogListener");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        //Al construir NoticeDialogFragment con solo botón positivo no va hacer falta
+        // este método pero es obigatorio su nombramiento por ser implementado mediante interface en esta clase.
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
+    public void writeNewVehicle( Vehicle vehicle ){
+        controllerVehicles.writeNewVehicle( vehicle );
+
+        result( controllerVehicles.isOperatingResult() );
+    }
+    public void result( Boolean resultOperating){
+        if( resultOperating == true){
+            WindowsNoticeYesRegistryVehicle windowsRegistryOK = new WindowsNoticeYesRegistryVehicle(getSupportFragmentManager());
+        }
+        if( resultOperating == false ){
+            WindowsNoticeNoRegistryVehicle windowsRegistryNo = new WindowsNoticeNoRegistryVehicle(getSupportFragmentManager());
+
+        }
+    }
+
+
+    public FormRegistryBrands getFormRegistryBrands(){
+        Resources res = getResources();
+        String[] manufactures = res.getStringArray(R.array.manufactures);
+        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), manufactures );
+        return formRegistryBrands;
+    }
+
+
+    //Onclik sobre item de FormRegistryBrands
+    @Override
+    public void onDialogItemClick(DialogFragment dialog) {
+        //System.out.println( "Item pulsado: " + this.formRegistryBrands.getItemResult() );
+        //System.out.println( "Texto pulsado: " + this.formRegistryBrands.textItem(this.formRegistryBrands.getItemResult() ) );
+
+    }
+
+    @Override
+    public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
+        //System.out.println("Pulsado siguiente >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
+
+    @Override
+    public void onDialogFragmentSelectNegativeClick(DialogFragment dialog) {
+        //System.out.println("Pulsado atras <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    }
 }
