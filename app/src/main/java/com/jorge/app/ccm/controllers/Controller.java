@@ -42,23 +42,25 @@ public class Controller {
                         String dataSnapshotChildrenValue = dataSnapshot.child(referenceCheck).getValue().toString();
 
                         if ( resutReferenceCheck.equals( dataSnapshotChildrenValue )) {
-                            System.out.println("Ya existe un registro con esa matrícula <<<< -----------------------------------------------------------------");
+                            System.out.println("Ya existe ---------------------------------");
                             return;
                         }
-                        else{
-                            //Grabado
-                            System.out.println("Grabando <<<< -----------------------------------------------------------------");
-                            databaseReference.child(referenceCheck).setValue( object );
-
-                        }
                     }
-
+                    else{
+                        //Grabado
+                        System.out.println("Datos guardados ----------------------------------");
+                        databaseReference.child(referenceCheck).setValue( object );
+                        return;
+                    }
                 }
+
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println( databaseError.toException() + "<-----------------------------------------------------------------------" );
             }
         });
+        return;
     }
 }

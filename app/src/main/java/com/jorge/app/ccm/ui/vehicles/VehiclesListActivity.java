@@ -51,7 +51,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_fiat,
-                "47",
+                "51",
                 "Fiat",
                 "Punto" );
         controllerVehicles.writeNewRegistry( vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba );
