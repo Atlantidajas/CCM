@@ -1,27 +1,33 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AdapterVehicle extends BaseAdapter {
 
     private Context context;
     private ArrayList<Vehicle> vehicles;
+    TextView textView;
+    ListView listView;
 
-    public AdapterVehicle(Context context, ArrayList<Vehicle> vehicles) {
+
+
+    public AdapterVehicle(Context context) {
         this.context = context;
         this.vehicles = vehicles;
+
     }
 
     @Override
@@ -49,8 +55,6 @@ public class AdapterVehicle extends BaseAdapter {
         ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
         imageView_image.setImageResource( vehicle.getLogoVehicle() );
 
-
-
         TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_vehicles );
         textView_registrationNumber.setText( vehicle.getRegistrationNumber() );
 
@@ -62,4 +66,28 @@ public class AdapterVehicle extends BaseAdapter {
 
         return convertView;
     }
+
+    public void setArrayAdapter(DataSnapshot dataSnapshot ){
+
+        Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
+        ArrayList<Vehicle> listIntemVehicles = listIntemVehicles = new ArrayList<Vehicle>();
+
+        do{
+            listIntemVehicles.add( new Vehicle( dataSnapshots.next() ) );
+        }while (dataSnapshots.hasNext());
+
+        TextView textView =  this.textView.findViewById(R.id.textView_vehicles);
+        ListView listView = this.listView.findViewById(R.id.listView_vehicles);
+
+
+
+        if ( this.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
+            textView.setText( "No hay vehículos en la lista" );
+        }else{
+            listView.setAdapter(this);
+        }
+
+    }
+
+
 }

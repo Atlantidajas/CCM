@@ -60,27 +60,4 @@ public class Controller {
         });
     }
 
-    public void readVehicles(   ) {
-        //Lamada función buscar vehículos
-        DatabaseReference vehicles = controllerVehicles.getVehicle();
-        vehicles.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.exists()) {
-                    setArrayAdapter(dataSnapshot);
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
 }

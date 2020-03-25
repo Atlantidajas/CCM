@@ -31,8 +31,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
         DialogFragmentSelect.DialogFragmentListener {
 
     private Controller controllerVehicles;
-    private TextView textView;
-    private ListView listView;
+    private AdapterVehicle arrayAdapterVehicle;
     private FormRegistryBrands formRegistryBrands;
 
     @Override
@@ -40,28 +39,32 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles_list);
 
+        this.arrayAdapterVehicle = new AdapterVehicle( getApplication());
+
+        controllerVehicles = new Controller("Vehicles");
+
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_fiat,
                 "47",
                 "Fiat",
                 "Punto" );
+        readVehicles();
 
-        controllerVehicles.writeNewRegistry(vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba);
+        //controllerVehicles.writeNewRegistry(vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba);
 
 
     }
 
 
-
     public void readVehicles() {
         //Lamada función buscar vehículos
-        DatabaseReference vehicles = controllerVehicles.getVehicle();
+        DatabaseReference vehicles = controllerVehicles.getDatabaseReference();
         vehicles.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    AdapterVehicle adapterVehicle = new AdapterVehicle( getApplication(),  )
+                    arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
@@ -74,8 +77,6 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
             }
         });
     }
-
-
 
     public void confirmNoticeDialogFragment( int title, int message, int textButtonPositive, boolean cancelable ) {
         DialogFragment newFragment = new DialogFragmentNotice( title, message, textButtonPositive, cancelable);
@@ -94,11 +95,6 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
     }
 
-    public void writeNewVehicle( Vehicle vehicle ){
-        controllerVehicles.writeNewVehicle( vehicle );
-
-        result( controllerVehicles.isOperatingResult() );
-    }
     public void result( Boolean resultOperating){
         if( resultOperating == true){
             WindowsNoticeYesRegistryVehicle windowsRegistryOK = new WindowsNoticeYesRegistryVehicle(getSupportFragmentManager());

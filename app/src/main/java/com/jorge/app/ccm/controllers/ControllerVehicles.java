@@ -36,8 +36,6 @@ public class ControllerVehicles extends AppCompatActivity {
 
     public void writeNewVehicle(final Vehicle vehicle) {
 
-
-
         DatabaseReference vehicles = this.databaseRfVehicles;
         vehicles.addValueEventListener(new ValueEventListener() {
             @Override
