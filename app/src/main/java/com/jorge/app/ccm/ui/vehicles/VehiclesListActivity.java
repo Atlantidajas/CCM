@@ -45,7 +45,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_fiat,
-                "27",
+                "40",
                 "Fiat",
                 "Punto" );
 
@@ -146,8 +146,9 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
     }
 
     public void writeNewVehicle( Vehicle vehicle ){
-        boolean resultOperating = controllerVehicles.writeNewVehicle( vehicle );
-        result( resultOperating );
+        controllerVehicles.writeNewVehicle( vehicle );
+
+        result( controllerVehicles.isOperatingResult() );
     }
     public void result( Boolean resultOperating){
         if( resultOperating == true){

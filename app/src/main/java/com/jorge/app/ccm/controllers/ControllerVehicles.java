@@ -15,7 +15,7 @@ public class ControllerVehicles extends AppCompatActivity {
 
     private DatabaseReference databaseRfVehicles;
     private DatabaseReference vehicleRf;
-    private boolean operatingResult = true;
+    private boolean operatingResult = false;
 
 
     public ControllerVehicles() {
@@ -34,57 +34,43 @@ public class ControllerVehicles extends AppCompatActivity {
         this.operatingResult = operatingResult;
     }
 
-    private boolean verifyRegistration(final Vehicle vehicle) {
+    public void writeNewVehicle(final Vehicle vehicle) {
 
-        DatabaseReference vehicles = this.databaseRfVehicles.child( vehicle.getRegistrationNumber() );
+
+
+        DatabaseReference vehicles = this.databaseRfVehicles;
         vehicles.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String resut = String.valueOf( dataSnapshot.child("registrationNumber").getValue() );
+                    String resut = "";
+                    resut = String.valueOf( dataSnapshot.child(vehicle.getRegistrationNumber()).getValue() );
                     //Compara la matricula introducida con las que existe en la base de datos.
-                    if ( resut.equals( vehicle.getRegistrationNumber() ) ){
-                        operatingResult = false;
+
+                    if( resut == vehicle.getRegistrationNumber() ){
+                        System.out.println("Repetido-------------------------------------------------");
+                        System.out.println("Repetido-------------------------------------------------");
+                        System.out.println("Repetido-------------------------------------------------");
                     }
+                    else{
+                        databaseRfVehicles.child(vehicle.getRegistrationNumber()).setValue(vehicle);
+                    }
+
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println( databaseError + "<----------------------------------------------------------" );
             }
         });
-        return operatingResult;
     }
 
-    public boolean writeNewVehicle( final Vehicle vehicle) {
-
-
-            DatabaseReference vehicles = this.databaseRfVehicles.child(vehicle.getRegistrationNumber());
-            vehicles.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-
-
-                        Vehicle vehicleIn = new Vehicle(
-                                vehicle.getLogoVehicle(),
-                                vehicle.getRegistrationNumber(),
-                                vehicle.getBrand(),
-                                vehicle.getModel());
-
-                        databaseRfVehicles.child(vehicle.getRegistrationNumber()).setValue(vehicleIn);
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-
-        return operatingResult;
-    }
     public DatabaseReference getVehicle() {
         return vehicleRf = this.databaseRfVehicles;
+    }
+
+    public boolean isOperatingResult() {
+        return operatingResult;
     }
 }
