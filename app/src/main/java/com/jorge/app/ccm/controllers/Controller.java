@@ -21,15 +21,20 @@ public class Controller {
         databaseReference.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String resut = String.valueOf( dataSnapshot.child(referenceCheck).getValue() );
+
                 if (dataSnapshot.exists()) {
-                    System.out.println("dataSnapshot valor" + dataSnapshot.child(referenceCheck) +  "<-----------------------------------------------------------------------" );
-                    System.out.println("Result valor" + resut +  "<-----------------------------------------------------------------------" );
-                    if( resut.equals( dataSnapshot.child(referenceCheck)) ){
-                        System.out.println("Ya existe un resultado con ese valor" + "<-----------------------------------------------------------------------" );
+                    String resutReferenceCheck = String.valueOf( dataSnapshot.child(referenceCheck).getValue() );
+                    if (dataSnapshot.child(referenceCheck).exists() ) {
+                        String dataSnapshotChildrenValue = dataSnapshot.child(referenceCheck).getValue().toString();
+                        System.out.println("dataSnapshot valor" + dataSnapshot.child(referenceCheck) +  "<------------------------------------" );
+                        System.out.println("ResultReferenceCheck valor" + resutReferenceCheck + "<-----------------------------------------------------------------------");
+
+                        if (resutReferenceCheck.equals( dataSnapshotChildrenValue )) {
+                            System.out.println("Ya existe un resultado con ese valor" + "<----------------------------------------------------");
+                        }
                     }
-                    else if ( !resut.equals( dataSnapshot.child(referenceCheck))) {
-                        System.out.println("Puede proceder al grabado de datos" + "<-----------------------------------------------------------------------" );
+                    else{
+                        System.out.println("Puede grabar" + "<------------------------------------------------------------------------------------");
                     }
                 }
             }

@@ -44,7 +44,7 @@ public class VehiclesListActivity extends AppCompatActivity {
 
         Vehicle vehiculoPrueba = new Vehicle(
                 R.mipmap.ic_launcher_logo_brand_fiat,
-                "41",
+                "46",
                 "Fiat",
                 "Punto" );
 
