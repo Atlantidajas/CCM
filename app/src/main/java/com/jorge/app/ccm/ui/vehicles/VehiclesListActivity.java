@@ -54,6 +54,9 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
                 "47",
                 "Fiat",
                 "Punto" );
+        controllerVehicles.writeNewRegistry( vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba );
+//        result(controllerVehicles.isResultOperating());
+
         readVehicles();
 
     }
