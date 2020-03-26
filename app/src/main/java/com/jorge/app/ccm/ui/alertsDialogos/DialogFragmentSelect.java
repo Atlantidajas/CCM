@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class DialogFragmentSelect extends DialogFragment {
 
-    private DialogFragmentSelect.DialogFragmentListener listener;
+    private DialogFragmentListener listener;
     private int title;
     private String items[];
     private int textButtonPositive;

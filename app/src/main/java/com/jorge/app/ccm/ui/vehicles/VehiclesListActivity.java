@@ -17,9 +17,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
+import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.FormRegistryBrands;
+import com.jorge.app.ccm.ui.form.FormRegistryModels;
 import com.jorge.app.ccm.ui.form.WindowsNoticeNoRegistryVehicle;
 import com.jorge.app.ccm.ui.form.WindowsNoticeYesRegistryVehicle;
 
@@ -58,6 +60,11 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 //        result(controllerVehicles.isResultOperating());
 
         readVehicles();
+
+        //FormRegistryModels rModel = new FormRegistryModels( getSupportFragmentManager() );
+        DialogFragmentDatePincker dp = new DialogFragmentDatePincker();
+        dp.show( getSupportFragmentManager(), "VehiclesListActivity" );
+        System.out.println( "-------------------------------------------------------------------------------------->" + dp.getYear() );
 
     }
 

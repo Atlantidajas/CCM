@@ -62,9 +62,7 @@ public class DialogFragmentNotice extends DialogFragment {
             // Instantiate the NoticeDialogListener so we can send events to the host
             listener = (NoticeDialogListener) context;
         } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(NoticeDialogListener.class.toString()
-                    + " must implement NoticeDialogListener");
+
         }
     }
 

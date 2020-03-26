@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Form Registry model -->
+    <string name="form_registry_model_title">Registry Model</string>
+    <string name="form_registry_model_placeholder">Model</string>
+    <string name="form_registry_model_button_next">Next</string>
+    <string name="form_registry_model_button_return">Return</string>
+</resources>
