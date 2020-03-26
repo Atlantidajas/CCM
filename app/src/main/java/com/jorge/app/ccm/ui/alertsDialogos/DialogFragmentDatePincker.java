@@ -1,7 +1,5 @@
 package com.jorge.app.ccm.ui.alertsDialogos;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -10,8 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-
-import com.jorge.app.ccm.R;
 
 import java.util.Calendar;
 
@@ -42,6 +38,7 @@ public class DialogFragmentDatePincker extends DialogFragment implements DatePic
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+
         Toast.makeText( getActivity() , "Fecha elegida: " + day + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
     }
 

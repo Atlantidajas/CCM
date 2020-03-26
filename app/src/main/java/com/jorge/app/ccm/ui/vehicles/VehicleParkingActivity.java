@@ -6,12 +6,12 @@ import android.os.Bundle;
 import com.jorge.app.ccm.R;
 
 
-public class ParkingVehicleActivity extends AppCompatActivity {
+public class VehicleParkingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parking_vehicle);
+        setContentView(R.layout.activity_vehicle_parking);
     }
 
 

@@ -1,7 +1,5 @@
 package com.jorge.app.ccm.ui.form;
 
-import android.text.Layout;
-
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import com.jorge.app.ccm.R;
@@ -19,7 +17,7 @@ public class FormRegistryModels extends DialogFragment{
 
     public FormRegistryModels(FragmentManager fragmentManager) {
 
-        this.resourceLayot = R.layout.form_registry_model;
+        this.resourceLayot = R.layout.form_vehicle_registry_model;
         this.textButtonPositive = R.string.form_registry_model_button_next;
         this.textButtonNegative = R.string.form_registry_model_button_return;
         this.cancelable = true;

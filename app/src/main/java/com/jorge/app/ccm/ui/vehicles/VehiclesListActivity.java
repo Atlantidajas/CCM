@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.jorge.app.ccm.MainActivity;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
@@ -127,6 +129,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
     //Onclik sobre item de FormRegistryBrands
     @Override
     public void onDialogItemClick(DialogFragment dialog) {
+
         //System.out.println( "Item pulsado: " + this.formRegistryBrands.getItemResult() );
         //System.out.println( "Texto pulsado: " + this.formRegistryBrands.textItem(this.formRegistryBrands.getItemResult() ) );
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Activity Vehicle Registry -->
+
+    <string name="textView_vehicle_registry_title">Registry new vehicle</string>
+    <string name="toggleButton_vehicle_registry_brand">Registry brand</string>
+    <string name="toggleButton_vehicle_registry_model">Registry model</string>
+    <string name="toggleButton_vehicle_resgistry_number">Registry registration number</string>
+    <string name="toggleButton_registry_vehicle_inspection_itv">Registry date ITV</string>
+    <string name="button_view_registry_vehicle_save_registry">Save</string>
+    <string name="checkBox_registry_vehicle_inspection_itv">Check ITV</string>
+
+
+
+</resources>

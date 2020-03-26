@@ -11,7 +11,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.jorge.app.ccm.ui.user.UserLoginActivity;
+import com.jorge.app.ccm.ui.vehicles.RegistryVehicles;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_fullscreen);
+        setContentView(R.layout.activity_main);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toggle();
-                Intent intent= new Intent (MainActivity.this, UserLoginActivity.class);
+                //Intent intent= new Intent (MainActivity.this, UserLoginActivity.class);
+                Intent intent= new Intent (MainActivity.this, RegistryVehicles.class);
                 startActivity(intent);
             }
         });

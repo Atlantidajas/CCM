@@ -1,8 +1,6 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +53,7 @@ public class AdapterVehicle extends BaseAdapter {
 
         Vehicle vehicle = (Vehicle) getItem(position);
 
-        convertView = LayoutInflater.from( context ).inflate(R.layout.item_list_view_vehicles, parent, false );
+        convertView = LayoutInflater.from( context ).inflate(R.layout.vehicle_item_list_view, parent, false );
 
         ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
         imageView_image.setImageResource( vehicle.getLogoVehicle() );
