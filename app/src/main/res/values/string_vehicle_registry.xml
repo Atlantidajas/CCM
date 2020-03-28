@@ -2,7 +2,7 @@
 <resources>
     <!-- Activity Vehicle Registry -->
 
-    <string name="textView_vehicle_registry_title">Registry new vehicle</string>
+    <string name="edit_text_brand_registry_vehicle">Select a brand</string>
     <string name="toggleButton_vehicle_registry_brand">Registry brand</string>
     <string name="toggleButton_vehicle_registry_model">Registry model</string>
     <string name="toggleButton_vehicle_resgistry_number">Registry registration number</string>
