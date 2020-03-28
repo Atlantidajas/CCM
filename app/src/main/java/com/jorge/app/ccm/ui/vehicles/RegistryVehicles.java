@@ -1,34 +1,65 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
+import com.jorge.app.ccm.ui.form.FormRegistryBrands;
 
-public class RegistryVehicles extends AppCompatActivity {
+public class RegistryVehicles extends AppCompatActivity implements DialogFragmentSelect.DialogFragmentListener {
+
+    private FormRegistryBrands formRegistryBrands;
+    private Button buttonBrand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry_vehicles);
+        buttonBrand = findViewById( R.id.button_brand_registry_vehicle );
 
-       /* TextView textViewTitle = findViewById(R.id.textView_vehicle_registry_title);
-        ToggleButton toggleButtonBrand = findViewById( R.id.toggleButton_vehicle_registry_brand);
-        ToggleButton toggleButtonModel = findViewById( R.id.toggleButton_vehicle_registry_model);
-        ToggleButton toggleButtonResgistryNumber = findViewById( R.id.toggleButton_vehicle_resgistry_number );
-        ToggleButton toggleButtonInspectionITV = findViewById( R.id.toggleButton_registry_vehicle_inspection_itv );
+        buttonBrand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFormRegistryBrands();
+            }
+        });
 
-        Button button_view_registry_vehicle_save_registry = findViewById( R.id.button_view_registry_vehicle_save_registry);
+    }
 
-        CheckBox checkBoxBrand = findViewById( R.id.checkBox_registry_vehicle_brand );
-        CheckBox checkBoxModel = findViewById( R.id.checkBox_registry_vehicle_model );
-        CheckBox checkBoxRegistryNumber = findViewById( R.id.checkBox_resgistry_vehicle_number);
-        CheckBox checkBoxInspectionITV = findViewById( R.id.checkBox_registry_vehicle_inspection_itv);*/
+    public FormRegistryBrands getFormRegistryBrands(){
+        Resources res = getResources();
+        String[] manufactures = res.getStringArray(R.array.manufactures);
+        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), manufactures );
+        return formRegistryBrands;
+    }
 
+    //Onclik sobre item de FormRegistryBrands
+    @Override
+    public void onDialogItemClick(DialogFragment dialog) {
+
+        //System.out.println( "Item pulsado: " + this.formRegistryBrands.getItemResult() );
+        System.out.println("************************************************************************************************");
+        System.out.println( "Texto pulsado: " + this.formRegistryBrands.textItem(this.formRegistryBrands.getItemResult() ) );
+        System.out.println("************************************************************************************************");
+
+    }
+
+    @Override
+    public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
+        //System.out.println("Pulsado siguiente >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
+
+    @Override
+    public void onDialogFragmentSelectNegativeClick(DialogFragment dialog) {
+        //System.out.println("Pulsado atras <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     }
 }
