@@ -30,16 +30,14 @@ public class DialogFragmentDatePincker extends DialogFragment implements DatePic
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         datePickerDialog = new DatePickerDialog(getContext(), this, year, month, day);
-
-
-
         return datePickerDialog;
     }
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-
-        Toast.makeText( getActivity() , "Fecha elegida: " + day + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
+       this.day = day;
+       this.month = month;
+       this.year = year;
     }
 
     public int getDay() {

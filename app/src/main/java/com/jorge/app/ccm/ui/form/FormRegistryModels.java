@@ -3,12 +3,12 @@ package com.jorge.app.ccm.ui.form;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmenForm;
+import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmenSpinner;
 
 
 public class FormRegistryModels extends DialogFragment{
 
-    private DialogFragmenForm dialogFragmenForm;
+    private DialogFragmenSpinner dialogFragmenSpinner;
     final int resourceLayot;
     private int textButtonPositive;
     private int textButtonNegative;
@@ -21,12 +21,12 @@ public class FormRegistryModels extends DialogFragment{
         this.textButtonPositive = R.string.form_registry_model_button_next;
         this.textButtonNegative = R.string.form_registry_model_button_return;
         this.cancelable = true;
-        this.dialogFragmenForm = new DialogFragmenForm(
+        this.dialogFragmenSpinner = new DialogFragmenSpinner(
                 this.resourceLayot,
                 this.textButtonPositive,
                 this.textButtonNegative,
                 this.cancelable);
-        this.dialogFragmenForm.show( fragmentManager, "RegistreVehicleActivity");
+        this.dialogFragmenSpinner.show( fragmentManager, "RegistreVehicleActivity");
 
     }
 

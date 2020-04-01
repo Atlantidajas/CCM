@@ -3,11 +3,11 @@ package com.jorge.app.ccm.ui.form;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
+import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
 
-public class FormRegistryBrands extends DialogFragment implements DialogFragmentSelect.DialogFragmentListener{
+public class SpinnerRegistryBrands extends DialogFragment implements DialogFragmentSpinner.DialogFragmentListener{
 
-    private DialogFragmentSelect dialogFragmentSelect;
+    private DialogFragmentSpinner dialogFragmentSpinner;
     private int title;
     final String items[];
     private int textButtonPositive;
@@ -15,19 +15,19 @@ public class FormRegistryBrands extends DialogFragment implements DialogFragment
     private boolean cancelable;
     private int itemResultSelect;
 
-    public FormRegistryBrands(FragmentManager fragmentManager, String items[]) {
+    public SpinnerRegistryBrands(FragmentManager fragmentManager, String items[]) {
         this.title = R.string.form_registry_brans_title;
         this.cancelable = false;
         this.items = items;
         this.textButtonPositive = R.string.form_registry_brans_button_next;
         this.textButtonNegative = R.string.form_registry_brans_button_return;
-        this.dialogFragmentSelect = new DialogFragmentSelect(this.title,
+        this.dialogFragmentSpinner = new DialogFragmentSpinner(this.title,
                 this.items,
                 this.textButtonPositive,
                 this.textButtonNegative,
                 this.cancelable);
-        this.dialogFragmentSelect.show( fragmentManager, "RegistreVehicleActivity");
-        this.itemResultSelect = this.dialogFragmentSelect.getItemResult();
+        this.dialogFragmentSpinner.show( fragmentManager, "RegistreVehicleActivity");
+        this.itemResultSelect = this.dialogFragmentSpinner.getItemResult();
 
     }
 
@@ -36,7 +36,7 @@ public class FormRegistryBrands extends DialogFragment implements DialogFragment
     }
 
     public int getItemResult() {
-        return itemResultSelect = this.dialogFragmentSelect.getItemResult();
+        return itemResultSelect = this.dialogFragmentSpinner.getItemResult();
     }
 
     public String textItem(int id){
@@ -53,13 +53,11 @@ public class FormRegistryBrands extends DialogFragment implements DialogFragment
     // Implemento para obligar a implementar cuando se cree el objeto
     @Override
     public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
-        // Pendiente de colocar lo que desea que haga al pulsar onclik
     }
 
     // Implemento para obligar a implementar cuando se cree el objeto
     @Override
     public void onDialogFragmentSelectNegativeClick(DialogFragment dialog) {
-        // Pendiente de colocar lo que desea que haga al pulsar onclik
     }
 
 }

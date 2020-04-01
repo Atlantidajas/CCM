@@ -9,4 +9,5 @@
     <string name="window_notice_registry_yes_vehicle_title">Notice</string>
     <string name="window_notice_registry_yes_vehicle_message">Registration made</string>
     <string name="window_notice_registry_yes_vehicle_button_aceptar">Aceptar</string>
+
 </resources>

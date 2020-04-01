@@ -3,12 +3,11 @@
     <!-- Activity Vehicle Registry -->
 
     <string name="edit_text_brand_registry_vehicle">Select a brand</string>
-    <string name="toggleButton_vehicle_registry_brand">Registry brand</string>
-    <string name="toggleButton_vehicle_registry_model">Registry model</string>
-    <string name="toggleButton_vehicle_resgistry_number">Registry registration number</string>
-    <string name="toggleButton_registry_vehicle_inspection_itv">Registry date ITV</string>
-    <string name="button_view_registry_vehicle_save_registry">Save</string>
-    <string name="checkBox_registry_vehicle_inspection_itv">Check ITV</string>
+    <string name="edit_text_model_registry_vehicle">Model</string>
+    <string name="edit_text_registry_number_registry_vehicle">Registry number</string>
+    <string name="edit_text_registry_date_itv_vehicle">Date ITV</string>
+    <string name="button_registry_save_vehicle">Save</string>
+
 
 
 

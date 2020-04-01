@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 
-public class DialogFragmentSelect extends DialogFragment {
+public class DialogFragmentSpinner extends DialogFragment {
 
     private DialogFragmentListener listener;
     private int title;
@@ -21,11 +21,11 @@ public class DialogFragmentSelect extends DialogFragment {
     /*
      * Constructor para dos botones en RegistryVehiclesBrandsDialogFragment tanto positivo como negativo
      */
-    public DialogFragmentSelect(int title,
-                                final String items[],
-                                int textButtonPositive,
-                                int textButtonNegative,
-                                boolean cancelable) {
+    public DialogFragmentSpinner(int title,
+                                 final String items[],
+                                 int textButtonPositive,
+                                 int textButtonNegative,
+                                 boolean cancelable) {
         this.title = title;
         this.items = items;
         this.textButtonPositive = textButtonPositive;
@@ -33,10 +33,10 @@ public class DialogFragmentSelect extends DialogFragment {
         this.cancelable = cancelable;
     }
 
-    public DialogFragmentSelect(int title,
-                                final String items[],
-                                int textButtonPositive,
-                                boolean cancelable) {
+    public DialogFragmentSpinner(int title,
+                                 final String items[],
+                                 int textButtonPositive,
+                                 boolean cancelable) {
         this.title = title;
         this.items = items;
         this.textButtonPositive = textButtonPositive;
@@ -73,16 +73,16 @@ public class DialogFragmentSelect extends DialogFragment {
                 .setCancelable( this.cancelable )
                 // El -1 es para colocar indice de la misma forma que array
                 .setSingleChoiceItems(items, -1,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                setItemResult( item);
-                                listener.onDialogItemClick(DialogFragmentSelect.this);
-                            }
-                        })
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        setItemResult( item );
+                        listener.onDialogItemClick(DialogFragmentSpinner.this);
+                    }
+                })
                 .setPositiveButton( this.textButtonPositive, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Send the positive button event back to the host activity
-                        listener.onDialogFragmentSelectPositiveClick(DialogFragmentSelect.this);
+                        listener.onDialogFragmentSelectPositiveClick(DialogFragmentSpinner.this);
                     }
                 });
                 // Si utilizo constructor sin el botón negatico no lo crea
@@ -90,7 +90,7 @@ public class DialogFragmentSelect extends DialogFragment {
                     builder.setNegativeButton( this.textButtonNegative, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // Send the negative button event back to the host activity
-                            listener.onDialogFragmentSelectNegativeClick(DialogFragmentSelect.this);
+                            listener.onDialogFragmentSelectNegativeClick(DialogFragmentSpinner.this);
                         }
                     });
         }

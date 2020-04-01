@@ -18,6 +18,7 @@ public class Controller {
 
     private DatabaseReference databaseReference;
 
+
     public Controller( String reference ) {
         databaseReference = FirebaseDatabase.getInstance().getReference( reference );
     }
@@ -63,4 +64,6 @@ public class Controller {
         });
         return;
     }
+
+
 }

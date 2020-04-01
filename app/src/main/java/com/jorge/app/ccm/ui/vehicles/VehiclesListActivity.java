@@ -2,13 +2,10 @@ package com.jorge.app.ccm.ui.vehicles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,28 +13,20 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.jorge.app.ccm.MainActivity;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSelect;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentNotice;
-import com.jorge.app.ccm.ui.form.FormRegistryBrands;
-import com.jorge.app.ccm.ui.form.FormRegistryModels;
-import com.jorge.app.ccm.ui.form.WindowsNoticeNoRegistryVehicle;
-import com.jorge.app.ccm.ui.form.WindowsNoticeYesRegistryVehicle;
-
+import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
 
 /**
  * @author Jorge.HL
  */
 
-public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.NoticeDialogListener,
-        DialogFragmentSelect.DialogFragmentListener {
+public class VehiclesListActivity extends AppCompatActivity{
 
     private Controller controllerVehicles;
     private AdapterVehicle arrayAdapterVehicle;
-    private FormRegistryBrands formRegistryBrands;
+    private SpinnerRegistryBrands spinnerRegistryBrands;
     private TextView textView;
     private ListView listView;
 
@@ -59,7 +48,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
                 "Fiat",
                 "Punto" );
         controllerVehicles.writeNewRegistry( vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba );
-//        result(controllerVehicles.isResultOperating());
+        //result(controllerVehicles.isResultOperating());
 
         readVehicles();
 
@@ -91,57 +80,20 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
     }
 
     public void confirmNoticeDialogFragment( int title, int message, int textButtonPositive, boolean cancelable ) {
-        DialogFragment newFragment = new DialogFragmentNotice( title, message, textButtonPositive, cancelable);
-        newFragment.show(getSupportFragmentManager(), "NoticeDialogListener");
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        //Al construir NoticeDialogFragment con solo botón positivo no va hacer falta
-        // este método pero es obigatorio su nombramiento por ser implementado mediante interface en esta clase.
-
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-
-    }
-
-    public void result( Boolean resultOperating){
-        if( resultOperating == true){
-            WindowsNoticeYesRegistryVehicle windowsRegistryOK = new WindowsNoticeYesRegistryVehicle(getSupportFragmentManager());
-        }
-        if( resultOperating == false ){
-            WindowsNoticeNoRegistryVehicle windowsRegistryNo = new WindowsNoticeNoRegistryVehicle(getSupportFragmentManager());
-
-        }
+       // DialogFragment newFragment = new DialogFragmentNotice( title, message, textButtonPositive, cancelable);
+        //newFragment.show(getSupportFragmentManager(), "NoticeDialogListener");
     }
 
 
-    public FormRegistryBrands getFormRegistryBrands(){
+
+
+
+    public SpinnerRegistryBrands getSpinnerRegistryBrands(){
         Resources res = getResources();
         String[] manufactures = res.getStringArray(R.array.manufactures);
-        this.formRegistryBrands = new FormRegistryBrands( getSupportFragmentManager(), manufactures );
-        return formRegistryBrands;
+        this.spinnerRegistryBrands = new SpinnerRegistryBrands( getSupportFragmentManager(), manufactures );
+        return spinnerRegistryBrands;
     }
 
 
-    //Onclik sobre item de FormRegistryBrands
-    @Override
-    public void onDialogItemClick(DialogFragment dialog) {
-
-        //System.out.println( "Item pulsado: " + this.formRegistryBrands.getItemResult() );
-        //System.out.println( "Texto pulsado: " + this.formRegistryBrands.textItem(this.formRegistryBrands.getItemResult() ) );
-
-    }
-
-    @Override
-    public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
-        //System.out.println("Pulsado siguiente >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    }
-
-    @Override
-    public void onDialogFragmentSelectNegativeClick(DialogFragment dialog) {
-        //System.out.println("Pulsado atras <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-    }
 }

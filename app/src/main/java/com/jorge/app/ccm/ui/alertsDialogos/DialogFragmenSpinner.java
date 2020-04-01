@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.jorge.app.ccm.R;
 
-public class DialogFragmenForm extends DialogFragment {
+public class DialogFragmenSpinner extends DialogFragment {
 
     private int resourceLayout;
     private int textButtonPositive;
@@ -22,7 +22,7 @@ public class DialogFragmenForm extends DialogFragment {
     /*
      * Constructor para dos botones en RegistryVehiclesBrandsDialogFragment tanto positivo como negativo
      */
-    public DialogFragmenForm(   int resourceLayout,
+    public DialogFragmenSpinner(int resourceLayout,
                                 int textButtonPositive,
                                 int textButtonNegative,
                                 boolean cancelable) {
@@ -32,10 +32,10 @@ public class DialogFragmenForm extends DialogFragment {
         this.cancelable = cancelable;
     }
 
-    public DialogFragmenForm(int resourceLayout,
-                             final String items[],
-                             int textButtonPositive,
-                             boolean cancelable) {
+    public DialogFragmenSpinner(int resourceLayout,
+                                final String items[],
+                                int textButtonPositive,
+                                boolean cancelable) {
         this.resourceLayout = resourceLayout;
         this.textButtonPositive = textButtonPositive;
         this.textButtonNegative = 0;
