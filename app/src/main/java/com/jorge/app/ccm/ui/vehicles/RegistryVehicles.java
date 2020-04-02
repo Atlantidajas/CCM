@@ -21,6 +21,8 @@ import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
 import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
+import java.text.SimpleDateFormat;
+
 public class RegistryVehicles extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
     private Controller controllerVehicles;
@@ -168,7 +170,7 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
         else{
             checkBoxConfirmDateITV.setChecked( false );
         }
-        editTextDateITV.setText( day + "/" + month + "/" + year );
+        editTextDateITV.setText( day + "-" + month + "-" + year );
     }
 
     public void showSaveRegistry(){
@@ -181,13 +183,11 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
             Resources resource = getResources();
             BrandsUtil brandsUtil = new BrandsUtil( resource );
 
-
             String registrationNumber = editTextRegistryNumber.getText().toString();
             String brand = editTextBrand.getText().toString();
             String model = editTextModel.getText().toString();
             String dateITV =  editTextDateITV.getText().toString();
             int logo = brandsUtil.getIdResource( brand );
-
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV );
             controllerVehicles.writeNewRegistry( registrationNumber, vehicle );
 
@@ -196,8 +196,7 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
         }
         else{
             Toast.makeText(getApplicationContext(), R.string.toast_message_empty_fields, Toast.LENGTH_SHORT).show();
-            Vehicle vehicle = new Vehicle( R.mipmap.ic_launcher_logo_brand_ford, "1", "Ford", "Fiesta", "0/0/0" );
-            controllerVehicles.writeNewRegistry( "1", vehicle );
+
         }
     }
 }

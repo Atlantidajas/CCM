@@ -16,12 +16,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
-import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
 
 /**
  * @author Jorge.HL
  */
-public class VehiclesListActivity extends AppCompatActivity{
+public class VehiclesListActivity extends AppCompatActivity {
 
     private Controller controllerVehicles;
     private AdapterVehicle arrayAdapterVehicle;
@@ -37,9 +36,9 @@ public class VehiclesListActivity extends AppCompatActivity{
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
+
         controllerVehicles = new Controller("Vehicles" );
         readVehicles();
-
     }
 
     @Override
@@ -79,6 +78,5 @@ public class VehiclesListActivity extends AppCompatActivity{
             }
         });
     }
-
 
 }
