@@ -53,7 +53,6 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
 
-
         // Button listeners
         findViewById(R.id.signInButton).setOnClickListener(this);
 

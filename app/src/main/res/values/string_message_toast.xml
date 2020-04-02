@@ -4,4 +4,6 @@
 
     <string name="toast_message_si_registry">Saved data</string>
     <string name="toast_message_no_registry">Data registration has been carried out</string>
+    
+    <string name="toast_message_no_data">No data to display</string>
 </resources>

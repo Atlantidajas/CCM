@@ -67,6 +67,9 @@ public class AdapterVehicle extends BaseAdapter {
         TextView textView_model = convertView.findViewById( R.id.textView_model_item_vehicles );
         textView_model.setText( vehicle.getModel() );
 
+        TextView textView_dateITV = convertView.findViewById( R.id.textView_dateITV_item_vehicles );
+        textView_dateITV.setText( vehicle.getDateITV() );
+
         return convertView;
     }
 

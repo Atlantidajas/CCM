@@ -2,9 +2,10 @@ package com.jorge.app.ccm.ui.vehicles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,18 +16,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
 import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
 
 /**
  * @author Jorge.HL
  */
-
 public class VehiclesListActivity extends AppCompatActivity{
 
     private Controller controllerVehicles;
     private AdapterVehicle arrayAdapterVehicle;
-    private SpinnerRegistryBrands spinnerRegistryBrands;
     private TextView textView;
     private ListView listView;
 
@@ -39,25 +37,28 @@ public class VehiclesListActivity extends AppCompatActivity{
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
-
-        controllerVehicles = new Controller("Vehicles");
-
-        Vehicle vehiculoPrueba = new Vehicle(
-                R.mipmap.ic_launcher_logo_brand_fiat,
-                "51",
-                "Fiat",
-                "Punto" );
-        controllerVehicles.writeNewRegistry( vehiculoPrueba.getRegistrationNumber(), vehiculoPrueba );
-        //result(controllerVehicles.isResultOperating());
-
+        controllerVehicles = new Controller("Vehicles" );
         readVehicles();
 
-        //FormRegistryModels rModel = new FormRegistryModels( getSupportFragmentManager() );
-        DialogFragmentDatePincker dp = new DialogFragmentDatePincker();
-        dp.show( getSupportFragmentManager(), "VehiclesListActivity" );
-        System.out.println( "-------------------------------------------------------------------------------------->" + dp.getYear() );
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate( R.menu.vehicles_toolbar, menu );
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == R.id.resgistreVehicle ) {//<-- Cierra sesion de usuario y el programa
+            Intent intent= new Intent ( VehiclesListActivity.this, RegistryVehicles.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
+    }
+
 
     public void readVehicles() {
         //Lamada función buscar vehículos
@@ -69,30 +70,14 @@ public class VehiclesListActivity extends AppCompatActivity{
                     arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "No se han obtenido resultado. Error en consulta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void confirmNoticeDialogFragment( int title, int message, int textButtonPositive, boolean cancelable ) {
-       // DialogFragment newFragment = new DialogFragmentNotice( title, message, textButtonPositive, cancelable);
-        //newFragment.show(getSupportFragmentManager(), "NoticeDialogListener");
-    }
-
-
-
-
-
-    public SpinnerRegistryBrands getSpinnerRegistryBrands(){
-        Resources res = getResources();
-        String[] manufactures = res.getStringArray(R.array.manufactures);
-        this.spinnerRegistryBrands = new SpinnerRegistryBrands( getSupportFragmentManager(), manufactures );
-        return spinnerRegistryBrands;
     }
 
 

@@ -1,10 +1,7 @@
 package com.jorge.app.ccm.controllers;
 
-import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,14 +9,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 public class Controller {
 
     private DatabaseReference databaseReference;
+    private FragmentManager fragmentManager;
 
-
-    public Controller( String reference ) {
+    public Controller(String reference) {
         databaseReference = FirebaseDatabase.getInstance().getReference( reference );
     }
 
@@ -43,13 +38,11 @@ public class Controller {
                         String dataSnapshotChildrenValue = dataSnapshot.child(referenceCheck).getValue().toString();
 
                         if ( resutReferenceCheck.equals( dataSnapshotChildrenValue )) {
-                            System.out.println("Ya existe ---------------------------------");
                             return;
                         }
                     }
                     else{
                         //Grabado
-                        System.out.println("Datos guardados ----------------------------------");
                         databaseReference.child(referenceCheck).setValue( object );
                         return;
                     }
