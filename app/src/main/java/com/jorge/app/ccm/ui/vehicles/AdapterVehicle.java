@@ -91,11 +91,12 @@ public class AdapterVehicle extends BaseAdapter {
 
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); //Para declarar valores en nuevos objetos date, usa el mismo formato date que usaste al crear las fechas
-            Date date1 = sdf.parse(vehicle.getDateITV()); //date1 es el 23 de febrero de 1995
-            Date date2 = sdf.parse( day + "-" + month + "-" + year); //date2 es el 31 de octubre de 2001
+            Date dateRegistry = sdf.parse(vehicle.getDateITV()); //date1 es el 23 de febrero de 1995
+            Date dateSystemCurrent = sdf.parse( day + "-" + month + "-" + year); //date2 es el 31 de octubre de 2001
+
 
             //Si la fecha del sistema es mayor que la fecha del registro fecha proxima ITV modifico el TextVies
-            if ( date1.compareTo(date2) <= 0 ){
+            if ( dateRegistry.compareTo(dateSystemCurrent) <= 0 ){
                 textView_dateITV.setTextColor( Color.RED );
                 textView_dateITV.setTypeface(null, Typeface.BOLD);
             }
