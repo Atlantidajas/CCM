@@ -1,7 +1,5 @@
 package com.jorge.app.ccm.ui.vehicles;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -88,7 +86,6 @@ public class AdapterVehicle extends BaseAdapter {
        int month = 1+ currentDate.get(Calendar.MONTH);
        int year = currentDate.get(Calendar.YEAR);
 
-
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); //Para declarar valores en nuevos objetos date, usa el mismo formato date que usaste al crear las fechas
             Date dateRegistry = sdf.parse(vehicle.getDateITV()); //date1 es el 23 de febrero de 1995
@@ -106,6 +103,16 @@ public class AdapterVehicle extends BaseAdapter {
         }
 
         textView_dateITV.setText( vehicle.getDateITV() );
+
+        ImageView imageViewDriving = convertView.findViewById( R.id.imageButton_driving_item_vehicles );
+
+
+        if( vehicle.getDriving() == "1" ){
+            imageViewDriving.setImageResource( R.mipmap.ic_launcher_driving_red );
+        }
+        if( vehicle.getDriving() == "0" ){
+            imageViewDriving.setImageResource( R.mipmap.ic_launcher_driving_grey );
+        }
 
         return convertView;
     }
@@ -144,8 +151,6 @@ public class AdapterVehicle extends BaseAdapter {
             }
         });
     }
-
-
 
 
 }

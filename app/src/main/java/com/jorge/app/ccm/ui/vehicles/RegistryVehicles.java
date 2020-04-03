@@ -21,8 +21,6 @@ import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
 import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
-import java.text.SimpleDateFormat;
-
 public class RegistryVehicles extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
     private Controller controllerVehicles;
@@ -188,7 +186,9 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
             String model = editTextModel.getText().toString();
             String dateITV =  editTextDateITV.getText().toString();
             int logo = brandsUtil.getIdResource( brand );
-            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV );
+            String driving = "0";//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
+
+            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
             controllerVehicles.writeNewRegistry( registrationNumber, vehicle );
 
             Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);

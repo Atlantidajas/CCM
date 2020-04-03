@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:gravity="center"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton_driving_item_vehicles"
             android:layout_width="40dp"
             android:layout_height="match_parent"
