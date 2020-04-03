@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_contextual_list_view_vehicles_title">Choose an option for</string>
+    <string name="menu_contextual_list_view_vehicles_title_item_editar">Edit</string>
+    <string name="menu_contextual_list_view_vehicles_title_item_delete">Delete</string>
+</resources>

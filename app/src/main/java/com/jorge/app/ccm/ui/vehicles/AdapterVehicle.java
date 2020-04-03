@@ -6,9 +6,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
-import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,8 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
-import static android.view.PointerIcon.TYPE_HELP;
-
 /**
  * @author Jorge.HL
  */
@@ -38,11 +36,13 @@ public class AdapterVehicle extends BaseAdapter {
     ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
     private TextView textView;
     private ListView listView;
+    private Vehicle vehicle;
 
     public AdapterVehicle(Context context, TextView textView, ListView listView) {
         this.context = context;
         this.textView = textView;
         this.listView = listView;
+        onclickItemList();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class AdapterVehicle extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Vehicle vehicle = (Vehicle) getItem(position);
+        this.vehicle = (Vehicle) getItem(position);
 
         convertView = LayoutInflater.from( context ).inflate(R.layout.vehicle_item_list_view, parent, false );
 
@@ -110,6 +110,10 @@ public class AdapterVehicle extends BaseAdapter {
         return convertView;
     }
 
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
     /**
      * @Jorge.HL
      */
@@ -127,5 +131,21 @@ public class AdapterVehicle extends BaseAdapter {
             listView.setAdapter(this);
         }
     }
+
+    public void onclickItemList(){
+        // Creo el listener para cuando se hace click en un item de la lista.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lst, View viewRow,
+                                    int posicion, long id) {
+                // Muestro mensaje de que ha pulsado sobre usuario.
+               System.out.println( "*************************************Pulsado inten ListView"+
+                       vehicle.getDateITV());
+            }
+        });
+    }
+
+
+
 
 }

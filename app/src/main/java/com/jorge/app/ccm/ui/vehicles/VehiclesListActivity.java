@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +42,7 @@ public class VehiclesListActivity extends AppCompatActivity {
 
         controllerVehicles = new Controller("Vehicles" );
         readVehicles();
+        registerForContextMenu( listView);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class VehiclesListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if ( id == R.id.resgistreVehicle ) {//<-- Cierra sesion de usuario y el programa
+        if ( id == R.id.resgistreVehicle ) {
             Intent intent= new Intent ( VehiclesListActivity.this, RegistryVehicles.class);
             startActivity(intent);
         }
@@ -78,5 +82,59 @@ public class VehiclesListActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo ) {
+
+        // Si se ha hecho LongClick sobre la lista.
+        if ( v.getId() == R.id.listView_vehicles ) {
+            // Obtengo la posición de la lista que se ha pulsado
+            int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+            // Inflo el menú.
+            this.getMenuInflater().inflate(R.menu.menu_contextual_list_view_vehicles, menu);
+
+            MenuItem itemMenu1 = menu.findItem( R.id.menu_contextual_list_view_vehicles_item_edit );
+            // Establezco el título que se muestra en el encabezado del menú. + número de matrúcula para avisar al usuario del cambio
+            menu.setHeaderTitle( getString( R.string.menu_contextual_list_view_vehicles_title ) + " " + arrayAdapterVehicle.getVehicle().getRegistrationNumber());
+        }
+        // Llamo al OnCreateContextMenu del padre por si quiere
+        // añadir algún elemento.
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        // Posición lista pulsado
+        int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+
+        // Información al usuario sobre menú pulsado.
+        switch (item.getItemId()) {
+
+            case R.id.menu_contextual_list_view_vehicles_item_edit:
+
+
+
+                break;
+
+            case R.id.menu_contextual_list_view_vehicles_item_delete:
+               // messageToast(getString(R.string.eliminar) + this.users.getUsers().get( position).getName());
+                //this.users.deteteUser( position );
+                //this.adapter.notifyDataSetChanged();
+
+                break;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
+    }
+
+    // Muestra una tostada.
+    private void messageToast(String mensaje) {
+        Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+
 
 }
