@@ -105,11 +105,10 @@ public class AdapterVehicle extends BaseAdapter {
         textView_dateITV.setText( vehicle.getDateITV() );
 
         ImageView imageDriving = convertView.findViewById( R.id.imageView_driving_item_vehicles );
-        imageDriving.setImageResource( R.mipmap.ic_launcher_driving_gray );
-
+        imageDriving.setBackgroundColor( Color.GRAY );
 
         if ( vehicle.getDriving() == 1 ){
-            imageDriving.setImageResource( R.mipmap.ic_launcher_driving_green );
+            imageDriving.setBackgroundColor( Color.GREEN );
         }
 
         return convertView;

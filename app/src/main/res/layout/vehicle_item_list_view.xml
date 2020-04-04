@@ -45,7 +45,8 @@
         <ImageView
             android:id="@+id/imageView_driving_item_vehicles"
             android:layout_width="40dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_stat_driving_car"/>
 
 
     </LinearLayout>
