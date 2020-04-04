@@ -42,13 +42,10 @@
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:gravity="center"/>
-
         <ImageView
-            android:id="@+id/imageButton_driving_item_vehicles"
+            android:id="@+id/imageView_driving_item_vehicles"
             android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:gravity="center"/>
-
+            android:layout_height="match_parent"/>
 
 
     </LinearLayout>

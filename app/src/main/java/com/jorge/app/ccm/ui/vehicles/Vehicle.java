@@ -9,9 +9,9 @@ public class Vehicle {
     private String brand;
     private String model;
     private String dateITV;
-    private String driving;
+    private int driving;
 
-    public Vehicle(int logoVehicle, String registrationNumber, String brand, String model, String dateITV, String driving ) {
+    public Vehicle(int logoVehicle, String registrationNumber, String brand, String model, String dateITV, int driving ) {
         this.logoVehicle = logoVehicle;
         this.registrationNumber = registrationNumber;
         this.brand = brand;
@@ -26,7 +26,7 @@ public class Vehicle {
         this.brand = String.valueOf( dataSnapshot.child("brand").getValue() );
         this.model = String.valueOf( dataSnapshot.child("model").getValue() );
         this.dateITV = String.valueOf( dataSnapshot.child("dateITV").getValue() );
-        this.driving = String.valueOf( dataSnapshot.child("driving").getValue() );
+        this.driving = Integer.parseInt( String.valueOf( dataSnapshot.child("driving").getValue() ) );
     }
 
     public void setLogoVehicle(int logoVehicle) {
@@ -49,6 +49,10 @@ public class Vehicle {
         this.dateITV = dateITV;
     }
 
+    public void setDriving(int driving) {
+        this.driving = driving;
+    }
+
     public int getLogoVehicle() {
         return logoVehicle;
     }
@@ -69,7 +73,7 @@ public class Vehicle {
         return dateITV;
     }
 
-    public String getDriving() {
+    public int getDriving() {
         return driving;
     }
 

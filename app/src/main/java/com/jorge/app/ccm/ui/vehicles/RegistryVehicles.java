@@ -185,8 +185,9 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
             String brand = editTextBrand.getText().toString();
             String model = editTextModel.getText().toString();
             String dateITV =  editTextDateITV.getText().toString();
+
             int logo = brandsUtil.getIdResource( brand );
-            String driving = "0";//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
+            int driving = 0;//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
             controllerVehicles.writeNewRegistry( registrationNumber, vehicle );
