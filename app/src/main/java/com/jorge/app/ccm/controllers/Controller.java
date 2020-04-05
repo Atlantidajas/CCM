@@ -1,7 +1,6 @@
 package com.jorge.app.ccm.controllers;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,13 +11,20 @@ import com.google.firebase.database.ValueEventListener;
 public class Controller {
 
     private DatabaseReference databaseReference;
+    private DatabaseReference childReference;
 
-    public Controller(String reference) {
-        databaseReference = FirebaseDatabase.getInstance().getReference( reference );
+
+    public Controller(String referenceChild) {
+        databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" );
+        childReference = databaseReference.child( referenceChild );
     }
 
     public DatabaseReference getDatabaseReference() {
         return databaseReference;
+    }
+
+    public DatabaseReference getChildReference() {
+        return childReference;
     }
 
     /*
@@ -31,7 +37,7 @@ public class Controller {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists()) {
+                //if (dataSnapshot.exists()) {
                     String resutReferenceCheck = String.valueOf( dataSnapshot.child(referenceCheck).getValue() );
                     if (dataSnapshot.child(referenceCheck).exists() ) {
                         String dataSnapshotChildrenValue = dataSnapshot.child(referenceCheck).getValue().toString();
@@ -42,10 +48,11 @@ public class Controller {
                     }
                     else{
                         //Grabado
-                        databaseReference.child(referenceCheck).setValue( object );
+                        childReference.child(referenceCheck).setValue( object );
                         return;
                     }
-                }
+               // }
+
 
 
             }

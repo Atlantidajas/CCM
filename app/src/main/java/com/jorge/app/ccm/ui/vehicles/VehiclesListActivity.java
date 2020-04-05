@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,15 +25,15 @@ import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowInitSesionVehicle;
 import com.jorge.app.ccm.ui.user.User;
 import com.jorge.app.ccm.ui.user.UserSesionVehicle;
-import com.jorge.app.ccm.utils.DateHoursUtil;
+
 
 /**
  * @author Jorge.HL
  */
 public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.DialogNoticeListerner{
 
-    private Controller controllerVehiclesList;
-    private Controller controllerVehicleSesion;
+    private Controller controllerVehiclesListStatus;
+    private Controller controllerVehiclesSesion;
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
@@ -77,9 +76,9 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
     public void readVehicles() {
 
-        controllerVehiclesList = new Controller("Vehicles" );
+        controllerVehiclesListStatus = new Controller("VehiclesListStatus" );
         //Lamada función buscar vehículos
-        DatabaseReference vehiclesDatabaseReference = controllerVehiclesList.getDatabaseReference();
+        DatabaseReference vehiclesDatabaseReference = controllerVehiclesListStatus.getChildReference();
         vehiclesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -181,9 +180,9 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
     public void writeSesionInitVehicle(){
 
         UserSesionVehicle userSesionVehicle = new UserSesionVehicle( arrayAdapterVehicle.getVehicle(), user );
-        controllerVehicleSesion = new Controller( "VehiclesSesions" );
-        controllerVehicleSesion.getDatabaseReference().child( userSesionVehicle.getUser().getTelephone() ).setValue( userSesionVehicle );
-
+        controllerVehiclesSesion = new Controller( "VehiclesSesions" );
+        //controllerVehiclesSesion.getDatabaseReference().child( userSesionVehicle.getUser().getTelephone() ).setValue( userSesionVehicle );
+        controllerVehiclesSesion.writeNewRegistry( userSesionVehicle.getUser().getTelephone() , userSesionVehicle );
 
     }
 }
