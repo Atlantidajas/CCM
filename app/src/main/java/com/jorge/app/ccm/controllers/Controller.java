@@ -12,7 +12,6 @@ import com.google.firebase.database.ValueEventListener;
 public class Controller {
 
     private DatabaseReference databaseReference;
-    private FragmentManager fragmentManager;
 
     public Controller(String reference) {
         databaseReference = FirebaseDatabase.getInstance().getReference( reference );

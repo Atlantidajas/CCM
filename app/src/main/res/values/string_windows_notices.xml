@@ -10,4 +10,11 @@
     <string name="window_notice_registry_yes_vehicle_message">Registration made</string>
     <string name="window_notice_registry_yes_vehicle_button_aceptar">Aceptar</string>
 
+    <!-- Window Notice Yes RegistryVehicle -->
+    <string name="windows_init_session_vehicle_title">Notice</string>
+    <string name="windows_init_session_vehicle_message">Register vehicle user</string>
+    <string name="windows_init_session_vehicle_button_aceptar">Accept</string>
+    <string name="windows_init_session_vehicle_button_cancel">Cancel</string>
+
+
 </resources>

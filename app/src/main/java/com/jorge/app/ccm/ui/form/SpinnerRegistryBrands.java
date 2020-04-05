@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
 
-public class SpinnerRegistryBrands extends DialogFragment implements DialogFragmentSpinner.DialogFragmentListener{
+public class SpinnerRegistryBrands extends DialogFragment {
 
     private DialogFragmentSpinner dialogFragmentSpinner;
     private int title;
@@ -43,21 +43,5 @@ public class SpinnerRegistryBrands extends DialogFragment implements DialogFragm
         return this.items[id];
     }
 
-
-    //---- Interface (Implementada)
-    // Implemento para obligar a implementar cuando se cree el objeto
-    @Override
-    public void onDialogItemClick(DialogFragment dialog) {
-    }
-
-    // Implemento para obligar a implementar cuando se cree el objeto
-    @Override
-    public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
-    }
-
-    // Implemento para obligar a implementar cuando se cree el objeto
-    @Override
-    public void onDialogFragmentSelectNegativeClick(DialogFragment dialog) {
-    }
 
 }

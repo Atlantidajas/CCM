@@ -2,7 +2,10 @@ package com.jorge.app.ccm.ui.vehicles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -19,16 +22,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
+import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
+import com.jorge.app.ccm.ui.form.WindowInitSesionVehicle;
+import com.jorge.app.ccm.ui.user.User;
+import com.jorge.app.ccm.ui.user.UserSesionVehicle;
+import com.jorge.app.ccm.utils.DateHoursUtil;
 
 /**
  * @author Jorge.HL
  */
-public class VehiclesListActivity extends AppCompatActivity {
+public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.DialogNoticeListerner{
 
-    private Controller controllerVehicles;
+    private Controller controllerVehiclesList;
+    private Controller controllerVehicleSesion;
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
+    private WindowInitSesionVehicle windowInitSV;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +50,11 @@ public class VehiclesListActivity extends AppCompatActivity {
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
+        this.user = new User();
 
-        controllerVehicles = new Controller("Vehicles" );
         readVehicles();
         registerForContextMenu( listView);
+        onclickItemList();
     }
 
     @Override
@@ -64,8 +76,10 @@ public class VehiclesListActivity extends AppCompatActivity {
 
 
     public void readVehicles() {
+
+        controllerVehiclesList = new Controller("Vehicles" );
         //Lamada función buscar vehículos
-        DatabaseReference vehiclesDatabaseReference = controllerVehicles.getDatabaseReference();
+        DatabaseReference vehiclesDatabaseReference = controllerVehiclesList.getDatabaseReference();
         vehiclesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -113,8 +127,6 @@ public class VehiclesListActivity extends AppCompatActivity {
 
             case R.id.menu_contextual_list_view_vehicles_item_edit:
 
-
-
                 break;
 
             case R.id.menu_contextual_list_view_vehicles_item_delete:
@@ -136,5 +148,42 @@ public class VehiclesListActivity extends AppCompatActivity {
     }
 
 
+    public void onclickItemList(){
+        // Creo el listener para cuando se hace click en un item de la lista.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lst, View viewRow,
+                                    int posicion, long id) {
+                Resources resources = getResources();
+                String message = resources.getString( R.string.windows_init_session_vehicle_message ) + " " +
+                        arrayAdapterVehicle.getVehicle().getRegistrationNumber();
 
+
+                windowInitSV = new WindowInitSesionVehicle( message );//<-- Show desde onclickItemList
+                windowInitSV.show( getSupportFragmentManager(), "WindosInitSesionVehicle" );
+
+            }
+        });
+    }
+
+    @Override
+    public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+
+        writeSesionInitVehicle();
+
+    }
+
+    @Override
+    public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+
+    }
+
+    public void writeSesionInitVehicle(){
+
+        UserSesionVehicle userSesionVehicle = new UserSesionVehicle( arrayAdapterVehicle.getVehicle(), user );
+        controllerVehicleSesion = new Controller( "VehiclesSesions" );
+        controllerVehicleSesion.getDatabaseReference().child( userSesionVehicle.getUser().getTelephone() ).setValue( userSesionVehicle );
+
+
+    }
 }

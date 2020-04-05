@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
+import com.jorge.app.ccm.ui.user.User;
+import com.jorge.app.ccm.utils.DateHoursUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +30,6 @@ import java.util.Iterator;
  * @author Jorge.HL
  */
 
-
 public class AdapterVehicle extends BaseAdapter {
 
     private Context context;
@@ -35,12 +37,14 @@ public class AdapterVehicle extends BaseAdapter {
     private TextView textView;
     private ListView listView;
     private Vehicle vehicle;
+    private User userLoging;
 
     public AdapterVehicle(Context context, TextView textView, ListView listView) {
         this.context = context;
         this.textView = textView;
         this.listView = listView;
-        onclickItemList();
+        this.userLoging = new User();
+
     }
 
     @Override
@@ -87,10 +91,10 @@ public class AdapterVehicle extends BaseAdapter {
        int year = currentDate.get(Calendar.YEAR);
 
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); //Para declarar valores en nuevos objetos date, usa el mismo formato date que usaste al crear las fechas
-            Date dateRegistry = sdf.parse(vehicle.getDateITV()); //date1 es el 23 de febrero de 1995
-            Date dateSystemCurrent = sdf.parse( day + "-" + month + "-" + year); //date2 es el 31 de octubre de 2001
-
+            DateHoursUtil dateHoursUtil = new DateHoursUtil();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date dateRegistry = sdf.parse(vehicle.getDateITV());
+            Date dateSystemCurrent = sdf.parse( day + "-" + month + "-" + year);
 
             //Si la fecha del sistema es mayor que la fecha del registro fecha proxima ITV modifico el TextVies
             if ( dateRegistry.compareTo(dateSystemCurrent) <= 0 ){
@@ -106,6 +110,7 @@ public class AdapterVehicle extends BaseAdapter {
 
         ImageView imageDriving = convertView.findViewById( R.id.imageView_driving_item_vehicles );
         imageDriving.setBackgroundColor( Color.GRAY );
+
 
         if ( vehicle.getDriving() == 1 ){
             imageDriving.setBackgroundColor( Color.GREEN );
@@ -135,19 +140,5 @@ public class AdapterVehicle extends BaseAdapter {
             listView.setAdapter(this);
         }
     }
-
-    public void onclickItemList(){
-        // Creo el listener para cuando se hace click en un item de la lista.
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> lst, View viewRow,
-                                    int posicion, long id) {
-                // Muestro mensaje de que ha pulsado sobre usuario.
-               System.out.println( "*************************************Pulsado inten ListView"+
-                       vehicle.getDateITV());
-            }
-        });
-    }
-
 
 }
