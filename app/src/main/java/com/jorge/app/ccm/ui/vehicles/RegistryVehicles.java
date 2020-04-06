@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
+import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
 import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
@@ -23,7 +24,7 @@ import com.jorge.app.ccm.utils.BrandsUtil;
 
 public class RegistryVehicles extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
-    private Controller controllerVehiclesListStatus;
+    private ControllerVehicle controllerVehicle;
     private SpinnerRegistryBrands spinnerRegistryBrands;
     private EditText editTextBrand;
     private CheckBox checkBoxConfirmBrand;
@@ -40,8 +41,6 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry_vehicles);
-
-        controllerVehiclesListStatus = new Controller("VehiclesListStatus" );
 
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
         editTextBrand.setOnClickListener( this );
@@ -190,7 +189,8 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
             int driving = 0;//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
-            controllerVehiclesListStatus.writeNewRegistry( registrationNumber, vehicle );
+            this.controllerVehicle = new ControllerVehicle();
+            controllerVehicle.newResgistryVehicle( vehicle );
 
             Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);
             startActivity(intent);

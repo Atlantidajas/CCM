@@ -6,42 +6,42 @@ import java.util.Date;
 
 public class DateHoursUtil {
 
-    private Date date;
-    private DateFormat hourFormat;
-    private DateFormat dateFormat;
-    private DateFormat hourdateFormat;
+    private final Date DATE;
+    private final DateFormat HOURT_FORMAT;
+    private final DateFormat DATE_FORMAT;
+    private final DateFormat HOUR_DATE_FORMAT;
     private String hourFormatString;
-    private String dateFormatString;
-    private String hourdateFormatString;
+    private String dateFormarString;
+    private String hourDateFormatString;
 
     public DateHoursUtil() {
-        this.date = new Date();
-        this.hourFormat = new SimpleDateFormat("HH:mm:ss");
-        this.dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        this.hourdateFormat = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+        this.DATE = new Date();
+        this.HOURT_FORMAT = new SimpleDateFormat("HH:mm:ss");
+        this.DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+        this.HOUR_DATE_FORMAT = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
     }
 
     public DateFormat getHourFormat() {
-        return hourFormat;
+        return HOURT_FORMAT;
     }
 
     public DateFormat getDateFormat() {
-        return dateFormat;
+        return DATE_FORMAT;
     }
 
     public DateFormat getHourdateFormat() {
-        return hourdateFormat;
+        return HOUR_DATE_FORMAT;
     }
 
     public String getHourFormatString() {
-        return hourFormatString = this.hourFormat.format(this.date);
+        return hourFormatString = this.HOURT_FORMAT.format(this.DATE);
     }
 
     public String getDateFormatString() {
-        return dateFormatString = this.dateFormat.format(this.date);
+        return dateFormarString = this.DATE_FORMAT.format(this.DATE);
     }
 
     public String getHourdateFormatString() {
-        return hourdateFormatString = hourdateFormat.format(date);
+        return hourDateFormatString = HOUR_DATE_FORMAT.format(DATE);
     }
 }

@@ -4,21 +4,47 @@ import com.jorge.app.ccm.ui.vehicles.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
 
-public class UserSesionVehicle extends DateHoursUtil  {
+public class UserSesionVehicle {
 
-   private final String DATE_SESION;
-   private Vehicle vehicle;
-   private User user;
+    private String sesionInitDate;
+    private String sesinoInitHours;
+    private String sesionEndDate;
+    private String sesinoEndHours;
+    private User user;
 
-    public UserSesionVehicle( Vehicle vehicle, User user) {
+    private Vehicle vehicle;
 
-        this.DATE_SESION = this.getHourdateFormatString();
+    public UserSesionVehicle( Vehicle vehicle, boolean session) {
+
+        DateHoursUtil dateHoursUtil = new DateHoursUtil();
+        this.user = new User();
         this.vehicle = vehicle;
-        this.user = user;
+        // Controlo que si el objeto es creado para registrar un inicio de session
+        if ( session ) {
+            this.sesionInitDate = dateHoursUtil.getDateFormatString();
+            this.sesinoInitHours = dateHoursUtil.getHourFormatString();
+        }
+        // Controlo que si el objeto es creado para registrar un fin de session
+        if ( session == false) {
+            this.sesionEndDate = dateHoursUtil.getDateFormatString();
+            this.sesinoEndHours = dateHoursUtil.getHourFormatString();
+        }
     }
 
-    public String getDATE_SESION() {
-        return DATE_SESION;
+    public String getSesionInitDate() {
+        return sesionInitDate;
+    }
+
+    public String getSesinoInitHours() {
+        return sesinoInitHours;
+    }
+
+    public String getSesionEndDate() {
+        return sesionEndDate;
+    }
+
+    public String getSesinoEndHours() {
+        return sesinoEndHours;
     }
 
     public Vehicle getVehicle() {

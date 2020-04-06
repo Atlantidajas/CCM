@@ -21,10 +21,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.Controller;
+import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowInitSesionVehicle;
 import com.jorge.app.ccm.ui.user.User;
 import com.jorge.app.ccm.ui.user.UserSesionVehicle;
+
+import java.util.ArrayList;
 
 
 /**
@@ -32,13 +35,13 @@ import com.jorge.app.ccm.ui.user.UserSesionVehicle;
  */
 public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.DialogNoticeListerner{
 
-    private Controller controllerVehiclesListStatus;
-    private Controller controllerVehiclesSesion;
+    private ControllerVehicle controllerVehicle;
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
     private WindowInitSesionVehicle windowInitSV;
-    private User user;
+    private ArrayList<Vehicle> vehicles;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +49,10 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
         setContentView(R.layout.activity_vehicles_list);
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_vehicles);
-
+        controllerVehicle = new ControllerVehicle();
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
-        this.user = new User();
-
+        vehicles = arrayAdapterVehicle.listIntemVehicles;
         readVehicles();
         registerForContextMenu( listView);
         onclickItemList();
@@ -76,14 +78,15 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
     public void readVehicles() {
 
-        controllerVehiclesListStatus = new Controller("VehiclesListStatus" );
         //Lamada función buscar vehículos
-        DatabaseReference vehiclesDatabaseReference = controllerVehiclesListStatus.getChildReference();
-        vehiclesDatabaseReference.addValueEventListener(new ValueEventListener() {
+
+        DatabaseReference vehiclesStatus = controllerVehicle.getChildVehiclesStatus();
+        vehiclesStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
+
                 }
                 else {
                     Toast.makeText(getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
@@ -109,6 +112,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
             MenuItem itemMenu1 = menu.findItem( R.id.menu_contextual_list_view_vehicles_item_edit );
             // Establezco el título que se muestra en el encabezado del menú. + número de matrúcula para avisar al usuario del cambio
             menu.setHeaderTitle( getString( R.string.menu_contextual_list_view_vehicles_title ) + " " + arrayAdapterVehicle.getVehicle().getRegistrationNumber());
+
         }
         // Llamo al OnCreateContextMenu del padre por si quiere
         // añadir algún elemento.
@@ -152,24 +156,28 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> lst, View viewRow,
-                                    int posicion, long id) {
+                                    int position, long id) {
+
+
                 Resources resources = getResources();
                 String message = resources.getString( R.string.windows_init_session_vehicle_message ) + " " +
-                        arrayAdapterVehicle.getVehicle().getRegistrationNumber();
+                        vehicles.get( position ).getRegistrationNumber();
 
 
                 windowInitSV = new WindowInitSesionVehicle( message );//<-- Show desde onclickItemList
-                windowInitSV.show( getSupportFragmentManager(), "WindosInitSesionVehicle" );
+                windowInitSV.show( getSupportFragmentManager(), "xxxx" );
+
 
             }
         });
+
     }
 
     @Override
     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-        writeSesionInitVehicle();
-
+        UserSesionVehicle userSesionVehicle = new UserSesionVehicle( vehicles.get( position ),true);
+        controllerVehicle.newSesionsVehicleResgistry( userSesionVehicle );
     }
 
     @Override
@@ -177,12 +185,5 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
 
     }
 
-    public void writeSesionInitVehicle(){
 
-        UserSesionVehicle userSesionVehicle = new UserSesionVehicle( arrayAdapterVehicle.getVehicle(), user );
-        controllerVehiclesSesion = new Controller( "VehiclesSesions" );
-        //controllerVehiclesSesion.getDatabaseReference().child( userSesionVehicle.getUser().getTelephone() ).setValue( userSesionVehicle );
-        controllerVehiclesSesion.writeNewRegistry( userSesionVehicle.getUser().getTelephone() , userSesionVehicle );
-
-    }
 }

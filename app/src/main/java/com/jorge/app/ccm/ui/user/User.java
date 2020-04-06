@@ -23,6 +23,25 @@ public class User {
         this.telephone = currentUser.getPhoneNumber();
     }
 
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhotoUri(Uri photoUri) {
+        this.photoUri = photoUri;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
     public String getIdUser() {
         return idUser;
@@ -32,7 +51,7 @@ public class User {
         return name;
     }
 
-    public Uri getPhotoUri() {
+    public Uri photoUri() {
         return photoUri;
     }
 
