@@ -16,6 +16,7 @@ public class WindowInitSesionVehicle extends DialogFragmentNotice {
         this.setTitle( R.string.windows_init_session_vehicle_title );
         this.setMessage( messagege );
         this.setTextButtonPositive( R.string.windows_init_session_vehicle_button_aceptar );
+        this.setTextButtonNegative( R.string.windows_init_session_vehicle_button_cancel );
         this.setCancelable( false );
     }
 

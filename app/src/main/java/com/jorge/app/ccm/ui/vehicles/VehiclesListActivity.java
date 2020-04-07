@@ -7,6 +7,7 @@ import androidx.fragment.app.DialogFragment;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,28 +21,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.Controller;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowInitSesionVehicle;
-import com.jorge.app.ccm.ui.user.User;
-import com.jorge.app.ccm.ui.user.UserSesionVehicle;
+import com.jorge.app.ccm.ui.session.SesionDriving;
+import com.jorge.app.ccm.ui.session.SesionDrivingActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 /**
  * @author Jorge.HL
  */
-public class VehiclesListActivity extends AppCompatActivity implements DialogFragmentNotice.DialogNoticeListerner{
+public class VehiclesListActivity extends AppCompatActivity implements Serializable, DialogFragmentNotice.DialogNoticeListerner{
 
+    Intent intent;
+    public static final String VEHICLE_SELECT_FOR_SESION = "com.jorge.app.ccm.vehicles.VEHICLE_SELECT_FOR_SESION";
     private ControllerVehicle controllerVehicle;
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
     private WindowInitSesionVehicle windowInitSV;
     private ArrayList<Vehicle> vehicles;
-    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
         vehicles = arrayAdapterVehicle.listIntemVehicles;
         readVehicles();
         registerForContextMenu( listView);
+
         onclickItemList();
     }
 
@@ -158,32 +161,29 @@ public class VehiclesListActivity extends AppCompatActivity implements DialogFra
             public void onItemClick(AdapterView<?> lst, View viewRow,
                                     int position, long id) {
 
-
                 Resources resources = getResources();
+                Vehicle vehicle = (Vehicle) arrayAdapterVehicle.getItem( position );
                 String message = resources.getString( R.string.windows_init_session_vehicle_message ) + " " +
-                        vehicles.get( position ).getRegistrationNumber();
+                        vehicle.getRegistrationNumber();
 
+                intent = new Intent(VehiclesListActivity.this, SesionDrivingActivity.class);
+                intent.putExtra(VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
 
                 windowInitSV = new WindowInitSesionVehicle( message );//<-- Show desde onclickItemList
-                windowInitSV.show( getSupportFragmentManager(), "xxxx" );
-
+                windowInitSV.show( getSupportFragmentManager(), "DialogFragmentNoticeSesionVehicle" );
 
             }
         });
-
     }
+
 
     @Override
     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-
-        UserSesionVehicle userSesionVehicle = new UserSesionVehicle( vehicles.get( position ),true);
-        controllerVehicle.newSesionsVehicleResgistry( userSesionVehicle );
+        startActivity(intent);
     }
 
     @Override
     public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-
+        return;
     }
-
-
 }

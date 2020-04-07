@@ -2,7 +2,9 @@ package com.jorge.app.ccm.ui.vehicles;
 
 import com.google.firebase.database.DataSnapshot;
 
-public class Vehicle {
+import java.io.Serializable;
+
+public class Vehicle implements Serializable {
 
     private int logoVehicle;
     private String registrationNumber;
