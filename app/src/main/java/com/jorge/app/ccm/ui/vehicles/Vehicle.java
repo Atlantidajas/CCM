@@ -1,7 +1,6 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import com.google.firebase.database.DataSnapshot;
-
 import java.io.Serializable;
 
 public class Vehicle implements Serializable {
@@ -25,6 +24,7 @@ public class Vehicle implements Serializable {
         this.model = model;
         this.dateITV = dateITV;
         this.driving = driving;
+
     }
 
     public Vehicle( DataSnapshot dataSnapshot ) {
@@ -35,7 +35,6 @@ public class Vehicle implements Serializable {
         this.dateITV = String.valueOf( dataSnapshot.child("dateITV").getValue() );
         this.driving = Integer.parseInt( String.valueOf( dataSnapshot.child("driving").getValue() ) );
     }
-
 
     public void setLogoVehicle(int logoVehicle) {
         this.logoVehicle = logoVehicle;
@@ -96,4 +95,6 @@ public class Vehicle implements Serializable {
                 ", driving='" + driving + '\'' +
                 '}';
     }
+
+
 }

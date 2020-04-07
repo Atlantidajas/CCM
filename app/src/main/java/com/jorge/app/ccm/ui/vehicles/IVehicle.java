@@ -1,6 +1,6 @@
 package com.jorge.app.ccm.ui.vehicles;
 
-public interface InterfaceVehicle {
+public interface IVehicle {
 
     public void setBrand(String brand);
     public void setModel(String model);

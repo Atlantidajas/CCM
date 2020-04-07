@@ -190,7 +190,7 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
             this.controllerVehicle = new ControllerVehicle();
-            controllerVehicle.newResgistryVehicle( vehicle );
+            controllerVehicle.getControllerVehicleStatus().newResgistryVehicle( vehicle );
 
             Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);
             startActivity(intent);

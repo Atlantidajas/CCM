@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.Controller;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
+import com.jorge.app.ccm.controllers.ControllerVehicleStatus;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
 import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
@@ -25,6 +27,12 @@ public class SesionDrivingActivity extends AppCompatActivity{
 
         Vehicle vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );
         SesionDriving userSesionVehicle = new SesionDriving( true , vehicleSelectForSesion);
-        controllerVehicle.newSesionsVehicleResgistry( userSesionVehicle );
+
+
+        controllerVehicle.getControllerVehiclesSesion().newSesionsVehicleResgistry( userSesionVehicle );
+
+        controllerVehicle.getControllerVehicleStatus().setDriving( vehicleSelectForSesion.getRegistrationNumber(), 1 );
+
+
     }
 }
