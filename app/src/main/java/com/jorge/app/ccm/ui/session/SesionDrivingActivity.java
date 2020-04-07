@@ -2,16 +2,11 @@ package com.jorge.app.ccm.ui.session;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.Controller;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
-import com.jorge.app.ccm.controllers.ControllerVehicleStatus;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
-import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
 import static com.jorge.app.ccm.ui.vehicles.VehiclesListActivity.VEHICLE_SELECT_FOR_SESION;
 

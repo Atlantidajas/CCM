@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.Controller;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
