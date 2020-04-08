@@ -72,7 +72,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         int id = item.getItemId();
 
         if ( id == R.id.resgistreVehicle ) {
-            Intent intent= new Intent ( VehiclesListActivity.this, RegistryVehicles.class);
+            Intent intent = new Intent ( VehiclesListActivity.this, RegistryVehicles.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
@@ -169,7 +169,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                         vehicle.getRegistrationNumber();
 
                 // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
-                if ( vehicle.getDriving() == 1 ){
+                if ( vehicle.getDriving() == 0 ){
                     windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
                     windowNoInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                         @Override
@@ -185,7 +185,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowNoInitSesionVehicle" );
                 }
                 // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
-                if ( vehicle.getDriving() == 0 ){
+                if ( vehicle.getDriving() == 1 ){
                     intent = new Intent(VehiclesListActivity.this, SesionDrivingActivity.class);
                     intent.putExtra(VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
                     windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList

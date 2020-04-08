@@ -1,5 +1,7 @@
 package com.jorge.app.ccm.controllers;
 
+import android.net.Uri;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jorge.app.ccm.ui.session.SesionDriving;
@@ -14,6 +16,11 @@ public class ControllerVehiclesSesion {
     public ControllerVehiclesSesion() {
         databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" );
         childVehicleSesions = databaseReference.child( "Sesions" );
+    }
+
+    public void setPhotoURL( String registrationNumber, Uri photoUri ){
+        String photoString = String.valueOf( photoUri );
+        childVehicleSesions.child( registrationNumber ).child( "photoUri" ).setValue( photoString );
     }
 
     public void setDate( String registrationNumber, String date ){

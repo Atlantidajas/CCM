@@ -10,6 +10,7 @@ public class User {
     private String idUser;
     private String name;
     private Uri photoUri;
+    private String photoUriString;
     private String email;
     private String telephone;
 
@@ -18,6 +19,7 @@ public class User {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         this.name = currentUser.getDisplayName();
         this.idUser = currentUser.getUid();
+        this.photoUriString = String.valueOf( currentUser.getPhotoUrl() );
         this.photoUri = currentUser.getPhotoUrl();
         this.email = currentUser.getEmail();
         this.telephone = currentUser.getPhoneNumber();
@@ -32,6 +34,11 @@ public class User {
     }
 
     public void setPhotoUri(Uri photoUri) {
+        this.photoUri = photoUri;
+    }
+
+    public void setPhotoUriString(Uri photoUri) {
+        String photoString = String.valueOf( photoUri );
         this.photoUri = photoUri;
     }
 
@@ -53,6 +60,10 @@ public class User {
 
     public Uri photoUri() {
         return photoUri;
+    }
+
+    public String getPhotoUriString() {
+        return photoUriString;
     }
 
     public String getEmail() {

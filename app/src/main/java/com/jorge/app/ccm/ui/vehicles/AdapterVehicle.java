@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
@@ -110,6 +111,8 @@ public class AdapterVehicle extends BaseAdapter {
 
         ImageView imageDriving = convertView.findViewById( R.id.imageView_driving_item_vehicles );
         imageDriving.setBackgroundColor( Color.GRAY );
+
+        Glide.with(context).load(userLoging.photoUri()).into(imageDriving);
 
 
         if ( vehicle.getDriving() == 1 ){
