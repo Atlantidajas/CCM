@@ -27,7 +27,10 @@ public class Vehicle implements Serializable {
 
     }
 
-    public Vehicle( DataSnapshot dataSnapshot ) {
+    public Vehicle() {
+    }
+
+    public Vehicle(DataSnapshot dataSnapshot ) {
         this.logoVehicle = Integer.parseInt( String.valueOf( dataSnapshot.child("logoVehicle").getValue() ) );
         this.registrationNumber =String.valueOf( dataSnapshot.child("registrationNumber").getValue() );
         this.brand = String.valueOf( dataSnapshot.child("brand").getValue() );

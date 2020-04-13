@@ -1,6 +1,5 @@
 package com.jorge.app.ccm.ui.vehicles;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -15,9 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
@@ -54,11 +51,17 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         controllerVS = new ControllerVehicle();
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
-        vehicles = arrayAdapterVehicle.listIntemVehicles;
-        readVehicles();
+        vehicles = arrayAdapterVehicle.getListIntemVehicles();
         registerForContextMenu( listView);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         onclickItemList();
+        arrayAdapterVehicle.readVehicles();
+
     }
 
     @Override
@@ -79,27 +82,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     }
 
 
-    public void readVehicles() {
 
-        //Lamada función buscar vehículos
-
-        DatabaseReference vehiclesStatus = controllerVS.getDB_RF_STATUS();
-        vehiclesStatus.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo ) {
@@ -137,8 +120,10 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
             case R.id.menu_contextual_list_view_vehicles_item_delete:
 
                 Toast.makeText( this, vehicles.get( position ).getRegistrationNumber(), Toast.LENGTH_SHORT).show(); //Correcto
-                this.vehicles.remove( position );
+
                 this.controllerVS.removeVehicle( vehicles.get( position ) );
+                this.vehicles.remove( position );
+                this.arrayAdapterVehicle.getListIntemVehicles().clear();
 
                 this.arrayAdapterVehicle.notifyDataSetChanged();
                 break;
