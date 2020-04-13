@@ -37,7 +37,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
     Intent intent;
     public static final String VEHICLE_SELECT_FOR_SESION = "com.jorge.app.ccm.vehicles.VEHICLE_SELECT_FOR_SESION";
-    private ControllerVehicle controllerVehicle;
+    private ControllerVehicle controllerVS;
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
@@ -51,7 +51,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         setContentView(R.layout.activity_vehicles_list);
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_vehicles);
-        controllerVehicle = new ControllerVehicle();
+        controllerVS = new ControllerVehicle();
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
         vehicles = arrayAdapterVehicle.listIntemVehicles;
@@ -83,14 +83,12 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
         //Lamada función buscar vehículos
 
-
-        DatabaseReference vehiclesStatus = controllerVehicle.getControllerVehicleStatus().getChildVehiclesStatus();
+        DatabaseReference vehiclesStatus = controllerVS.getDB_RF_STATUS();
         vehiclesStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
-
                 }
                 else {
                     Toast.makeText(getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
@@ -115,7 +113,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             MenuItem itemMenu1 = menu.findItem( R.id.menu_contextual_list_view_vehicles_item_edit );
             // Establezco el título que se muestra en el encabezado del menú. + número de matrúcula para avisar al usuario del cambio
-            menu.setHeaderTitle( getString( R.string.menu_contextual_list_view_vehicles_title ) + " " + arrayAdapterVehicle.getVehicle().getRegistrationNumber());
+            menu.setHeaderTitle( getString( R.string.menu_contextual_list_view_vehicles_title ) + " " +
+                    vehicles.get( position ).getRegistrationNumber());
 
         }
         // Llamo al OnCreateContextMenu del padre por si quiere
@@ -135,12 +134,13 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
             case R.id.menu_contextual_list_view_vehicles_item_edit:
 
                 break;
-
             case R.id.menu_contextual_list_view_vehicles_item_delete:
-               // messageToast(getString(R.string.eliminar) + this.users.getUsers().get( position).getName());
-                //this.users.deteteUser( position );
-                //this.adapter.notifyDataSetChanged();
 
+                Toast.makeText( this, vehicles.get( position ).getRegistrationNumber(), Toast.LENGTH_SHORT).show(); //Correcto
+                this.vehicles.remove( position );
+                this.controllerVS.removeVehicle( vehicles.get( position ) );
+
+                this.arrayAdapterVehicle.notifyDataSetChanged();
                 break;
 
             default:
@@ -148,12 +148,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         }
         return true;
     }
-
-    // Muestra una tostada.
-    private void messageToast(String mensaje) {
-        Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
-    }
-
 
     public void onclickItemList(){
         // Creo el listener para cuando se hace click en un item de la lista.

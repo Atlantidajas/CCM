@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +17,7 @@ import static com.jorge.app.ccm.ui.vehicles.VehiclesListActivity.VEHICLE_SELECT_
 
 public class SesionDrivingActivity extends AppCompatActivity{
 
-    private ControllerVehicle controllerVehicle;
+    private ControllerVehicle controllerVS;
     private ImageView imageViewLogoUser;
     private ImageView imageViewLogoBrand;
 
@@ -31,19 +30,19 @@ public class SesionDrivingActivity extends AppCompatActivity{
         Resources resource = getResources();
         BrandsUtil brandsUtil = new BrandsUtil( resource );
 
-        controllerVehicle = new ControllerVehicle();
+       // controllerVehicle = new ControllerVehicle();
 
         Vehicle vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
         SesionDriving userSesionVehicle = new SesionDriving( true , vehicleSelectForSesion);
 
         User user = new User();
 
-        controllerVehicle.getControllerVehiclesSesion().newSesionsVehicleResgistry( userSesionVehicle );
+        //controllerVehicle.getControllerVehiclesSesion().newSesionsVehicleResgistry( userSesionVehicle );
         Glide.with(this).load(user.photoUri()).into(imageViewLogoUser);
 
 
 
-        controllerVehicle.getControllerVehicleStatus().setDriving( vehicleSelectForSesion.getRegistrationNumber(), 1 );
+      //  controllerVehicle.getControllerVehicleStatus().setDriving( vehicleSelectForSesion.getRegistrationNumber(), 1 );
         imageViewLogoBrand.setImageResource( vehicleSelectForSesion.getLogoVehicle() );
 
         System.out.println( user.photoUri() );

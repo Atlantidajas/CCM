@@ -122,9 +122,6 @@ public class AdapterVehicle extends BaseAdapter {
         return convertView;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
 
     /**
      * @Jorge.HL
