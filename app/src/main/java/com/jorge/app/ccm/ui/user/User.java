@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 public class User {
 
@@ -23,6 +24,15 @@ public class User {
         this.photoUri = currentUser.getPhotoUrl();
         this.email = currentUser.getEmail();
         this.telephone = currentUser.getPhoneNumber();
+    }
+
+    public User(DataSnapshot dataSnapshotUser){
+        this.name = String.valueOf( dataSnapshotUser.child("name").getValue() );
+        this.idUser = String.valueOf( dataSnapshotUser.child( "idUser" ) );
+        this.photoUriString = String.valueOf( dataSnapshotUser.child( "photoUriString" ) );
+        this.photoUri = Uri.parse( String.valueOf( dataSnapshotUser.child( "photoUriString" ) ) );
+        this.email = String.valueOf( dataSnapshotUser.child("email").getValue() );
+        this.telephone = String.valueOf( dataSnapshotUser.child("telephone").getValue() );
     }
 
     public void setIdUser(String idUser) {

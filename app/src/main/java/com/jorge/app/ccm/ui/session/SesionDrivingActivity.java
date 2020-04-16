@@ -1,49 +1,75 @@
 package com.jorge.app.ccm.ui.session;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
-import com.jorge.app.ccm.ui.user.User;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
-import com.jorge.app.ccm.utils.BrandsUtil;
+import java.util.ArrayList;
 
 import static com.jorge.app.ccm.ui.vehicles.VehiclesListActivity.VEHICLE_SELECT_FOR_SESION;
 
 public class SesionDrivingActivity extends AppCompatActivity{
 
-    private ControllerVehicle controllerVS;
-    private ImageView imageViewLogoUser;
-    private ImageView imageViewLogoBrand;
+    private ControllerVehicle controllerVehicle;
+    private AdapterSession arrayAdapterSesion;
+    private TextView textView;
+    private ListView listView;
+    private ArrayList<SesionDriving> sesionsDrivings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sesion_driving );
-        this.imageViewLogoUser = findViewById( R.id.imageView_logo_user_sesion_driving );
-        this.imageViewLogoBrand = findViewById( R.id.imageView_logo_brand_sesion_driving );
-        Resources resource = getResources();
-        BrandsUtil brandsUtil = new BrandsUtil( resource );
-        controllerVS = new ControllerVehicle( getApplicationContext() );
+        textView = findViewById(R.id.textView_vehicles);
+        listView = findViewById(R.id.listView_sessions);
+        controllerVehicle = new ControllerVehicle( getApplicationContext() );
+        //Inizializao Adapter para mostrar lista de sesiones
+        this.arrayAdapterSesion = new AdapterSession( getApplication(), textView, listView);
+        sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
+
 
         Vehicle vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
         SesionDriving sesionDriving = new SesionDriving( true , vehicleSelectForSesion);
-        controllerVS.setSesion( sesionDriving );
-        System.out.println( sesionDriving.getDate() + "**************************************************************" );
+        controllerVehicle.setSesion( sesionDriving );
+
         //controllerVehicle.getControllerVehiclesSesion().newSesionsVehicleResgistry( userSesionVehicle );
         //Glide.with(this).load(user.photoUri()).into(imageViewLogoUser);
+        //  controllerVehicle.getControllerVehicleStatus().setDriving( vehicleSelectForSesion.getRegistrationNumber(), 1 );
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        onclickItemList();
+        arrayAdapterSesion.readSesions();
 
+    }
 
-      //  controllerVehicle.getControllerVehicleStatus().setDriving( vehicleSelectForSesion.getRegistrationNumber(), 1 );
-        imageViewLogoBrand.setImageResource( vehicleSelectForSesion.getLogoVehicle() );
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        //if ( id == R.id.xxxxxxxxx ) {
+       // }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
+    }
 
-
+    public void onclickItemList(){
+        // Creo el listener para cuando se hace click en un item de la lista.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lst, View viewRow,
+                                    int position, long id) {}
+        });
     }
 }

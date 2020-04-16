@@ -1,5 +1,6 @@
 package com.jorge.app.ccm.ui.session;
 
+import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.ui.user.User;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
@@ -33,8 +34,20 @@ public class SesionDriving {
         }
         this.user = new User();
         this.vehicle = vehicle;
+    }
+
+    public SesionDriving(DataSnapshot dataSnapshotSesion ) {
+        this.typeSesion = String.valueOf( dataSnapshotSesion.child("typeSession").getValue() );
+        this.date = String.valueOf( dataSnapshotSesion.child("date").getValue() );
+        this.hours = String.valueOf( dataSnapshotSesion.child("hours").getValue() );
+        this.user = new User( dataSnapshotSesion.child( "user" ) );
+        this.vehicle = new Vehicle( dataSnapshotSesion.child( "vehicle" ) );
+
+        //this.user.setPhotoUri(  dataSnapshot.child( "User" ).child( "photoUriString" ).getValue() ); ;
 
     }
+
+
     public String getTypeSesion() {
         return typeSesion;
     }

@@ -13,9 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;

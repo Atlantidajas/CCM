@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/item_list_vehicles">
-
+    android:id="@+id/item_list_sesions">
 
     <ImageView
-        android:id="@+id/imageView_image_item_vehicles"
+        android:id="@+id/imageView_image_item_sessions"
         android:layout_width="45dp"
         android:layout_height="45dp" />
 
@@ -18,37 +17,30 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView_registrationNumber_item_vehicles"
-            android:layout_width="64dp"
+            android:id="@+id/textView_registrationNumber_item_sessions"
+            android:layout_width="68dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView_brand_item_vehicles"
-            android:layout_width="95dp"
+            android:id="@+id/textView_session_date_item_sessions"
+            android:layout_width="85dp"
             android:layout_height="match_parent"
             android:textSize="16dp"
             android:gravity="center" />
 
         <TextView
-            android:id="@+id/textView_model_item_vehicles"
-            android:layout_width="98dp"
+            android:id="@+id/textView_session_hours_item_sessions"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:gravity="center" />
 
-        <TextView
-            android:id="@+id/textView_dateITV_item_vehicles"
-            android:layout_width="72dp"
-            android:paddingRight="4dp"
-            android:layout_height="match_parent"
-            android:gravity="center"/>
         <ImageView
-            android:id="@+id/imageView_driving_item_vehicles"
+            android:id="@+id/imageView_driving_item_sessions"
             android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_stat_driving_car"/>
-
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
+
 </LinearLayout>

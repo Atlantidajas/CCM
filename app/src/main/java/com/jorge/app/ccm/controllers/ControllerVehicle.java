@@ -12,10 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jorge.app.ccm.ui.session.SesionDriving;
-import com.jorge.app.ccm.ui.user.User;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
-import com.jorge.app.ccm.utils.DateHoursUtil;
-
 
 public class ControllerVehicle {
 
