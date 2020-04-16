@@ -123,7 +123,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 startActivity(intentForUpdate);
                 break;
 
-                break;
             case R.id.menu_contextual_list_view_vehicles_item_delete:
 
                 Toast.makeText( this, vehicles.get( position ).getRegistrationNumber(), Toast.LENGTH_SHORT).show(); //Correcto

@@ -31,4 +31,8 @@ public class ControllerVehicle {
         this.DB_RF_STATUS.child( vehicle.getRegistrationNumber() ).removeValue();
     }
 
+    public void updateVehicle( Vehicle vehicle ){
+        this.DB_RF_STATUS.child( vehicle.getRegistrationNumber() ).setValue( vehicle );
+    }
+
 }
