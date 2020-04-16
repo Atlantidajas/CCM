@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
+import com.jorge.app.ccm.ui.user.User;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -83,7 +84,7 @@ public class AdapterSession extends BaseAdapter {
         textView_hours.setText( session.getHours() );
 
         ImageView imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
-        Glide.with( context ).load(session.getUser().photoUri()).into(imageView_drivind);
+        Glide.with( context ).load( session.getUser().getPhotoUriString() ).into(imageView_drivind);
 
         return convertView;
     }

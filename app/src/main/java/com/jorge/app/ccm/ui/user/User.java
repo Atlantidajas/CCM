@@ -28,9 +28,9 @@ public class User {
 
     public User(DataSnapshot dataSnapshotUser){
         this.name = String.valueOf( dataSnapshotUser.child("name").getValue() );
-        this.idUser = String.valueOf( dataSnapshotUser.child( "idUser" ) );
-        this.photoUriString = String.valueOf( dataSnapshotUser.child( "photoUriString" ) );
-        this.photoUri = Uri.parse( String.valueOf( dataSnapshotUser.child( "photoUriString" ) ) );
+        this.idUser = String.valueOf( dataSnapshotUser.child( "idUser" ).getValue() );
+        this.photoUriString = String.valueOf( dataSnapshotUser.child( "photoUriString" ).getValue() );
+        this.photoUri = Uri.parse( String.valueOf( dataSnapshotUser.child( "photoUriString" ).getValue() ) );
         this.email = String.valueOf( dataSnapshotUser.child("email").getValue() );
         this.telephone = String.valueOf( dataSnapshotUser.child("telephone").getValue() );
     }
