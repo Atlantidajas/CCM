@@ -29,23 +29,20 @@ public class SesionDrivingActivity extends AppCompatActivity{
         this.imageViewLogoBrand = findViewById( R.id.imageView_logo_brand_sesion_driving );
         Resources resource = getResources();
         BrandsUtil brandsUtil = new BrandsUtil( resource );
-
-       // controllerVehicle = new ControllerVehicle();
+        controllerVS = new ControllerVehicle( getApplicationContext() );
 
         Vehicle vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
-        SesionDriving userSesionVehicle = new SesionDriving( true , vehicleSelectForSesion);
-
-        User user = new User();
-
+        SesionDriving sesionDriving = new SesionDriving( true , vehicleSelectForSesion);
+        controllerVS.setSesion( sesionDriving );
+        System.out.println( sesionDriving.getDate() + "**************************************************************" );
         //controllerVehicle.getControllerVehiclesSesion().newSesionsVehicleResgistry( userSesionVehicle );
-        Glide.with(this).load(user.photoUri()).into(imageViewLogoUser);
+        //Glide.with(this).load(user.photoUri()).into(imageViewLogoUser);
 
 
 
       //  controllerVehicle.getControllerVehicleStatus().setDriving( vehicleSelectForSesion.getRegistrationNumber(), 1 );
         imageViewLogoBrand.setImageResource( vehicleSelectForSesion.getLogoVehicle() );
 
-        System.out.println( user.photoUri() );
 
 
     }

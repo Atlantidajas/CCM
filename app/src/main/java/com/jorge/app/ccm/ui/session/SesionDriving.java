@@ -15,6 +15,8 @@ public class SesionDriving {
 
     public SesionDriving(boolean typeSesion, Vehicle vehicle) {
 
+        this.user = new User();
+        this.vehicle = vehicle;
         DateHoursUtil dateHoursUtil = new DateHoursUtil();
 
         // Controlo que si el objeto es creado para registrar un inicio de session

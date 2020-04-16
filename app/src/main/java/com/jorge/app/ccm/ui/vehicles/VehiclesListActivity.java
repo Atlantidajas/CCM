@@ -157,7 +157,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                         vehicle.getRegistrationNumber();
 
                 // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
-                if ( vehicle.getDriving() == 0 ){
+                if ( vehicle.getDriving() == 1 ){
                     windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
                     windowNoInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                         @Override
@@ -173,7 +173,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowNoInitSesionVehicle" );
                 }
                 // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
-                if ( vehicle.getDriving() == 1 ){
+                if ( vehicle.getDriving() == 0 ){
                     intentForSeccion = new Intent(VehiclesListActivity.this, SesionDrivingActivity.class);
                     intentForSeccion.putExtra(VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
                     windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList
