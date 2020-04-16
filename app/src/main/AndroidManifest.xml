@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.session.SesionDrivingActivity"></activity>
+        <activity android:name=".ui.vehicles.UpdateVehicle"/>
+        <activity android:name=".ui.session.SesionDrivingActivity"/>
         <activity android:name=".ui.vehicles.RegistryVehicles" />
         <activity android:name=".ui.vehicles.VehicleParkingActivity" />
         <activity android:name=".ui.vehicles.VehiclesListActivity" />
