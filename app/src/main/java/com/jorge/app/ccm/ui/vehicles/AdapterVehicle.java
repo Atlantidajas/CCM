@@ -55,7 +55,7 @@ public class AdapterVehicle extends BaseAdapter {
         this.textView = textView;
         this.listView = listView;
         this.userLoging = new User();
-        controllerVS = new ControllerVehicle();
+        controllerVS = new ControllerVehicle( context );
         this.readVehicles();
         dbRF = controllerVS.getDB_RF_STATUS();
         dbRF.addValueEventListener( valueEventListener );

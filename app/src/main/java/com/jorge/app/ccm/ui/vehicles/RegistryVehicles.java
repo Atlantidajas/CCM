@@ -40,7 +40,7 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry_vehicles);
-        controllerVS = new ControllerVehicle();
+        controllerVS = new ControllerVehicle( getApplicationContext() );
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
         editTextBrand.setOnClickListener( this );
         checkBoxConfirmBrand = findViewById( R.id.checkBox_brand_registry_vehicle );

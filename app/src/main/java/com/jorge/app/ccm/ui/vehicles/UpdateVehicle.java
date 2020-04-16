@@ -15,9 +15,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
@@ -49,8 +46,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_registry_vehicles);
 
-
-        controllerVS = new ControllerVehicle();
+        controllerVS = new ControllerVehicle( getApplicationContext() );
         vehicleForUpdate = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE );//<- El Inten
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
         editTextBrand.setText( vehicleForUpdate.getBrand() );
@@ -81,6 +77,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
     @Override
     public void onResume(){
         super.onResume();
+        controllerVS.getDB_RF_STATUS().removeEventListener( controllerVS.getChildEventListener() );
     }
 
     //Onclik sobre item de FormRegistryBrands

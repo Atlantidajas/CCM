@@ -50,20 +50,25 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         setContentView(R.layout.activity_vehicles_list);
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_vehicles);
-        controllerVS = new ControllerVehicle();
+        controllerVS = new ControllerVehicle(  getApplicationContext() );
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
-        registerForContextMenu( listView);
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        registerForContextMenu( listView);
         onclickItemList();
         arrayAdapterVehicle.readVehicles();
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        controllerVS.getDB_RF_STATUS().removeEventListener( controllerVS.getChildEventListener() );
     }
 
     @Override
@@ -124,8 +129,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 break;
 
             case R.id.menu_contextual_list_view_vehicles_item_delete:
-
-                Toast.makeText( this, vehicles.get( position ).getRegistrationNumber(), Toast.LENGTH_SHORT).show(); //Correcto
 
                 this.controllerVS.removeVehicle( vehicles.get( position ) );
                 this.vehicles.remove( position );
