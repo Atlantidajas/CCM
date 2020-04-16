@@ -34,8 +34,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
     public Intent intentForSeccion;
     public Intent intentForUpdate;
-    public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     public static final String VEHICLE_SELECT_FOR_SESION = "com.jorge.app.ccm.vehicles.VEHICLE_SELECT_FOR_SESION";
+    public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerVehicle controllerVS;
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
