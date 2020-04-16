@@ -32,7 +32,9 @@ import java.util.ArrayList;
  */
 public class VehiclesListActivity extends AppCompatActivity implements Serializable{
 
-    Intent intent;
+    public Intent intentForSeccion;
+    public Intent intentForUpdate;
+    public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     public static final String VEHICLE_SELECT_FOR_SESION = "com.jorge.app.ccm.vehicles.VEHICLE_SELECT_FOR_SESION";
     private ControllerVehicle controllerVS;
     private AdapterVehicle arrayAdapterVehicle;
@@ -116,6 +118,11 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             case R.id.menu_contextual_list_view_vehicles_item_edit:
 
+                intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicle.class);
+                intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) arrayAdapterVehicle.getItem( position ) );
+                startActivity(intentForUpdate);
+                break;
+
                 break;
             case R.id.menu_contextual_list_view_vehicles_item_delete:
 
@@ -165,13 +172,13 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 }
                 // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
                 if ( vehicle.getDriving() == 1 ){
-                    intent = new Intent(VehiclesListActivity.this, SesionDrivingActivity.class);
-                    intent.putExtra(VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
+                    intentForSeccion = new Intent(VehiclesListActivity.this, SesionDrivingActivity.class);
+                    intentForSeccion.putExtra(VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
                     windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList
                     windowYesInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                         @Override
                         public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                            startActivity(intent);
+                            startActivity(intentForSeccion);
                         }
 
                         @Override
