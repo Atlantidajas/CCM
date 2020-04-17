@@ -31,9 +31,6 @@ import java.util.Iterator;
 public class AdapterSession extends BaseAdapter {
 
     private Context context;
-    private ControllerVehicle controllerVehicle;
-    private ValueEventListener valueEventListener;
-    private DatabaseReference dbRF;
     private ArrayList<SesionDriving> listIntemSessions = new ArrayList<SesionDriving>();
     private TextView textView;
     private ListView listView;
@@ -43,7 +40,6 @@ public class AdapterSession extends BaseAdapter {
         this.context = context;
         this.textView = textView;
         this.listView = listView;
-        controllerVehicle = new ControllerVehicle( context );
     }
 
     @Override
@@ -84,28 +80,6 @@ public class AdapterSession extends BaseAdapter {
         Glide.with( context ).load( session.getUser().getPhotoUriString() ).into(imageView_drivind);
 
         return convertView;
-    }
-
-
-    public ValueEventListener getValueEventListener() {
-
-        //Lamada función buscar vehículos
-        this.valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshotSesion) {
-                if (dataSnapshotSesion.exists()) {
-                    setArrayAdapter(dataSnapshotSesion);
-                }
-                else {
-                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-        return valueEventListener;
     }
 
     /**

@@ -1,9 +1,9 @@
 package com.jorge.app.ccm.ui.session;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
@@ -21,6 +25,8 @@ import static com.jorge.app.ccm.ui.vehicles.VehiclesListActivity.VEHICLE_SELECT_
 public class SesionDrivingActivity extends AppCompatActivity{
 
     private ControllerVehicle controllerVehicle;
+    private DatabaseReference dbRFSesions;
+    private ValueEventListener valueEventListener;
     private AdapterSession arrayAdapterSesion;
     private Vehicle vehicleSelectForSesion;
     private TextView textView;
@@ -34,10 +40,28 @@ public class SesionDrivingActivity extends AppCompatActivity{
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
         controllerVehicle = new ControllerVehicle( getApplicationContext() );
+        dbRFSesions = controllerVehicle.getDB_RF_SESIONS();
+        valueEventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshotSesion) {
+                        if (dataSnapshotSesion.exists()) {
+                            arrayAdapterSesion.setArrayAdapter(dataSnapshotSesion);
+                        }
+                        else {
+                            Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                };
+
         //Inizializao Adapter para mostrar lista de sesiones
         this.arrayAdapterSesion = new AdapterSession( getApplication(), textView, listView);
         sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
         vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
+        dbRFSesions.addValueEventListener( valueEventListener );
 
     }
 
@@ -45,14 +69,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
     public void onStart() {
         super.onStart();
         onclickItemList();
-        controllerVehicle.getDB_RF_SESIONS().addValueEventListener( arrayAdapterSesion.getValueEventListener() );
         checkSesion();
-
-    }
-    @Override
-    public void onResume(){
-        super.onResume();
-
     }
 
     @Override
@@ -101,4 +118,9 @@ public class SesionDrivingActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        dbRFSesions.removeEventListener( valueEventListener );
+    }
 }

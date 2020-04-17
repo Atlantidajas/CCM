@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -15,6 +16,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
@@ -27,6 +32,8 @@ import static com.jorge.app.ccm.ui.vehicles.VehiclesListActivity.VEHICLE_REGISTR
 public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
     private ControllerVehicle controllerVS;
+    private DatabaseReference dbRFStatus;
+    private ChildEventListener childEventListener;
     private Vehicle vehicleForUpdate;
     private SpinnerRegistryBrands spinnerRegistryBrands;
     private EditText editTextBrand;
@@ -47,6 +54,34 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
         setContentView( R.layout.activity_registry_vehicles);
 
         controllerVS = new ControllerVehicle( getApplicationContext() );
+        dbRFStatus = controllerVS.getDB_RF_STATUS();
+        childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText( getApplicationContext(), "Modificado", Toast.LENGTH_SHORT ).show();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Toast.makeText( getApplicationContext(), "Eliminado", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText( getApplicationContext(), "Movido", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        };
+
         vehicleForUpdate = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE );//<- El Inten
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
         editTextBrand.setText( vehicleForUpdate.getBrand() );
@@ -71,13 +106,12 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
 
         buttonSave = findViewById( R.id.button_registry_save_vehicle );
         buttonSave.setOnClickListener( this );
-
+        dbRFStatus.addChildEventListener( childEventListener );
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-        controllerVS.getDB_RF_STATUS().removeEventListener( controllerVS.getChildEventListener() );
+    public void onStart() {
+        super.onStart();
     }
 
     //Onclik sobre item de FormRegistryBrands
@@ -204,7 +238,6 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
             int driving = 0;//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
-
             // Eventos en controlador
             controllerVS.updateVehicle( vehicle );
 
@@ -214,6 +247,12 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
         else{
             Toast.makeText(getApplicationContext(), R.string.toast_message_empty_fields, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        dbRFStatus.removeEventListener( childEventListener );
     }
 
 }

@@ -13,6 +13,4 @@ public class VehicleParkingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_parking);
     }
-
-
 }

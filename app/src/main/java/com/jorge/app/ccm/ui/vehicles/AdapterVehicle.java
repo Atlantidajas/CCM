@@ -18,12 +18,7 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerVehicle;
-import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.user.User;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
@@ -41,9 +36,6 @@ import java.util.Iterator;
 public class AdapterVehicle extends BaseAdapter {
 
     private Context context;
-    private ControllerVehicle controllerVS;
-    private ValueEventListener valueEventListener;
-    private DatabaseReference dbRF;
     private ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
     private TextView textView;
     private ListView listView;
@@ -55,19 +47,6 @@ public class AdapterVehicle extends BaseAdapter {
         this.textView = textView;
         this.listView = listView;
         this.userLoging = new User();
-        controllerVS = new ControllerVehicle( context );
-        this.readVehicles();
-        dbRF = controllerVS.getDB_RF_STATUS();
-        dbRF.addValueEventListener( valueEventListener );
-
-    }
-
-    public ControllerVehicle getControllerVS() {
-        return controllerVS;
-    }
-
-    public DatabaseReference getDbRF() {
-        return dbRF;
     }
 
     @Override
@@ -145,26 +124,6 @@ public class AdapterVehicle extends BaseAdapter {
     }
 
 
-    public void readVehicles() {
-
-        //Lamada función buscar vehículos
-        this.valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    setArrayAdapter(dataSnapshot);
-                }
-                else {
-                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
-
     /**
      * @Jorge.HL
      */
@@ -181,10 +140,6 @@ public class AdapterVehicle extends BaseAdapter {
         }else{
             listView.setAdapter(this);
         }
-    }
-
-    public ValueEventListener getValueEventListener() {
-        return valueEventListener;
     }
 
     public ArrayList<Vehicle> getListIntemVehicles() {

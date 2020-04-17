@@ -20,14 +20,12 @@ public class ControllerVehicle {
     private final DatabaseReference DB_RF;
     private final DatabaseReference DB_RF_STATUS;
     private final DatabaseReference DB_RF_SESIONS;
-    private ChildEventListener childEventListener;
 
     public ControllerVehicle( final Context context ) {
         this.context = context;
         DB_RF = FirebaseDatabase.getInstance().getReference( "VehiclesDB" );
         DB_RF_STATUS = DB_RF.child( "Status" );
         DB_RF_SESIONS = DB_RF.child( "Sesions" );
-        DB_RF_STATUS.addChildEventListener( getChildEventListener() );
     }
 
     public DatabaseReference getDB_RF() {
@@ -58,33 +56,5 @@ public class ControllerVehicle {
         this.DB_RF_SESIONS.child( sesionDriving.getVehicle().getRegistrationNumber() ).setValue( sesionDriving );
     }
 
-    public ChildEventListener getChildEventListener() {
-        childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( context, "Modificado", Toast.LENGTH_SHORT ).show();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText( context, "Eliminado", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( context, "Movido", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-    };
-        return childEventListener;
-    }
 }

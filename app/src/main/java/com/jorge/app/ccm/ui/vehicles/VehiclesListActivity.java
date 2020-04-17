@@ -1,5 +1,6 @@
 package com.jorge.app.ccm.ui.vehicles;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -13,7 +14,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
@@ -35,12 +43,17 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public static final String VEHICLE_SELECT_FOR_SESION = "com.jorge.app.ccm.vehicles.VEHICLE_SELECT_FOR_SESION";
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerVehicle controllerVS;
+    private DatabaseReference dbRfVehicleStatus;
+    private ValueEventListener valueEventListener;
+    private ChildEventListener childEventListener;
+
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
     private WindowYesInitSesionVehicle windowYesInitSV;
     private WindowNoInitSesionVehicle windowNoInitSV;
     private ArrayList<Vehicle> vehicles;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +62,61 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_vehicles);
         controllerVS = new ControllerVehicle(  getApplicationContext() );
+        dbRfVehicleStatus = controllerVS.getDB_RF_STATUS();
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
+                }
+                else {
+                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText( getApplicationContext(), "Modificado", Toast.LENGTH_SHORT ).show();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Toast.makeText( getApplicationContext(), "Eliminado", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText( getApplicationContext(), "Movido", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        };
+
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
+        dbRfVehicleStatus.addValueEventListener( valueEventListener );
+        dbRfVehicleStatus.addChildEventListener( childEventListener );
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        registerForContextMenu( listView);
+        registerForContextMenu( listView );
         onclickItemList();
-        //arrayAdapterVehicle.readVehicles();
-
     }
 
     @Override
@@ -79,9 +135,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         }
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
-
-
-
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo ) {
@@ -173,6 +226,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                         @Override
                         public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
                             startActivity(intentForSeccion);
+                            arrayAdapterVehicle.getListIntemVehicles().clear();
+                            arrayAdapterVehicle.notifyDataSetChanged();
                         }
 
                         @Override
@@ -189,7 +244,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     @Override
     public void onDestroy(){
         super.onDestroy();
-        controllerVS.getDB_RF_STATUS().removeEventListener( controllerVS.getChildEventListener() );
+        dbRfVehicleStatus.removeEventListener( valueEventListener);
+        dbRfVehicleStatus.removeEventListener( childEventListener );
     }
 
 }
