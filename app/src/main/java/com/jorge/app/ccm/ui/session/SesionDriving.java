@@ -8,16 +8,15 @@ import com.jorge.app.ccm.utils.DateHoursUtil;
 
 public class SesionDriving {
 
-    private User user;
     private String date;
     private String hours;
     private String typeSesion;
+    private User user;
     private Vehicle vehicle;
 
     public SesionDriving(boolean typeSesion, Vehicle vehicle) {
-
-        this.user = new User();
         this.vehicle = vehicle;
+        this.user = new User();
         DateHoursUtil dateHoursUtil = new DateHoursUtil();
 
         // Controlo que si el objeto es creado para registrar un inicio de session
@@ -25,28 +24,27 @@ public class SesionDriving {
             this.typeSesion = "Start";
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
+            vehicle.setDriving( 1 );//<-- Paso a ocupado vehículo
         }
         // Controlo que si el objeto es creado para registrar un fin de session
         if ( typeSesion == false) {
             this.typeSesion = "End";
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
+            vehicle.setDriving( 0 );//<-- Paso a libre vehículo
         }
         this.user = new User();
         this.vehicle = vehicle;
     }
 
-    public SesionDriving(DataSnapshot dataSnapshotSesion ) {
+    public SesionDriving( DataSnapshot dataSnapshotSesion ) {
+
         this.typeSesion = String.valueOf( dataSnapshotSesion.child("typeSession").getValue() );
         this.date = String.valueOf( dataSnapshotSesion.child("date").getValue() );
         this.hours = String.valueOf( dataSnapshotSesion.child("hours").getValue() );
         this.user = new User( dataSnapshotSesion.child( "user" ) );
         this.vehicle = new Vehicle( dataSnapshotSesion.child( "vehicle" ) );
-
-        //this.user.setPhotoUri(  dataSnapshot.child( "User" ).child( "photoUriString" ).getValue() ); ;
-
     }
-
 
     public String getTypeSesion() {
         return typeSesion;

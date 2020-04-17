@@ -44,9 +44,6 @@ public class AdapterSession extends BaseAdapter {
         this.textView = textView;
         this.listView = listView;
         controllerVehicle = new ControllerVehicle( context );
-        this.readSesions();
-        dbRF = controllerVehicle.getDB_RF_SESIONS();
-        dbRF.addValueEventListener( valueEventListener );
     }
 
     @Override
@@ -90,7 +87,7 @@ public class AdapterSession extends BaseAdapter {
     }
 
 
-    public void readSesions() {
+    public ValueEventListener getValueEventListener() {
 
         //Lamada función buscar vehículos
         this.valueEventListener = new ValueEventListener() {
@@ -108,6 +105,7 @@ public class AdapterSession extends BaseAdapter {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
+        return valueEventListener;
     }
 
     /**
@@ -128,9 +126,6 @@ public class AdapterSession extends BaseAdapter {
         }
     }
 
-    public ValueEventListener getValueEventListener() {
-        return valueEventListener;
-    }
 
     public ArrayList<SesionDriving> getListIntemSesions() {
         return listIntemSessions;

@@ -59,14 +59,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         super.onStart();
         registerForContextMenu( listView);
         onclickItemList();
-        arrayAdapterVehicle.readVehicles();
+        //arrayAdapterVehicle.readVehicles();
 
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        controllerVS.getDB_RF_STATUS().removeEventListener( controllerVS.getChildEventListener() );
     }
 
     @Override
@@ -190,6 +184,12 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        controllerVS.getDB_RF_STATUS().removeEventListener( controllerVS.getChildEventListener() );
     }
 
 }

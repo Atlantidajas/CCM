@@ -22,6 +22,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
 
     private ControllerVehicle controllerVehicle;
     private AdapterSession arrayAdapterSesion;
+    private Vehicle vehicleSelectForSesion;
     private TextView textView;
     private ListView listView;
     private ArrayList<SesionDriving> sesionsDrivings;
@@ -36,22 +37,21 @@ public class SesionDrivingActivity extends AppCompatActivity{
         //Inizializao Adapter para mostrar lista de sesiones
         this.arrayAdapterSesion = new AdapterSession( getApplication(), textView, listView);
         sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
+        vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
 
-
-        Vehicle vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
-        SesionDriving sesionDriving = new SesionDriving( true , vehicleSelectForSesion);
-        controllerVehicle.setSesion( sesionDriving );
-
-        //controllerVehicle.getControllerVehiclesSesion().newSesionsVehicleResgistry( userSesionVehicle );
-        //Glide.with(this).load(user.photoUri()).into(imageViewLogoUser);
-        //  controllerVehicle.getControllerVehicleStatus().setDriving( vehicleSelectForSesion.getRegistrationNumber(), 1 );
     }
 
     @Override
     public void onStart() {
         super.onStart();
         onclickItemList();
-        arrayAdapterSesion.readSesions();
+        controllerVehicle.getDB_RF_SESIONS().addValueEventListener( arrayAdapterSesion.getValueEventListener() );
+        checkSesion();
+
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
 
     }
 
@@ -72,4 +72,33 @@ public class SesionDrivingActivity extends AppCompatActivity{
                                     int position, long id) {}
         });
     }
+
+    public void checkSesion(){
+
+        SesionDriving sesion = new SesionDriving( true , vehicleSelectForSesion);//<-- Inicio session (Start)
+
+        //Si no hay registro de sesión (No existe) no puede estar ocupado
+        if ( sesionsDrivings.size() == 0 ){
+            //Guardo sesion en db
+            controllerVehicle.setSesion( sesion );
+            controllerVehicle.setVehicle( sesion.getVehicle() );//<-- Lo machaco para pasar vehículo a ocupado en Status ->Driving
+        }
+        // Controlo que este vehiculo no esté en uso actualmente
+        else {
+            for( int i = 0; i < sesionsDrivings.size(); i++ ) {
+                //Si existe registro de sesión del vehículo con el que se pretende iniciar la misma
+                if (sesionsDrivings.get( i ).getVehicle().getRegistrationNumber().equals( vehicleSelectForSesion.getRegistrationNumber() )) {
+                    System.out.println( sesionsDrivings.get( i ).getVehicle().getRegistrationNumber() + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
+                    if (sesionsDrivings.get( i ).getVehicle().getDriving() == 1) {
+                        System.out.println( "Alguién está utilizando este vehículo" );
+                    } else {
+                        //Guardo sesion en db
+                        controllerVehicle.setSesion( sesion );
+                        controllerVehicle.setVehicle( sesion.getVehicle() );//<-- Lo machaco para pasar vehículo a ocupado en Status ->Driving
+                    }
+                }
+            }
+        }
+    }
+
 }

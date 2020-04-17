@@ -163,8 +163,6 @@ public class AdapterVehicle extends BaseAdapter {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
-
-
     }
 
     /**

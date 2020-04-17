@@ -58,7 +58,6 @@ public class ControllerVehicle {
         this.DB_RF_SESIONS.child( sesionDriving.getVehicle().getRegistrationNumber() ).setValue( sesionDriving );
     }
 
-
     public ChildEventListener getChildEventListener() {
         childEventListener = new ChildEventListener() {
             @Override
