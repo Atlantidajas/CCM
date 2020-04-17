@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toast_message_save_generic">Save</string>
+    <string name="toast_message_update_generic">Update</string>
+    <string name="toast_message_delete_generic">Delete</string>
+    <string name="toast_message_moved_generic">Moved</string>
+</resources>

@@ -32,7 +32,6 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
 
     private ControllerVehicle controllerVS;
     private DatabaseReference dbRFVehicleStatus;
-    private ChildEventListener childEventListener;
     private SpinnerRegistryBrands spinnerRegistryBrands;
     private EditText editTextBrand;
     private CheckBox checkBoxConfirmBrand;
@@ -51,32 +50,6 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
         setContentView(R.layout.activity_registry_vehicles);
         controllerVS = new ControllerVehicle( getApplicationContext() );
         dbRFVehicleStatus = controllerVS.getDB_RF_STATUS();
-        childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), "Modificado", Toast.LENGTH_SHORT ).show();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText( getApplicationContext(), "Eliminado", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), "Movido", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
 
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
         editTextBrand.setOnClickListener( this );
@@ -97,7 +70,6 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
 
         buttonSave = findViewById( R.id.button_registry_save_vehicle );
         buttonSave.setOnClickListener( this );
-        dbRFVehicleStatus.addChildEventListener( childEventListener );
     }
 
     @Override
@@ -243,6 +215,5 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
     @Override
     public void onDestroy(){
         super.onDestroy();
-        dbRFVehicleStatus.removeEventListener( childEventListener );
     }
 }

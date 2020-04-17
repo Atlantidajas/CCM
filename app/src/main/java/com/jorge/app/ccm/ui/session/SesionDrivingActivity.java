@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.ui.session;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +29,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
     private ControllerVehicle controllerVehicle;
     private DatabaseReference dbRFSesions;
     private ValueEventListener valueEventListener;
+    private ChildEventListener childEventListener;
     private AdapterSession arrayAdapterSesion;
     private Vehicle vehicleSelectForSesion;
     private TextView textView;
@@ -57,11 +60,15 @@ public class SesionDrivingActivity extends AppCompatActivity{
                     }
                 };
 
+
         //Inizializao Adapter para mostrar lista de sesiones
         this.arrayAdapterSesion = new AdapterSession( getApplication(), textView, listView);
         sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
         vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
         dbRFSesions.addValueEventListener( valueEventListener );
+        dbRFSesions.addChildEventListener( childEventListener );
+
+
 
     }
 
@@ -105,9 +112,10 @@ public class SesionDrivingActivity extends AppCompatActivity{
             for( int i = 0; i < sesionsDrivings.size(); i++ ) {
                 //Si existe registro de sesión del vehículo con el que se pretende iniciar la misma
                 if (sesionsDrivings.get( i ).getVehicle().getRegistrationNumber().equals( vehicleSelectForSesion.getRegistrationNumber() )) {
-                    System.out.println( sesionsDrivings.get( i ).getVehicle().getRegistrationNumber() + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
+
                     if (sesionsDrivings.get( i ).getVehicle().getDriving() == 1) {
-                        System.out.println( "Alguién está utilizando este vehículo" );
+                        //No debería llegar aquí este vehículo está ocupado.
+                        Toast.makeText( getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     } else {
                         //Guardo sesion en db
                         controllerVehicle.setSesion( sesion );
@@ -122,5 +130,6 @@ public class SesionDrivingActivity extends AppCompatActivity{
     public void onDestroy(){
         super.onDestroy();
         dbRFSesions.removeEventListener( valueEventListener );
+        dbRFSesions.removeEventListener( childEventListener );
     }
 }

@@ -86,7 +86,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), "Modificado", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getApplicationContext(), "1", Toast.LENGTH_SHORT ).show();
             }
 
             @Override
