@@ -86,17 +86,17 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), "1", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getApplicationContext(), R.string.toast_message_update_generic, Toast.LENGTH_SHORT ).show();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText( getApplicationContext(), "Eliminado", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), R.string.toast_message_delete_generic, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), "Movido", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), R.string.toast_message_moved_generic, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -217,6 +217,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     } );
                     windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowNoInitSesionVehicle" );
                 }
+
                 // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
                 if ( vehicle.getDriving() == 0 ){
                     intentForSeccion = new Intent(VehiclesListActivity.this, SesionDrivingActivity.class);
@@ -226,8 +227,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                         @Override
                         public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
                             startActivity(intentForSeccion);
-                            arrayAdapterVehicle.getListIntemVehicles().clear();
-                            arrayAdapterVehicle.notifyDataSetChanged();
+                            arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
+                            arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
                         }
 
                         @Override

@@ -29,7 +29,6 @@ public class SesionDrivingActivity extends AppCompatActivity{
     private ControllerVehicle controllerVehicle;
     private DatabaseReference dbRFSesions;
     private ValueEventListener valueEventListener;
-    private ChildEventListener childEventListener;
     private AdapterSession arrayAdapterSesion;
     private Vehicle vehicleSelectForSesion;
     private TextView textView;
@@ -66,10 +65,6 @@ public class SesionDrivingActivity extends AppCompatActivity{
         sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
         vehicleSelectForSesion = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_SELECT_FOR_SESION );//<- El Inten
         dbRFSesions.addValueEventListener( valueEventListener );
-        dbRFSesions.addChildEventListener( childEventListener );
-
-
-
     }
 
     @Override
@@ -130,6 +125,5 @@ public class SesionDrivingActivity extends AppCompatActivity{
     public void onDestroy(){
         super.onDestroy();
         dbRFSesions.removeEventListener( valueEventListener );
-        dbRFSesions.removeEventListener( childEventListener );
     }
 }

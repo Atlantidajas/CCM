@@ -63,17 +63,17 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), "Modificado", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getApplicationContext(), R.string.toast_message_update_generic, Toast.LENGTH_SHORT ).show();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText( getApplicationContext(), "Eliminado", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), R.string.toast_message_delete_generic, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), "Movido", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), R.string.toast_message_moved_generic, Toast.LENGTH_SHORT).show();
             }
 
             @Override
