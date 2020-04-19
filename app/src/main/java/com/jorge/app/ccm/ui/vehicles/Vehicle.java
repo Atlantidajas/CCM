@@ -13,20 +13,18 @@ public class Vehicle implements Serializable {
     private int driving;
     private String drivingCurrent;
 
-    public Vehicle(int logoVehicle,
+    public Vehicle( int logoVehicle,
                    String registrationNumber,
                    String brand,
                    String model,
                    String dateITV,
-                   int driving,
-                   String drivingCurrent) {
+                   int driving ) {
         this.logoVehicle = logoVehicle;
         this.registrationNumber = registrationNumber;
         this.brand = brand;
         this.model = model;
         this.dateITV = dateITV;
         this.driving = driving;
-        this.drivingCurrent = drivingCurrent;
     }
 
     public Vehicle(int logoVehicle,

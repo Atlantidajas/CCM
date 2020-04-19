@@ -25,6 +25,7 @@ public class SesionDriving {
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
             vehicle.setDriving( 1 );//<-- Paso a ocupado vehículo
+            vehicle.setDrivingCurrent( user.getEmail() );
         }
         // Controlo que si el objeto es creado para registrar un fin de session
         if ( typeSesion == false) {
@@ -32,7 +33,7 @@ public class SesionDriving {
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
             vehicle.setDriving( 0 );//<-- Paso a libre vehículo
-            vehicle.setDrivingCurrent( "0" );
+            vehicle.setDrivingCurrent( user.getEmail() );
         }
         this.user = new User();
         this.vehicle = vehicle;

@@ -27,7 +27,6 @@ public class ControllerVehicle {
     private int messageOnChildChangedChildEvent = R.string.toast_message_update_generic;
     private int messageOnChildRemovedChildEvent = R.string.toast_message_delete_generic;
     private int messageOnChildMovedChildEvent = R.string.toast_message_moved_generic;
-    ArrayList<Vehicle>vehicles;
 
     public ControllerVehicle(final Context context ) {
         this.context = context;
@@ -60,7 +59,6 @@ public class ControllerVehicle {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
             }
         };
-        vehicles = new ArrayList<>(  );
     }
 
     public void setMessageOnChildChangedChildEvent(int messageOnChildChangedChildEvent) {
@@ -92,7 +90,7 @@ public class ControllerVehicle {
     }
 
     public void setSesion(SesionDriving sesionDriving){
-        this.DB_RF_SESIONS.child( sesionDriving.getVehicle().getRegistrationNumber() ).setValue( sesionDriving );
+        this.DB_RF_SESIONS.child( sesionDriving.getUser().getEmail() ).setValue( sesionDriving );
     }
 
     public void removeVehicle( Vehicle vehicle ){
@@ -106,6 +104,5 @@ public class ControllerVehicle {
     public ChildEventListener getChildEventListener() {
         return childEventListener;
     }
-
 
 }

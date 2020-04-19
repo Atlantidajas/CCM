@@ -200,7 +200,7 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
             int logo = brandsUtil.getIdResource( brand );
             int driving = 0;//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
 
-            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV );
+            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
             controllerVS.setVehicle( vehicle );
 
             Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);

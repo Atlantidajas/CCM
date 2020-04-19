@@ -205,14 +205,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicle.getRegistrationNumber();
 
-                //Controlo que el usuario actual no tenga una sesión con un vehículo abierta.
-                for( int i = 0; i < vehicles.size(); i++ ) {
-                    if (vehicles.get( i ).getDrivingCurrent().equals( user.getEmail() ) ) {
-                        Toast.makeText( getApplicationContext(), "Debes cerrar sesión abierta", Toast.LENGTH_SHORT ).show();
-                        return;
-                    }
-                }
-
                 // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
                 if ( vehicle.getDriving() == 1 ){
                     windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList

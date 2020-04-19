@@ -106,11 +106,10 @@ public class SesionDrivingActivity extends AppCompatActivity{
         else {
             for( int i = 0; i < sesionsDrivings.size(); i++ ) {
                 //Si existe registro de sesión del vehículo con el que se pretende iniciar la misma
-                if (sesionsDrivings.get( i ).getVehicle().getRegistrationNumber().equals( vehicleSelectForSesion.getRegistrationNumber() )) {
-
-                    if (sesionsDrivings.get( i ).getVehicle().getDriving() == 1) {
+                if (sesionsDrivings.get( i ).getUser().getEmail().equals( vehicleSelectForSesion.getDrivingCurrent() )) {
                         //No debería llegar aquí este vehículo está ocupado.
-                        Toast.makeText( getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText( getApplicationContext(), "Ya tiene un sesion iniciada con matrícula: " +
+                                vehicleSelectForSesion.getRegistrationNumber(), Toast.LENGTH_SHORT).show();
                     } else {
                         //Guardo sesion en db
                         controllerVehicle.setSesion( sesion );
@@ -118,7 +117,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
                     }
                 }
             }
-        }
+
     }
 
     @Override
