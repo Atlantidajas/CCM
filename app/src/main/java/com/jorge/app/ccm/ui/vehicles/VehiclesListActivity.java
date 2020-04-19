@@ -20,6 +20,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 import com.jorge.app.ccm.R;
@@ -28,6 +29,7 @@ import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowNoInitSesionVehicle;
 import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
 import com.jorge.app.ccm.ui.session.SesionDrivingActivity;
+import com.jorge.app.ccm.ui.user.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerVehicle controllerVS;
     private DatabaseReference dbRfVehicleStatus;
-    private ValueEventListener valueEventListener;
+    private ValueEventListener valueEventListenerStatus;
     private ChildEventListener childEventListener;
 
     private AdapterVehicle arrayAdapterVehicle;
@@ -53,6 +55,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     private WindowYesInitSesionVehicle windowYesInitSV;
     private WindowNoInitSesionVehicle windowNoInitSV;
     private ArrayList<Vehicle> vehicles;
+    private User user;
 
 
     @Override
@@ -62,8 +65,9 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_vehicles);
         controllerVS = new ControllerVehicle(  getApplicationContext() );
+        user = new User(  );
         dbRfVehicleStatus = controllerVS.getDB_RF_STATUS();
-        valueEventListener = new ValueEventListener() {
+        valueEventListenerStatus = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -108,7 +112,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
-        dbRfVehicleStatus.addValueEventListener( valueEventListener );
+        dbRfVehicleStatus.addValueEventListener( valueEventListenerStatus );
         dbRfVehicleStatus.addChildEventListener( childEventListener );
     }
 
@@ -201,6 +205,14 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicle.getRegistrationNumber();
 
+                //Controlo que el usuario actual no tenga una sesión con un vehículo abierta.
+                for( int i = 0; i < vehicles.size(); i++ ) {
+                    if (vehicles.get( i ).getDrivingCurrent().equals( user.getEmail() ) ) {
+                        Toast.makeText( getApplicationContext(), "Debes cerrar sesión abierta", Toast.LENGTH_SHORT ).show();
+                        return;
+                    }
+                }
+
                 // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
                 if ( vehicle.getDriving() == 1 ){
                     windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
@@ -245,7 +257,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     @Override
     public void onDestroy(){
         super.onDestroy();
-        dbRfVehicleStatus.removeEventListener( valueEventListener);
+        dbRfVehicleStatus.removeEventListener( valueEventListenerStatus);
         dbRfVehicleStatus.removeEventListener( childEventListener );
     }
 

@@ -235,9 +235,8 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
             String dateITV =  editTextDateITV.getText().toString();
 
             int logo = brandsUtil.getIdResource( brand );
-            int driving = 0;//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
 
-            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
+            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV );
             // Eventos en controlador
             controllerVS.updateVehicle( vehicle );
 

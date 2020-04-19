@@ -11,10 +11,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.session.SesionDriving;
 import com.jorge.app.ccm.ui.vehicles.Vehicle;
+import java.util.ArrayList;
+
 
 public class ControllerVehicle {
 
@@ -26,6 +27,7 @@ public class ControllerVehicle {
     private int messageOnChildChangedChildEvent = R.string.toast_message_update_generic;
     private int messageOnChildRemovedChildEvent = R.string.toast_message_delete_generic;
     private int messageOnChildMovedChildEvent = R.string.toast_message_moved_generic;
+    ArrayList<Vehicle>vehicles;
 
     public ControllerVehicle(final Context context ) {
         this.context = context;
@@ -58,6 +60,7 @@ public class ControllerVehicle {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
             }
         };
+        vehicles = new ArrayList<>(  );
     }
 
     public void setMessageOnChildChangedChildEvent(int messageOnChildChangedChildEvent) {
@@ -103,5 +106,6 @@ public class ControllerVehicle {
     public ChildEventListener getChildEventListener() {
         return childEventListener;
     }
+
 
 }

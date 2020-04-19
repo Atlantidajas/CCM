@@ -32,6 +32,7 @@ public class SesionDriving {
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
             vehicle.setDriving( 0 );//<-- Paso a libre vehículo
+            vehicle.setDrivingCurrent( "0" );
         }
         this.user = new User();
         this.vehicle = vehicle;
