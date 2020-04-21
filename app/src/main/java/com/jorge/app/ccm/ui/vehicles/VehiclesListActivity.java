@@ -1,6 +1,5 @@
 package com.jorge.app.ccm.ui.vehicles;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -14,16 +13,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.Nullable;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBSesions;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowNoInitSesionVehicle;
 import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
@@ -191,7 +184,9 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                             public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
                                 startActivity( intentSesionDriving );
                                 SesionDriving sesionDriving = new SesionDriving( true, vehicles.get( position ) );
-                                //controllerVS.setSesion( sesionDriving );//<-- Inicio sesion
+
+                                ControllerDBSesions controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+                                controllerDBSesions.setSesion( sesionDriving );
 
                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
                                 arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
