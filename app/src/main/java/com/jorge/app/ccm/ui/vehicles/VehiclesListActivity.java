@@ -19,15 +19,15 @@ import android.widget.Toast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowNoInitSesionVehicle;
 import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
+import com.jorge.app.ccm.ui.session.SesionDriving;
 import com.jorge.app.ccm.ui.session.SesionDrivingActivity;
 import com.jorge.app.ccm.ui.user.User;
 
@@ -40,14 +40,10 @@ import java.util.ArrayList;
  */
 public class VehiclesListActivity extends AppCompatActivity implements Serializable{
 
-    public Intent intentForSeccion;
+    public Intent intentSesionDriving;
     public Intent intentForUpdate;
-    public static final String VEHICLE_SELECT_FOR_SESION = "com.jorge.app.ccm.vehicles.VEHICLE_SELECT_FOR_SESION";
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
-    private ControllerVehicle controllerVS;
-    private DatabaseReference dbRfVehicleStatus;
-    private ValueEventListener valueEventListenerStatus;
-    private ChildEventListener childEventListener;
+    private ControllerDBStatus controllerDBStatus;
 
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
@@ -64,56 +60,13 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         setContentView(R.layout.activity_vehicles_list);
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_vehicles);
-        controllerVS = new ControllerVehicle(  getApplicationContext() );
+        controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
         user = new User(  );
-        dbRfVehicleStatus = controllerVS.getDB_RF_STATUS();
-        valueEventListenerStatus = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    arrayAdapterVehicle.setArrayAdapter(dataSnapshot);
-                }
-                else {
-                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-        childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), R.string.toast_message_update_generic, Toast.LENGTH_SHORT ).show();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText( getApplicationContext(), R.string.toast_message_delete_generic, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), R.string.toast_message_moved_generic, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
+        controllerDBStatus.setAdapter( arrayAdapterVehicle );
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
-        dbRfVehicleStatus.addValueEventListener( valueEventListenerStatus );
-        dbRfVehicleStatus.addChildEventListener( childEventListener );
     }
 
     @Override
@@ -179,11 +132,14 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             case R.id.menu_contextual_list_view_vehicles_item_delete:
 
-                this.controllerVS.removeVehicle( vehicles.get( position ) );
+                controllerDBStatus = new ControllerDBStatus( getApplication(), vehicles.get( position ).getRegistrationNumber() );
+                controllerDBStatus.removeValue();
+                //Cambo de mensaje genérico a espesívico para este evento
+                controllerDBStatus.setMessageOnChildRemovedChildEvent( R.string.toast_message_delete_vehicle );
                 this.vehicles.remove( position );
                 this.arrayAdapterVehicle.getListIntemVehicles().clear();
-
                 this.arrayAdapterVehicle.notifyDataSetChanged();
+                controllerDBStatus = null;//<-- Elimino objeto para eliminar posibles eventos
                 break;
 
             default:
@@ -197,60 +153,66 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> lst, View viewRow,
-                                    int position, long id) {
+                                    final int position, long id) {
                 Resources resources = getResources();
-                Vehicle vehicle = (Vehicle) arrayAdapterVehicle.getItem( position );
+                final Vehicle vehicle = (Vehicle) arrayAdapterVehicle.getItem( position );
                 String messageYes = resources.getString( R.string.windows_yes_init_session_vehicle_message ) + " " +
                         vehicle.getRegistrationNumber();
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicle.getRegistrationNumber();
+                intentSesionDriving = new Intent( VehiclesListActivity.this, SesionDrivingActivity.class );
 
-                // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
-                if ( vehicle.getDriving() == 1 ){
-                    windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
-                    windowNoInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
-                        @Override
-                        public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                            return;
-                        }
+                    // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
+                    if (vehicle.getDriving() == 1) {
+                        windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
+                        windowNoInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                            @Override
+                            public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                                startActivity( intentSesionDriving );
 
-                        @Override
-                        public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                            }
 
-                        }
-                    } );
-                    windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowNoInitSesionVehicle" );
+                            @Override
+                            public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                                return;
+                            }
+                        } );
+                        windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowNoInitSesionVehicle" );
+                    }
+
+                    // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
+                    if (vehicle.getDriving() == 0) {
+
+                        //intentForSeccion.putExtra( VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
+
+                        windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList
+                        windowYesInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                            @Override
+                            public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                                startActivity( intentSesionDriving );
+                                SesionDriving sesionDriving = new SesionDriving( true, vehicles.get( position ) );
+                                //controllerVS.setSesion( sesionDriving );//<-- Inicio sesion
+
+                                arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
+                                arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
+                                finish();
+                            }
+
+                            @Override
+                            public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                                return;
+                            }
+                        } );
+                        windowYesInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowYesInitSesionVehicle" );
+                    }
                 }
-
-                // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
-                if ( vehicle.getDriving() == 0 ){
-                    intentForSeccion = new Intent(VehiclesListActivity.this, SesionDrivingActivity.class);
-                    intentForSeccion.putExtra(VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
-                    windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList
-                    windowYesInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
-                        @Override
-                        public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                            startActivity(intentForSeccion);
-                            arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
-                            arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
-                        }
-
-                        @Override
-                        public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-                            return;
-                        }
-                    } );
-                    windowYesInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowYesInitSesionVehicle" );
-                }
-            }
         });
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        dbRfVehicleStatus.removeEventListener( valueEventListenerStatus);
-        dbRfVehicleStatus.removeEventListener( childEventListener );
+        controllerDBStatus = null;
     }
 
 }

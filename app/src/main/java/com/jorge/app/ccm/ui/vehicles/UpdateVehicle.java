@@ -16,12 +16,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerVehicle;
+import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
 import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
@@ -31,9 +27,8 @@ import static com.jorge.app.ccm.ui.vehicles.VehiclesListActivity.VEHICLE_REGISTR
 
 public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
-    private ControllerVehicle controllerVS;
-    private DatabaseReference dbRFStatus;
-    private ChildEventListener childEventListener;
+    private ControllerDBStatus controllerDBStatus;
+
     private Vehicle vehicleForUpdate;
     private SpinnerRegistryBrands spinnerRegistryBrands;
     private EditText editTextBrand;
@@ -52,35 +47,6 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_registry_vehicles);
-
-        controllerVS = new ControllerVehicle( getApplicationContext() );
-        dbRFStatus = controllerVS.getDB_RF_STATUS();
-        childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), R.string.toast_message_update_generic, Toast.LENGTH_SHORT ).show();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText( getApplicationContext(), R.string.toast_message_delete_generic, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText( getApplicationContext(), R.string.toast_message_moved_generic, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
 
         vehicleForUpdate = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE );//<- El Inten
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
@@ -106,7 +72,6 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
 
         buttonSave = findViewById( R.id.button_registry_save_vehicle );
         buttonSave.setOnClickListener( this );
-        dbRFStatus.addChildEventListener( childEventListener );
     }
 
     @Override
@@ -237,8 +202,10 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
             int logo = brandsUtil.getIdResource( brand );
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV );
-            // Eventos en controlador
-            controllerVS.updateVehicle( vehicle );
+            controllerDBStatus = new ControllerDBStatus( getApplicationContext(), vehicle.getRegistrationNumber() );
+            controllerDBStatus.setMessageOnChildChangedChildEvent( R.string.toast_message_update_vehicle );
+            controllerDBStatus.updateValue( vehicle );
+            controllerDBStatus = null;
 
             Intent intent= new Intent ( UpdateVehicle.this, VehiclesListActivity.class);
             startActivity(intent);
@@ -251,7 +218,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
     @Override
     public void onDestroy(){
         super.onDestroy();
-        dbRFStatus.removeEventListener( childEventListener );
+        controllerDBStatus = null;
     }
 
 }

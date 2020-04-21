@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.controllers.ControllerVehicle;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
 import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
@@ -30,8 +31,7 @@ import com.jorge.app.ccm.utils.BrandsUtil;
 
 public class RegistryVehicles extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
-    private ControllerVehicle controllerVS;
-    private DatabaseReference dbRFVehicleStatus;
+    private ControllerDBStatus controllerDBStatus;
     private SpinnerRegistryBrands spinnerRegistryBrands;
     private EditText editTextBrand;
     private CheckBox checkBoxConfirmBrand;
@@ -48,8 +48,6 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry_vehicles);
-        controllerVS = new ControllerVehicle( getApplicationContext() );
-        dbRFVehicleStatus = controllerVS.getDB_RF_STATUS();
 
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
         editTextBrand.setOnClickListener( this );
@@ -200,9 +198,12 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
             int logo = brandsUtil.getIdResource( brand );
             int driving = 0;//<-- Siempre que se crea vehículo a 0 para cuando lo coja para conducir de un 1 en String
 
-            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, driving );
-            controllerVS.setVehicle( vehicle );
+            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV );
 
+            controllerDBStatus = new ControllerDBStatus( getApplicationContext(), vehicle.getRegistrationNumber() );
+            controllerDBStatus.setMessageOnChildChangedChildEvent( R.string.toast_message_update_vehicle );
+            controllerDBStatus.setValue( vehicle );
+            controllerDBStatus = null;
             Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);
             startActivity(intent);
         }
@@ -215,5 +216,6 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
     @Override
     public void onDestroy(){
         super.onDestroy();
+        controllerDBStatus = null;
     }
 }

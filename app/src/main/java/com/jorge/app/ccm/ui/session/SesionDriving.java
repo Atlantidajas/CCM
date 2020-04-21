@@ -20,7 +20,7 @@ public class SesionDriving {
         DateHoursUtil dateHoursUtil = new DateHoursUtil();
 
         // Controlo que si el objeto es creado para registrar un inicio de session
-        if ( typeSesion ) {
+        if ( typeSesion == true) {
             this.typeSesion = "Start";
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
@@ -41,7 +41,7 @@ public class SesionDriving {
 
     public SesionDriving( DataSnapshot dataSnapshotSesion ) {
 
-        this.typeSesion = String.valueOf( dataSnapshotSesion.child("typeSession").getValue() );
+        this.typeSesion = String.valueOf( dataSnapshotSesion.child("typeSesion").getValue() );
         this.date = String.valueOf( dataSnapshotSesion.child("date").getValue() );
         this.hours = String.valueOf( dataSnapshotSesion.child("hours").getValue() );
         this.user = new User( dataSnapshotSesion.child( "user" ) );

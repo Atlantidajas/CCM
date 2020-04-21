@@ -76,6 +76,9 @@ public class AdapterSession extends BaseAdapter {
         TextView textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
         textView_hours.setText( session.getHours() );
 
+        TextView textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
+        textView_typeSesion.setText( session.getTypeSesion() );
+
         ImageView imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
         Glide.with( context ).load( session.getUser().getPhotoUriString() ).into(imageView_drivind);
 

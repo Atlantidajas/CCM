@@ -31,7 +31,13 @@
             android:gravity="center" />
 
         <TextView
-            android:id="@+id/textView_session_hours_item_sessions"
+        android:id="@+id/textView_session_hours_item_sessions"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center" />
+
+        <TextView
+            android:id="@+id/textView_session_type_item_sessions"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:gravity="center" />
