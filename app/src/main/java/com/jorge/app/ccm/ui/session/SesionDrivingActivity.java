@@ -1,6 +1,9 @@
 package com.jorge.app.ccm.ui.session;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -10,6 +13,9 @@ import android.widget.TextView;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesions;
+import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
+import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
+import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
 import java.util.ArrayList;
 
@@ -21,6 +27,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
     private TextView textView;
     private ListView listView;
     private ArrayList<SesionDriving> sesionsDrivings;
+    private Intent intentCloseSesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +35,9 @@ public class SesionDrivingActivity extends AppCompatActivity{
         setContentView( R.layout.activity_sesion_driving );
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
+        intentCloseSesion  = new Intent( SesionDrivingActivity.this, VehiclesListActivity.class );
         controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+
 
         //Inizializao Adapter para mostrar lista de sesiones
         arrayAdapterSesion = new AdapterSession( getApplication(), textView, listView);
@@ -52,13 +61,26 @@ public class SesionDrivingActivity extends AppCompatActivity{
             public void onItemClick( AdapterView<?> lst, View viewRow,
                                     int position, long id) {
 
-                System.out.println( arrayAdapterSesion.getItem( position ) );
+                final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
+                WindowYesInitSesionVehicle windowCloseSesionVehicle = new WindowYesInitSesionVehicle( "Desea cerrar sesion" );
+                windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                    @Override
+                    public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
-                controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
-                controllerDBSesions.setSesion( sesionDrivingEnd );
-                arrayAdapterSesion.getListIntemSesions().clear();//<-- Limpio por si retrosede
-                arrayAdapterSesion.notifyDataSetChanged();//<-- Notifico cambios
+                        controllerDBSesions.endSesion( sesionDrivingEnd );
+
+                        arrayAdapterSesion.getListIntemSesions().clear();//<-- Limpio por si retrosede
+                        arrayAdapterSesion.notifyDataSetChanged();//<-- Notifico cambios
+                        startActivity( intentCloseSesion );
+                        finish();
+                    }
+
+                    @Override
+                    public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                        return;
+                    }
+                } );
+                windowCloseSesionVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), "windowCloseSesionVehicle" );
 
 
             }
@@ -68,6 +90,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
     @Override
     public void onDestroy(){
         super.onDestroy();
+        controllerDBSesions = null;
     }
 
 }

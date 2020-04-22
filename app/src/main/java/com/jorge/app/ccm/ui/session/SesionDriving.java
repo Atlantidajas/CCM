@@ -14,6 +14,8 @@ public class SesionDriving {
     private User user;
     private Vehicle vehicle;
 
+    public SesionDriving() {}
+
     public SesionDriving(boolean typeSesion, Vehicle vehicle) {
         this.vehicle = vehicle;
         this.user = new User();

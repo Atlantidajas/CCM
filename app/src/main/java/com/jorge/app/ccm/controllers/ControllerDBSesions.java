@@ -34,7 +34,7 @@ public class ControllerDBSesions {
     public ControllerDBSesions( final Context context) {
         this.context = context;
         this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sesions" );
-        this.childEventListener = new ChildEventListener() {
+        /*this.childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -59,8 +59,8 @@ public class ControllerDBSesions {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
             }
-        };
-        //this.databaseReference.addChildEventListener( childEventListener );//<-- General para cualquier operación (Set, Update, delete)
+        };*/
+        // this.databaseReference.addChildEventListener( childEventListener );//<-- General para cualquier operación (Set, Update, delete)
     }
 
     public void setMessageOnChildChangedChildEvent(int messageOnChildChangedChildEvent) {
@@ -75,7 +75,13 @@ public class ControllerDBSesions {
         this.messageOnChildMovedChildEvent = messageOnChildMovedChildEvent;
     }
 
-    public void setAdapter( final AdapterSession ADAPTER_SESION ){
+    public DatabaseReference getDatabaseReference() {
+        return databaseReference;
+    }
+
+
+
+    public void setAdapter(final AdapterSession ADAPTER_SESION ){
 
         databaseReference.child( "SesionsHistorics" ).addValueEventListener( new ValueEventListener() {
             @Override
@@ -95,43 +101,46 @@ public class ControllerDBSesions {
         });
     }
 
-    public void setSesion( final SesionDriving sesionDriving ) {
+    public void startSesion( final SesionDriving sesionDriving ) {
 
-        final  DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
-        final  DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
+        final DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
+        final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
         dbSesionsCurrent.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
-                DatabaseReference dbRfStatus = controllerDBStatus.getDatabaseReference();
+                DatabaseReference dbRefStatus = controllerDBStatus.getDatabaseReference();
 
                 if (dataSnapshot.exists()) {
 
                     SesionDriving resultSesionCurrent = new SesionDriving( dataSnapshot );
 
-
                     // Si la acción que se pretende es iniciar pero ya hay una sesión de este usuario iniciada.
                     if ((resultSesionCurrent.getTypeSesion().equals( "Start" )) && (sesionDriving.getTypeSesion().equals( "Start" ))) {
-                        Toast.makeText( context, "Debe cerrar sesión abierta antes de iniciar otra", Toast.LENGTH_SHORT ).show();
-                        return;
+                        Toast.makeText( context, "Sesion iniciada", Toast.LENGTH_SHORT ).show();
+                        System.out.println( "*********************************************1 START ***************************" );
                     }
-                    // Si está iniciada pero se pretende cerrar
-                    if (( resultSesionCurrent.getTypeSesion().equals( "Start" )) && (sesionDriving.getTypeSesion().equals( "End" ))) {
+
+                    else{
+
                         dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
                                 sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
                                 sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
-                        dbRfStatus.child( "driving" ).setValue( 0 );//<-- Paso a liberado
-                        dbRfStatus.child( "typeSesion" ).setValue( "End" );//<-- Paso a liberado
+                        System.out.println( "*********************************************2 START *****************************" );
                     }
-                } else {
-                    // Si no existe es que no está iniciada
-                    dbSesionsCurrent.child( sesionDriving.getUser().getIdUser() ).setValue( sesionDriving );//<-- Guardo sesion current por si alguien pretende iniciar mientras este en uso
-                    dbRfStatus.child( "driving" ).setValue( 1 );//<-- Paso a ocupado
+
+                }
+
+                else {
+
+                    //<-- Guardo sesion current por si alguien pretende iniciar mientras este en uso
+                    dbRefStatus.setValue( sesionDriving.getVehicle() );//<-- Paso a ocupado
+                    dbSesionsCurrent.setValue( sesionDriving );
                     dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
                             sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
                             sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Guardo sesion current
+                    System.out.println( "*********************************************3 START *****************************" );
                 }
             }
 
@@ -140,5 +149,27 @@ public class ControllerDBSesions {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
             }
         } );
+    }
+
+    public void endSesion( final SesionDriving sesionDriving ) {
+
+        final DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
+        final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
+
+
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
+        DatabaseReference dbRefStatus = controllerDBStatus.getDatabaseReference();
+
+
+        dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
+                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
+                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
+
+        dbSesionsCurrent.child( "typeSesion" ).setValue( "End" );
+        dbRefStatus.setValue( sesionDriving.getVehicle() );
+        System.out.println( "*****************************************************************************" );
+        System.out.println( "Resusltado de funcion type END" + sesionDriving.getTypeSesion()  );
+        System.out.println( "Resusltado de funcion driving END" + sesionDriving.getVehicle().getDriving()  );
+        System.out.println( "*****************************************************************************" );
     }
 }

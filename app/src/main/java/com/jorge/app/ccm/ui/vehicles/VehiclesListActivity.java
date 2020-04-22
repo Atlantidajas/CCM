@@ -37,6 +37,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public Intent intentForUpdate;
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerDBStatus controllerDBStatus;
+    private ControllerDBSesions controllerDBSesions;
 
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
@@ -185,8 +186,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                 startActivity( intentSesionDriving );
                                 SesionDriving sesionDriving = new SesionDriving( true, vehicles.get( position ) );
 
-                                ControllerDBSesions controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
-                                controllerDBSesions.setSesion( sesionDriving );
+                                controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+                                controllerDBSesions.startSesion( sesionDriving );
 
                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
                                 arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
@@ -208,6 +209,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public void onDestroy(){
         super.onDestroy();
         controllerDBStatus = null;
+        controllerDBSesions = null;
     }
 
 }
