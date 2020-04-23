@@ -124,7 +124,8 @@ public class ControllerDBSesions {
                     }
 
 
-                        dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
+
+                    dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
                             sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
                             sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
                 }
@@ -147,12 +148,17 @@ public class ControllerDBSesions {
         DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
+
+        if( sesionDriving.getTypeSesion().equals( "End" ) ){
             dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
                     sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
                     sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
 
+
             dbSesionsCurrent.setValue( sesionDriving );
 
+        }
 
         return;
 
