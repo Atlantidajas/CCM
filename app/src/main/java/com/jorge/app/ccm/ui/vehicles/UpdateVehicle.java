@@ -201,7 +201,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
 
             int logo = brandsUtil.getIdResource( brand );
 
-            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV );
+            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV,0);
             controllerDBStatus = new ControllerDBStatus( getApplicationContext(), vehicle.getRegistrationNumber() );
             controllerDBStatus.setMessageOnChildChangedChildEvent( R.string.toast_message_update_vehicle );
             controllerDBStatus.updateValue( vehicle );

@@ -27,17 +27,7 @@ public class Vehicle implements Serializable {
         this.driving = driving;
     }
 
-    public Vehicle(int logoVehicle,
-                   String registrationNumber,
-                   String brand,
-                   String model,
-                   String dateITV) {
-        this.logoVehicle = logoVehicle;
-        this.registrationNumber = registrationNumber;
-        this.brand = brand;
-        this.model = model;
-        this.dateITV = dateITV;
-    }
+
 
     public Vehicle() {
     }

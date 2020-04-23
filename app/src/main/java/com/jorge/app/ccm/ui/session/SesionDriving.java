@@ -26,16 +26,15 @@ public class SesionDriving {
             this.typeSesion = "Start";
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
-            vehicle.setDriving( 1 );//<-- Paso a ocupado vehículo
-            vehicle.setDrivingCurrent( user.getEmail() );
+            this.vehicle.setDriving( 1 );//<-- Paso a ocupado vehículo
+            this.vehicle.setDrivingCurrent( user.getEmail() );
         }
         // Controlo que si el objeto es creado para registrar un fin de session
         if ( typeSesion == false) {
             this.typeSesion = "End";
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
-            vehicle.setDriving( 0 );//<-- Paso a libre vehículo
-            vehicle.setDrivingCurrent( user.getEmail() );
+            this.vehicle.setDriving( 0 );//<-- Paso a libre vehículo
         }
         this.user = new User();
         this.vehicle = vehicle;
@@ -52,6 +51,10 @@ public class SesionDriving {
 
     public String getTypeSesion() {
         return typeSesion;
+    }
+
+    public void setTypeSesion(String typeSesion) {
+        this.typeSesion = typeSesion;
     }
 
     public String getDate() {

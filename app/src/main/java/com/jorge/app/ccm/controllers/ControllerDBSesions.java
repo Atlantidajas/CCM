@@ -17,6 +17,7 @@ import com.jorge.app.ccm.ui.session.AdapterSession;
 import com.jorge.app.ccm.ui.session.SesionDriving;
 import com.jorge.app.ccm.ui.user.User;
 import com.jorge.app.ccm.ui.vehicles.AdapterVehicle;
+import com.jorge.app.ccm.ui.vehicles.Vehicle;
 
 public class ControllerDBSesions {
 
@@ -34,7 +35,7 @@ public class ControllerDBSesions {
     public ControllerDBSesions( final Context context) {
         this.context = context;
         this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sesions" );
-        /*this.childEventListener = new ChildEventListener() {
+        this.childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -59,8 +60,8 @@ public class ControllerDBSesions {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
             }
-        };*/
-        // this.databaseReference.addChildEventListener( childEventListener );//<-- General para cualquier operación (Set, Update, delete)
+        };
+        this.databaseReference.addChildEventListener( childEventListener );//<-- General para cualquier operación (Set, Update, delete)
     }
 
     public void setMessageOnChildChangedChildEvent(int messageOnChildChangedChildEvent) {
@@ -106,11 +107,11 @@ public class ControllerDBSesions {
         final DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
+
         dbSesionsCurrent.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
-                DatabaseReference dbRefStatus = controllerDBStatus.getDatabaseReference();
 
                 if (dataSnapshot.exists()) {
 
@@ -119,28 +120,19 @@ public class ControllerDBSesions {
                     // Si la acción que se pretende es iniciar pero ya hay una sesión de este usuario iniciada.
                     if ((resultSesionCurrent.getTypeSesion().equals( "Start" )) && (sesionDriving.getTypeSesion().equals( "Start" ))) {
                         Toast.makeText( context, "Sesion iniciada", Toast.LENGTH_SHORT ).show();
-                        System.out.println( "*********************************************1 START ***************************" );
+
                     }
 
-                    else{
+                        controllerDBStatus.updateValue( sesionDriving.getVehicle() );
 
                         dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
                                 sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
                                 sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
-                        System.out.println( "*********************************************2 START *****************************" );
-                    }
-
                 }
 
                 else {
-
                     //<-- Guardo sesion current por si alguien pretende iniciar mientras este en uso
-                    dbRefStatus.setValue( sesionDriving.getVehicle() );//<-- Paso a ocupado
                     dbSesionsCurrent.setValue( sesionDriving );
-                    dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
-                            sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                            sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Guardo sesion current
-                    System.out.println( "*********************************************3 START *****************************" );
                 }
             }
 
@@ -151,25 +143,28 @@ public class ControllerDBSesions {
         } );
     }
 
+    public void exit(){
+        return;
+    }
+
     public void endSesion( final SesionDriving sesionDriving ) {
 
-        final DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
+        DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
-
         ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
-        DatabaseReference dbRefStatus = controllerDBStatus.getDatabaseReference();
+
+        if( sesionDriving.getTypeSesion().equals( "End" ) ){
+            dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
+                    sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
+                    sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
 
 
-        dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
-                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
+            dbSesionsCurrent.setValue( sesionDriving );
 
-        dbSesionsCurrent.child( "typeSesion" ).setValue( "End" );
-        dbRefStatus.setValue( sesionDriving.getVehicle() );
-        System.out.println( "*****************************************************************************" );
-        System.out.println( "Resusltado de funcion type END" + sesionDriving.getTypeSesion()  );
-        System.out.println( "Resusltado de funcion driving END" + sesionDriving.getVehicle().getDriving()  );
-        System.out.println( "*****************************************************************************" );
+        }
+
+        return;
+
     }
 }

@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesions;
+import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
+import com.jorge.app.ccm.ui.vehicles.Vehicle;
 import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
 import java.util.ArrayList;
@@ -81,7 +83,6 @@ public class SesionDrivingActivity extends AppCompatActivity{
                     }
                 } );
                 windowCloseSesionVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), "windowCloseSesionVehicle" );
-
 
             }
         });

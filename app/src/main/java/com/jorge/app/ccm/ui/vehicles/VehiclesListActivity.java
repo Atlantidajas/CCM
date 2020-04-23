@@ -183,7 +183,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                         windowYesInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                             @Override
                             public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                                startActivity( intentSesionDriving );
+
                                 SesionDriving sesionDriving = new SesionDriving( true, vehicles.get( position ) );
 
                                 controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
@@ -191,6 +191,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
                                 arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
+                                startActivity( intentSesionDriving );
                                 finish();
                             }
 
