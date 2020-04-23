@@ -123,7 +123,6 @@ public class ControllerDBSesions {
 
                     }
 
-                        controllerDBStatus.updateValue( sesionDriving.getVehicle() );
 
                         dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
                                 sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
@@ -151,8 +150,6 @@ public class ControllerDBSesions {
 
         DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
-
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
 
         if( sesionDriving.getTypeSesion().equals( "End" ) ){
             dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +

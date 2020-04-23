@@ -63,16 +63,19 @@ public class SesionDrivingActivity extends AppCompatActivity{
             public void onItemClick( AdapterView<?> lst, View viewRow,
                                     int position, long id) {
 
+                final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplication(), sesionsDrivings.get( position ).getVehicle().getRegistrationNumber() );
                 final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
                 WindowYesInitSesionVehicle windowCloseSesionVehicle = new WindowYesInitSesionVehicle( "Desea cerrar sesion" );
                 windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
+
                         controllerDBSesions.endSesion( sesionDrivingEnd );
 
                         arrayAdapterSesion.getListIntemSesions().clear();//<-- Limpio por si retrosede
                         arrayAdapterSesion.notifyDataSetChanged();//<-- Notifico cambios
+                        controllerDBStatus.getDatabaseReference().child( "driving" ).setValue( 0 );
                         startActivity( intentCloseSesion );
                         finish();
                     }
