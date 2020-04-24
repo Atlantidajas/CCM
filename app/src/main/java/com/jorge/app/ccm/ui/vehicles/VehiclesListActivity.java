@@ -1,5 +1,6 @@
 package com.jorge.app.ccm.ui.vehicles;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -14,6 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesions;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
@@ -34,6 +38,7 @@ import java.util.ArrayList;
 public class VehiclesListActivity extends AppCompatActivity implements Serializable{
 
     public Intent intentSesionDriving;
+    public Intent intentSesionParking;
     public Intent intentForUpdate;
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerDBStatus controllerDBStatus;
@@ -158,6 +163,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicle.getRegistrationNumber();
                 intentSesionDriving = new Intent( VehiclesListActivity.this, SesionDrivingActivity.class );
+                intentSesionParking = new Intent( VehiclesListActivity.this, VehicleParkingActivity.class );
 
                     // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
                     if (vehicle.getDriving() == 1) {
@@ -178,6 +184,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     }
 
                     // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
+
                     if (vehicle.getDriving() == 0) {
 
                         windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList
@@ -185,21 +192,59 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                             @Override
                             public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                                Vehicle vehicleResult = vehicles.get( position );
-                                SesionDriving sesionDriving = new SesionDriving( true, vehicleResult );
+                                final Vehicle vehicleResult = vehicles.get( position );
+                                final SesionDriving sesionDriving = new SesionDriving( true, vehicleResult );
 
                                 controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
-                                controllerDBSesions.startSesion( sesionDriving );
 
-                                vehicleResult.setDriving( 1 );
-                                controllerDBStatus.updateValue( vehicleResult, null );//<-- Sin mensaje toast, en evento child (No es necesario).
-                                controllerDBSesions.updateCurrent( sesionDriving );
+                                controllerDBSesions.getDatabaseReference().child( "SesionsCurrents" ).addValueEventListener( new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
-                                arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
-                                controllerDBStatus = null;
-                                startActivity( intentSesionDriving );
-                                finish();
+                                        if( dataSnapshot.exists() ) {
+
+                                            SesionDriving resultSesionCurrent = new SesionDriving( dataSnapshot );
+
+                                            //Puede si ha cerrado previamente una que abrio y se registró.
+                                            if ( resultSesionCurrent.getTypeSesion().equals( "End" )) {
+
+                                                controllerDBSesions.startSesion( sesionDriving );
+                                                vehicleResult.setDriving( 1 );
+                                                controllerDBStatus.updateValue( vehicleResult, null );//<-- Sin mensaje toast, en evento child (No es necesario).
+                                                controllerDBSesions.updateCurrent( sesionDriving );
+                                                startActivity( intentSesionParking );
+
+                                            }
+                                            //No puede ya que tiene una sesion abierta.
+                                            else {
+                                                startActivity( intentSesionDriving );
+                                            }
+                                        }
+                                        //Si no existe es que no tiene ninguna iniciada, por lo que puede
+                                        else {
+                                            controllerDBSesions.startSesion( sesionDriving );
+                                            vehicleResult.setDriving( 1 );
+                                            controllerDBStatus.updateValue( vehicleResult, null );//<-- Sin mensaje toast, en evento child (No es necesario).
+                                            controllerDBSesions.updateCurrent( sesionDriving );
+                                            startActivity( intentSesionParking );
+
+                                        }
+
+                                        arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
+                                        arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
+                                        controllerDBStatus = null;
+
+                                        finish();
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                } );
+
+
                             }
 
                             @Override
