@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesions;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
@@ -64,6 +65,9 @@ public class SesionDrivingActivity extends AppCompatActivity{
                                     int position, long id) {
 
                 final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplication(), sesionsDrivings.get( position ).getVehicle().getRegistrationNumber() );
+                final ControllerDBSesions controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+                final DatabaseReference databaseReferenceSesionsCurrent = controllerDBSesions.getDatabaseReference().child( "SesionsCurrents" ).child( sesionsDrivings.get( position ).getUser().getIdUser() );
+
                 final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
                 WindowYesInitSesionVehicle windowCloseSesionVehicle = new WindowYesInitSesionVehicle( "Desea cerrar sesion" );
                 windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
@@ -72,10 +76,11 @@ public class SesionDrivingActivity extends AppCompatActivity{
 
 
                         controllerDBSesions.endSesion( sesionDrivingEnd );
-
                         arrayAdapterSesion.getListIntemSesions().clear();//<-- Limpio por si retrosede
                         arrayAdapterSesion.notifyDataSetChanged();//<-- Notifico cambios
                         controllerDBStatus.getDatabaseReference().child( "driving" ).setValue( 0 );
+                        databaseReferenceSesionsCurrent.child( "typeSesion" ).setValue( "End" );
+
                         startActivity( intentCloseSesion );
                         finish();
                     }

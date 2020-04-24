@@ -189,9 +189,11 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                 controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
                                 controllerDBSesions.startSesion( sesionDriving );
                                 controllerDBStatus.getDatabaseReference().child( vehicles.get( position ).getRegistrationNumber()  ).child( "driving" ).setValue( 1 );
+                                controllerDBSesions.getDatabaseReference().child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() ).setValue( sesionDriving );
 
                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
                                 arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
+                                controllerDBStatus = null;
                                 startActivity( intentSesionDriving );
                                 finish();
                             }

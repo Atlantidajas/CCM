@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.OnDisconnect;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.session.AdapterSession;
@@ -113,7 +114,7 @@ public class ControllerDBSesions {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
 
-                if (dataSnapshot.exists()) {
+
 
                     SesionDriving resultSesionCurrent = new SesionDriving( dataSnapshot );
 
@@ -121,20 +122,14 @@ public class ControllerDBSesions {
                     if ((resultSesionCurrent.getTypeSesion().equals( "Start" )) && (sesionDriving.getTypeSesion().equals( "Start" ))) {
                         Toast.makeText( context, "Sesion iniciada", Toast.LENGTH_SHORT ).show();
 
+
+                        dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
+                                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
+                                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
+
                     }
-
-
-
-                    dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
-                            sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                            sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
                 }
 
-                else {
-                    //<-- Guardo sesion current por si alguien pretende iniciar mientras este en uso
-                    dbSesionsCurrent.setValue( sesionDriving );
-                }
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -145,20 +140,13 @@ public class ControllerDBSesions {
 
     public void endSesion( final SesionDriving sesionDriving ) {
 
-        DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
+        //DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( context, sesionDriving.getVehicle().getRegistrationNumber() );
+        dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
+                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
+                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
 
-        if( sesionDriving.getTypeSesion().equals( "End" ) ){
-            dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
-                    sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                    sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
-
-
-            dbSesionsCurrent.setValue( sesionDriving );
-
-        }
 
         return;
 
