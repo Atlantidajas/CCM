@@ -64,7 +64,8 @@ public class SesionDrivingActivity extends AppCompatActivity{
             public void onItemClick( AdapterView<?> lst, View viewRow,
                                     int position, long id) {
 
-                final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplication(), sesionsDrivings.get( position ).getVehicle().getRegistrationNumber() );
+                final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplication() );
+                final DatabaseReference vehicleDatabaseReference = controllerDBStatus.getDatabaseReferenceSearch( sesionsDrivings.get( position ).getVehicle() );
                 final ControllerDBSesions controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
                 final DatabaseReference databaseReferenceSesionsCurrent = controllerDBSesions.getDatabaseReference().child( "SesionsCurrents" ).child( sesionsDrivings.get( position ).getUser().getIdUser() );
 
@@ -78,7 +79,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
                         controllerDBSesions.endSesion( sesionDrivingEnd );
                         arrayAdapterSesion.getListIntemSesions().clear();//<-- Limpio por si retrosede
                         arrayAdapterSesion.notifyDataSetChanged();//<-- Notifico cambios
-                        controllerDBStatus.getDatabaseReference().child( "driving" ).setValue( 0 );
+                        vehicleDatabaseReference.child( "driving" ).setValue( 0 );
                         databaseReferenceSesionsCurrent.child( "typeSesion" ).setValue( "End" );
 
                         startActivity( intentCloseSesion );

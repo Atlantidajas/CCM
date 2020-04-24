@@ -106,7 +106,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
                 showRegistryDateITV();
                 break;
             case R.id.button_registry_save_vehicle:
-                showSaveRegistry();
+                showUpdateRegistry();
                 break;
 
         }
@@ -184,7 +184,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
         editTextDateITV.setText( day + "-" + month + "-" + year );
     }
 
-    public void showSaveRegistry(){
+    public void showUpdateRegistry(){
 
         if( checkBoxConfirmBrand.isChecked() &&
                 checkBoxConfirmModel.isChecked() &&
@@ -202,9 +202,9 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
             int logo = brandsUtil.getIdResource( brand );
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV,0);
-            controllerDBStatus = new ControllerDBStatus( getApplicationContext(), vehicle.getRegistrationNumber() );
-            controllerDBStatus.setMessageOnChildChangedChildEvent( R.string.toast_message_update_vehicle );
-            controllerDBStatus.updateValue( vehicle );
+            controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+            String messageUpdateVehicle = getString( R.string.toast_message_changed_vehicle_generic );
+            controllerDBStatus.updateValue( vehicle, messageUpdateVehicle + " " + vehicle.getRegistrationNumber());
             controllerDBStatus = null;
 
             Intent intent= new Intent ( UpdateVehicle.this, VehiclesListActivity.class);

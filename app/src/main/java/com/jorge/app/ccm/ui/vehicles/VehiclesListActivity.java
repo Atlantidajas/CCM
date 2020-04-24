@@ -126,11 +126,14 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             case R.id.menu_contextual_list_view_vehicles_item_delete:
 
-                controllerDBStatus = new ControllerDBStatus( getApplication(), vehicles.get( position ).getRegistrationNumber() );
-                controllerDBStatus.removeValue();
+                controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+
+                //Evento childEventListernet Incorporado en Cotrolador Status
+                String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
+                controllerDBStatus.removeValue( vehicles.get( position ), messageRemove + " " +
+                        vehicles.get( position ).getRegistrationNumber() );
+
                 //Cambo de mensaje genérico a espesívico para este evento
-                controllerDBStatus.setMessageOnChildRemovedChildEvent( R.string.toast_message_delete_vehicle );
-                this.vehicles.remove( position );
                 this.arrayAdapterVehicle.getListIntemVehicles().clear();
                 this.arrayAdapterVehicle.notifyDataSetChanged();
                 controllerDBStatus = null;//<-- Elimino objeto para eliminar posibles eventos
@@ -177,19 +180,20 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
                     if (vehicle.getDriving() == 0) {
 
-                        //intentForSeccion.putExtra( VEHICLE_SELECT_FOR_SESION, (Serializable) arrayAdapterVehicle.getItem( position ) );
-
                         windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList
                         windowYesInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                             @Override
                             public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                                SesionDriving sesionDriving = new SesionDriving( true, vehicles.get( position ) );
+                                Vehicle vehicleResult = vehicles.get( position );
+                                SesionDriving sesionDriving = new SesionDriving( true, vehicleResult );
 
                                 controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
                                 controllerDBSesions.startSesion( sesionDriving );
-                                controllerDBStatus.getDatabaseReference().child( vehicles.get( position ).getRegistrationNumber()  ).child( "driving" ).setValue( 1 );
-                                controllerDBSesions.getDatabaseReference().child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() ).setValue( sesionDriving );
+
+                                vehicleResult.setDriving( 1 );
+                                controllerDBStatus.updateValue( vehicleResult, null );//<-- Sin mensaje toast, en evento child (No es necesario).
+                                controllerDBSesions.updateCurrent( sesionDriving );
 
                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
                                 arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios

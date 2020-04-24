@@ -191,8 +191,7 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, 0 );
 
-            controllerDBStatus = new ControllerDBStatus( getApplicationContext(), vehicle.getRegistrationNumber() );
-            controllerDBStatus.setMessageOnChildChangedChildEvent( R.string.toast_message_update_vehicle );
+            controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
             controllerDBStatus.setValue( vehicle );
             controllerDBStatus = null;
             Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);

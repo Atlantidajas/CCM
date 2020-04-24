@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="sesionDrivingOpen">Este usuario ya tiene un sesion abierta, cierrela para abrir otra</string>
-    <string name="toast_message_save_generic">Save</string>
-    <string name="toast_message_update_generic">Update</string>
-    <string name="toast_message_delete_generic">Delete</string>
-    <string name="toast_message_moved_generic">Moved</string>
+    <string name="toast_message_save_vehicle_generic">Save vehicle registration number</string>
+    <string name="toast_message_changed_vehicle_generic">Changed vehicle registration number</string>
+    <string name="toast_message_removed_vehicle_generic">Removed vehicle registration number</string>
+    <string name="toast_message_moved_vehicle_generic">Moved vehicle registration number</string>
 
-    <string name="toast_message_delete_vehicle">Vehículo eliminado</string>
-    <string name="toast_message_update_vehicle">Vehículo modificado</string>
+  <string name="toast_message_init_sesion">You have logged init</string>
+  <string name="toast_message_close_sesion">You have logged out</string>
+
+
 </resources>
