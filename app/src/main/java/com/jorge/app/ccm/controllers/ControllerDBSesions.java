@@ -59,28 +59,16 @@ public class ControllerDBSesions {
         final DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
-        dbSesionsCurrent.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    SesionDriving resultSesionCurrent = new SesionDriving( dataSnapshot );
-
-                    // Si la acción que se pretende es iniciar pero ya hay una sesión de este usuario iniciada.
-                    if ((resultSesionCurrent.getTypeSesion().equals( "Start" )) && (sesionDriving.getTypeSesion().equals( "Start" ))) {
-
-                        dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
-                                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
-                        Toast.makeText( context, R.string.toast_message_init_sesion, Toast.LENGTH_SHORT ).show();
-                    }
-                }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
-            }
-        } );
+                // Si la acción que se pretende es iniciar pero ya hay una sesión de este usuario iniciada.
+
+                    dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
+                            sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
+                            sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
+                    Toast.makeText( context, R.string.toast_message_init_sesion, Toast.LENGTH_SHORT ).show();
+
+
     }
 
     public void endSesion( final SesionDriving sesionDriving ) {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesions;
@@ -196,8 +197,9 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                 final SesionDriving sesionDriving = new SesionDriving( true, vehicleResult );
 
                                 controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+                                DatabaseReference dbRef = controllerDBSesions.getDatabaseReference().child( sesionDriving.getUser().getIdUser() );
 
-                                controllerDBSesions.getDatabaseReference().child( "SesionsCurrents" ).addValueEventListener( new ValueEventListener() {
+                                dbRef.addValueEventListener( new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -207,35 +209,37 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                                             //Puede si ha cerrado previamente una que abrio y se registró.
                                             if ( resultSesionCurrent.getTypeSesion().equals( "End" )) {
-
                                                 controllerDBSesions.startSesion( sesionDriving );
-                                                vehicleResult.setDriving( 1 );
-                                                controllerDBStatus.updateValue( vehicleResult, null );//<-- Sin mensaje toast, en evento child (No es necesario).
-                                                controllerDBSesions.updateCurrent( sesionDriving );
                                                 startActivity( intentSesionParking );
+                                                arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
+                                                arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
+                                                controllerDBStatus = null;
+                                                finish();
 
                                             }
                                             //No puede ya que tiene una sesion abierta.
                                             else {
                                                 startActivity( intentSesionDriving );
+                                                arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
+                                                arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
+                                                controllerDBStatus = null;
+                                                finish();
+
                                             }
                                         }
                                         //Si no existe es que no tiene ninguna iniciada, por lo que puede
                                         else {
-                                            controllerDBSesions.startSesion( sesionDriving );
-                                            vehicleResult.setDriving( 1 );
-                                            controllerDBStatus.updateValue( vehicleResult, null );//<-- Sin mensaje toast, en evento child (No es necesario).
                                             controllerDBSesions.updateCurrent( sesionDriving );
+                                            vehicleResult.setDriving( 1 );
+                                            controllerDBStatus.updateValue( vehicleResult, null );
+                                            controllerDBSesions.startSesion( sesionDriving );
                                             startActivity( intentSesionParking );
+                                            arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
+                                            arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
+                                            controllerDBStatus = null;
+                                            finish();
 
                                         }
-
-                                        arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
-                                        arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
-                                        controllerDBStatus = null;
-
-                                        finish();
-
                                     }
 
                                     @Override
@@ -243,8 +247,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                                     }
                                 } );
-
-
                             }
 
                             @Override
