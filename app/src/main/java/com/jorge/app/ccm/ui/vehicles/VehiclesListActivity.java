@@ -197,7 +197,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                 final SesionDriving sesionDriving = new SesionDriving( true, vehicleResult );
 
                                 controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
-                                DatabaseReference dbRef = controllerDBSesions.getDatabaseReference().child( sesionDriving.getUser().getIdUser() );
+                                DatabaseReference dbRef = controllerDBSesions.getDatabaseReference().child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
 
                                 dbRef.addValueEventListener( new ValueEventListener() {
                                     @Override
@@ -209,6 +209,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                                             //Puede si ha cerrado previamente una que abrio y se registró.
                                             if ( resultSesionCurrent.getTypeSesion().equals( "End" )) {
+                                                System.out.println( "Existe y es End *************************************************************************" );
                                                 controllerDBSesions.startSesion( sesionDriving );
                                                 startActivity( intentSesionParking );
                                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
@@ -219,6 +220,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                             }
                                             //No puede ya que tiene una sesion abierta.
                                             else {
+                                                System.out.println( "No puede ya tiene *************************************************************************" );
                                                 startActivity( intentSesionDriving );
                                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
                                                 arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
@@ -229,6 +231,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                         }
                                         //Si no existe es que no tiene ninguna iniciada, por lo que puede
                                         else {
+                                            System.out.println( "No existe *************************************************************************" );
                                             controllerDBSesions.updateCurrent( sesionDriving );
                                             vehicleResult.setDriving( 1 );
                                             controllerDBStatus.updateValue( vehicleResult, null );

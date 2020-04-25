@@ -80,6 +80,6 @@ public class ControllerDBSesions {
                 sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
                 sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
         Toast.makeText( context, R.string.toast_message_close_sesion, Toast.LENGTH_SHORT ).show();
-        return;
+
     }
 }
