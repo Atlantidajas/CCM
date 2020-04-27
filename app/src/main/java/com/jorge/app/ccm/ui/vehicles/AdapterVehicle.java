@@ -110,14 +110,16 @@ public class AdapterVehicle extends BaseAdapter {
 
         textView_dateITV.setText( vehicle.getDateITV() );
 
+        //Muestro icono de vehículo libre.
         ImageView imageDriving = convertView.findViewById( R.id.imageView_driving_item_vehicles );
-        imageDriving.setBackgroundColor( Color.GRAY );
+        imageDriving.setBackgroundColor( Color.BLUE );
+        imageDriving.setImageResource( R.drawable.ic_stat_driving_car );
 
-        Glide.with(context).load(userLoging.photoUri()).into(imageDriving);
 
-
+        //Muestro el logo o inicial del cliente si inicio sesión con este vehículo
         if ( vehicle.getDriving() == 1 ){
-            imageDriving.setBackgroundColor( Color.GREEN );
+            Glide.with(context).load(userLoging.photoUri()).into(imageDriving);
+            imageDriving.setBackgroundColor( Color.GRAY );
         }
 
         return convertView;
