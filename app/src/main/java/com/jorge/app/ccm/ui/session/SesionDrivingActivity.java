@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesions;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;

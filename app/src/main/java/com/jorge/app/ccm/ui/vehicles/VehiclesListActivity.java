@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +53,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     private ListView listView;
     private WindowYesInitSesionVehicle windowYesInitSV;
     private WindowNoInitSesionVehicle windowNoInitSV;
+    private WindowYesInitSesionVehicle windowCloseRedirecSesionDriving;
     private ArrayList<Vehicle> vehicles;
     private User user;
     private DatabaseReference dbRef;
@@ -119,8 +121,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     vehicles.get( position ).getRegistrationNumber());
 
         }
-        // Llamo al OnCreateContextMenu del padre por si quiere
-        // añadir algún elemento.
+        // Llamo al OnCreateContextMenu del padre por si quiere añadir algún elemento
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
@@ -129,26 +130,73 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
         // Posición lista pulsado
         int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+        final Vehicle vehicleSelect = vehicles.get( position );
 
         // Información al usuario sobre menú pulsado.
         switch (item.getItemId()) {
 
             case R.id.menu_contextual_list_view_vehicles_item_edit:
 
-                intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) arrayAdapterVehicle.getItem( position ) );
-                startActivity(intentForUpdate);
+                //Si se puede editar.
+                if ( vehicleSelect.getDriving() == 0 ){
+                    intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) arrayAdapterVehicle.getItem( position ) );
+                    startActivity(intentForUpdate);
+                }
+                // No se puede editar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
+                else if ( vehicleSelect.getDriving() == 1 ){
+
+                    windowCloseRedirecSesionDriving = new WindowYesInitSesionVehicle( R.string.windowCloseRedirecSesionDriving_edit_message );//<-- Show desde onclickItemList
+                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                        @Override
+                        public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                            startActivity( intentSesionDriving );
+                        }
+
+                        @Override
+                        public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                            return;
+                        }
+                    } );
+                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+
+                }
+
                 break;
 
             case R.id.menu_contextual_list_view_vehicles_item_delete:
 
                 //Evento childEventListernet Incorporado en Cotrolador Status
-                String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
-                controllerDBStatus.removeValue( vehicles.get( position ), messageRemove + " " +
-                        vehicles.get( position ).getRegistrationNumber() );
+                final String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
 
-                //Cambo de mensaje genérico a espesívico para este evento
-                this.arrayAdapterVehicle.getListIntemVehicles().clear();
-                this.arrayAdapterVehicle.notifyDataSetChanged();
+                Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicleSelect.getDriving() );
+
+                // Se puede eliminar
+                if ( vehicleSelect.getDriving() == 0 ){
+                    controllerDBStatus.removeValue( vehicleSelect, messageRemove + " " +
+                            vehicleSelect.getRegistrationNumber() );
+                    //Cambo de mensaje genérico a espesívico para este evento
+                    this.arrayAdapterVehicle.getListIntemVehicles().clear();
+                    this.arrayAdapterVehicle.notifyDataSetChanged();
+
+                }
+                // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
+                else if ( vehicleSelect.getDriving() == 1 ){
+
+                    windowCloseRedirecSesionDriving = new WindowYesInitSesionVehicle( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList
+                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                        @Override
+                        public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                            startActivity( intentSesionDriving );
+                        }
+
+                        @Override
+                        public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                            return;
+                        }
+                    } );
+                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+
+                }
                 break;
 
             default:
