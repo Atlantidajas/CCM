@@ -229,19 +229,11 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                             //Condición 1.3
                                             if ( resultSesionCurrent.getTypeSesion().equals( "End" ) && sesionDriving.getTypeSesion().equals( "Start" )  ) {
 
+                                                Log.i( TAG, "Condición 1.3 -> resultSesionCurrente (Valor) : " + resultSesionCurrent.getTypeSesion() );
+                                                Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getTypeSesion() );
+                                                Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getVehicle().getRegistrationNumber() );
+                                                Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getUser().getIdUser() );
 
-                                                System.out.println( sesionDriving.getTypeSesion() );
-                                                System.out.println( sesionDriving.getVehicle().getModel() );
-                                                System.out.println( sesionDriving.getDate() );
-                                                System.out.println( sesionDriving.getHours() );
-                                                System.out.println( sesionDriving.getUser().getIdUser() );
-
-                                                //Log.i( TAG, "Condición 1.3 -> resultSesionCurrente (Valor) : " + resultSesionCurrent.getTypeSesion() );
-                                                //Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getTypeSesion() );
-                                                //Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getVehicle().getRegistrationNumber() );
-                                                //Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getUser().getIdUser() );
-                                                //Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getDate() );
-                                                //Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getHours() );
                                                 controllerDBSesions.updateCurrent( sesionDriving );
                                                 controllerDBStatus.updateValue( sesionDriving.getVehicle(), null );
                                                 controllerDBSesions.startSesion( sesionDriving );
@@ -302,9 +294,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         if( valueEventListener != null ){
             dbRef.removeEventListener( valueEventListener );
         }
-
-        //controllerDBStatus = null;
-        //controllerDBSesions = null;
     }
 
 }
