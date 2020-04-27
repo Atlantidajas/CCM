@@ -45,6 +45,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
         listView = findViewById(R.id.listView_sessions);
         controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
+        intentCloseSesion  = new Intent( SesionDrivingActivity.this, VehiclesListActivity.class );
 
 
         //Inizializao Adapter para mostrar lista de sesiones
@@ -81,7 +82,6 @@ public class SesionDrivingActivity extends AppCompatActivity{
                         controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
                         controllerDBSesions.updateCurrent( sesionDrivingEnd );
                         controllerDBSesions.endSesion( sesionDrivingEnd );
-                        intentCloseSesion  = new Intent( SesionDrivingActivity.this, VehiclesListActivity.class );
                         arrayAdapterSesion.getListIntemSesions().clear();//<-- Limpio por si retrocede
                         arrayAdapterSesion.notifyDataSetChanged();//<-- Notifico cambios
                         startActivity( intentCloseSesion );

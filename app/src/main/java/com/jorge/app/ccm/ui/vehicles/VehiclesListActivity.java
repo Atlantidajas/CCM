@@ -299,7 +299,10 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     @Override
     public void onDestroy(){
         super.onDestroy();
-        dbRef.removeEventListener( valueEventListener );
+        if( valueEventListener != null ){
+            dbRef.removeEventListener( valueEventListener );
+        }
+
         //controllerDBStatus = null;
         //controllerDBSesions = null;
     }
