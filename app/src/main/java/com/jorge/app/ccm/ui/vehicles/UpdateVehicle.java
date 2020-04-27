@@ -61,6 +61,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
 
         editTextRegistryNumber = findViewById( R.id.edit_text_registry_number_registry_vehicle );
         editTextRegistryNumber.setText( vehicleForUpdate.getRegistrationNumber() );
+        editTextRegistryNumber.setEnabled( false );//<-- No se puede cambiar matrícula (Se trata tambien del id del vehículo)
         checkBoxConfirmRegistryNumber = findViewById( R.id.checkBox_registry_number_registry_vehicle );
         showRegistryNumber();
 
