@@ -56,30 +56,21 @@ public class ControllerDBSesions {
 
     public void startSesion( final SesionDriving sesionDriving ) {
 
-        final DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
-
-
-                // Si la acción que se pretende es iniciar pero ya hay una sesión de este usuario iniciada.
-
-                    dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
-                            sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                            sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
-                    Toast.makeText( context, R.string.toast_message_init_sesion, Toast.LENGTH_SHORT ).show();
-
-
+        dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
+                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
+                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
+        Toast.makeText( context, R.string.toast_message_init_sesion, Toast.LENGTH_SHORT ).show();
     }
 
     public void endSesion( final SesionDriving sesionDriving ) {
 
-        //DatabaseReference dbSesionsCurrent = databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() );
         final DatabaseReference dbSesionsHistoric = databaseReference.child( "SesionsHistorics" );
 
         dbSesionsHistoric.child( sesionDriving.getUser().getIdUser() + "_" +
                 sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
                 sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
         Toast.makeText( context, R.string.toast_message_close_sesion, Toast.LENGTH_SHORT ).show();
-
     }
 }
