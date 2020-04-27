@@ -41,8 +41,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
     private final String TAG = "VehiclesListActivity";
     public Intent intentSesionDriving;
-    public Intent intentSesionParking;
     public Intent intentForUpdate;
+    public Intent intentForRegistryVehicles;
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerDBStatus controllerDBStatus;
     private ControllerDBSesions controllerDBSesions;
@@ -73,6 +73,11 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         controllerDBStatus.setAdapter( arrayAdapterVehicle );
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
 
+        //Intens
+        intentForRegistryVehicles = new Intent ( VehiclesListActivity.this, RegistryVehicles.class);
+        intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicle.class);
+        intentSesionDriving = new Intent( VehiclesListActivity.this, SesionDrivingActivity.class );
+
     }
 
     @Override
@@ -93,8 +98,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         int id = item.getItemId();
 
         if ( id == R.id.resgistreVehicle ) {
-            Intent intent = new Intent ( VehiclesListActivity.this, RegistryVehicles.class);
-            startActivity(intent);
+            startActivity(intentForRegistryVehicles);
         }
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
@@ -131,7 +135,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             case R.id.menu_contextual_list_view_vehicles_item_edit:
 
-                intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicle.class);
                 intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) arrayAdapterVehicle.getItem( position ) );
                 startActivity(intentForUpdate);
                 break;
@@ -166,8 +169,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                         vehicle.getRegistrationNumber();
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicle.getRegistrationNumber();
-                intentSesionDriving = new Intent( VehiclesListActivity.this, SesionDrivingActivity.class );
-                intentSesionParking = new Intent( VehiclesListActivity.this, VehicleParkingActivity.class );
 
                     // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
                     if (vehicle.getDriving() == 1) {
@@ -187,7 +188,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     }
 
                     // Si no se ha iniciado sesión para la conducción de este vehículo (Ventana dos botones)
-
                     if (vehicle.getDriving() == 0) {
 
                         windowYesInitSV = new WindowYesInitSesionVehicle( messageYes );//<-- Show desde onclickItemList
@@ -239,7 +239,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                                 controllerDBSesions.startSesion( sesionDriving );
                                                 arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
                                                 arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
-                                                startActivity( intentSesionParking );
                                                 finish();
                                             }
 
@@ -281,7 +280,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                 return;
                             }
                         } );
-                        windowYesInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), "WindowYesInitSesionVehicle" );
+                        windowYesInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
                     }
             }
         });
@@ -291,6 +290,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     @Override
     public void onDestroy(){
         super.onDestroy();
+        //Destruyo el evento para evitar recursividad
         if( valueEventListener != null ){
             dbRef.removeEventListener( valueEventListener );
         }
