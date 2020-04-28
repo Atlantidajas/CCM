@@ -308,6 +308,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                                 Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getVehicle().getRegistrationNumber() );
                                                 Log.i( TAG, "Condición 1.3 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getUser().getIdUser() );
 
+                                                sesionDriving.getVehicle().setDriving( 0 );
                                                 controllerDBSesions.updateCurrent( sesionDriving );
                                                 controllerDBStatus.updateValue( sesionDriving.getVehicle(), null );
                                                 controllerDBSesions.startSesion( sesionDriving );

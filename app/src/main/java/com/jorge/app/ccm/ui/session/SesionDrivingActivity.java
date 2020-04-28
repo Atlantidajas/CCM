@@ -50,6 +50,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
         controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         user = new User();
+
         //Eventos de cambios sobre el adaptador
         controllerDBSesions.getDatabaseReference().child( "SesionsHistorics" ).addChildEventListener( new ChildEventListener() {
             @Override
@@ -114,17 +115,15 @@ public class SesionDrivingActivity extends AppCompatActivity{
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        System.out.println( "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
-
                         Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
                         Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
 
                         //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
-                        if ( sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
+                        //Condicion 1
+                        if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() )) {
 
-                            Log.i( TAG, "OnclickItem -> sesionDrivingEND -> typeSesion (Valor) -->: " + sesionDrivingEnd.getTypeSesion() );
-                            Log.i( TAG, "OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
-
+                            Log.i( TAG, "Condicion 1: OnclickItem -> sesionDrivingEND -> typeSesion (Valor) -->: " + sesionDrivingEnd.getTypeSesion() );
+                            Log.i( TAG, "Condicion 1: OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
 
                             controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
                             controllerDBSesions.updateCurrent( sesionDrivingEnd );
@@ -142,6 +141,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
                         return;
                     }
                 } );
+
                 windowCloseSesionVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
             }
         });
