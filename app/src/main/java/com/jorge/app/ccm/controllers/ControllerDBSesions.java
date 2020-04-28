@@ -15,7 +15,6 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.session.AdapterSession;
 import com.jorge.app.ccm.ui.session.SesionDriving;
 
-
 public class ControllerDBSesions {
 
     private Context context;
@@ -52,6 +51,10 @@ public class ControllerDBSesions {
 
     public void updateCurrent( SesionDriving sesionDriving ){
         databaseReference.child( "SesionsCurrents" ).child( sesionDriving.getUser().getIdUser() ).setValue( sesionDriving );
+    }
+
+    public DatabaseReference getDatabaseReferenceSearch( SesionDriving sesionDriving){
+        return databaseReference.child( sesionDriving.getUser().getIdUser() );
     }
 
     public void startSesion( final SesionDriving sesionDriving ) {

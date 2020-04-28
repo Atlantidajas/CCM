@@ -10,5 +10,7 @@
   <string name="toast_message_close_sesion">You have logged out</string>
   <string name="toast_message_vehicle_already_exists">There is already a vehicle with that registration</string>
 
+  <string name="toast_message_logout_error">You cannot close a session from another user</string>
+
 
 </resources>

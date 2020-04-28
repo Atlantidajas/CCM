@@ -118,7 +118,6 @@ public class AdapterVehicle extends BaseAdapter {
 
         //Muestro el logo o inicial del cliente si inicio sesión con este vehículo
         if ( vehicle.getDriving() == 1 ){
-            Glide.with(context).load(userLoging.photoUri()).into(imageDriving);
             imageDriving.setBackgroundColor( Color.GRAY );
         }
 
