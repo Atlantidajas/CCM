@@ -8,6 +8,7 @@
 
   <string name="toast_message_init_sesion">You have logged init</string>
   <string name="toast_message_close_sesion">You have logged out</string>
+  <string name="toast_message_vehicle_already_exists">There is already a vehicle with that registration</string>
 
 
 </resources>

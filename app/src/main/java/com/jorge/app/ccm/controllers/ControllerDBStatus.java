@@ -31,7 +31,7 @@ public class ControllerDBStatus {
 
     public void setAdapter( final AdapterVehicle ADAPTER_VEHICLE ){
 
-        databaseReference.addValueEventListener( new ValueEventListener() {
+        ValueEventListener valueEventListenerStatus = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -45,12 +45,30 @@ public class ControllerDBStatus {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+
+        databaseReference.addValueEventListener( valueEventListenerStatus );
+
     }
 
     public void setValue( final Vehicle vehicle ){
-        DatabaseReference dbRF = databaseReference.child( vehicle.getRegistrationNumber() );
-        dbRF.setValue( vehicle );
+        final DatabaseReference dbRF = databaseReference.child( vehicle.getRegistrationNumber() );
+
+        final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    dbRF.setValue( vehicle );
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
+            }
+        };
+        dbRF.addValueEventListener( valueEventListenerSetVehicle );
     }
 
     public void removeValue(final Vehicle vehicle, String messageOnChildRemoved ){

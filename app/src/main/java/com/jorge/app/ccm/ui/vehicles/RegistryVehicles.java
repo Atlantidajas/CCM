@@ -193,7 +193,6 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
 
             controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
             controllerDBStatus.setValue( vehicle );
-            controllerDBStatus = null;
             Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);
             startActivity(intent);
         }
@@ -206,6 +205,5 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
     @Override
     public void onDestroy(){
         super.onDestroy();
-        controllerDBStatus = null;
     }
 }

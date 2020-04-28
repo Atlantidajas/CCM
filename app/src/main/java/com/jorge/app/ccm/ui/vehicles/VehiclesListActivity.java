@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.ui.vehicles;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -68,6 +70,37 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         listView = findViewById(R.id.listView_vehicles);
         controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
         controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+        //Eventos de cambios sobre el adaptador
+        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                arrayAdapterVehicle.getListIntemVehicles().clear();
+                arrayAdapterVehicle.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                arrayAdapterVehicle.getListIntemVehicles().clear();
+                arrayAdapterVehicle.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                arrayAdapterVehicle.getListIntemVehicles().clear();
+                arrayAdapterVehicle.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                arrayAdapterVehicle.getListIntemVehicles().clear();
+                arrayAdapterVehicle.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
         user = new User(  );
 
         //Inizializao Adapter para mostrar lista de vehículos
@@ -174,10 +207,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 if ( vehicleSelect.getDriving() == 0 ){
                     controllerDBStatus.removeValue( vehicleSelect, messageRemove + " " +
                             vehicleSelect.getRegistrationNumber() );
-                    //Cambo de mensaje genérico a espesívico para este evento
-                    this.arrayAdapterVehicle.getListIntemVehicles().clear();
-                    this.arrayAdapterVehicle.notifyDataSetChanged();
-
                 }
                 // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
                 else if ( vehicleSelect.getDriving() == 1 ){
@@ -269,9 +298,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                                 sesionDriving.setTypeSesion( "Start" );
                                                 controllerDBSesions.updateCurrent( sesionDriving );
                                                 controllerDBSesions.startSesion( sesionDriving );
-                                                arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrocede
-                                                arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
-                                                finish();
                                             }
 
                                             //Condición 1.3
@@ -285,9 +311,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                                 controllerDBSesions.updateCurrent( sesionDriving );
                                                 controllerDBStatus.updateValue( sesionDriving.getVehicle(), null );
                                                 controllerDBSesions.startSesion( sesionDriving );
-                                                arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
-                                                arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
-                                                finish();
                                             }
 
                                             //Condición 1.4
@@ -296,8 +319,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                                                 Log.i( TAG, "Condición 1.4 -> resultSesionCurrente (Valor) : " + resultSesionCurrent.getTypeSesion() );
                                                 Log.i( TAG, "Condición 1.4 -> sesionDriving -> typeSesion (Valor) : " + sesionDriving.getTypeSesion() );
 
-                                                arrayAdapterVehicle.getListIntemVehicles().clear();//<-- Limpio por si retrosede
-                                                arrayAdapterVehicle.notifyDataSetChanged();//<-- Notifico cambios
                                                 startActivity( intentSesionDriving );
                                                 finish();
                                             }
@@ -339,9 +360,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public void onDestroy(){
         super.onDestroy();
         //Destruyo el evento para evitar recursividad
-        if( valueEventListener != null ){
-            dbRef.removeEventListener( valueEventListener );
-        }
+
     }
 
 }
