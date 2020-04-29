@@ -19,7 +19,19 @@
         android:id="@+id/button_link_vehicles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="168dp"
         android:text="Button"
-        tools:layout_editor_absoluteX="167dp"
-        tools:layout_editor_absoluteY="130dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_home" />
+
+    <Button
+        android:id="@+id/button_link_historic_sesions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hitoric Sesisons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_link_vehicles" />
 </androidx.constraintlayout.widget.ConstraintLayout>

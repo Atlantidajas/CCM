@@ -7,7 +7,6 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,9 +27,8 @@ import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
 
 import java.util.ArrayList;
 
-public class SesionDrivingActivity extends AppCompatActivity{
-
-    private final String TAG = "SesionDrivingActivity";
+public class SesionHistoricActivity extends AppCompatActivity {
+    private final String TAG = "SesionHistoricActivity";
     private ControllerDBSesions controllerDBSesions;
     private ControllerDBStatus controllerDBStatus;
 
@@ -83,7 +81,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
             }
         } );
 
-        intentCloseSesion  = new Intent( SesionDrivingActivity.this, VehiclesListActivity.class );
+        intentCloseSesion  = new Intent( SesionHistoricActivity.this, VehiclesListActivity.class );
 
         //Inizializao Adapter para mostrar lista de sesiones
         arrayAdapterSesion = new AdapterSession( getApplication(), textView, listView);
