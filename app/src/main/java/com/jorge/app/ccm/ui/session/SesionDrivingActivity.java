@@ -19,7 +19,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesions;
+import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class SesionDrivingActivity extends AppCompatActivity{
 
     private final String TAG = "SesionDrivingActivity";
-    private ControllerDBSesions controllerDBSesions;
+    private ControllerDBSesionsCurrents controllerDBSesionsCurrents;
     private ControllerDBStatus controllerDBStatus;
 
     private AdapterSession arrayAdapterSesion;
@@ -47,12 +47,12 @@ public class SesionDrivingActivity extends AppCompatActivity{
         setContentView( R.layout.activity_sesion_driving );
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
-        controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+        controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         user = new User();
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSesions.getDatabaseReference().child( "SesionsHistorics" ).addChildEventListener( new ChildEventListener() {
+        controllerDBSesionsCurrents.getDatabaseReference().child( "SesionsHistorics" ).addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 arrayAdapterSesion.getListIntemSesions().clear();
@@ -88,7 +88,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
         //Inizializao Adapter para mostrar lista de sesiones
         arrayAdapterSesion = new AdapterSession( getApplication(), textView, listView);
         // Cargo array adapte
-        controllerDBSesions.setAdapter( arrayAdapterSesion );
+        controllerDBSesionsCurrents.setAdapter( arrayAdapterSesion );
         sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
 
     }
@@ -126,8 +126,8 @@ public class SesionDrivingActivity extends AppCompatActivity{
                             Log.i( TAG, "Condicion 1: OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
 
                             controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
-                            controllerDBSesions.updateCurrent( sesionDrivingEnd );
-                            controllerDBSesions.endSesion( sesionDrivingEnd );
+                            controllerDBSesionsCurrents.updateCurrent( sesionDrivingEnd );
+                            controllerDBSesionsCurrents.endSesion( sesionDrivingEnd );
                             startActivity( intentCloseSesion );
                             finish();
                         }
