@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.session.AdapterSession;
 import com.jorge.app.ccm.ui.session.SesionDriving;
+import com.jorge.app.ccm.ui.vehicles.Vehicle;
 
 public class ControllerDBSesionsCurrents {
 
@@ -30,14 +31,33 @@ public class ControllerDBSesionsCurrents {
         return databaseReference;
     }
 
+    public void setValue( final SesionDriving sesionDriving ){
+        final DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() );
+
+        final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    dbRF.setValue( sesionDriving );
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
+            }
+        };
+        dbRF.addValueEventListener( valueEventListenerSetVehicle );
+    }
+
     public void removeValue(final SesionDriving sesionDriving, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getVehicle().getRegistrationNumber() );
+        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() );
         dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
     public void updateValue( final SesionDriving sesionDriving, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getVehicle().getRegistrationNumber() );
+        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() );
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
         dbRF.setValue( sesionDriving );
     }

@@ -124,8 +124,8 @@ public class SesionHistoricActivity extends AppCompatActivity {
                             Log.i( TAG, "Condicion 1: OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
 
                             controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
-                            controllerDBSesionsCurrents.updateCurrent( sesionDrivingEnd );
-                            controllerDBSesionsCurrents.endSesion( sesionDrivingEnd );
+                           // controllerDBSesionsCurrents.updateCurrent( sesionDrivingEnd );
+                            //controllerDBSesionsCurrents.endSesion( sesionDrivingEnd );
                             startActivity( intentCloseSesion );
                             finish();
                         }

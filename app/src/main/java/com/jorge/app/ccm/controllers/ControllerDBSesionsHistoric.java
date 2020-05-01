@@ -30,14 +30,35 @@ public class ControllerDBSesionsHistoric {
         return databaseReference;
     }
 
+    public void setValue( final SesionDriving sesionDriving ){
+        final DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() );
+
+        final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    dbRF.setValue( sesionDriving );
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
+            }
+        };
+        dbRF.addValueEventListener( valueEventListenerSetVehicle );
+    }
+
     public void removeValue(final SesionDriving sesionDriving, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getVehicle().getRegistrationNumber() );
+        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() );
         dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
     public void updateValue( final SesionDriving sesionDriving, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getVehicle().getRegistrationNumber() );
+        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() + "_" +
+                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
+                sesionDriving.getTypeSesion() );
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
         dbRF.setValue( sesionDriving );
     }
@@ -105,23 +126,4 @@ public class ControllerDBSesionsHistoric {
     public DatabaseReference getDatabaseReferenceSearch( SesionDriving sesionDriving){
         return databaseReference.child( sesionDriving.getUser().getIdUser() );
     }
-
-
-    public void startSesion( final SesionDriving sesionDriving ) {
-
-        databaseReference.child( sesionDriving.getUser().getIdUser() + "_" +
-                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
-        Toast.makeText( context, R.string.toast_message_init_sesion, Toast.LENGTH_SHORT ).show();
-    }
-
-    public void endSesion( final SesionDriving sesionDriving ) {
-
-        databaseReference.child( sesionDriving.getUser().getIdUser() + "_" +
-                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                sesionDriving.getTypeSesion() ).setValue( sesionDriving );//<-- Cambio a cerrada sesión current
-        Toast.makeText( context, R.string.toast_message_close_sesion, Toast.LENGTH_SHORT ).show();
-    }
-
-
 }
