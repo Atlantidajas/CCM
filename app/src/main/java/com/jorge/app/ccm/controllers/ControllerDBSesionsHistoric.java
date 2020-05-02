@@ -50,15 +50,13 @@ public class ControllerDBSesionsHistoric {
     }
 
     public void removeValue(final SesionDriving sesionDriving, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() );
+        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() ).getRoot();
         dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
     public void updateValue( final SesionDriving sesionDriving, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() + "_" +
-                sesionDriving.getDate() + "_" + sesionDriving.getHours() + "_" +
-                sesionDriving.getTypeSesion() );
+        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() ).getRoot();
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
         dbRF.setValue( sesionDriving );
     }

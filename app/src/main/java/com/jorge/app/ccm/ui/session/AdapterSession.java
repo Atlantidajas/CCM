@@ -48,11 +48,11 @@ public class AdapterSession extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView( int position, View convertView, ViewGroup parent ) {
 
         this.session = (SesionDriving) getItem(position);
 
@@ -95,6 +95,7 @@ public class AdapterSession extends BaseAdapter {
         }else{
             listView.setAdapter(this);
         }
+
     }
 
 

@@ -15,7 +15,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.session.AdapterSession;
 import com.jorge.app.ccm.ui.session.SesionDriving;
-import com.jorge.app.ccm.ui.vehicles.Vehicle;
 
 public class ControllerDBSesionsCurrents {
 

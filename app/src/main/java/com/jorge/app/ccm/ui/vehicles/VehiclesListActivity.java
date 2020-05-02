@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -58,7 +59,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     private WindowNoInitSesionVehicle windowNoInitSV;
     private WindowYesInitSesionVehicle windowCloseRedirecSesionDriving;
     private ArrayList<Vehicle> vehicles;
-    private ArrayList<SesionDriving>sesionDrivingsCurrents;
+    private SesionDriving sesionDrivingCurrent;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
         controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
         controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
+        user = new User();
 
         //Eventos de cambios sobre el adaptador
         controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
@@ -103,20 +106,12 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             }
         } );
-
-
-
-        sesionDrivingsCurrents = new ArrayList<>(  );
-        controllerDBSesionsCurrents.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        controllerDBSesionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if( dataSnapshot.exists() ) {
-
-                    Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
-                    do {
-                        sesionDrivingsCurrents.add( new SesionDriving( dataSnapshots.next() ) );
-                    } while (dataSnapshots.hasNext());
+                    sesionDrivingCurrent = new SesionDriving( dataSnapshot );
                 }
 
             }
@@ -126,8 +121,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             }
         } );
-
-
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
@@ -144,7 +137,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     @Override
     public void onStart() {
         super.onStart();
-        onSesionCreate();//Si es la primera vez que usa la app, creo una primera sesión de tipo Create (Esta no será mostrada al usuario)
+        //Si es la primera vez que usa la app, creo una primera sesión de tipo Create (Esta no será mostrada al usuario)
+        onSesionDrinvingCreate();
         registerForContextMenu( listView );
         onclickItemList();
     }
@@ -261,7 +255,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         return true;
     }
 
-    public void onSesionCreate(){
+    public void onSesionDrinvingCreate(){
         //Sesion de inicio por si es la primera ves que inicia sesión
         SesionDriving sesionDrivingCreate = new SesionDriving();
         sesionDrivingCreate.setTypeSesion( "Create" );
@@ -281,26 +275,34 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicleSelect.getRegistrationNumber();
 
-                    // Si ya hay iniciado sesión para la conducción de este vehículo (Ventana de un solo botón)
-                    if (vehicleSelect.getDriving() == 1) {
-                        windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
-                        windowNoInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
-                            @Override
-                            public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                                startActivity( intentSesionDriving );
-                            }
 
-                            @Override
-                            public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-                                return;
-                            }
-                        } );
-                        windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+                    if (vehicleSelect.getDriving() == 1) {
+
+                        Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sesionDrivingCurrent.getTypeSesion() );
+
+                        if (sesionDrivingCurrent.getTypeSesion().equals( "Create" ) ) {
+                            Toast.makeText( getApplicationContext(), "Este vehículo está siendo usado por otro usuario, no puede iniciar sesión", Toast.LENGTH_SHORT ).show();
+                        }
+                        else {
+                            windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
+                            windowNoInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                                @Override
+                                public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                                    startActivity( intentSesionDriving );
+                                }
+
+                                @Override
+                                public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                                    return;
+                                }
+                            } );
+                            windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+                        }
                     }
                 if (vehicleSelect.getDriving() == 0) {
-                     SesionDriving sesionDrivingStart = new SesionDriving(true, vehicleSelect);
-                     checkSesion( sesionDrivingStart );
-                     Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getDriving());
+                    SesionDriving sesionDrivingStart = new SesionDriving(true, vehicleSelect);
+                    checkSesion( sesionDrivingStart );
+                    Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getDriving());
                 }
 
             }
@@ -310,9 +312,9 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public void checkSesion( final SesionDriving sesionDrivingStart ) {
 
         //Condición 1
-        if (sesionDrivingsCurrents.get( 0 ).getTypeSesion().equals( "Start" )) {
+        if (sesionDrivingCurrent.getTypeSesion().equals( "Start" )) {
 
-            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingsCurrents.get( 0 ).getTypeSesion() );
+            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getTypeSesion() );
 
             WindowYesInitSesionVehicle windowForActivictiSesionDriving = new WindowYesInitSesionVehicle( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
             windowForActivictiSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
@@ -329,16 +331,16 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
             windowForActivictiSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
         }
 
-        //Condición 2
-        else if (sesionDrivingsCurrents.get( 0 ).getTypeSesion() != "Start") {
+        //Condición 3
+        else if (sesionDrivingCurrent.getTypeSesion() != "Start") {
 
             WindowYesInitSesionVehicle windowInitSesion = new WindowYesInitSesionVehicle( "Deses iniciar sesión" );
             windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                    Log.i( TAG, "checkSesion() Condición 2 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingsCurrents.get( 0 ).getTypeSesion() );
-                    Log.i( TAG, "checkSesion() Condición 2 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sesionDrivingStart.getVehicle().getDriving() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getTypeSesion() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sesionDrivingStart.getVehicle().getDriving() );
 
                     controllerDBSesionsCurrents.updateValue( sesionDrivingStart, null );
                     controllerDBStatus.updateValue( sesionDrivingStart.getVehicle(), null);
