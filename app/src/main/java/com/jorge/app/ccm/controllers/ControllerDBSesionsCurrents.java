@@ -37,7 +37,10 @@ public class ControllerDBSesionsCurrents {
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()){
+                if( dataSnapshot.exists()){
+
+                }
+                else {
                     dbRF.setValue( sesionDriving );
                 }
             }

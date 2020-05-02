@@ -14,30 +14,39 @@ public class SesionDriving {
     private User user;
     private Vehicle vehicle;
 
-    public SesionDriving() {}
 
     public SesionDriving(boolean typeSesion, Vehicle vehicle) {
         this.user = new User();
-        this.vehicle = vehicle;
+
         DateHoursUtil dateHoursUtil = new DateHoursUtil();
 
         // Controlo que si el objeto es creado para registrar un inicio de session
-        if ( typeSesion == true) {
+        if (typeSesion == true) {
             this.typeSesion = "Start";
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
-            this.vehicle.setDriving( 1 );//<-- Paso a ocupado vehículo
-            this.vehicle.setDrivingCurrent( user.getEmail() );
+            vehicle.setDriving( 1 );
+            vehicle.setDrivingCurrent( user.getEmail() );
+            this.vehicle = vehicle;
         }
         // Controlo que si el objeto es creado para registrar un fin de session
-        if ( typeSesion == false) {
+        if (typeSesion == false) {
             this.typeSesion = "End";
             this.date = dateHoursUtil.getDateFormatString();
             this.hours = dateHoursUtil.getHourFormatString();
-            this.vehicle.setDriving( 0 );//<-- Paso a libre vehículo
+            vehicle.setDriving( 0 );
+            this.vehicle = vehicle;
         }
-
     }
+    public SesionDriving() {
+        this.user = new User();
+        DateHoursUtil dateHoursUtil = new DateHoursUtil();
+        this.date = dateHoursUtil.getDateFormatString();
+        this.hours = dateHoursUtil.getHourFormatString();
+        this.vehicle = new Vehicle();
+    }
+
+
 
     public SesionDriving( DataSnapshot dataSnapshotSesion ) {
 

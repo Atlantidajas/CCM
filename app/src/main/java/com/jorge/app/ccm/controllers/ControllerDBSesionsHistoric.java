@@ -31,7 +31,7 @@ public class ControllerDBSesionsHistoric {
     }
 
     public void setValue( final SesionDriving sesionDriving ){
-        final DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() );
+        final DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() ).push();
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override

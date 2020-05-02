@@ -50,7 +50,7 @@ public class SesionHistoricActivity extends AppCompatActivity {
         user = new User();
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSesionsCurrents.getDatabaseReference().child( "SesionsHistorics" ).addChildEventListener( new ChildEventListener() {
+        controllerDBSesionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 arrayAdapterSesion.getListIntemSesions().clear();
@@ -105,7 +105,7 @@ public class SesionHistoricActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> lst, View viewRow,
                                     final int position, long id) {
 
-                final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
+              //  final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
 
                 WindowYesInitSesionVehicle windowCloseSesionVehicle = new WindowYesInitSesionVehicle( "Desea cerrar sesion" );
 
@@ -120,10 +120,10 @@ public class SesionHistoricActivity extends AppCompatActivity {
                         //Condicion 1
                         if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
 
-                            Log.i( TAG, "Condicion 1: OnclickItem -> sesionDrivingEND -> typeSesion (Valor) -->: " + sesionDrivingEnd.getTypeSesion() );
-                            Log.i( TAG, "Condicion 1: OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
+                    //        Log.i( TAG, "Condicion 1: OnclickItem -> sesionDrivingEND -> typeSesion (Valor) -->: " + sesionDrivingEnd.getTypeSesion() );
+                    //        Log.i( TAG, "Condicion 1: OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
 
-                            controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
+                         //   controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
                            // controllerDBSesionsCurrents.updateCurrent( sesionDrivingEnd );
                             //controllerDBSesionsCurrents.endSesion( sesionDrivingEnd );
                             startActivity( intentCloseSesion );

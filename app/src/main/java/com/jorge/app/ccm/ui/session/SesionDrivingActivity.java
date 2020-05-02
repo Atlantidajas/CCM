@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
+import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
@@ -33,6 +34,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
     private final String TAG = "SesionDrivingActivity";
     private ControllerDBSesionsCurrents controllerDBSesionsCurrents;
     private ControllerDBStatus controllerDBStatus;
+    private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
 
     private AdapterSession arrayAdapterSesion;
     private TextView textView;
@@ -49,10 +51,11 @@ public class SesionDrivingActivity extends AppCompatActivity{
         listView = findViewById(R.id.listView_sessions);
         controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
+        controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
         user = new User();
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSesionsCurrents.getDatabaseReference().child( "SesionsHistorics" ).addChildEventListener( new ChildEventListener() {
+        controllerDBSesionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 arrayAdapterSesion.getListIntemSesions().clear();
@@ -107,13 +110,15 @@ public class SesionDrivingActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> lst, View viewRow,
                                     final int position, long id) {
 
-                final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
+                //final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
 
                 WindowYesInitSesionVehicle windowCloseSesionVehicle = new WindowYesInitSesionVehicle( "Desea cerrar sesion" );
 
                 windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+
+                        final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
 
                         Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
                         Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
@@ -122,14 +127,11 @@ public class SesionDrivingActivity extends AppCompatActivity{
                         //Condicion 1
                         if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
 
-                            Log.i( TAG, "Condicion 1: OnclickItem -> sesionDrivingEND -> typeSesion (Valor) -->: " + sesionDrivingEnd.getTypeSesion() );
-                            Log.i( TAG, "Condicion 1: OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
-
-                            //controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
-                            //controllerDBSesionsCurrents.updateCurrent( sesionDrivingEnd );
-                            //controllerDBSesionsCurrents.endSesion( sesionDrivingEnd );
+                            controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
+                            controllerDBSesionsCurrents.updateValue( sesionDrivingEnd, "Ha cerrado sesión" );
+                            controllerDBSesionsHistoric.setValue( sesionDrivingEnd );
                             startActivity( intentCloseSesion );
-                            finish();
+
                         }
                         else {
                             Toast.makeText( getApplicationContext(), R.string.toast_message_logout_error, Toast.LENGTH_SHORT ).show();

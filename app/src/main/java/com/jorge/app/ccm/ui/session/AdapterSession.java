@@ -28,6 +28,8 @@ public class AdapterSession extends BaseAdapter {
     private ListView listView;
     private SesionDriving session;
 
+    public AdapterSession(){}
+
     public AdapterSession(Context context, TextView textView, ListView listView) {
         this.context = context;
         this.textView = textView;
