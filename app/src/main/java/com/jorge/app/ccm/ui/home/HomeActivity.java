@@ -2,7 +2,7 @@ package com.jorge.app.ccm.ui.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.jorge.app.ccm.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.firebase.auth.FirebaseUser;
-import com.jorge.app.ccm.ui.session.SesionHistoricActivity;
-import com.jorge.app.ccm.ui.vehicles.VehiclesListActivity;
+import com.jorge.app.ccm.ui.sessionHistoric.SesionHistoricActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 public class HomeActivity extends AppCompatActivity  {
 

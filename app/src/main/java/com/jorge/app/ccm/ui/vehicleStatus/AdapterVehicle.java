@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehicles;
+package com.jorge.app.ccm.ui.vehicleStatus;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -6,20 +6,15 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.user.User;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.user.User;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
 import java.text.ParseException;
@@ -129,7 +124,7 @@ public class AdapterVehicle extends BaseAdapter {
      * @Jorge.HL
      */
 
-    public void setArrayAdapter(DataSnapshot dataSnapshot){
+    public void setArrayAdapterVehicle(DataSnapshot dataSnapshot){
 
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
         do{

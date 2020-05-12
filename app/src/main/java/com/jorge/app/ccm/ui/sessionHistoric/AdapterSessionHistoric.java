@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.session;
+package com.jorge.app.ccm.ui.sessionHistoric;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,25 +12,21 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.ui.sessionCrurrent.SesionDriving;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * @author Jorge.HL
- */
-
-public class AdapterSession extends BaseAdapter {
-
+public class AdapterSessionHistoric extends BaseAdapter {
     private Context context;
     private ArrayList<SesionDriving> listIntemSessions = new ArrayList<SesionDriving>();
     private TextView textView;
     private ListView listView;
     private SesionDriving session;
 
-    public AdapterSession(){}
+    public AdapterSessionHistoric(){}
 
-    public AdapterSession(Context context, TextView textView, ListView listView) {
+    public AdapterSessionHistoric(Context context, TextView textView, ListView listView) {
         this.context = context;
         this.textView = textView;
         this.listView = listView;
@@ -52,11 +48,11 @@ public class AdapterSession extends BaseAdapter {
     }
 
     @Override
-    public View getView( int position, View convertView, ViewGroup parent ) {
+    public View getView(int position, View convertView, ViewGroup parent ) {
 
         this.session = (SesionDriving) getItem(position);
 
-        convertView = LayoutInflater.from( context ).inflate(R.layout.session_item_list_view, parent, false );
+        convertView = LayoutInflater.from( context ).inflate( R.layout.session_item_list_view, parent, false );
 
         ImageView imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
         imageViewLogoVehicle.setImageResource( session.getVehicle().getLogoVehicle() );
@@ -83,7 +79,7 @@ public class AdapterSession extends BaseAdapter {
      * @Jorge.HL
      */
 
-    public void setArrayAdapter(DataSnapshot dataSnapshot){
+    public void setArrayAdapterHistoric(DataSnapshot dataSnapshot){
 
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
         do{

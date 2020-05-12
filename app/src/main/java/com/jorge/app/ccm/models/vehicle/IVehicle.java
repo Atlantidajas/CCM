@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehicles;
+package com.jorge.app.ccm.models.vehicle;
 
 public interface IVehicle {
 

@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import com.jorge.app.ccm.ui.user.UserLoginActivity;
+import com.jorge.app.ccm.ui.login.LoginActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 toggle();
                 //Intent intent= new Intent (MainActivity.this, UserLoginActivity.class);
-                Intent intent= new Intent (MainActivity.this, UserLoginActivity.class);
+                Intent intent= new Intent (MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

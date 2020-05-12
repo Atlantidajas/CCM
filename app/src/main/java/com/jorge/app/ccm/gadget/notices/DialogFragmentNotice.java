@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.alertsDialogos.notices;
+package com.jorge.app.ccm.gadget.notices;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 
 
 public class DialogFragmentNotice extends DialogFragment {

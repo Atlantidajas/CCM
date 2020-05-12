@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.session.SesionHistoricActivity"></activity>
-        <activity android:name=".ui.vehicles.UpdateVehicle" />
-        <activity android:name=".ui.session.SesionDrivingActivity" />
-        <activity android:name=".ui.vehicles.RegistryVehicles" />
-        <activity android:name=".ui.vehicles.VehicleParkingActivity" />
-        <activity android:name=".ui.vehicles.VehiclesListActivity" />
+        <activity android:name=".ui.sessionHistoric.SesionHistoricActivity"></activity>
+        <activity android:name=".ui.vehicleStatus.UpdateVehicleActivity" />
+        <activity android:name=".ui.sessionCrurrent.SesionDrivingActivity" />
+        <activity android:name=".ui.vehicleStatus.RegistryVehiclesActivity" />
+        <activity android:name=".ui.vehicleStatus.VehicleParkingActivity" />
+        <activity android:name=".ui.vehicleStatus.VehiclesListActivity" />
         <activity android:name=".ui.home.HomeActivity" />
-        <activity android:name=".ui.user.UserLoginActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -1,9 +1,9 @@
-package com.jorge.app.ccm.ui.form;
+package com.jorge.app.ccm.gadget;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
 
 public class SpinnerRegistryBrands extends DialogFragment {
 

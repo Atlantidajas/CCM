@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehicles;
+package com.jorge.app.ccm.ui.vehicleStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

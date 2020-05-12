@@ -1,15 +1,13 @@
-package com.jorge.app.ccm.ui.form;
-
-import android.content.res.Resources;
+package com.jorge.app.ccm.gadget;
 
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 
-public class WindowYesInitSesionVehicle extends DialogFragmentNotice {
+public class WindowDialogFragment extends DialogFragmentNotice {
 
     DialogFragmentNotice dialogFragmentNotice;
 
-    public WindowYesInitSesionVehicle(String menssage ) {
+    public WindowDialogFragment(String menssage ) {
         dialogFragmentNotice = new DialogFragmentNotice( R.string.windows_init_session_vehicle_title,
                 menssage,
                 R.string.windows_init_session_vehicle_button_aceptar,
@@ -17,7 +15,7 @@ public class WindowYesInitSesionVehicle extends DialogFragmentNotice {
                 false);
     }
 
-    public WindowYesInitSesionVehicle( int messageResorce ) {
+    public WindowDialogFragment(int messageResorce ) {
 
         dialogFragmentNotice = new DialogFragmentNotice( R.string.windows_init_session_vehicle_title,
                 messageResorce,

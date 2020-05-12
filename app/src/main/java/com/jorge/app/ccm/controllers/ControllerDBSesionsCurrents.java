@@ -13,8 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.session.AdapterSession;
-import com.jorge.app.ccm.ui.session.SesionDriving;
+import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
+import com.jorge.app.ccm.ui.sessionCrurrent.SesionDriving;
 
 public class ControllerDBSesionsCurrents {
 
@@ -64,14 +64,14 @@ public class ControllerDBSesionsCurrents {
         dbRF.setValue( sesionDriving );
     }
 
-    public void setAdapter(final AdapterSession ADAPTER_SESION ){
+    public void setAdapter(final AdapterSessionCurrent ADAPTER_SESION ){
 
         databaseReference.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
 
                 if (dataSnapshot.exists()) {
-                    ADAPTER_SESION.setArrayAdapter( dataSnapshot );
+                    ADAPTER_SESION.setArrayAdapterSessionCurrent( dataSnapshot );
                 }
                 else {
                     Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();

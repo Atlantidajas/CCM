@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.user;
+package com.jorge.app.ccm.models.user;
 
 import android.net.Uri;
 

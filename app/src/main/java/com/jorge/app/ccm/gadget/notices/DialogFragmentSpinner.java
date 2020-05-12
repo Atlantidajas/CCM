@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.alertsDialogos;
+package com.jorge.app.ccm.gadget.notices;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -1,8 +1,8 @@
-package com.jorge.app.ccm.ui.user;
+package com.jorge.app.ccm.models.user;
 
 import android.net.Uri;
 
-public interface InterfaceUser {
+public interface IUser {
 
     public void setIdUser(String idUser);
     public void setName(String name);

@@ -1,8 +1,8 @@
-package com.jorge.app.ccm.ui.session;
+package com.jorge.app.ccm.ui.sessionCrurrent;
 
 import com.google.firebase.database.DataSnapshot;
-import com.jorge.app.ccm.ui.user.User;
-import com.jorge.app.ccm.ui.vehicles.Vehicle;
+import com.jorge.app.ccm.models.user.User;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
 

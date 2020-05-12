@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehicles;
+package com.jorge.app.ccm.ui.vehicleStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -16,12 +16,13 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
-import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
+import com.jorge.app.ccm.gadget.SpinnerRegistryBrands;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
-public class RegistryVehicles extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
+public class RegistryVehiclesActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
     private ControllerDBStatus controllerDBStatus;
     private SpinnerRegistryBrands spinnerRegistryBrands;
@@ -193,7 +194,7 @@ public class RegistryVehicles extends AppCompatActivity implements DialogFragmen
 
             controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
             controllerDBStatus.setValue( vehicle );
-            Intent intent= new Intent ( RegistryVehicles.this, VehiclesListActivity.class);
+            Intent intent= new Intent ( RegistryVehiclesActivity.this, VehiclesListActivity.class);
             startActivity(intent);
         }
         else{

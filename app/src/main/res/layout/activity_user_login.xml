@@ -4,7 +4,7 @@
     android:id="@+id/user_login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.user.UserLoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"

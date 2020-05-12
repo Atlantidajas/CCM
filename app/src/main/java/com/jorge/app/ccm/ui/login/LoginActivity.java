@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.user;
+package com.jorge.app.ccm.ui.login;
 
 /**
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -41,7 +41,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.home.HomeActivity;
 
-public class UserLoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "HomeActivity";
     private static final int RC_SIGN_IN = 9001;

@@ -1,7 +1,5 @@
-package com.jorge.app.ccm.ui.vehicles;
+package com.jorge.app.ccm.ui.vehicleStatus;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -18,14 +16,15 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentDatePincker;
-import com.jorge.app.ccm.ui.alertsDialogos.DialogFragmentSpinner;
-import com.jorge.app.ccm.ui.form.SpinnerRegistryBrands;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
+import com.jorge.app.ccm.gadget.SpinnerRegistryBrands;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
-import static com.jorge.app.ccm.ui.vehicles.VehiclesListActivity.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE;
+import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE;
 
-public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
+public class UpdateVehicleActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
     private ControllerDBStatus controllerDBStatus;
 
@@ -208,7 +207,7 @@ public class UpdateVehicle extends AppCompatActivity implements DialogFragmentSp
             controllerDBStatus.updateValue( vehicle, messageUpdateVehicle + " " + vehicle.getRegistrationNumber());
             controllerDBStatus = null;
 
-            Intent intent= new Intent ( UpdateVehicle.this, VehiclesListActivity.class);
+            Intent intent= new Intent ( UpdateVehicleActivity.this, VehiclesListActivity.class);
             startActivity(intent);
         }
         else{

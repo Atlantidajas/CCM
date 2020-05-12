@@ -1,7 +1,6 @@
 package com.jorge.app.ccm.controllers;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,10 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.vehicles.AdapterVehicle;
-import com.jorge.app.ccm.ui.vehicles.Vehicle;
-
-import static android.provider.Settings.System.getString;
+import com.jorge.app.ccm.ui.vehicleStatus.AdapterVehicle;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 
 public class ControllerDBStatus {
 
@@ -35,7 +32,7 @@ public class ControllerDBStatus {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    ADAPTER_VEHICLE.setArrayAdapter(dataSnapshot);
+                    ADAPTER_VEHICLE.setArrayAdapterVehicle(dataSnapshot);
                 }
                 else {
                     Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();

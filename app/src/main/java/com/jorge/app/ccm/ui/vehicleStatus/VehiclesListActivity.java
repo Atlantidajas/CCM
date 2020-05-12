@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehicles;
+package com.jorge.app.ccm.ui.vehicleStatus;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,22 +21,20 @@ import android.widget.Toast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.ui.alertsDialogos.notices.DialogFragmentNotice;
-import com.jorge.app.ccm.ui.form.WindowNoInitSesionVehicle;
-import com.jorge.app.ccm.ui.form.WindowYesInitSesionVehicle;
-import com.jorge.app.ccm.ui.session.SesionDriving;
-import com.jorge.app.ccm.ui.session.SesionDrivingActivity;
-import com.jorge.app.ccm.ui.user.User;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
+import com.jorge.app.ccm.gadget.WindowDialogFragment;
+import com.jorge.app.ccm.ui.sessionCrurrent.SesionDriving;
+import com.jorge.app.ccm.ui.sessionCrurrent.SesionDrivingActivity;
+import com.jorge.app.ccm.models.user.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 /**
@@ -56,8 +54,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
-    private WindowNoInitSesionVehicle windowNoInitSV;
-    private WindowYesInitSesionVehicle windowCloseRedirecSesionDriving;
     private ArrayList<Vehicle> vehicles;
     private SesionDriving sesionDrivingCurrent;
     private User user;
@@ -128,8 +124,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
 
         //Intens
-        intentForRegistryVehicles = new Intent ( VehiclesListActivity.this, RegistryVehicles.class);
-        intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicle.class);
+        intentForRegistryVehicles = new Intent ( VehiclesListActivity.this, RegistryVehiclesActivity.class);
+        intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesListActivity.this, SesionDrivingActivity.class );
 
     }
@@ -199,7 +195,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 // No se puede editar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
                 else if ( vehicleSelect.getDriving() == 1 ){
 
-                    windowCloseRedirecSesionDriving = new WindowYesInitSesionVehicle( R.string.windowCloseRedirecSesionDriving_edit_message );//<-- Show desde onclickItemList
+                    WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_edit_message );//<-- Show desde onclickItemList
                     windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                         @Override
                         public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
@@ -232,7 +228,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                 // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
                 else if ( vehicleSelect.getDriving() == 1 ){
 
-                    windowCloseRedirecSesionDriving = new WindowYesInitSesionVehicle( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList
+                    WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList
                     windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                         @Override
                         public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
@@ -284,7 +280,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                             Toast.makeText( getApplicationContext(), "Este vehículo está siendo usado por otro usuario, no puede iniciar sesión", Toast.LENGTH_SHORT ).show();
                         }
                         else {
-                            windowNoInitSV = new WindowNoInitSesionVehicle( messageNo );//<-- Show desde onclickItemList
+
+                            WindowDialogFragment windowNoInitSV = new WindowDialogFragment( messageNo );//<-- Show desde onclickItemList
                             windowNoInitSV.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                                 @Override
                                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
@@ -316,7 +313,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getTypeSesion() );
 
-            WindowYesInitSesionVehicle windowForActivictiSesionDriving = new WindowYesInitSesionVehicle( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
+            WindowDialogFragment windowForActivictiSesionDriving = new WindowDialogFragment( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
             windowForActivictiSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
@@ -334,7 +331,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         //Condición 3
         else if (sesionDrivingCurrent.getTypeSesion() != "Start") {
 
-            WindowYesInitSesionVehicle windowInitSesion = new WindowYesInitSesionVehicle( "Deses iniciar sesión" );
+            WindowDialogFragment windowInitSesion = new WindowDialogFragment( "Deses iniciar sesión" );
             windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {

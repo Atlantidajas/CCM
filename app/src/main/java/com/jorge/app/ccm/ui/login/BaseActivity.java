@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.user;
+package com.jorge.app.ccm.ui.login;
 
 import android.app.ProgressDialog;
 import android.content.Context;
