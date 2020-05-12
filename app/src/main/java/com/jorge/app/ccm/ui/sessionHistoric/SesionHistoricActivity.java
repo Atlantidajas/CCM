@@ -24,7 +24,7 @@ import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.user.User;
 import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
-import com.jorge.app.ccm.ui.sessionCrurrent.SesionDriving;
+import com.jorge.app.ccm.models.session.SesionDriving;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 import java.util.ArrayList;

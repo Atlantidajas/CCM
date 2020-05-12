@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.models.session.SesionDriving;
 
 import java.util.ArrayList;
 import java.util.Iterator;

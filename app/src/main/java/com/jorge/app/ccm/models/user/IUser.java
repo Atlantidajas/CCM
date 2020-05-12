@@ -11,7 +11,6 @@ public interface IUser {
     public void setTelephone(String telephone);
     public String getIdUser();
     public String getName();
-    public Uri getPhotoUri();
     public String getEmail();
     public String getTelephone();
 }

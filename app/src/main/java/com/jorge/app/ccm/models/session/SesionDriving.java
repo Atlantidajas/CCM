@@ -1,12 +1,16 @@
-package com.jorge.app.ccm.ui.sessionCrurrent;
+package com.jorge.app.ccm.models.session;
+
+import android.net.Uri;
 
 import com.google.firebase.database.DataSnapshot;
+import com.jorge.app.ccm.models.user.IUser;
 import com.jorge.app.ccm.models.user.User;
+import com.jorge.app.ccm.models.vehicle.IVehicle;
 import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
 
-public class SesionDriving {
+public class SesionDriving implements IUser, IVehicle {
 
     private String date;
     private String hours;
@@ -79,6 +83,103 @@ public class SesionDriving {
 
     public Vehicle getVehicle() {
         return vehicle;
+    }
+
+
+    @Override
+    public void setIdUser(String idUser) {
+        this.user.setIdUser( idUser );
+    }
+
+    @Override
+    public void setName(String name) {
+        this.user.setName( name );
+    }
+
+    @Override
+    public void setPhotoUri(Uri photoUri) {
+        this.user.setPhotoUri( photoUri );
+    }
+
+    @Override
+    public void setEmail(String email) {
+        this.user.setEmail( email );
+    }
+
+    @Override
+    public void setTelephone(String telephone) {
+        this.setTelephone( telephone );
+    }
+
+    @Override
+    public String getIdUser() {
+        return this.user.getIdUser();
+    }
+
+    @Override
+    public String getName() {
+        return user.getName();
+    }
+
+    @Override
+    public String getEmail() {
+        return this.user.getEmail();
+    }
+
+    @Override
+    public String getTelephone() {
+        return this.user.getTelephone();
+    }
+
+
+    @Override
+    public void setBrand(String brand) {
+        this.vehicle.setBrand( brand );
+    }
+
+    @Override
+    public void setModel(String model) {
+        this.vehicle.setModel( model );
+    }
+
+    @Override
+    public void setDateITV(String dateITV) {
+        this.setDateITV( dateITV );
+    }
+
+    @Override
+    public void setDriving(int driving) {
+        this.setDriving( driving );
+    }
+
+    @Override
+    public int getLogoVehicle() {
+        return this.vehicle.getLogoVehicle();
+    }
+
+    @Override
+    public String getRegistrationNumber() {
+        return this.vehicle.getRegistrationNumber();
+    }
+
+    @Override
+    public String getBrand() {
+        return this.vehicle.getBrand();
+    }
+
+    @Override
+    public String getModel() {
+        return this.vehicle.getModel();
+    }
+
+    @Override
+    public String getDateITV() {
+        return this.vehicle.getDateITV();
+    }
+
+    @Override
+    public int getDriving() {
+        return this.vehicle.getDriving();
     }
 
 }

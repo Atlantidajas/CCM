@@ -68,10 +68,6 @@ public class User {
         return name;
     }
 
-    public Uri photoUri() {
-        return photoUri;
-    }
-
     public String getPhotoUriString() {
         return photoUriString;
     }
@@ -82,5 +78,9 @@ public class User {
 
     public String getTelephone() {
         return telephone;
+    }
+
+    public Uri PhotoUri() {
+        return photoUri;
     }
 }
