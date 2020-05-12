@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehicleStatus;
+package com.jorge.app.ccm.ui.VehicleCu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -20,15 +20,12 @@ import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
 import com.jorge.app.ccm.gadget.SpinnerRegistryBrands;
+import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
-import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE;
-
-public class UpdateVehicleActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
+public class RegistryVehiclesActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
     private ControllerDBStatus controllerDBStatus;
-
-    private Vehicle vehicleForUpdate;
     private SpinnerRegistryBrands spinnerRegistryBrands;
     private EditText editTextBrand;
     private CheckBox checkBoxConfirmBrand;
@@ -41,32 +38,25 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
     private DialogFragmentDatePincker dialogFragmentDatePincker;//<- Para ITV
     private Button buttonSave;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView( R.layout.activity_registry_vehicles);
+        setContentView(R.layout.activity_registry_vehicles);
 
-        vehicleForUpdate = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE );//<- El Inten
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
-        editTextBrand.setText( vehicleForUpdate.getBrand() );
         editTextBrand.setOnClickListener( this );
         checkBoxConfirmBrand = findViewById( R.id.checkBox_brand_registry_vehicle );
 
         editTextModel = findViewById( R.id.edit_text_model_registry_vehicle );
-        editTextModel.setText( vehicleForUpdate.getModel() );
         checkBoxConfirmModel = findViewById( R.id.checkBox_model_registry_vehicle );
         showRegistryModel();
 
         editTextRegistryNumber = findViewById( R.id.edit_text_registry_number_registry_vehicle );
-        editTextRegistryNumber.setText( vehicleForUpdate.getRegistrationNumber() );
-        editTextRegistryNumber.setEnabled( false );//<-- No se puede cambiar matrícula (Se trata tambien del id del vehículo)
         checkBoxConfirmRegistryNumber = findViewById( R.id.checkBox_registry_number_registry_vehicle );
         showRegistryNumber();
 
         checkBoxConfirmDateITV = findViewById( R.id.check_box_registry_date_itv_vehicle );
         editTextDateITV = findViewById( R.id.edit_text_registry_date_itv_vehicle );
-        editTextDateITV.setText( vehicleForUpdate.getDateITV() );
         dialogFragmentDatePincker = new DialogFragmentDatePincker();
         editTextDateITV.setOnClickListener( this );
 
@@ -75,7 +65,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
     }
 
     @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
     }
 
@@ -106,7 +96,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
                 showRegistryDateITV();
                 break;
             case R.id.button_registry_save_vehicle:
-                showUpdateRegistry();
+                showSaveRegistry();
                 break;
 
         }
@@ -184,12 +174,12 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
         editTextDateITV.setText( day + "-" + month + "-" + year );
     }
 
-    public void showUpdateRegistry(){
+    public void showSaveRegistry(){
 
         if( checkBoxConfirmBrand.isChecked() &&
-                checkBoxConfirmModel.isChecked() &&
-                checkBoxConfirmRegistryNumber.isChecked() &&
-                checkBoxConfirmDateITV.isChecked() ){
+            checkBoxConfirmModel.isChecked() &&
+            checkBoxConfirmRegistryNumber.isChecked() &&
+            checkBoxConfirmDateITV.isChecked() ){
 
             Resources resource = getResources();
             BrandsUtil brandsUtil = new BrandsUtil( resource );
@@ -201,24 +191,21 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
 
             int logo = brandsUtil.getIdResource( brand );
 
-            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV,0);
-            controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
-            String messageUpdateVehicle = getString( R.string.toast_message_changed_vehicle_generic );
-            controllerDBStatus.updateValue( vehicle, messageUpdateVehicle + " " + vehicle.getRegistrationNumber());
-            controllerDBStatus = null;
+            Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, 0 );
 
-            Intent intent= new Intent ( UpdateVehicleActivity.this, VehiclesListActivity.class);
+            controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+            controllerDBStatus.setValue( vehicle );
+            Intent intent= new Intent ( RegistryVehiclesActivity.this, VehiclesListActivity.class);
             startActivity(intent);
         }
         else{
             Toast.makeText(getApplicationContext(), R.string.toast_message_empty_fields, Toast.LENGTH_SHORT).show();
+
         }
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        controllerDBStatus = null;
     }
-
 }

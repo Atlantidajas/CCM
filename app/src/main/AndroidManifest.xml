@@ -12,10 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.sessionHistoric.SesionHistoricActivity"></activity>
-        <activity android:name=".ui.vehicleStatus.UpdateVehicleActivity" />
+        <activity android:name=".ui.VehicleCu.UpdateVehicleActivity" />
         <activity android:name=".ui.sessionCrurrent.SesionDrivingActivity" />
-        <activity android:name=".ui.vehicleStatus.RegistryVehiclesActivity" />
-        <activity android:name=".ui.vehicleStatus.VehicleParkingActivity" />
+        <activity android:name=".ui.VehicleCu.RegistryVehiclesActivity" />
         <activity android:name=".ui.vehicleStatus.VehiclesListActivity" />
         <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.login.LoginActivity" />
