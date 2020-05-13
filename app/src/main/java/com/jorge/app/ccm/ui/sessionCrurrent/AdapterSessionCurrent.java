@@ -57,7 +57,7 @@ public class AdapterSessionCurrent extends BaseAdapter {
 
         this.session = (SesionDriving) getItem(position);
 
-        convertView = LayoutInflater.from( context ).inflate(R.layout.session_item_list_view, parent, false );
+        convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_session, parent, false );
 
         ImageView imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
         imageViewLogoVehicle.setImageResource( session.getVehicle().getLogoVehicle() );

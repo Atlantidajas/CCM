@@ -64,7 +64,7 @@ public class AdapterVehicle extends BaseAdapter {
 
         this.vehicle = (Vehicle) getItem(position);
 
-        convertView = LayoutInflater.from( context ).inflate(R.layout.vehicle_item_list_view, parent, false );
+        convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_vehicle_, parent, false );
 
         ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
         imageView_image.setImageResource( vehicle.getLogoVehicle() );

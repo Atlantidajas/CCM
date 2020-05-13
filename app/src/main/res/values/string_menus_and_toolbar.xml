@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Menú contextual List_View_Vehicle -->
+    <string name="menu_contextual_list_view_vehicles_title">Vehículo seleccionado</string>
+    <string name="menu_contextual_list_view_vehicles_title_item_editar">Editar</string>
+    <string name="menu_contextual_list_view_vehicles_title_item_delete">Borrar</string>
+
+    <!-- Home toolbar -->
+    <string name="home_toolbar_toolbar_button_sign_out_title">Cerrar sesión</string>
+    <string name="home_toolbar_toolbar_button_disconnect_title">Cerrar aplicación</string>
+
+    <!-- Vehicles toolbar -->
+    <string name="toolbar_vehicle_list_button_resgistreVehicle_title">Craer nuevo vehículo</string>
+
+</resources>

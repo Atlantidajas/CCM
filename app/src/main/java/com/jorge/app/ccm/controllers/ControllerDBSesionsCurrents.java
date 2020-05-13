@@ -128,5 +128,4 @@ public class ControllerDBSesionsCurrents {
         return databaseReference.child( sesionDriving.getUser().getIdUser() );
     }
 
-
 }

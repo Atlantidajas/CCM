@@ -4,11 +4,11 @@
     <item
         android:id="@+id/signOutButtonToolbar"
         android:icon="@drawable/ic_action_arrow_downward"
-        android:title="@string/toolbar_button_sign_out_title"
+        android:title="@string/home_toolbar_toolbar_button_sign_out_title"
         app:showAsAction="always"/>
     <item
         android:id="@+id/disconnectButton"
         android:icon="@drawable/ic_action_arrow_forward_ios_red"
-        android:title="@string/toolbar_button_disconnect_title"
+        android:title="@string/home_toolbar_toolbar_button_disconnect_title"
         app:showAsAction="always"/>
 </menu>

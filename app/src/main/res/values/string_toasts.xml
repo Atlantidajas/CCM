@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="sesionDrivingOpen">Este usuario ya tiene un sesion abierta, cierrela para abrir otra</string>
+    <string name="toast_message_save_vehicle_generic">Guardar vehículo con matrícula</string>
+    <string name="toast_message_changed_vehicle_generic">Se modifico los datos del vehículo con la matrícula</string>
+    <string name="toast_message_removed_vehicle_generic">Eliminado vehículo con matrícula</string>
+    <string name="toast_message_moved_vehicle_generic">zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</string>
+
+  <string name="toast_message_init_sesion">You have logged init</string>
+  <string name="toast_message_close_sesion">You have logged out</string>
+  <string name="toast_message_vehicle_already_exists">There is already a vehicle with that registration</string>
+
+  <string name="toast_message_logout_error">You cannot close a session from another user</string>
+
+  <string name="toast_message_empty_fields">Fields missing</string>
+
+  <string name="toast_message_si_registry">Saved data</string>
+  <string name="toast_message_no_registry">Data registration has been carried out</string>
+
+  <string name="toast_message_no_data">No data to display</string>
+
+
+</resources>

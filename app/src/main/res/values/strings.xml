@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">Car control manager</string>
-    <!-- Progress Bar -->
-    <string name="loading">loading</string>
-
-
-</resources>
-
-

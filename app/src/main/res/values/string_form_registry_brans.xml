@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Formulario registro de marcas -->
-    <string name="form_registry_brans_title">Select vehicle make</string>
-    <string name="form_registry_brans_button_next">Next</string>
-    <string name="form_registry_brans_button_return">Return</string>
-</resources>
