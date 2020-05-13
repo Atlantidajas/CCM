@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.session.SesionDriving;
+import com.jorge.app.ccm.models.SesionDriving;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,7 +27,7 @@ public class AdapterSessionCurrent extends BaseAdapter {
     private ArrayList<SesionDriving> listIntemSessions = new ArrayList<SesionDriving>();
     private TextView textView;
     private ListView listView;
-    private SesionDriving session;
+    private SesionDriving sessionDriving;
 
     public AdapterSessionCurrent(){}
 
@@ -55,27 +55,27 @@ public class AdapterSessionCurrent extends BaseAdapter {
     @Override
     public View getView( int position, View convertView, ViewGroup parent ) {
 
-        this.session = (SesionDriving) getItem(position);
+        this.sessionDriving = (SesionDriving) getItem(position);
 
         convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_session, parent, false );
 
         ImageView imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
-        imageViewLogoVehicle.setImageResource( session.getVehicle().getLogoVehicle() );
+        imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
 
         TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_sessions );
-        textView_registrationNumber.setText( session.getVehicle().getRegistrationNumber() );
+        textView_registrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
 
         TextView textView_date = convertView.findViewById( R.id.textView_session_date_item_sessions );
-        textView_date.setText( session.getDate() );
+        textView_date.setText( sessionDriving.getSession().getDate() );
 
         TextView textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
-        textView_hours.setText( session.getHours() );
+        textView_hours.setText( sessionDriving.getSession().getHours() );
 
         TextView textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
-        textView_typeSesion.setText( session.getTypeSesion() );
+        textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
 
         ImageView imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
-        Glide.with( context ).load( session.getUser().getPhotoUriString() ).into(imageView_drivind);
+        Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into(imageView_drivind);
 
         return convertView;
     }

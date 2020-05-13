@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
-import com.jorge.app.ccm.models.session.SesionDriving;
+import com.jorge.app.ccm.models.SesionDriving;
 
 public class ControllerDBSesionsCurrents {
 

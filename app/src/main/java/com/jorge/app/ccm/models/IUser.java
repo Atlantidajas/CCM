@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.models.user;
+package com.jorge.app.ccm.models;
 
 import android.net.Uri;
 
@@ -11,6 +11,7 @@ public interface IUser {
     public void setTelephone(String telephone);
     public String getIdUser();
     public String getName();
+    public String getPhotoUriString();
     public String getEmail();
     public String getTelephone();
 }

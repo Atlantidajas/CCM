@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
-import com.jorge.app.ccm.models.user.User;
+import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
 import java.text.ParseException;

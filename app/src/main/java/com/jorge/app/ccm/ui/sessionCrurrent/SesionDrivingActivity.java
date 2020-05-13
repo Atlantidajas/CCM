@@ -24,8 +24,10 @@ import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
-import com.jorge.app.ccm.models.session.SesionDriving;
-import com.jorge.app.ccm.models.user.User;
+import com.jorge.app.ccm.models.SesionDriving;
+import com.jorge.app.ccm.models.Session;
+import com.jorge.app.ccm.models.User;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 import java.util.ArrayList;
@@ -119,7 +121,11 @@ public class SesionDrivingActivity extends AppCompatActivity{
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
+                        Session sessionEnd = new Session( "End" );
+
+                        Vehicle vehicleSelect = sesionsDrivings.get( position ).getVehicle();
+
+                        final SesionDriving sesionDriving = new SesionDriving( sessionEnd, user,  vehicleSelect );
 
                         Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
                         Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
@@ -127,9 +133,9 @@ public class SesionDrivingActivity extends AppCompatActivity{
                         //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
                         //Condicion 1
                         if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
-                            controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
-                            controllerDBSesionsCurrents.updateValue( sesionDrivingEnd, "Ha cerrado sesión" );
-                            controllerDBSesionsHistoric.setValue( sesionDrivingEnd );
+                            controllerDBStatus.updateValue( sesionDriving.getVehicle(), null );
+                            controllerDBSesionsCurrents.updateValue( sesionDriving, "Ha cerrado sesión" );
+                            controllerDBSesionsHistoric.setValue( sesionDriving );
                             startActivity( intentCloseSesion );
                         }
                         else {

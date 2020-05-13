@@ -26,14 +26,15 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Session;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
-import com.jorge.app.ccm.models.session.SesionDriving;
+import com.jorge.app.ccm.models.SesionDriving;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.VehicleCu.UpdateVehicleActivity;
 import com.jorge.app.ccm.ui.sessionCrurrent.SesionDrivingActivity;
-import com.jorge.app.ccm.models.user.User;
+import com.jorge.app.ccm.models.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -254,9 +255,10 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     }
 
     public void onSesionDrinvingCreate(){
+
         //Sesion de inicio por si es la primera ves que inicia sesión
-        SesionDriving sesionDrivingCreate = new SesionDriving();
-        sesionDrivingCreate.setTypeSesion( "Create" );
+        Session sessionCreate = new Session( "Create" );
+        SesionDriving sesionDrivingCreate = new SesionDriving( sessionCreate, user );
         controllerDBSesionsCurrents.setValue( sesionDrivingCreate );
     }
 
@@ -276,9 +278,9 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                     if (vehicleSelect.getDriving() == 1) {
 
-                        Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sesionDrivingCurrent.getTypeSesion() );
+                        Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sesionDrivingCurrent.getSession().getTypeSesion() );
 
-                        if (sesionDrivingCurrent.getTypeSesion().equals( "Create" ) ) {
+                        if (sesionDrivingCurrent.getSession().getTypeSesion().equals( "Create" ) ) {
                             Toast.makeText( getApplicationContext(), "Este vehículo está siendo usado por otro usuario, no puede iniciar sesión", Toast.LENGTH_SHORT ).show();
                         }
                         else {
@@ -299,7 +301,10 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                         }
                     }
                 if (vehicleSelect.getDriving() == 0) {
-                    SesionDriving sesionDrivingStart = new SesionDriving(true, vehicleSelect);
+
+                    Session session = new Session("Start" );
+
+                    SesionDriving sesionDrivingStart = new SesionDriving( session, user, vehicleSelect );
                     checkSesion( sesionDrivingStart );
                     Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getDriving());
                 }
@@ -311,9 +316,9 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public void checkSesion( final SesionDriving sesionDrivingStart ) {
 
         //Condición 1
-        if (sesionDrivingCurrent.getTypeSesion().equals( "Start" )) {
+        if (sesionDrivingCurrent.getSession().getTypeSesion().equals( "Start" )) {
 
-            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getTypeSesion() );
+            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getSession().getTypeSesion() );
 
             WindowDialogFragment windowForActivictiSesionDriving = new WindowDialogFragment( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
             windowForActivictiSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
@@ -331,14 +336,14 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         }
 
         //Condición 3
-        else if (sesionDrivingCurrent.getTypeSesion() != "Start") {
+        else if (sesionDrivingCurrent.getSession().getTypeSesion() != "Start") {
 
             WindowDialogFragment windowInitSesion = new WindowDialogFragment( "Deses iniciar sesión" );
             windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getTypeSesion() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getSession().getTypeSesion() );
                     Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sesionDrivingStart.getVehicle().getDriving() );
 
                     controllerDBSesionsCurrents.updateValue( sesionDrivingStart, null );

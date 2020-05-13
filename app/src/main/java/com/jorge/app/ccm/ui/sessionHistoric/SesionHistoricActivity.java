@@ -22,9 +22,9 @@ import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
-import com.jorge.app.ccm.models.user.User;
+import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
-import com.jorge.app.ccm.models.session.SesionDriving;
+import com.jorge.app.ccm.models.SesionDriving;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 import java.util.ArrayList;
@@ -115,7 +115,9 @@ public class SesionHistoricActivity extends AppCompatActivity {
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
+                        User userSessionDriving = sesionsDrivings.get( position ).getUser();
+
+                        Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + userSessionDriving.getIdUser() );
                         Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
 
                         //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
