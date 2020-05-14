@@ -1,12 +1,14 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
+import com.jorge.app.ccm.controllers.ControllerDBSesions;
 
 public class SesionDriving {
 
     private Session session;
     private User user;
     private Vehicle vehicle;
+    ControllerDBSesions controllerDBSesions;
 
     public SesionDriving( Session session, User user ) {
         this.user = user;
@@ -16,16 +18,20 @@ public class SesionDriving {
     public SesionDriving( Session session, User user,  Vehicle vehicle) {
         this.session = session;
         this.user = user;
+        String nameRegistry;
         switch(session.getTypeSesion()) {
             case "Create":
+                nameRegistry = "a";
                 vehicle.setDriving( 0 );
                 this.vehicle = vehicle;
                 break;
             case "Start":
+                nameRegistry = "b";
                 vehicle.setDriving( 1 );
                 this.vehicle = vehicle;
                 break;
             case "End":
+                nameRegistry = "c";
                 vehicle.setDriving( 0 );
                 this.vehicle = vehicle;
                 break;

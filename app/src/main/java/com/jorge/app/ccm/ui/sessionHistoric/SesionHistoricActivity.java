@@ -18,7 +18,8 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
+import com.jorge.app.ccm.controllers.ControllerDBSesions;
+import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
@@ -30,11 +31,12 @@ import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 import java.util.ArrayList;
 
 public class SesionHistoricActivity extends AppCompatActivity {
+
     private final String TAG = "SesionHistoricActivity";
-    private ControllerDBSesionsCurrents controllerDBSesionsCurrents;
+    private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
     private ControllerDBStatus controllerDBStatus;
 
-    private AdapterSessionCurrent arrayAdapterSesion;
+    private AdapterSessionHistoric adapterSessionHistoric;
     private TextView textView;
     private ListView listView;
     private ArrayList<SesionDriving> sesionsDrivings;
@@ -47,34 +49,34 @@ public class SesionHistoricActivity extends AppCompatActivity {
         setContentView( R.layout.activity_sesion_driving );
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
-        controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
+        controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         user = new User();
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSesionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+        controllerDBSesionsHistoric.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
+                adapterSessionHistoric.getListIntemSesions().clear();
+                adapterSessionHistoric.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
+                adapterSessionHistoric.getListIntemSesions().clear();
+                adapterSessionHistoric.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
+                adapterSessionHistoric.getListIntemSesions().clear();
+                adapterSessionHistoric.notifyDataSetChanged();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
+                adapterSessionHistoric.getListIntemSesions().clear();
+                adapterSessionHistoric.notifyDataSetChanged();
             }
 
             @Override
@@ -86,10 +88,10 @@ public class SesionHistoricActivity extends AppCompatActivity {
         intentCloseSesion  = new Intent( SesionHistoricActivity.this, VehiclesListActivity.class );
 
         //Inizializao Adapter para mostrar lista de sesiones
-        arrayAdapterSesion = new AdapterSessionCurrent( getApplication(), textView, listView);
+        adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView);
         // Cargo array adapte
-        controllerDBSesionsCurrents.setAdapter( arrayAdapterSesion );
-        sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
+        controllerDBSesionsHistoric.setAdapter( adapterSessionHistoric  );
+        sesionsDrivings = adapterSessionHistoric.getListIntemSesions();
 
     }
 

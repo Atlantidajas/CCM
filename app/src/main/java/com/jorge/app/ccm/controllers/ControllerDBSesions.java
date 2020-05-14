@@ -16,12 +16,12 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
 import com.jorge.app.ccm.models.SesionDriving;
 
-public class ControllerDBSesionsCurrents {
+public class ControllerDBSesions {
 
     private Context context;
     private DatabaseReference databaseReference;
 
-    public ControllerDBSesionsCurrents(final Context context) {
+    public ControllerDBSesions(final Context context) {
         this.context = context;
         this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sesions" ).child( "Currents" );
     }
@@ -64,25 +64,7 @@ public class ControllerDBSesionsCurrents {
         dbRF.setValue( sesionDriving );
     }
 
-    public void setAdapter(final AdapterSessionCurrent ADAPTER_SESION ){
 
-        databaseReference.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot dataSnapshot ) {
-
-                if (dataSnapshot.exists()) {
-                    ADAPTER_SESION.setArrayAdapterSessionCurrent( dataSnapshot );
-                }
-                else {
-                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public ChildEventListener setChildEventListener(final String messageOnChildChanged,
                                                     final String messageOnChildRemoved,
