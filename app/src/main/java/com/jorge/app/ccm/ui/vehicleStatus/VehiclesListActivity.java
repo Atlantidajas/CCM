@@ -23,17 +23,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
-import com.jorge.app.ccm.models.SesionDriving;
+import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.VehicleCu.UpdateVehicleActivity;
-import com.jorge.app.ccm.ui.sessionCrurrent.SesionDrivingActivity;
+import com.jorge.app.ccm.ui.sessionCrurrent.SessionDrivingActivity;
 import com.jorge.app.ccm.models.User;
 
 import java.io.Serializable;
@@ -51,14 +51,14 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public Intent intentForRegistryVehicles;
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerDBStatus controllerDBStatus;
-    private ControllerDBSesionsCurrents controllerDBSesionsCurrents;
-    private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
+    private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
     private AdapterVehicle arrayAdapterVehicle;
     private TextView textView;
     private ListView listView;
     private ArrayList<Vehicle> vehicles;
-    private SesionDriving sesionDrivingCurrent;
+    private SessionDriving sessionDrivingCurrent;
     private User user;
 
     @Override
@@ -70,8 +70,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
         //Inicialización de controladores
         controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
-        controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
-        controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
+        controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
         user = new User();
 
         //Eventos de cambios sobre el adaptador
@@ -105,12 +105,12 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             }
         } );
-        controllerDBSesionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
+        controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if( dataSnapshot.exists() ) {
-                    sesionDrivingCurrent = new SesionDriving( dataSnapshot );
+                    sessionDrivingCurrent = new SessionDriving( dataSnapshot );
                 }
 
             }
@@ -129,7 +129,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         //Intens
         intentForRegistryVehicles = new Intent ( VehiclesListActivity.this, RegistryVehiclesActivity.class);
         intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicleActivity.class);
-        intentSesionDriving = new Intent( VehiclesListActivity.this, SesionDrivingActivity.class );
+        intentSesionDriving = new Intent( VehiclesListActivity.this, SessionDrivingActivity.class );
 
     }
 
@@ -278,8 +278,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
         //Sesion de inicio por si es la primera ves que inicia sesión
         Session sessionCreate = new Session( "Create" );
-        SesionDriving sesionDrivingCreate = new SesionDriving( sessionCreate, user );
-        controllerDBSesionsCurrents.setValue( sesionDrivingCreate );
+        SessionDriving sessionDrivingCreate = new SessionDriving( sessionCreate, user );
+        controllerDBSessionsCurrents.setValue( sessionDrivingCreate );
     }
 
     public void onclickItemList(){
@@ -298,9 +298,9 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                     if (vehicleSelect.getDriving() == 1) {
 
-                        Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sesionDrivingCurrent.getSession().getTypeSesion() );
+                        Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sessionDrivingCurrent.getSession().getTypeSesion() );
 
-                        if (sesionDrivingCurrent.getSession().getTypeSesion().equals( "Create" ) ) {
+                        if (sessionDrivingCurrent.getSession().getTypeSesion().equals( "Create" ) ) {
                             Toast.makeText( getApplicationContext(), "Este vehículo está siendo usado por otro usuario, no puede iniciar sesión", Toast.LENGTH_SHORT ).show();
                         }
                         else {
@@ -324,8 +324,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                     Session session = new Session("Start" );
 
-                    SesionDriving sesionDrivingStart = new SesionDriving( session, user, vehicleSelect );
-                    checkSesion( sesionDrivingStart );
+                    SessionDriving sessionDrivingStart = new SessionDriving( session, user, vehicleSelect );
+                    checkSesion( sessionDrivingStart );
                     Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getDriving());
                 }
 
@@ -333,12 +333,12 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         });
     }
 
-    public void checkSesion( final SesionDriving sesionDrivingStart ) {
+    public void checkSesion( final SessionDriving sessionDrivingStart) {
 
         //Condición 1
-        if (sesionDrivingCurrent.getSession().getTypeSesion().equals( "Start" )) {
+        if (sessionDrivingCurrent.getSession().getTypeSesion().equals( "Start" )) {
 
-            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getSession().getTypeSesion() );
+            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSession().getTypeSesion() );
 
             WindowDialogFragment windowForActivictiSesionDriving = new WindowDialogFragment( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
             windowForActivictiSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
@@ -356,19 +356,19 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         }
 
         //Condición 3
-        else if (sesionDrivingCurrent.getSession().getTypeSesion() != "Start") {
+        else if (sessionDrivingCurrent.getSession().getTypeSesion() != "Start") {
 
             WindowDialogFragment windowInitSesion = new WindowDialogFragment( "Deses iniciar sesión" );
             windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getSession().getTypeSesion() );
-                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sesionDrivingStart.getVehicle().getDriving() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSession().getTypeSesion() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sessionDrivingStart.getVehicle().getDriving() );
 
-                    controllerDBSesionsCurrents.updateValue( sesionDrivingStart, null );
-                    controllerDBStatus.updateValue( sesionDrivingStart.getVehicle(), null);
-                    controllerDBSesionsHistoric.setValue( sesionDrivingStart );
+                    controllerDBSessionsCurrents.updateValue( sessionDrivingStart, null );
+                    controllerDBStatus.updateValue( sessionDrivingStart.getVehicle(), null);
+                    controllerDBSessionsHistoric.setValue( sessionDrivingStart );
                     startActivity( intentSesionDriving );
                 }
 

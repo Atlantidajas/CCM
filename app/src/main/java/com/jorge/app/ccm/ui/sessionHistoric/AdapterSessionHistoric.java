@@ -12,17 +12,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.SesionDriving;
+import com.jorge.app.ccm.models.SessionDriving;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class AdapterSessionHistoric extends BaseAdapter {
     private Context context;
-    private ArrayList<SesionDriving> listIntemSessions = new ArrayList<SesionDriving>();
+    private ArrayList<SessionDriving> listIntemSessions = new ArrayList<SessionDriving>();
     private TextView textView;
     private ListView listView;
-    private SesionDriving sessionDriving;
+    private SessionDriving sessionDriving;
 
     public AdapterSessionHistoric(){}
 
@@ -50,7 +50,7 @@ public class AdapterSessionHistoric extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent ) {
 
-        this.sessionDriving = (SesionDriving) getItem(position);
+        this.sessionDriving = (SessionDriving) getItem(position);
 
         convertView = LayoutInflater.from( context ).inflate( R.layout.list_item_view_session, parent, false );
 
@@ -83,7 +83,7 @@ public class AdapterSessionHistoric extends BaseAdapter {
 
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
         do{
-            listIntemSessions.add( new SesionDriving( dataSnapshots.next() ) );
+            listIntemSessions.add( new SessionDriving( dataSnapshots.next() ) );
         }while (dataSnapshots.hasNext());
 
         if ( this.getCount() <= 0 ){//<-- Controlo que tenga al menos exista una sesión registrada, en caso contrario muestro mensaje
@@ -95,7 +95,7 @@ public class AdapterSessionHistoric extends BaseAdapter {
     }
 
 
-    public ArrayList<SesionDriving> getListIntemSesions() {
+    public ArrayList<SessionDriving> getListIntemSesions() {
         return listIntemSessions;
     }
 }

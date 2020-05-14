@@ -20,12 +20,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
-import com.jorge.app.ccm.models.SesionDriving;
+import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
@@ -33,17 +33,17 @@ import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 import java.util.ArrayList;
 
-public class SesionDrivingActivity extends AppCompatActivity{
+public class SessionDrivingActivity extends AppCompatActivity{
 
     private final String TAG = "SesionDrivingActivity";
-    private ControllerDBSesionsCurrents controllerDBSesionsCurrents;
+    private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
     private ControllerDBStatus controllerDBStatus;
-    private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
     private AdapterSessionCurrent arrayAdapterSesion;
     private TextView textView;
     private ListView listView;
-    private ArrayList<SesionDriving> sesionsDrivings;
+    private ArrayList<SessionDriving> sesionsDrivings;
     private Intent intentCloseSesion;
     private User user;
 
@@ -53,13 +53,13 @@ public class SesionDrivingActivity extends AppCompatActivity{
         setContentView( R.layout.activity_sesion_driving );
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
-        controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
+        controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
-        controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
         user = new User();
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSesionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+        controllerDBSessionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 arrayAdapterSesion.getListIntemSesions().clear();
@@ -90,7 +90,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
             }
         } );
 
-        intentCloseSesion  = new Intent( SesionDrivingActivity.this, VehiclesListActivity.class );
+        intentCloseSesion  = new Intent( SessionDrivingActivity.this, VehiclesListActivity.class );
 
         //Inizializao Adapter para mostrar lista de sesiones
         arrayAdapterSesion = new AdapterSessionCurrent( getApplication(), textView, listView);
@@ -126,7 +126,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
 
                         Vehicle vehicleSelect = sesionsDrivings.get( position ).getVehicle();
 
-                        final SesionDriving sesionDriving = new SesionDriving( sessionEnd, user,  vehicleSelect );
+                        final SessionDriving sessionDriving = new SessionDriving( sessionEnd, user,  vehicleSelect );
 
                         Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
                         Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
@@ -134,9 +134,9 @@ public class SesionDrivingActivity extends AppCompatActivity{
                         //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
                         //Condicion 1
                         if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
-                            controllerDBStatus.updateValue( sesionDriving.getVehicle(), null );
-                            controllerDBSesionsCurrents.updateValue( sesionDriving, "Ha cerrado sesión" );
-                            controllerDBSesionsHistoric.setValue( sesionDriving );
+                            controllerDBStatus.updateValue( sessionDriving.getVehicle(), null );
+                            controllerDBSessionsCurrents.updateValue( sessionDriving, "Ha cerrado sesión" );
+                            controllerDBSessionsHistoric.setValue( sessionDriving );
                             startActivity( intentCloseSesion );
                         }
                         else {
@@ -157,7 +157,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
 
     public void setAdapter(final AdapterSessionCurrent ADAPTER_SESION ){
 
-        this.controllerDBSesionsCurrents.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        this.controllerDBSessionsCurrents.getDatabaseReference().addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
 

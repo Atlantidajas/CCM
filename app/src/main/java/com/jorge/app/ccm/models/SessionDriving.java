@@ -1,21 +1,21 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
 
-public class SesionDriving {
+public class SessionDriving {
 
     private Session session;
     private User user;
     private Vehicle vehicle;
-    ControllerDBSesionsCurrents controllerDBSesionsCurrents;
+    ControllerDBSessionsCurrents controllerDBSessionsCurrents;
 
-    public SesionDriving( Session session, User user ) {
+    public SessionDriving(Session session, User user ) {
         this.user = user;
         this.session = session;
     }
 
-    public SesionDriving( Session session, User user,  Vehicle vehicle) {
+    public SessionDriving(Session session, User user, Vehicle vehicle) {
         this.session = session;
         this.user = user;
         String nameRegistry;
@@ -41,7 +41,7 @@ public class SesionDriving {
 
     }
 
-    public SesionDriving( DataSnapshot dataSnapshotSesion ) {
+    public SessionDriving(DataSnapshot dataSnapshotSesion ) {
         this.session = new Session( dataSnapshotSesion.child( "session" ) );
         this.user = new User( dataSnapshotSesion.child( "user" ) );
         if (dataSnapshotSesion.child( "vehicle" ).exists()) {

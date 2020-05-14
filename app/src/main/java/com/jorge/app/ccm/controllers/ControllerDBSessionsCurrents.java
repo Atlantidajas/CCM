@@ -12,32 +12,33 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.SesionDriving;
-import com.jorge.app.ccm.ui.sessionHistoric.AdapterSessionHistoric;
+import com.jorge.app.ccm.models.SessionDriving;
 
-public class ControllerDBSesionsHistoric {
+public class ControllerDBSessionsCurrents {
 
     private Context context;
     private DatabaseReference databaseReference;
 
-    public ControllerDBSesionsHistoric(final Context context) {
+    public ControllerDBSessionsCurrents(final Context context) {
         this.context = context;
-        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sesions" ).child( "Historics" );
+        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sessions" ).child( "Currents" );
     }
 
     public DatabaseReference getDatabaseReference() {
         return databaseReference;
     }
 
-    public void setValue( final SesionDriving sesionDriving ){
-        final DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() ).push();
+    public void setValue( final SessionDriving sessionDriving){
+        final DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() );
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()){
-                    dbRF.setValue( sesionDriving );
+                if( dataSnapshot.exists()){
+
+                }
+                else {
+                    dbRF.setValue( sessionDriving );
                 }
             }
 
@@ -49,37 +50,18 @@ public class ControllerDBSesionsHistoric {
         dbRF.addValueEventListener( valueEventListenerSetVehicle );
     }
 
-    public void removeValue(final SesionDriving sesionDriving, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() ).getRoot();
+    public void removeValue(final SessionDriving sessionDriving, String messageOnChildRemoved ){
+        DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() );
         dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
-    public void updateValue( final SesionDriving sesionDriving, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( sesionDriving.getUser().getIdUser() ).getRoot();
+    public void updateValue(final SessionDriving sessionDriving, String messageOnChildChanged  ){
+        DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() );
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
-        dbRF.setValue( sesionDriving );
+        dbRF.setValue( sessionDriving );
     }
 
-    public void setAdapter(final AdapterSessionHistoric ADAPTER_SESION ){
-
-        databaseReference.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot dataSnapshot ) {
-
-                if (dataSnapshot.exists()) {
-                    ADAPTER_SESION.setArrayAdapterHistoric( dataSnapshot );
-                }
-                else {
-                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public ChildEventListener setChildEventListener(final String messageOnChildChanged,
                                                     final String messageOnChildRemoved,
@@ -121,7 +103,8 @@ public class ControllerDBSesionsHistoric {
         return childEventListener;
     }
 
-    public DatabaseReference getDatabaseReferenceSearch( SesionDriving sesionDriving){
-        return databaseReference.child( sesionDriving.getUser().getIdUser() );
+    public DatabaseReference getDatabaseReferenceSearch( SessionDriving sessionDriving){
+        return databaseReference.child( sessionDriving.getUser().getIdUser() );
     }
+
 }

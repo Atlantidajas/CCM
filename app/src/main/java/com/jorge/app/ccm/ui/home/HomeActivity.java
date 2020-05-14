@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.jorge.app.ccm.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.firebase.auth.FirebaseUser;
-import com.jorge.app.ccm.ui.sessionHistoric.SesionHistoricActivity;
+import com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 public class HomeActivity extends AppCompatActivity  {
@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity  {
         getButtonLinkHistoricSesions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent (HomeActivity.this, SesionHistoricActivity.class);
+                Intent intent= new Intent (HomeActivity.this, SessionHistoricActivity.class);
                 startActivity(intent);
             }
         });

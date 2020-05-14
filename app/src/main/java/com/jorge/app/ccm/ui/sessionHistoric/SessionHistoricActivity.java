@@ -19,26 +19,23 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
-import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
-import com.jorge.app.ccm.controllers.ControllerDBStatus;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.User;
-import com.jorge.app.ccm.models.SesionDriving;
-import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
+import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 import java.util.ArrayList;
 
-public class SesionHistoricActivity extends AppCompatActivity {
+public class SessionHistoricActivity extends AppCompatActivity {
 
     private final String TAG = "SesionHistoricActivity";
-    private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
     private AdapterSessionHistoric adapterSessionHistoric;
     private TextView textView;
     private ListView listView;
-    private ArrayList<SesionDriving> sesionsDrivings;
+    private ArrayList<SessionDriving> sesionsDrivings;
     private Intent intentCloseSesion;
     private User user;
 
@@ -48,12 +45,12 @@ public class SesionHistoricActivity extends AppCompatActivity {
         setContentView( R.layout.activity_sesion_driving );
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
-        controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
 
         user = new User();
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSesionsHistoric.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+        controllerDBSessionsHistoric.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 adapterSessionHistoric.getListIntemSesions().clear();
@@ -84,7 +81,7 @@ public class SesionHistoricActivity extends AppCompatActivity {
             }
         } );
 
-        intentCloseSesion  = new Intent( SesionHistoricActivity.this, VehiclesListActivity.class );
+        intentCloseSesion  = new Intent( SessionHistoricActivity.this, VehiclesListActivity.class );
 
         //Inizializao Adapter para mostrar lista de sesiones
         adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView);
@@ -96,7 +93,7 @@ public class SesionHistoricActivity extends AppCompatActivity {
 
     public void setAdapter(final AdapterSessionHistoric ADAPTER_SESION ){
 
-        controllerDBSesionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
 
