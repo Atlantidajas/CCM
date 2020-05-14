@@ -4,15 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.vehicleStatus.VehicleParkingActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Estas en Regsitro de vehículos"/>
-    </LinearLayout>
+    tools:context=".ui.location.LocationActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

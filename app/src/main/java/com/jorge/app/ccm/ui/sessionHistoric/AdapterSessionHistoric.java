@@ -91,7 +91,6 @@ public class AdapterSessionHistoric extends BaseAdapter {
             }
         });
 
-
     }
 
     @Override

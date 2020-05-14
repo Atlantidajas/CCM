@@ -6,32 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
 
-
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="54dp" />
-
     <Button
-        android:id="@+id/button_link_vehicles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_home" />
-
-    <Button
-        android:id="@+id/button_link_historic_sesions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hitoric Sesisons"
+        android:id="@+id/button_vehicles_status"
+        android:layout_width="190dp"
+        android:layout_height="285dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_link_vehicles" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047"
+        android:text="@string/button_vehicles_status"/>
+
+    <Button
+        android:id="@+id/button_expenses"
+        android:layout_width="190dp"
+        android:layout_height="285dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047"
+        android:text="@string/button_expenses"/>
+
+    <Button
+        android:id="@+id/button_historic_sesions"
+        android:layout_width="190dp"
+        android:layout_height="285dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.949"
+        android:text="@string/button_historic_sesions"/>
+
+    <Button
+        android:id="@+id/button_location"
+        android:layout_width="190dp"
+        android:layout_height="285dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.946"
+        android:text="@string/button_location"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

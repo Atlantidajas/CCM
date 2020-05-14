@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.jorge.app.ccm.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.firebase.auth.FirebaseUser;
+import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
+import com.jorge.app.ccm.ui.location.LocationActivity;
 import com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
@@ -28,8 +30,10 @@ public class HomeActivity extends AppCompatActivity  {
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private String nameUser;
-    private Button buttonLinkVehicles;
-    private Button getButtonLinkHistoricSesions;
+    private Button buttonVehiclesStatus;
+    private Button buttonExpenses;
+    private Button getButtonHistoricSesions;
+    private Button buttonLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +41,8 @@ public class HomeActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_home);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        buttonLinkVehicles = findViewById(R.id.button_link_vehicles);
-        buttonLinkVehicles.setOnClickListener(new View.OnClickListener() {
+        buttonVehiclesStatus = findViewById(R.id.button_vehicles_status);
+        buttonVehiclesStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                Intent intent= new Intent (HomeActivity.this, VehiclesListActivity.class);
@@ -46,12 +50,30 @@ public class HomeActivity extends AppCompatActivity  {
             }
         });
 
+        buttonExpenses = findViewById(R.id.button_expenses);
+        buttonExpenses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent (HomeActivity.this, ExpensesActivity.class);
+                startActivity(intent);
+            }
+        });
+
         //Direcciono A
-        getButtonLinkHistoricSesions = findViewById( R.id.button_link_historic_sesions );
-        getButtonLinkHistoricSesions.setOnClickListener(new View.OnClickListener() {
+        getButtonHistoricSesions = findViewById( R.id.button_historic_sesions );
+        getButtonHistoricSesions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent (HomeActivity.this, SessionHistoricActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonLocation = findViewById(R.id.button_location);
+        buttonLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent (HomeActivity.this, LocationActivity.class);
                 startActivity(intent);
             }
         });
