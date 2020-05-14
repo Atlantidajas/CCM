@@ -10,9 +10,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.utils.DateHoursUtil;
@@ -36,12 +44,64 @@ public class AdapterVehicle extends BaseAdapter {
     private ListView listView;
     private Vehicle vehicle;
     private User userLoging;
+    ControllerDBStatus controllerDBStatus;
 
-    public AdapterVehicle(Context context, TextView textView, ListView listView) {
+    public AdapterVehicle(final Context context, TextView textView, ListView listView) {
         this.context = context;
         this.textView = textView;
         this.listView = listView;
         this.userLoging = new User();
+        this.controllerDBStatus = new ControllerDBStatus( context );
+
+
+        //Eventos de cambios sobre el adaptador
+        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                getListIntemVehicles().clear();
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                getListIntemVehicles().clear();
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                getListIntemVehicles().clear();
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                getListIntemVehicles().clear();
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
+
+        //Cargo con los datos de la db el adapter
+        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    setArrayAdapterVehicle(dataSnapshot);
+                }
+                else {
+                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

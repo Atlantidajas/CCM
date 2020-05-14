@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class SessionHistoricActivity extends AppCompatActivity {
 
-    private final String TAG = "SesionHistoricActivity";
+    private final String TAG = "SessionHistoricActivity";
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
     private AdapterSessionHistoric adapterSessionHistoric;
     private TextView textView;
@@ -43,80 +43,25 @@ public class SessionHistoricActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sesion_driving );
-        textView = findViewById(R.id.textView_vehicles);
+        textView = findViewById(R.id.textView_Sesions);
         listView = findViewById(R.id.listView_sessions);
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
-
         user = new User();
-
-        //Eventos de cambios sobre el adaptador
-        controllerDBSessionsHistoric.getDatabaseReference().addChildEventListener( new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                adapterSessionHistoric.getListIntemSesions().clear();
-                adapterSessionHistoric.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                adapterSessionHistoric.getListIntemSesions().clear();
-                adapterSessionHistoric.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                adapterSessionHistoric.getListIntemSesions().clear();
-                adapterSessionHistoric.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                adapterSessionHistoric.getListIntemSesions().clear();
-                adapterSessionHistoric.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
 
         intentCloseSesion  = new Intent( SessionHistoricActivity.this, VehiclesListActivity.class );
 
         //Inizializao Adapter para mostrar lista de sesiones
         adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView);
-        // Cargo array adapte
-        setAdapter( adapterSessionHistoric  );
         sesionsDrivings = adapterSessionHistoric.getListIntemSesions();
 
     }
 
-    public void setAdapter(final AdapterSessionHistoric ADAPTER_SESION ){
-
-        controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot dataSnapshot ) {
-
-                if (dataSnapshot.exists()) {
-                    ADAPTER_SESION.setArrayAdapterHistoric( dataSnapshot );
-                }
-                else {
-                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onStart() {
         super.onStart();
         onclickItemList();
     }
-
 
     public void onclickItemList(){
         // Creo el listener para cuando se hace click en un item de la lista.

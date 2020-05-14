@@ -74,37 +74,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
         user = new User();
 
-        //Eventos de cambios sobre el adaptador
-        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterVehicle.getListIntemVehicles().clear();
-                arrayAdapterVehicle.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterVehicle.getListIntemVehicles().clear();
-                arrayAdapterVehicle.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                arrayAdapterVehicle.getListIntemVehicles().clear();
-                arrayAdapterVehicle.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterVehicle.getListIntemVehicles().clear();
-                arrayAdapterVehicle.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
         controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -123,7 +92,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
-        setAdapter( arrayAdapterVehicle );
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
 
         //Intens
@@ -131,26 +99,6 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesListActivity.this, SessionDrivingActivity.class );
 
-    }
-
-    //Cargo el adaptador
-    public void setAdapter( final AdapterVehicle ADAPTER_VEHICLE ){
-
-        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    ADAPTER_VEHICLE.setArrayAdapterVehicle(dataSnapshot);
-                }
-                else {
-                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

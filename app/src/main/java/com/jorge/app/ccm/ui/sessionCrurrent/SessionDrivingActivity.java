@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class SessionDrivingActivity extends AppCompatActivity{
 
-    private final String TAG = "SesionDrivingActivity";
+    private final String TAG = "SessionDrivingActivity";
     private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
     private ControllerDBStatus controllerDBStatus;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
@@ -51,51 +51,17 @@ public class SessionDrivingActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sesion_driving );
-        textView = findViewById(R.id.textView_vehicles);
+        textView = findViewById(R.id.textView_Sesions);
         listView = findViewById(R.id.listView_sessions);
         controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
         user = new User();
 
-        //Eventos de cambios sobre el adaptador
-        controllerDBSessionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterSesion.getListIntemSesions().clear();
-                arrayAdapterSesion.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
-
         intentCloseSesion  = new Intent( SessionDrivingActivity.this, VehiclesListActivity.class );
 
         //Inizializao Adapter para mostrar lista de sesiones
         arrayAdapterSesion = new AdapterSessionCurrent( getApplication(), textView, listView);
-        // Cargo array adapte
-        setAdapter( arrayAdapterSesion );
         sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
 
     }
@@ -105,7 +71,6 @@ public class SessionDrivingActivity extends AppCompatActivity{
         super.onStart();
         onclickItemList();
     }
-
 
     public void onclickItemList(){
         // Creo el listener para cuando se hace click en un item de la lista.
@@ -154,28 +119,6 @@ public class SessionDrivingActivity extends AppCompatActivity{
             }
         });
     }
-
-    public void setAdapter(final AdapterSessionCurrent ADAPTER_SESION ){
-
-        this.controllerDBSessionsCurrents.getDatabaseReference().addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot dataSnapshot ) {
-
-                if (dataSnapshot.exists()) {
-                    ADAPTER_SESION.setArrayAdapterSessionCurrent( dataSnapshot );
-                }
-                else {
-                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
 
     @Override
     public void onDestroy(){
