@@ -23,7 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesions;
+import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Session;
@@ -51,7 +51,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     public Intent intentForRegistryVehicles;
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
     private ControllerDBStatus controllerDBStatus;
-    private ControllerDBSesions controllerDBSesions;
+    private ControllerDBSesionsCurrents controllerDBSesionsCurrents;
     private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
 
     private AdapterVehicle arrayAdapterVehicle;
@@ -70,7 +70,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
         //Inicialización de controladores
         controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
-        controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+        controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
         controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
         user = new User();
 
@@ -105,7 +105,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
             }
         } );
-        controllerDBSesions.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
+        controllerDBSesionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -123,7 +123,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
-        controllerDBStatus.setAdapter( arrayAdapterVehicle );
+        setAdapter( arrayAdapterVehicle );
         vehicles = arrayAdapterVehicle.getListIntemVehicles();
 
         //Intens
@@ -131,6 +131,26 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesListActivity.this, SesionDrivingActivity.class );
 
+    }
+
+    //Cargo el adaptador
+    public void setAdapter( final AdapterVehicle ADAPTER_VEHICLE ){
+
+        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ADAPTER_VEHICLE.setArrayAdapterVehicle(dataSnapshot);
+                }
+                else {
+                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -259,7 +279,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         //Sesion de inicio por si es la primera ves que inicia sesión
         Session sessionCreate = new Session( "Create" );
         SesionDriving sesionDrivingCreate = new SesionDriving( sessionCreate, user );
-        controllerDBSesions.setValue( sesionDrivingCreate );
+        controllerDBSesionsCurrents.setValue( sesionDrivingCreate );
     }
 
     public void onclickItemList(){
@@ -346,7 +366,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
                     Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sesionDrivingCurrent.getSession().getTypeSesion() );
                     Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sesionDrivingStart.getVehicle().getDriving() );
 
-                    controllerDBSesions.updateValue( sesionDrivingStart, null );
+                    controllerDBSesionsCurrents.updateValue( sesionDrivingStart, null );
                     controllerDBStatus.updateValue( sesionDrivingStart.getVehicle(), null);
                     controllerDBSesionsHistoric.setValue( sesionDrivingStart );
                     startActivity( intentSesionDriving );

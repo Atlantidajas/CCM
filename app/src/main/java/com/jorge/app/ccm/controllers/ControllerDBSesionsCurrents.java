@@ -16,12 +16,12 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
 import com.jorge.app.ccm.models.SesionDriving;
 
-public class ControllerDBSesions {
+public class ControllerDBSesionsCurrents {
 
     private Context context;
     private DatabaseReference databaseReference;
 
-    public ControllerDBSesions(final Context context) {
+    public ControllerDBSesionsCurrents(final Context context) {
         this.context = context;
         this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sesions" ).child( "Currents" );
     }
@@ -63,7 +63,6 @@ public class ControllerDBSesions {
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
         dbRF.setValue( sesionDriving );
     }
-
 
 
     public ChildEventListener setChildEventListener(final String messageOnChildChanged,

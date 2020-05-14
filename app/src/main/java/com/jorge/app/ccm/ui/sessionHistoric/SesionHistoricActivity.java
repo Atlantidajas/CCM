@@ -17,15 +17,16 @@ import android.widget.Toast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesions;
+import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.User;
-import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
 import com.jorge.app.ccm.models.SesionDriving;
+import com.jorge.app.ccm.ui.sessionCrurrent.AdapterSessionCurrent;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
 import java.util.ArrayList;
@@ -34,8 +35,6 @@ public class SesionHistoricActivity extends AppCompatActivity {
 
     private final String TAG = "SesionHistoricActivity";
     private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
-    private ControllerDBStatus controllerDBStatus;
-
     private AdapterSessionHistoric adapterSessionHistoric;
     private TextView textView;
     private ListView listView;
@@ -50,7 +49,7 @@ public class SesionHistoricActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
         controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
-        controllerDBStatus = new ControllerDBStatus( getApplication() );
+
         user = new User();
 
         //Eventos de cambios sobre el adaptador
@@ -90,9 +89,29 @@ public class SesionHistoricActivity extends AppCompatActivity {
         //Inizializao Adapter para mostrar lista de sesiones
         adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView);
         // Cargo array adapte
-        controllerDBSesionsHistoric.setAdapter( adapterSessionHistoric  );
+        setAdapter( adapterSessionHistoric  );
         sesionsDrivings = adapterSessionHistoric.getListIntemSesions();
 
+    }
+
+    public void setAdapter(final AdapterSessionHistoric ADAPTER_SESION ){
+
+        controllerDBSesionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange( DataSnapshot dataSnapshot ) {
+
+                if (dataSnapshot.exists()) {
+                    ADAPTER_SESION.setArrayAdapterHistoric( dataSnapshot );
+                }
+                else {
+                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

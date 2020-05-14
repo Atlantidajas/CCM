@@ -26,28 +26,6 @@ public class ControllerDBStatus {
         this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Status" );
     }
 
-    public void setAdapter( final AdapterVehicle ADAPTER_VEHICLE ){
-
-        ValueEventListener valueEventListenerStatus = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    ADAPTER_VEHICLE.setArrayAdapterVehicle(dataSnapshot);
-                }
-                else {
-                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        databaseReference.addValueEventListener( valueEventListenerStatus );
-
-    }
-
     public void setValue( final Vehicle vehicle ){
         final DatabaseReference dbRF = databaseReference.child( vehicle.getRegistrationNumber() );
 

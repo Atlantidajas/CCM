@@ -20,7 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSesions;
+import com.jorge.app.ccm.controllers.ControllerDBSesionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSesionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public class SesionDrivingActivity extends AppCompatActivity{
 
     private final String TAG = "SesionDrivingActivity";
-    private ControllerDBSesions controllerDBSesions;
+    private ControllerDBSesionsCurrents controllerDBSesionsCurrents;
     private ControllerDBStatus controllerDBStatus;
     private ControllerDBSesionsHistoric controllerDBSesionsHistoric;
 
@@ -53,13 +53,13 @@ public class SesionDrivingActivity extends AppCompatActivity{
         setContentView( R.layout.activity_sesion_driving );
         textView = findViewById(R.id.textView_vehicles);
         listView = findViewById(R.id.listView_sessions);
-        controllerDBSesions = new ControllerDBSesions( getApplicationContext() );
+        controllerDBSesionsCurrents = new ControllerDBSesionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         controllerDBSesionsHistoric = new ControllerDBSesionsHistoric( getApplicationContext() );
         user = new User();
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSesions.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+        controllerDBSesionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 arrayAdapterSesion.getListIntemSesions().clear();
@@ -135,7 +135,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
                         //Condicion 1
                         if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
                             controllerDBStatus.updateValue( sesionDriving.getVehicle(), null );
-                            controllerDBSesions.updateValue( sesionDriving, "Ha cerrado sesión" );
+                            controllerDBSesionsCurrents.updateValue( sesionDriving, "Ha cerrado sesión" );
                             controllerDBSesionsHistoric.setValue( sesionDriving );
                             startActivity( intentCloseSesion );
                         }
@@ -157,7 +157,7 @@ public class SesionDrivingActivity extends AppCompatActivity{
 
     public void setAdapter(final AdapterSessionCurrent ADAPTER_SESION ){
 
-        this.controllerDBSesions.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        this.controllerDBSesionsCurrents.getDatabaseReference().addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
 
