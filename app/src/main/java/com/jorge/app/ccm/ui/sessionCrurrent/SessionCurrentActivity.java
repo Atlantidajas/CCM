@@ -1,7 +1,6 @@
 package com.jorge.app.ccm.ui.sessionCrurrent;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -10,12 +9,10 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -31,56 +28,88 @@ import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 
-import java.util.ArrayList;
-
-public class SessionDrivingActivity extends AppCompatActivity{
+public class SessionCurrentActivity extends AppCompatActivity{
 
     private final String TAG = "SessionDrivingActivity";
     private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
     private ControllerDBStatus controllerDBStatus;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
+    private SessionDriving sessionDriving;
 
-    private AdapterSessionCurrent arrayAdapterSesion;
-    private TextView textView;
-    private ListView listView;
-    private ArrayList<SessionDriving> sesionsDrivings;
+    private TextView textViewDate;
+    private TextView textViewHours;
+    private TextView textViewBrand;
+    private TextView textViewModel;
+    private TextView textViewRegistrationNumber;
+    private Button buttonCloseSesionCurrent;
+
     private Intent intentCloseSesion;
     private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView( R.layout.activity_sesion_driving );
-        textView = findViewById(R.id.textView_Sesions);
-        listView = findViewById(R.id.listView_sessions);
+        setContentView( R.layout.activity_sesion_current );
+
+        textViewDate = findViewById(R.id.textViewDate);
+        textViewHours = findViewById(R.id.textViewHours);
+        textViewBrand = findViewById(R.id.textViewBrand);
+        textViewModel = findViewById(R.id.textViewModel);
+        textViewRegistrationNumber = findViewById(R.id.textViewRegistrationNumber);
+        buttonCloseSesionCurrent = findViewById( R.id.buttonCloseSesionCurrent );
+
+
         controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
         user = new User();
 
-        intentCloseSesion  = new Intent( SessionDrivingActivity.this, VehiclesListActivity.class );
+        intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesListActivity.class );
 
-        //Inizializao Adapter para mostrar lista de sesiones
-        arrayAdapterSesion = new AdapterSessionCurrent( getApplication(), textView, listView);
-        sesionsDrivings = arrayAdapterSesion.getListIntemSesions();
+        // Cargo array adapte
+        this.controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
+
+            @Override
+            public void onDataChange( DataSnapshot dataSnapshot ) {
+
+                if (dataSnapshot.exists()) {
+                    sessionDriving = new SessionDriving( dataSnapshot );
+
+                    textViewDate.setText( sessionDriving.getSession().getDate() );
+                    textViewHours.setText( sessionDriving.getSession().getHours() );
+                    textViewBrand.setText( sessionDriving.getVehicle().getBrand() );
+                    textViewModel.setText( sessionDriving.getVehicle().getModel() );
+                    textViewRegistrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
+
+                }
+                else {
+                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
+
 
     @Override
     public void onStart() {
         super.onStart();
-        onclickItemList();
+        onclick();
     }
 
-    public void onclickItemList(){
+    public void onclick(){
         // Creo el listener para cuando se hace click en un item de la lista.
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.buttonCloseSesionCurrent.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> lst, View viewRow,
-                                    final int position, long id) {
+            public void onClick(View v) {
 
                 //Una sesión que ya está cerrada no se puede volver a cerrar.
-                if (sesionsDrivings.get( position ).getSession().getTypeSesion().equals( "End" )) {
+                if (sessionDriving.getSession().getTypeSesion().equals( "End" )) {
                     Toast.makeText( getApplicationContext(), "No puede cerrar una sesión que ya lo está", Toast.LENGTH_SHORT ).show();
                 } else {
 
@@ -92,17 +121,17 @@ public class SessionDrivingActivity extends AppCompatActivity{
 
                             Session sessionEnd = new Session( "End" );
 
-                            Vehicle vehicleSelect = sesionsDrivings.get( position ).getVehicle();
+                            Vehicle vehicleSelect = sessionDriving.getVehicle();
 
                             final SessionDriving sessionDriving = new SessionDriving( sessionEnd, user, vehicleSelect );
 
-                            Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
+                            Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sessionDriving.getUser().getIdUser() );
                             Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
 
 
                             //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
                             //Condicion 1
-                            if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() )) {
+                            if (sessionDriving.getUser().getIdUser().equals( user.getIdUser() )) {
                                 controllerDBStatus.updateValue( sessionDriving.getVehicle(), null );
                                 controllerDBSessionsCurrents.updateValue( sessionDriving, null );
                                 controllerDBSessionsHistoric.setValue( sessionDriving );

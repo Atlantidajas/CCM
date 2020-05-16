@@ -1,7 +1,6 @@
 package com.jorge.app.ccm.ui.vehicleStatus;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -18,7 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -33,7 +31,7 @@ import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.VehicleCu.UpdateVehicleActivity;
-import com.jorge.app.ccm.ui.sessionCrurrent.SessionDrivingActivity;
+import com.jorge.app.ccm.ui.sessionCrurrent.SessionCurrentActivity;
 import com.jorge.app.ccm.models.User;
 
 import java.io.Serializable;
@@ -97,7 +95,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         //Intens
         intentForRegistryVehicles = new Intent ( VehiclesListActivity.this, RegistryVehiclesActivity.class);
         intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicleActivity.class);
-        intentSesionDriving = new Intent( VehiclesListActivity.this, SessionDrivingActivity.class );
+        intentSesionDriving = new Intent( VehiclesListActivity.this, SessionCurrentActivity.class );
 
     }
 
