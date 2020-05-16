@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.ui.sessionCrurrent;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
 import com.jorge.app.ccm.models.SessionDriving;
+import com.jorge.app.ccm.models.User;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,12 +33,20 @@ import java.util.Iterator;
 
 public class AdapterSessionCurrent extends BaseAdapter {
 
+    private ImageView imageViewLogoVehicle;
+    private TextView textView_registrationNumber;
+    private TextView textView_date;
+    private TextView textView_hours;
+    private TextView textView_typeSesion;
+    private ImageView imageView_drivind;
+
     private Context context;
     private ArrayList<SessionDriving> listIntemSessions = new ArrayList<SessionDriving>();
     private TextView textView;
     private ListView listView;
     private SessionDriving sessionDriving;
     private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
+    private User user;
 
     public AdapterSessionCurrent(){}
 
@@ -45,6 +55,9 @@ public class AdapterSessionCurrent extends BaseAdapter {
         this.textView = textView;
         this.listView = listView;
         this.controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( context );
+        this.user = new User(  );
+
+
 
         //Eventos de cambios sobre el adaptador
         controllerDBSessionsCurrents.getDatabaseReference().addChildEventListener( new ChildEventListener() {
@@ -80,6 +93,7 @@ public class AdapterSessionCurrent extends BaseAdapter {
 
         // Cargo array adapte
         this.controllerDBSessionsCurrents.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
 
@@ -116,26 +130,21 @@ public class AdapterSessionCurrent extends BaseAdapter {
     public View getView( int position, View convertView, ViewGroup parent ) {
 
         this.sessionDriving = (SessionDriving) getItem(position);
-
         convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_session, parent, false );
 
-        ImageView imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
+        imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
+        textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_sessions );
+        textView_date = convertView.findViewById( R.id.textView_session_date_item_sessions );
+        textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
+        textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
+        imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
+
         imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
-
-        TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_sessions );
         textView_registrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
-
-        TextView textView_date = convertView.findViewById( R.id.textView_session_date_item_sessions );
         textView_date.setText( sessionDriving.getSession().getDate() );
-
-        TextView textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
         textView_hours.setText( sessionDriving.getSession().getHours() );
-
-        TextView textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
         textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
-
-        ImageView imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
-        Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into(imageView_drivind);
+        Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageView_drivind );
 
         return convertView;
     }
@@ -147,12 +156,20 @@ public class AdapterSessionCurrent extends BaseAdapter {
     public void setArrayAdapterSessionCurrent(DataSnapshot dataSnapshot){
 
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
+
         do{
-            listIntemSessions.add( new SessionDriving( dataSnapshots.next() ) );
+
+            SessionDriving sessionDrivingsDB = new SessionDriving( dataSnapshots.next() );
+
+            if( sessionDrivingsDB.getUser().getIdUser().equals( user.getIdUser() ) ){
+
+                listIntemSessions.add( sessionDrivingsDB );
+            }
+
         }while (dataSnapshots.hasNext());
 
         if ( this.getCount() <= 0 ){//<-- Controlo que tenga al menos exista una sesión registrada, en caso contrario muestro mensaje
-            textView.setText( "No hay sesiones en la lista" );
+            Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
         }else{
             listView.setAdapter(this);
         }

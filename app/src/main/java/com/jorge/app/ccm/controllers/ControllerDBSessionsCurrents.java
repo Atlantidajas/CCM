@@ -21,7 +21,7 @@ public class ControllerDBSessionsCurrents {
 
     public ControllerDBSessionsCurrents(final Context context) {
         this.context = context;
-        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sessions" ).child( "Currents" );
+        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "SessionsCurrents" );
     }
 
     public DatabaseReference getDatabaseReference() {

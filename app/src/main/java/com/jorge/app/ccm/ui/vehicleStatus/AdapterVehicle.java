@@ -192,7 +192,7 @@ public class AdapterVehicle extends BaseAdapter {
         }while (dataSnapshots.hasNext());
 
         if ( this.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
-            textView.setText( "No hay vehículos en la lista" );
+            Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
         }else{
             listView.setAdapter(this);
         }

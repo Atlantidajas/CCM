@@ -23,7 +23,7 @@ public class ControllerDBSessionsHistoric {
 
     public ControllerDBSessionsHistoric(final Context context) {
         this.context = context;
-        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Sessions" ).child( "Historics" );
+        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "SessionsHistorics" );
     }
 
     public DatabaseReference getDatabaseReference() {
@@ -31,7 +31,7 @@ public class ControllerDBSessionsHistoric {
     }
 
     public void setValue( final SessionDriving sessionDriving){
-        final DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() ).push();
+        final DatabaseReference dbRF = databaseReference.push();
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override
@@ -47,38 +47,6 @@ public class ControllerDBSessionsHistoric {
             }
         };
         dbRF.addValueEventListener( valueEventListenerSetVehicle );
-    }
-
-    public void removeValue(final SessionDriving sessionDriving, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() ).getRoot();
-        dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
-        dbRF.removeValue();
-    }
-
-    public void updateValue(final SessionDriving sessionDriving, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() ).getRoot();
-        dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
-        dbRF.setValue( sessionDriving );
-    }
-
-    public void setAdapter(final AdapterSessionHistoric ADAPTER_SESION ){
-
-        databaseReference.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot dataSnapshot ) {
-
-                if (dataSnapshot.exists()) {
-                    ADAPTER_SESION.setArrayAdapterHistoric( dataSnapshot );
-                }
-                else {
-                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public ChildEventListener setChildEventListener(final String messageOnChildChanged,

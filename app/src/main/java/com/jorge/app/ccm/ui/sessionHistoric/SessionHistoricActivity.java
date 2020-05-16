@@ -31,7 +31,6 @@ import java.util.ArrayList;
 public class SessionHistoricActivity extends AppCompatActivity {
 
     private final String TAG = "SessionHistoricActivity";
-    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
     private AdapterSessionHistoric adapterSessionHistoric;
     private TextView textView;
     private ListView listView;
@@ -45,8 +44,6 @@ public class SessionHistoricActivity extends AppCompatActivity {
         setContentView( R.layout.activity_sesion_driving );
         textView = findViewById(R.id.textView_Sesions);
         listView = findViewById(R.id.listView_sessions);
-        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
-        user = new User();
 
         intentCloseSesion  = new Intent( SessionHistoricActivity.this, VehiclesListActivity.class );
 
@@ -70,35 +67,15 @@ public class SessionHistoricActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> lst, View viewRow,
                                     final int position, long id) {
 
-              //  final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
+                WindowDialogFragment windowNotice = new WindowDialogFragment( R.string.windowNoticeSesionHistoricActivity );
 
-                WindowDialogFragment windowCloseSesionVehicle = new WindowDialogFragment( "Desea cerrar sesion" );
-
-                windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                windowNotice.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        User userSessionDriving = sesionsDrivings.get( position ).getUser();
+                        startActivity( intentCloseSesion );
+                        finish();
 
-                        Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + userSessionDriving.getIdUser() );
-                        Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
-
-                        //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
-                        //Condicion 1
-                        if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
-
-                    //        Log.i( TAG, "Condicion 1: OnclickItem -> sesionDrivingEND -> typeSesion (Valor) -->: " + sesionDrivingEnd.getTypeSesion() );
-                    //        Log.i( TAG, "Condicion 1: OnclickItem -> vehicleSesionDriving -> driving (Valor) -->: " + sesionDrivingEnd.getVehicle().getDriving() );
-
-                         //   controllerDBStatus.updateValue( sesionDrivingEnd.getVehicle(), null );
-                           // controllerDBSesionsCurrents.updateCurrent( sesionDrivingEnd );
-                            //controllerDBSesionsCurrents.endSesion( sesionDrivingEnd );
-                            startActivity( intentCloseSesion );
-                            finish();
-                        }
-                        else {
-                            Toast.makeText( getApplicationContext(), R.string.toast_message_logout_error, Toast.LENGTH_SHORT ).show();
-                        }
                     }
 
                     @Override
@@ -107,7 +84,7 @@ public class SessionHistoricActivity extends AppCompatActivity {
                     }
                 } );
 
-                windowCloseSesionVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+                windowNotice.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
             }
         });
     }

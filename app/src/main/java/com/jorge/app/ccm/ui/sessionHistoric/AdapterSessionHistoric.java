@@ -21,17 +21,28 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.models.SessionDriving;
+import com.jorge.app.ccm.models.User;
+import com.jorge.app.ccm.models.Vehicle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class AdapterSessionHistoric extends BaseAdapter {
+
+    private ImageView imageViewLogoVehicle;
+    private TextView textView_registrationNumber;
+    private TextView textView_date;
+    private TextView textView_hours;
+    private TextView textView_typeSesion;
+    ImageView imageView_drivind;
     private Context context;
-    private ArrayList<SessionDriving> listIntemSessions = new ArrayList<SessionDriving>();
+    private ArrayList<SessionDriving> listIntemSessions;
     private TextView textView;
     private ListView listView;
     private SessionDriving sessionDriving;
-    ControllerDBSessionsHistoric controllerDBSessionsHistoric;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
+    private User user;
+
 
     public AdapterSessionHistoric(){}
 
@@ -40,30 +51,33 @@ public class AdapterSessionHistoric extends BaseAdapter {
         this.textView = textView;
         this.listView = listView;
         this.controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( context );
+        user = new User(  );
+
+        listIntemSessions = new ArrayList<>(  );
 
         //Eventos de cambios sobre el adaptador
         controllerDBSessionsHistoric.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                getListIntemSesions().clear();
+                listIntemSessions.clear();
                 notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                getListIntemSesions().clear();
+                listIntemSessions.clear();
                 notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                getListIntemSesions().clear();
+                listIntemSessions.clear();
                 notifyDataSetChanged();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                getListIntemSesions().clear();
+                listIntemSessions.clear();
                 notifyDataSetChanged();
             }
 
@@ -73,17 +87,19 @@ public class AdapterSessionHistoric extends BaseAdapter {
             }
         } );
 
+
         // Cargo array adapte
-        controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        this.controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
 
-                if (dataSnapshot.exists()) {
+                if( dataSnapshot.exists() ) {
                     setArrayAdapterHistoric( dataSnapshot );
                 }
-                else {
+                else{
                     Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -109,29 +125,25 @@ public class AdapterSessionHistoric extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent ) {
+    public View getView( int position, View convertView, ViewGroup parent ) {
 
         this.sessionDriving = (SessionDriving) getItem(position);
+        convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_session, parent, false );
 
-        convertView = LayoutInflater.from( context ).inflate( R.layout.list_item_view_session, parent, false );
+        imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
+        textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_sessions );
+        textView_date = convertView.findViewById( R.id.textView_session_date_item_sessions );
+        textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
+        textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
+        imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
 
-        ImageView imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
         imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
-
-        TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_sessions );
         textView_registrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
-
-        TextView textView_date = convertView.findViewById( R.id.textView_session_date_item_sessions );
         textView_date.setText( sessionDriving.getSession().getDate() );
-
-        TextView textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
         textView_hours.setText( sessionDriving.getSession().getHours() );
-
-        TextView textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
         textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
+        Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageView_drivind );
 
-        ImageView imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
-        Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into(imageView_drivind);
 
         return convertView;
     }
@@ -143,18 +155,36 @@ public class AdapterSessionHistoric extends BaseAdapter {
     public void setArrayAdapterHistoric(DataSnapshot dataSnapshot){
 
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
+
         do{
             listIntemSessions.add( new SessionDriving( dataSnapshots.next() ) );
         }while (dataSnapshots.hasNext());
 
-        if ( this.getCount() <= 0 ){//<-- Controlo que tenga al menos exista una sesión registrada, en caso contrario muestro mensaje
-            textView.setText( "No hay sesiones en la lista" );
+        if ( this.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
+
         }else{
             listView.setAdapter(this);
         }
+
     }
 
     public ArrayList<SessionDriving> getListIntemSesions() {
         return listIntemSessions;
+    }
+
+    public void readerIdsUsers(){
+        // Cargo array adapte
+        this.controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange( DataSnapshot dataSnapshot ) {
+
+                setArrayAdapterHistoric( dataSnapshot );
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

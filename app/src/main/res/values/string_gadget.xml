@@ -47,4 +47,7 @@
     <string name="windowCloseRedirecSesionDriving_remove_message">Este vehículo está en uso, debe cerrar la sesión para poderlo eliminar</string>
     <string name="windowCloseRedirecSesionDriving_edit_message">Este vehículo está en uso, debe cerrar la sesión para poderlo editar</string>
 
+    <!-- Windows Notice (SesionHistoricActivity) -->
+    <string name="windowNoticeSesionHistoricActivity">Ver datos de la sesión</string>
+
 </resources>
