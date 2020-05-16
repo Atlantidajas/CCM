@@ -79,45 +79,51 @@ public class SessionDrivingActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> lst, View viewRow,
                                     final int position, long id) {
 
-                //final SesionDriving sesionDrivingEnd = new SesionDriving( false, sesionsDrivings.get( position ).getVehicle() );
+                //Una sesión que ya está cerrada no se puede volver a cerrar.
+                if (sesionsDrivings.get( position ).getSession().getTypeSesion().equals( "End" )) {
+                    Toast.makeText( getApplicationContext(), "No puede cerrar una sesión que ya lo está", Toast.LENGTH_SHORT ).show();
+                } else {
 
-                WindowDialogFragment windowCloseSesionVehicle = new WindowDialogFragment( "Desea cerrar sesion" );
+                    WindowDialogFragment windowCloseSesionVehicle = new WindowDialogFragment( "Desea cerrar sesion" );
 
-                windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
-                    @Override
-                    public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                    windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                        @Override
+                        public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        Session sessionEnd = new Session( "End" );
+                            Session sessionEnd = new Session( "End" );
 
-                        Vehicle vehicleSelect = sesionsDrivings.get( position ).getVehicle();
+                            Vehicle vehicleSelect = sesionsDrivings.get( position ).getVehicle();
 
-                        final SessionDriving sessionDriving = new SessionDriving( sessionEnd, user,  vehicleSelect );
+                            final SessionDriving sessionDriving = new SessionDriving( sessionEnd, user, vehicleSelect );
 
-                        Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
-                        Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
+                            Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sesionsDrivings.get( position ).getUser().getIdUser() );
+                            Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
 
-                        //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
-                        //Condicion 1
-                        if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() ) ) {
-                            controllerDBStatus.updateValue( sessionDriving.getVehicle(), null );
-                            controllerDBSessionsCurrents.updateValue( sessionDriving, "Ha cerrado sesión" );
-                            controllerDBSessionsHistoric.setValue( sessionDriving );
-                            startActivity( intentCloseSesion );
+
+                            //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
+                            //Condicion 1
+                            if (sesionsDrivings.get( position ).getUser().getIdUser().equals( user.getIdUser() )) {
+                                controllerDBStatus.updateValue( sessionDriving.getVehicle(), null );
+                                controllerDBSessionsCurrents.updateValue( sessionDriving, null );
+                                controllerDBSessionsHistoric.setValue( sessionDriving );
+                                Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
+                                startActivity( intentCloseSesion );
+                            } else {
+                                Toast.makeText( getApplicationContext(), R.string.toast_message_logout_error, Toast.LENGTH_SHORT ).show();
+                            }
                         }
-                        else {
-                            Toast.makeText( getApplicationContext(), R.string.toast_message_logout_error, Toast.LENGTH_SHORT ).show();
+
+                        @Override
+                        public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                            return;
                         }
-                    }
+                    } );
 
-                    @Override
-                    public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-                        return;
-                    }
-                } );
-
-                windowCloseSesionVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+                    windowCloseSesionVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+                }
             }
         });
+
     }
 
     @Override

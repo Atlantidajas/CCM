@@ -97,6 +97,7 @@ public class AdapterSessionHistoric extends BaseAdapter {
                     setArrayAdapterHistoric( dataSnapshot );
                 }
                 else{
+                    //Muestro mensaje si no hay ningún registro, por si es el admin el que consulta
                     Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
                 }
 
@@ -130,20 +131,19 @@ public class AdapterSessionHistoric extends BaseAdapter {
         this.sessionDriving = (SessionDriving) getItem(position);
         convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_session, parent, false );
 
-        imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
-        textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_sessions );
-        textView_date = convertView.findViewById( R.id.textView_session_date_item_sessions );
-        textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
-        textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
-        imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
+            imageViewLogoVehicle = convertView.findViewById( R.id.imageView_image_item_sessions );
+            textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_sessions );
+            textView_date = convertView.findViewById( R.id.textView_session_date_item_sessions );
+            textView_hours = convertView.findViewById( R.id.textView_session_hours_item_sessions );
+            textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
+            imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
 
-        imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
-        textView_registrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
-        textView_date.setText( sessionDriving.getSession().getDate() );
-        textView_hours.setText( sessionDriving.getSession().getHours() );
-        textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
-        Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageView_drivind );
-
+            imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
+            textView_registrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
+            textView_date.setText( sessionDriving.getSession().getDate() );
+            textView_hours.setText( sessionDriving.getSession().getHours() );
+            textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
+            Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageView_drivind );
 
         return convertView;
     }
@@ -157,10 +157,20 @@ public class AdapterSessionHistoric extends BaseAdapter {
         Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
 
         do{
-            listIntemSessions.add( new SessionDriving( dataSnapshots.next() ) );
+            SessionDriving sessionDriving = new SessionDriving( dataSnapshots.next() );
+
+            if( sessionDriving.getUser().getIdUser().equals( user.getIdUser() ) ) {
+
+                listIntemSessions.add( sessionDriving );
+
+            }
+
+
         }while (dataSnapshots.hasNext());
 
         if ( this.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
+            //Muestro mensaje si no hay ningún registro, de este usuario
+            Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
 
         }else{
             listView.setAdapter(this);
@@ -172,19 +182,4 @@ public class AdapterSessionHistoric extends BaseAdapter {
         return listIntemSessions;
     }
 
-    public void readerIdsUsers(){
-        // Cargo array adapte
-        this.controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot dataSnapshot ) {
-
-                setArrayAdapterHistoric( dataSnapshot );
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

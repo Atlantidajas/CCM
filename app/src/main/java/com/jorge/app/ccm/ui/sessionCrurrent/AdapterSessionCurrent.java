@@ -146,6 +146,7 @@ public class AdapterSessionCurrent extends BaseAdapter {
         textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
         Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageView_drivind );
 
+
         return convertView;
     }
 
