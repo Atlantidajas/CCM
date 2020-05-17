@@ -31,6 +31,7 @@
 
         <EditText
             android:id="@+id/edit_text_brand_registry_vehicle"
+            android:drawableLeft="@mipmap/ic_launcher_brand"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
@@ -69,7 +70,7 @@
 
         <EditText
             android:id="@+id/edit_text_model_registry_vehicle"
-            android:drawableLeft="@drawable/ic_stat_driving_car"
+            android:drawableLeft="@mipmap/ic_launcher_car"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
@@ -104,6 +105,7 @@
 
         <EditText
             android:id="@+id/edit_text_registry_number_registry_vehicle"
+            android:drawableLeft="@mipmap/ic_launcher_license_plate"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
@@ -136,6 +138,7 @@
 
         <EditText
             android:id="@+id/edit_text_registry_date_itv_vehicle"
+            android:drawableLeft="@mipmap/ic_launcher_calendar"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:layout_weight="0"

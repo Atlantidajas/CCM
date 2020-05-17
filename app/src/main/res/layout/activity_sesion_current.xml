@@ -7,85 +7,194 @@
     tools:context=".ui.sessionCrurrent.SessionCurrentActivity">
 
 
-    <TextView
-        android:id="@+id/textViewDate"
+    <LinearLayout
+        android:id="@+id/linearLayoutUserDate"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.056" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textViewHours"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        <ImageView
+            android:id="@+id/imageViewUserDate"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="10dp"/>
 
-    <TextView
-        android:id="@+id/textViewBrand"
+
+        <TextView
+            android:id="@+id/textViewUserDate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textAlignment="viewStart" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutDate"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.34" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutUserDate">
 
-    <TextView
-        android:id="@+id/textViewModel"
+        <ImageView
+            android:id="@+id/imageViewDate"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="10dp"
+            android:src="@mipmap/ic_launcher_calendar"/>
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textAlignment="viewStart"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutHours"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutDate">
+
+        <ImageView
+            android:id="@+id/imageViewHours"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="10dp"
+            android:src="@mipmap/ic_launcher_watch" />
+
+        <TextView
+            android:id="@+id/textViewHours"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textAlignment="viewStart"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.481" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutHours">
 
-    <TextView
-        android:id="@+id/textViewRegistrationNumber"
+        <ImageView
+            android:id="@+id/imageViewBrand"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="10dp"/>
+
+        <TextView
+            android:id="@+id/textViewBrand"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textAlignment="viewStart"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutModel"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.621" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutBrand">
 
-    <Button
-        android:id="@+id/buttonCloseSesionCurrent"
-        android:layout_width="wrap_content"
-        android:layout_height="90dp"
-        android:text="@string/button_close_session_session_driving_crurrent"
+        <ImageView
+            android:id="@+id/imageViewModel"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="10dp"
+            android:src="@mipmap/ic_launcher_car"/>
+
+        <TextView
+            android:id="@+id/textViewModel"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textAlignment="viewStart" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutRegistrationNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutModel">
+
+        <ImageView
+            android:id="@+id/imageViewRegistrationNumber"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="10dp"
+            android:src="@mipmap/ic_launcher_license_plate"/>
+
+        <TextView
+            android:id="@+id/textViewRegistrationNumber"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textAlignment="viewStart" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/textViewButoms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.898" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRegistrationNumber">
+
+        <Button
+            android:id="@+id/button_return_session_session_driving_crurrent"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:text="@string/button_return_session_session_driving_crurrent" />
+
+        <Button
+            android:id="@+id/button_close_session_session_driving_crurrent"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="40dp"
+            android:text="@string/button_close_session_session_driving_crurrent" />
+
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

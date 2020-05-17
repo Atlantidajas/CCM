@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -36,12 +42,16 @@ public class SessionCurrentActivity extends AppCompatActivity{
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
     private SessionDriving sessionDriving;
 
+    private ImageView imageViewUserDate;
+    private TextView textViewUserDate;
     private TextView textViewDate;
     private TextView textViewHours;
+    private ImageView imageViewBrand;
     private TextView textViewBrand;
     private TextView textViewModel;
     private TextView textViewRegistrationNumber;
     private Button buttonCloseSesionCurrent;
+    private Button buttonReturnSessionCrurrent;
 
     private Intent intentCloseSesion;
     private User user;
@@ -51,12 +61,16 @@ public class SessionCurrentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sesion_current );
 
+        imageViewUserDate = findViewById( R.id.imageViewUserDate );
+        textViewUserDate = findViewById( R.id.textViewUserDate );
         textViewDate = findViewById(R.id.textViewDate);
         textViewHours = findViewById(R.id.textViewHours);
+        imageViewBrand = findViewById( R.id.imageViewBrand );
         textViewBrand = findViewById(R.id.textViewBrand);
         textViewModel = findViewById(R.id.textViewModel);
         textViewRegistrationNumber = findViewById(R.id.textViewRegistrationNumber);
-        buttonCloseSesionCurrent = findViewById( R.id.buttonCloseSesionCurrent );
+        buttonReturnSessionCrurrent = findViewById( R.id.button_return_session_session_driving_crurrent );
+        buttonCloseSesionCurrent = findViewById( R.id.button_close_session_session_driving_crurrent );
 
 
         controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
@@ -75,11 +89,23 @@ public class SessionCurrentActivity extends AppCompatActivity{
                 if (dataSnapshot.exists()) {
                     sessionDriving = new SessionDriving( dataSnapshot );
 
-                    textViewDate.setText( sessionDriving.getSession().getDate() );
-                    textViewHours.setText( sessionDriving.getSession().getHours() );
-                    textViewBrand.setText( sessionDriving.getVehicle().getBrand() );
-                    textViewModel.setText( sessionDriving.getVehicle().getModel() );
-                    textViewRegistrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
+                    Resources resources = getResources();
+                    String userSession = resources.getString( R.string.textViewUserDate );
+                    String dateSession = resources.getString( R.string.textViewDate );
+                    String hoursSession = resources.getString( R.string.textViewHours );
+                    String brandVehicleSession = resources.getString( R.string.textViewBrand );
+                    String modelVehicleSession = resources.getString( R.string.textViewModel );
+                    String registrationNumberVehicleSession = resources.getString( R.string.textViewRegistrationNumber );
+
+                    Glide.with( getApplicationContext() ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageViewUserDate );
+                    textViewUserDate.setText( userSession + " " + sessionDriving.getUser().getName() );
+                    textViewDate.setText( dateSession + " " + sessionDriving.getSession().getDate() );
+                    textViewHours.setText( hoursSession  + " " + sessionDriving.getSession().getHours() );
+                    textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicle().getBrand() );
+                    imageViewBrand.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
+
+                    textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicle().getModel() );
+                    textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicle().getRegistrationNumber() );
 
                 }
                 else {
