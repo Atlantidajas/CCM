@@ -1,14 +1,12 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
-import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
 
 public class SessionDriving {
 
     private Session session;
     private User user;
     private Vehicle vehicle;
-    ControllerDBSessionsCurrents controllerDBSessionsCurrents;
 
     public SessionDriving(Session session, User user ) {
         this.user = user;

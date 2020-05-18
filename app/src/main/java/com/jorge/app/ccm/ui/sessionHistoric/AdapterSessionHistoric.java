@@ -22,8 +22,8 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.models.User;
-import com.jorge.app.ccm.models.Vehicle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 

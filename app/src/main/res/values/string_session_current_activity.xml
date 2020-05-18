@@ -2,6 +2,8 @@
 <resources>
 
 
+    <string name="textViewTypeSessionStart">Estado actual de la sesión: Iniciada</string>
+    <string name="textViewTypeSessionEnd">Estado actual de la sesión: Finalizada</string>
     <string name="textViewUserDate">Usuario:</string>
     <string name="textViewDate">Fecha de sesión:</string>
     <string name="textViewHours">Hora de sesión:</string>

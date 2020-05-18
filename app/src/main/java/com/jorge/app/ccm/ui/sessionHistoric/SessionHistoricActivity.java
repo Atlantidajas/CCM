@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,8 +16,9 @@ import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.SessionDriving;
-import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
+import com.jorge.app.ccm.ui.sessionStatus.SessionStatusActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SessionHistoricActivity extends AppCompatActivity {
@@ -26,8 +28,8 @@ public class SessionHistoricActivity extends AppCompatActivity {
     private TextView textView;
     private ListView listView;
     private ArrayList<SessionDriving> sesionsDrivings;
-    private Intent intentCloseSesion;
-    private User user;
+    private Intent intentSessionStatus;
+    public static final String SESSION_HISTORIC = "SessionDriving";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +37,15 @@ public class SessionHistoricActivity extends AppCompatActivity {
         setContentView( R.layout.activity_sesion_historic );
         textView = findViewById(R.id.textView_Sesions);
         listView = findViewById(R.id.listView_sessions);
+        intentSessionStatus  = new Intent( SessionHistoricActivity.this, SessionStatusActivity.class );
 
-        intentCloseSesion  = new Intent( SessionHistoricActivity.this, VehiclesListActivity.class );
+
 
         //Inizializao Adapter para mostrar lista de sesiones
         adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView);
+        sesionsDrivings = new ArrayList<>(  );
         sesionsDrivings = adapterSessionHistoric.getListIntemSesions();
+
 
     }
 
@@ -64,8 +69,13 @@ public class SessionHistoricActivity extends AppCompatActivity {
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        startActivity( intentCloseSesion );
-                        finish();
+                        Log.i( TAG, sesionsDrivings.get( position ).getSession().getTypeSesion() );
+                        Log.i( TAG, sesionsDrivings.get( position ).getVehicle().getRegistrationNumber() );
+
+                        SessionDriving sessionDrivingSelect = sesionsDrivings.get( position );
+
+                        intentSessionStatus.putExtra(SESSION_HISTORIC, (Serializable) sessionDrivingSelect.getSession() );
+                        startActivity(intentSessionStatus);
 
                     }
 

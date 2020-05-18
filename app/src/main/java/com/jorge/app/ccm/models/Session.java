@@ -3,7 +3,9 @@ package com.jorge.app.ccm.models;
 import com.google.firebase.database.DataSnapshot;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
-public class Session {
+import java.io.Serializable;
+
+public class Session implements Serializable {
 
     private String date;
     private String hours;

@@ -6,8 +6,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable {
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     private String idUser;
     private String name;
     private Uri photoUri;
@@ -16,8 +20,8 @@ public class User {
     private String telephone;
 
     public User(){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        this.mAuth = FirebaseAuth.getInstance();
+        this.currentUser = mAuth.getCurrentUser();
         this.name = currentUser.getDisplayName();
         this.idUser = currentUser.getUid();
         this.photoUriString = String.valueOf( currentUser.getPhotoUrl() );
