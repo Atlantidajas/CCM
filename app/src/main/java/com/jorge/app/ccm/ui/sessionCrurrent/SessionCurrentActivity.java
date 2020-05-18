@@ -6,6 +6,8 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -37,7 +39,6 @@ public class SessionCurrentActivity extends AppCompatActivity{
     private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
     private ControllerDBStatus controllerDBStatus;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
-    private SessionDriving sessionDriving;
 
     private ImageView imageViewTypeSession;
     private TextView textViewTypeSession;
@@ -89,40 +90,16 @@ public class SessionCurrentActivity extends AppCompatActivity{
             public void onDataChange( DataSnapshot dataSnapshot ) {
 
                 if (dataSnapshot.exists()) {
-                    sessionDriving = new SessionDriving( dataSnapshot );
+                    SessionDriving sessionDriving = new SessionDriving( dataSnapshot );
 
-                    Resources resources = getResources();
-                    String typeSessionStart = resources.getString( R.string.textViewTypeSessionStart );
-                    String typeSessionEnd = resources.getString( R.string.textViewTypeSessionEnd );
-                    String userSession = resources.getString( R.string.textViewUserDate );
-                    String dateSession = resources.getString( R.string.textViewDate );
-                    String hoursSession = resources.getString( R.string.textViewHours );
-                    String brandVehicleSession = resources.getString( R.string.textViewBrand );
-                    String modelVehicleSession = resources.getString( R.string.textViewModel );
-                    String registrationNumberVehicleSession = resources.getString( R.string.textViewRegistrationNumber );
-
-                    Glide.with( getApplicationContext() ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageViewUserDate );
-                    switch ( sessionDriving.getSession().getTypeSesion() ){
-                        case "Start":
-                            imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_open_lock );
-                            textViewTypeSession.setText( typeSessionStart );
-                            break;
-                        case "End":
-                            imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_close_lock );
-                            textViewTypeSession.setText( typeSessionEnd );
-                            break;
-                        default:
-                            imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_open_lock );
-                            textViewTypeSession.setText( sessionDriving.getSession().getTypeSesion() );
-                            break;
-                    }
-                    textViewUserDate.setText( userSession + " " + sessionDriving.getUser().getName() );
-                    textViewDate.setText( dateSession + " " + sessionDriving.getSession().getDate() );
-                    textViewHours.setText( hoursSession  + " " + sessionDriving.getSession().getHours() );
-                    textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicle().getBrand() );
-                    imageViewBrand.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
-                    textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicle().getModel() );
-                    textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicle().getRegistrationNumber() );
+                    loadFieldUserSession( sessionDriving );
+                    loadFieldStatuSession( sessionDriving );
+                    loadFieldDateSession( sessionDriving );
+                    loadFieldHoursSession( sessionDriving );
+                    loadFieldBrandVehicle( sessionDriving );
+                    loadFieldModelVehicle( sessionDriving );
+                    loadFieldRegistrationNumberVehicle( sessionDriving );
+                    loadButtonCloseSession( sessionDriving );
 
                 }
                 else {
@@ -134,18 +111,76 @@ public class SessionCurrentActivity extends AppCompatActivity{
                 Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    public void loadFieldUserSession( SessionDriving sessionDriving ){
+        Resources resources = getResources();
+        String userSession = resources.getString( R.string.textViewUserDate );
+        Glide.with( getApplicationContext() ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageViewUserDate );
+        textViewUserDate.setText( userSession + " " + sessionDriving.getUser().getName() );
+    }
 
+    public void loadFieldStatuSession( SessionDriving sessionDriving ){
+
+        Resources resources = getResources();
+        String typeSessionStart = resources.getString( R.string.textViewTypeSessionStart );
+        String typeSessionEnd = resources.getString( R.string.textViewTypeSessionEnd );
+
+        switch ( sessionDriving.getSession().getTypeSesion() ){
+            case "Start":
+                imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_open_lock );
+                textViewTypeSession.setTextColor( Color.BLUE );
+                textViewTypeSession.setText( typeSessionStart );
+                break;
+            case "End":
+                imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_close_lock );
+                textViewTypeSession.setText( typeSessionEnd );
+                break;
+            default:
+                imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_open_lock );
+                textViewTypeSession.setText( sessionDriving.getSession().getTypeSesion() );
+                break;
+        }
+    }
+
+    public void loadFieldDateSession( SessionDriving sessionDriving){
+        Resources resources = getResources();
+        String dateSession = resources.getString( R.string.textViewDate );
+        textViewDate.setText( dateSession + " " + sessionDriving.getSession().getDate() );
+    }
+
+    public void loadFieldHoursSession( SessionDriving sessionDriving){
+        Resources resources = getResources();
+        String hoursSession = resources.getString( R.string.textViewHours );
+        textViewHours.setText( hoursSession  + " " + sessionDriving.getSession().getHours() );
+    }
+
+    public void loadFieldBrandVehicle( SessionDriving sessionDriving ){
+        Resources resources = getResources();
+        String brandVehicleSession = resources.getString( R.string.textViewBrand );
+        textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicle().getBrand() );
+        imageViewBrand.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
+    }
+
+    public void loadFieldModelVehicle( SessionDriving sessionDriving){
+        Resources resources = getResources();
+        String modelVehicleSession = resources.getString( R.string.textViewModel );
+        textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicle().getModel() );
+    }
+
+    public void loadFieldRegistrationNumberVehicle( SessionDriving sessionDriving){
+        Resources resources = getResources();
+        String registrationNumberVehicleSession = resources.getString( R.string.textViewRegistrationNumber );
+        textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicle().getRegistrationNumber() );
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-        onclick();
     }
 
-    public void onclick(){
+    public void loadButtonCloseSession(final SessionDriving sessionDriving ){
 
         this.buttonCloseSesionCurrent.setOnClickListener( new View.OnClickListener() {
             @Override

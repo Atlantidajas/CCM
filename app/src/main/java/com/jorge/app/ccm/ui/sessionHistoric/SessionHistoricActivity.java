@@ -29,7 +29,7 @@ public class SessionHistoricActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<SessionDriving> sesionsDrivings;
     private Intent intentSessionStatus;
-    public static final String SESSION_HISTORIC = "SessionDriving";
+    public static final String SESSION_HISTORIC = "SessionDriving"; //<-- Objeto Session
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +89,8 @@ public class SessionHistoricActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     public void onDestroy(){
