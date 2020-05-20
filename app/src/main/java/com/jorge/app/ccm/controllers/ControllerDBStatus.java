@@ -12,8 +12,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.ui.vehicleStatus.AdapterVehicle;
 import com.jorge.app.ccm.models.Vehicle;
 
 public class ControllerDBStatus {
@@ -34,7 +32,6 @@ public class ControllerDBStatus {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
                     dbRF.setValue( vehicle );
-
                 }
             }
 

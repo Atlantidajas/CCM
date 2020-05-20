@@ -36,7 +36,7 @@ import java.util.Iterator;
  * @author Jorge.HL
  */
 
-public class AdapterVehicle extends BaseAdapter {
+public class AdapterVehicleStatus extends BaseAdapter {
 
     private Context context;
     private ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
@@ -46,7 +46,7 @@ public class AdapterVehicle extends BaseAdapter {
     private User userLoging;
     ControllerDBStatus controllerDBStatus;
 
-    public AdapterVehicle(final Context context, TextView textView, ListView listView) {
+    public AdapterVehicleStatus(final Context context, TextView textView, ListView listView) {
         this.context = context;
         this.textView = textView;
         this.listView = listView;

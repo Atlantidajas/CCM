@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
 import com.jorge.app.ccm.ui.location.LocationActivity;
 import com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity;
-import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 
 public class HomeActivity extends AppCompatActivity  {
 
@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity  {
         buttonVehiclesStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent= new Intent (HomeActivity.this, VehiclesListActivity.class);
+               Intent intent= new Intent (HomeActivity.this, VehiclesStatusListActivity.class);
                startActivity(intent);
             }
         });

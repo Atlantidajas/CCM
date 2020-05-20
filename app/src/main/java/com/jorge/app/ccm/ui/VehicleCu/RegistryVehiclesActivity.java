@@ -20,7 +20,7 @@ import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
 import com.jorge.app.ccm.gadget.GadgetSpinner;
-import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
 public class RegistryVehiclesActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
@@ -204,8 +204,8 @@ public class RegistryVehiclesActivity extends AppCompatActivity implements Dialo
 
             controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
             controllerDBStatus.setValue( vehicle );
-            Intent intent= new Intent ( RegistryVehiclesActivity.this, VehiclesListActivity.class);
-            startActivity(intent);
+            //Lo envío a la actividad de la que proviene, ya que se pueden crear vehículos desde diferentes actividades
+            finish();
         }
         else{
             Toast.makeText(getApplicationContext(), R.string.toast_message_empty_fields, Toast.LENGTH_SHORT).show();

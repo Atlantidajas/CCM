@@ -4,24 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.vehicleStatus.VehiclesListActivity">
-
+    tools:context=".ui.vehicleStatus.VehiclesStatusListActivity">
 
     <TextView
         android:id="@+id/textView_vehicles"
-        android:layout_width="391dp"
-        android:layout_height="69dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:drawableRight="@mipmap/ic_launcher_select_multiple"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listView_vehicles"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="122dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView_vehicles"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,6 @@ import androidx.fragment.app.DialogFragment;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -31,7 +30,7 @@ import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
-import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 
 public class SessionCurrentActivity extends AppCompatActivity{
 
@@ -81,7 +80,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
         user = new User();
 
-        intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesListActivity.class );
+        intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesStatusListActivity.class );
 
         // Cargo array adapte
         this.controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {

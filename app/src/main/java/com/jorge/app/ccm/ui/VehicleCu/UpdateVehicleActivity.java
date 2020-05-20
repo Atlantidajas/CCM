@@ -20,10 +20,10 @@ import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
 import com.jorge.app.ccm.gadget.GadgetSpinner;
-import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
-import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE;
+import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE;
 
 public class UpdateVehicleActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
@@ -213,7 +213,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
             controllerDBStatus.updateValue( vehicle, messageUpdateVehicle + " " + vehicle.getRegistrationNumber());
             controllerDBStatus = null;
 
-            Intent intent= new Intent ( UpdateVehicleActivity.this, VehiclesListActivity.class);
+            Intent intent= new Intent ( UpdateVehicleActivity.this, VehiclesStatusListActivity.class);
             startActivity(intent);
         }
         else{

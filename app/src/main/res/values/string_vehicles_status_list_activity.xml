@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="textView_vehicles_select_list_activity">Seleccione un vehículo</string>
+    <string name="testView_title_registrarion_numbre">Matrícula</string>
+    <string name="testView_title_brand">Marca</string>
+    <string name="testView_title_model">Modelo</string>
+    <string name="testView_title_date_itv">ITV</string>
+    <string name="testView_title_status">Estado</string>
+</resources>

@@ -41,7 +41,7 @@ import java.util.ArrayList;
 /**
  * @author Jorge.HL
  */
-public class VehiclesListActivity extends AppCompatActivity implements Serializable{
+public class VehiclesStatusListActivity extends AppCompatActivity implements Serializable{
 
     private final String TAG = "VehiclesListActivity";
     public Intent intentSesionDriving;
@@ -52,7 +52,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
-    private AdapterVehicle arrayAdapterVehicle;
+    private AdapterVehicleStatus arrayAdapterVehicleStatus;
     private TextView textView;
     private ListView listView;
     private ArrayList<Vehicle> vehicles;
@@ -62,8 +62,8 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vehicles_list);
-        textView = findViewById(R.id.textView_vehicles);
+        setContentView(R.layout.activity_vehicles_status_list );
+        textView = findViewById(R.id.testView_title_registrarion_numbre);
         listView = findViewById(R.id.listView_vehicles);
 
         //Inicialización de controladores
@@ -89,13 +89,13 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
         } );
 
         //Inizializao Adapter para mostrar lista de vehículos
-        this.arrayAdapterVehicle = new AdapterVehicle( getApplication(), textView, listView);
-        vehicles = arrayAdapterVehicle.getListIntemVehicles();
+        this.arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplication(), textView, listView);
+        vehicles = arrayAdapterVehicleStatus.getListIntemVehicles();
 
         //Intens
-        intentForRegistryVehicles = new Intent ( VehiclesListActivity.this, RegistryVehiclesActivity.class);
-        intentForUpdate= new Intent ( VehiclesListActivity.this, UpdateVehicleActivity.class);
-        intentSesionDriving = new Intent( VehiclesListActivity.this, SessionCurrentActivity.class );
+        intentForRegistryVehicles = new Intent ( VehiclesStatusListActivity.this, RegistryVehiclesActivity.class);
+        intentForUpdate= new Intent ( VehiclesStatusListActivity.this, UpdateVehicleActivity.class);
+        intentSesionDriving = new Intent( VehiclesStatusListActivity.this, SessionCurrentActivity.class );
 
     }
 
@@ -158,7 +158,7 @@ public class VehiclesListActivity extends AppCompatActivity implements Serializa
 
                 //Si se puede editar.
                 if ( vehicleSelect.getDriving() == 0 ){
-                    intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) arrayAdapterVehicle.getItem( position ) );
+                    intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) arrayAdapterVehicleStatus.getItem( position ) );
                     startActivity(intentForUpdate);
                 }
                 // No se puede editar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.

@@ -11,14 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".gadget.SpinnerVehiclesActivity"/>
         <activity android:name=".ui.sessionStatus.SessionStatusActivity" />
         <activity android:name=".ui.location.LocationActivity" />
         <activity android:name=".ui.expenses.ExpensesActivity" />
         <activity android:name=".ui.sessionHistoric.SessionHistoricActivity" />
-        <activity android:name=".ui.VehicleCu.UpdateVehicleActivity" />
+        <activity android:name=".ui.VehicleCu.UpdateVehicleActivity"/>
+        <activity android:name=".ui.VehicleCu.RegistryVehiclesActivity"/>
         <activity android:name=".ui.sessionCrurrent.SessionCurrentActivity" />
-        <activity android:name=".ui.VehicleCu.RegistryVehiclesActivity" />
-        <activity android:name=".ui.vehicleStatus.VehiclesListActivity" />
+        <activity android:name=".ui.vehiclesSelect.VehiclesSelectListActivity" />
+        <activity android:name=".ui.vehicleStatus.VehiclesStatusListActivity" />
         <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity
