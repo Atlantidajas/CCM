@@ -78,7 +78,6 @@ public class DialogFragmentNotice extends DialogFragment {
     /*
      * Constructor para un botón y con tipo de mensaje desde recursos
      */
-
     public DialogFragmentNotice( int title,
                                  int messageResorce,
                                  int textButtonPositive,
@@ -90,9 +89,6 @@ public class DialogFragmentNotice extends DialogFragment {
         this.textButtonNegative = 0;
         this.message = null;
     }
-
-
-
 
     /*
      * Interface para asegurarme de la implenetación de los métodos

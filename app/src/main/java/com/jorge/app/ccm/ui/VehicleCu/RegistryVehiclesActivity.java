@@ -19,14 +19,15 @@ import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
-import com.jorge.app.ccm.gadget.SpinnerRegistryBrands;
+import com.jorge.app.ccm.gadget.GadgetSpinner;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesListActivity;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
 public class RegistryVehiclesActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{
 
+    private final String TAG = "RegistryVehiclesActivity";
     private ControllerDBStatus controllerDBStatus;
-    private SpinnerRegistryBrands spinnerRegistryBrands;
+    private GadgetSpinner spinnerBrands;
     private EditText editTextBrand;
     private CheckBox checkBoxConfirmBrand;
     private EditText editTextModel;
@@ -72,13 +73,18 @@ public class RegistryVehiclesActivity extends AppCompatActivity implements Dialo
     //Onclik sobre item de FormRegistryBrands
     @Override
     public void onDialogItemClick(DialogFragment dialog) {
-        String resultItemSelect = spinnerRegistryBrands.textItem(spinnerRegistryBrands.getItemResult() );
+        String resultItemSelect = spinnerBrands.textItem( spinnerBrands.getItemResult() );
         editTextBrand.setText( resultItemSelect );
         checkBoxConfirmBrand.setChecked(true);
     }
 
     @Override
     public void onDialogFragmentSelectPositiveClick(DialogFragment dialog) {
+    }
+
+    @Override
+    public void onDialogFragmentSelectNeutralClick(DialogFragment dialog) {
+
     }
 
     @Override
@@ -106,7 +112,10 @@ public class RegistryVehiclesActivity extends AppCompatActivity implements Dialo
         Resources resource = getResources();
         BrandsUtil brandsUtil = new BrandsUtil( resource );
         String[] manufactures = brandsUtil.getBrands();
-        this.spinnerRegistryBrands = new SpinnerRegistryBrands( getSupportFragmentManager(), manufactures );
+        this.spinnerBrands = new GadgetSpinner( getSupportFragmentManager(),
+                R.string.spiner_title_records_vehicles,
+                manufactures,
+                TAG );
         editTextModel.requestFocus();//<-- Mando el foco a la siguiente posición
     }
 
