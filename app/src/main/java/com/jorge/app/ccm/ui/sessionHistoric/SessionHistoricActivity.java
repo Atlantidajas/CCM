@@ -35,8 +35,8 @@ public class SessionHistoricActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sesion_historic );
-        textView = findViewById(R.id.textView_Sesions);
-        listView = findViewById(R.id.listView_sessions);
+        textView = findViewById(R.id.textView_Sesions_historic);
+        listView = findViewById(R.id.listView_sessions_historic);
         intentSessionStatus  = new Intent( SessionHistoricActivity.this, SessionStatusActivity.class );
 
 

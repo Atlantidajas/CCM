@@ -61,7 +61,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listView_vehicles"
+        android:id="@+id/listView_vehicles_status_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

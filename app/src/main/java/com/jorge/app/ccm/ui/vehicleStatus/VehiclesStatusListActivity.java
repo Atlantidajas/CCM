@@ -64,7 +64,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles_status_list );
         textView = findViewById(R.id.testView_title_registrarion_numbre);
-        listView = findViewById(R.id.listView_vehicles);
+        listView = findViewById(R.id.listView_vehicles_status_list);
 
         //Inicialización de controladores
         controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
@@ -128,7 +128,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo ) {
 
         // Si se ha hecho LongClick sobre la lista.
-        if ( v.getId() == R.id.listView_vehicles ) {
+        if ( v.getId() == R.id.listView_vehicles_status_list ) {
             // Obtengo la posición de la lista que se ha pulsado
             int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
             // Inflo el menú.

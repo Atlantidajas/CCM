@@ -4,28 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.vehicleStatus.VehiclesStatusListActivity">
+    tools:context=".ui.vehiclesSelect.VehiclesSelectListActivity">
 
     <TextView
-        android:id="@+id/textView_vehicles"
+        android:id="@+id/textView_vehicles_vehicle_select_list"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textAlignment="center"
         android:gravity="center"
-        android:drawableRight="@mipmap/ic_launcher_select_multiple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#F8F8F8"
+        android:textStyle="bold"/>
 
     <ListView
-        android:id="@+id/listView_vehicles"
+        android:id="@+id/listView_vehicles_vehicle_select_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_vehicles"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_vehicles_vehicle_select_list"
+        tools:ignore="MissingConstraints"
+        android:background="#F8F8F8"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

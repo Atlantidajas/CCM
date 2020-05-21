@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.sessionCrurrent.SessionDrivingActivity">
+    tools:context=".ui.sessionHistoric.SessionHistoricActivity">
 
     <TextView
-        android:id="@+id/textView_Sesions"
+        android:id="@+id/textView_Sesions_historic"
         android:layout_width="391dp"
         android:layout_height="69dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listView_sessions"
+        android:id="@+id/listView_sessions_historic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"

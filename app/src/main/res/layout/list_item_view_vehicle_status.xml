@@ -43,6 +43,7 @@
             android:paddingRight="4dp"
             android:layout_height="match_parent"
             android:gravity="center"/>
+
         <ImageView
             android:id="@+id/imageView_driving_item_vehicles"
             android:layout_width="40dp"
@@ -51,4 +52,6 @@
 
 
     </LinearLayout>
+
+
 </LinearLayout>
