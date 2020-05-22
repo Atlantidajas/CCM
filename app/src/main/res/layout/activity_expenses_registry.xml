@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
@@ -36,12 +38,17 @@
             android:hint="@string/editText_date_expense_registry" />
 
 
-        <EditText
-            android:id="@+id/editText_method_of_payment_expense_registry"
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:drawableLeft="@mipmap/ic_launcher_method_expense"
-            android:hint="@string/editText_method_of_payment_expense_registry" />
+            android:layout_height="45dp"
+            app:backgroundTint="#03A9F4"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
         <EditText
             android:id="@+id/editText_total_expense_expense_registry"

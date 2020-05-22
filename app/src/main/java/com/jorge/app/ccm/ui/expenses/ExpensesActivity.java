@@ -1,16 +1,22 @@
 package com.jorge.app.ccm.ui.expenses;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 
@@ -20,6 +26,7 @@ import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
+import com.jorge.app.ccm.gadget.notices.GadgetSpinnerGeneric;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.typeExpenses.TypeExpensesActivity;
 import com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity;
@@ -34,6 +41,7 @@ public class ExpensesActivity extends AppCompatActivity {
     private Intent intentCreateVehicle;
     private Intent intentVehiclesSelectList;
     private Intent intentTypeExpenses;
+    private Spinner spinner;
     private EditText editTextSelectVehicle;
     private EditText editTextTypeExpense;
     private EditText editTextTickectExpenses;
@@ -54,7 +62,9 @@ public class ExpensesActivity extends AppCompatActivity {
         editTextTypeExpense = findViewById( R.id.editText_type_expense_expense_registry );
         editTextTickectExpenses = findViewById( R.id.editText_ticket_expense_registry  );
         editTextDateExpenses = findViewById( R.id.editText_date_expense_registry   );
-        editTextMethodOfPlayment = findViewById( R.id.editText_method_of_payment_expense_registry  );
+        editTextMethodOfPlayment = findViewById( R.id.etDescription  );
+        spinner = findViewById( R.id.spinner  );
+
         buttonAcceptExpenses = findViewById( R.id.button_accept_expense_registry  );
         buttonCancelExpenses = findViewById( R.id.button_cancel_expense_registry  );
 //        GadgetSpinner spinnerMethodPlayment = new GadgetSpinner( getSupportFragmentManager(),  )
@@ -144,13 +154,24 @@ public class ExpensesActivity extends AppCompatActivity {
     }
     public void loadFieldEditTextMethodOfPlayment(){
 
-
         Resources res = getResources();
-        String[] methodPlayments = res.getStringArray(R.array.methodPlayment);
-        GadgetSpinner spinnerMethodPlayment = new GadgetSpinner( getSupportFragmentManager(), R.string.spiner_title_records_vehicles,
-                methodPlayments,
-                TAG);
-        spinnerMethodPlayment.getDialogFragmentSpinner().getItemResult();
+        final String[] methodPlayments = res.getStringArray(R.array.methodPlayment);
+        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, methodPlayments));
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id)
+            {
+                Toast.makeText(adapterView.getContext(),
+                        (String) adapterView.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {    }
+        });
+
 
         //editTextMethodOfPlayment.setText( spinnerMethodPlayment.getItemResult() );
 
