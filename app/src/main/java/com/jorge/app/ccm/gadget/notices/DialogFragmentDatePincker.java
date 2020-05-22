@@ -40,15 +40,32 @@ public class DialogFragmentDatePincker extends DialogFragment implements DatePic
        this.year = year;
     }
 
-    public int getDay() {
+    public int getDayInt() {
         return day;
     }
 
-    public int getMonth() {
-        return month;
+    public int getMonthInt( int regulation ) {
+        return month + regulation;
     }
 
-    public int getYear() {
+    public int getYearInt() {
         return year;
     }
+
+    public String getDayString() {
+        return String.valueOf( day );
+    }
+
+    public String getMonthString( int regulation) {
+        return String.valueOf( month + regulation);
+    }
+
+    public String getYearString() {
+        return String.valueOf( year );
+    }
+
+    public String getDateFotmat( int regulationMonth ){
+        return String.valueOf( day ) + "-" + String.valueOf( month + regulationMonth ) + "-" + String.valueOf( year );
+    }
+
 }

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
@@ -37,7 +38,6 @@ import com.jorge.app.ccm.models.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 /**
  * @author Jorge.HL
  */
@@ -48,16 +48,11 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public Intent intentForUpdate;
     public Intent intentForRegistryVehicles;
     public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
-    private ControllerDBStatus controllerDBStatus;
-    private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
-    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
     private AdapterVehicleStatus arrayAdapterVehicleStatus;
     private TextView textView;
     private ListView listView;
-    private ArrayList<Vehicle> vehicles;
-    private SessionDriving sessionDrivingCurrent;
-    private User user;
+    private SessionDriving sessionDrivingCurrent;//<-- Inicializada desde función readSesionCurrent()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,31 +61,16 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         textView = findViewById(R.id.testView_title_registrarion_numbre);
         listView = findViewById(R.id.listView_vehicles_status_list);
 
-        //Inicialización de controladores
-        controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
-        controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
-        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
-        user = new User();
+        //Si es la primera vez que usa la app, creo una primera sesión de tipo Create (Esta no será mostrada al usuario)
+        onSesionDrinvingCreate();
 
-        controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        //Inicializo sessionDrivingCurrent
+        readSesionCurrent();
 
-                if( dataSnapshot.exists() ) {
-                    sessionDrivingCurrent = new SessionDriving( dataSnapshot );
-                }
+        loadArrayAdapter();//<-- El adaptador
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
-
-        //Inizializao Adapter para mostrar lista de vehículos
-        this.arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplication(), textView, listView);
-        vehicles = arrayAdapterVehicleStatus.getListIntemVehicles();
+        registerForContextMenu( listView );
+        onclickItemList();
 
         //Intens
         intentForRegistryVehicles = new Intent ( VehiclesStatusListActivity.this, RegistryVehiclesActivity.class);
@@ -99,13 +79,38 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //Si es la primera vez que usa la app, creo una primera sesión de tipo Create (Esta no será mostrada al usuario)
-        onSesionDrinvingCreate();
-        registerForContextMenu( listView );
-        onclickItemList();
+    public void loadArrayAdapter(){
+        //Inizializao Adapter para mostrar lista de vehículos
+        this.arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplication(), listView);
+        //Inizializo controlador para datos del adaptador
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        //Obtengo la referencia para los datos del adpatador
+        DatabaseReference dbrfSatus = controllerDBStatus.getDatabaseReference();
+        //Cargo el adaptador con los datos
+        arrayAdapterVehicleStatus.loadAndUpdateAdapter( dbrfSatus );
+    }
+
+    /**
+     * Inicializa sessionDrivingCurrent
+     */
+    public void readSesionCurrent(){
+
+        User user = new User(  );
+        ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
+        controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if( dataSnapshot.exists() ) {
+                    sessionDrivingCurrent = new SessionDriving( dataSnapshot );
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
     }
 
     @Override
@@ -132,12 +137,15 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
             // Obtengo la posición de la lista que se ha pulsado
             int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
             // Inflo el menú.
-            this.getMenuInflater().inflate(R.menu.menu_contextual_list_view_vehicles, menu);
+            this.getMenuInflater().inflate( R.menu.menu_contextual_list_view_vehicles, menu );
 
             MenuItem itemMenu1 = menu.findItem( R.id.menu_contextual_list_view_vehicles_item_edit );
+
+            Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
+
             // Establezco el título que se muestra en el encabezado del menú. + número de matrúcula para avisar al usuario del cambio
             menu.setHeaderTitle( getString( R.string.menu_contextual_list_view_vehicles_title ) + " " +
-                    vehicles.get( position ).getRegistrationNumber());
+                    vehicleSelect.getRegistrationNumber());
 
         }
         // Llamo al OnCreateContextMenu del padre por si quiere añadir algún elemento
@@ -149,70 +157,23 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
         // Posición lista pulsado
         int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-        final Vehicle vehicleSelect = vehicles.get( position );
+        final Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
 
         // Información al usuario sobre menú pulsado.
         switch (item.getItemId()) {
 
+            //Editar
             case R.id.menu_contextual_list_view_vehicles_item_edit:
 
-                //Si se puede editar.
-                if ( vehicleSelect.getDriving() == 0 ){
-                    intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) arrayAdapterVehicleStatus.getItem( position ) );
-                    startActivity(intentForUpdate);
-                }
-                // No se puede editar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
-                else if ( vehicleSelect.getDriving() == 1 ){
-
-                    WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_edit_message );//<-- Show desde onclickItemList
-                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
-                        @Override
-                        public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                            startActivity( intentSesionDriving );
-                        }
-
-                        @Override
-                        public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-                            return;
-                        }
-                    } );
-                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
-
-                }
+                //Eliminar un vehículo de la db
+                editVehicle( vehicleSelect );
 
                 break;
 
             case R.id.menu_contextual_list_view_vehicles_item_delete:
 
-                //Evento childEventListernet Incorporado en Cotrolador Status
-                final String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
-
-                Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicleSelect.getDriving() );
-
-                // Se puede eliminar
-                if ( vehicleSelect.getDriving() == 0 ){
-                    controllerDBStatus.removeValue( vehicleSelect, messageRemove + " " +
-                            vehicleSelect.getRegistrationNumber() );
-                }
-                // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
-                else if ( vehicleSelect.getDriving() == 1 ){
-
-                    WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList
-                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
-                        @Override
-                        public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                            startActivity( intentSesionDriving );
-                        }
-
-                        @Override
-                        public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-                            return;
-                        }
-                    } );
-                    windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
-
-                }
-                break;
+                deleteVehicle( vehicleSelect );
 
             default:
                 return super.onContextItemSelected(item);
@@ -223,24 +184,29 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public void onSesionDrinvingCreate(){
 
         //Sesion de inicio por si es la primera ves que inicia sesión
+        ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         Session sessionCreate = new Session( "Create" );
+        User user = new User();
         SessionDriving sessionDrivingCreate = new SessionDriving( sessionCreate, user );
         controllerDBSessionsCurrents.setValue( sessionDrivingCreate );
     }
 
     public void onclickItemList(){
+
+        final User user = new User(  );
         // Creo el listener para cuando se hace click en un item de la lista.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> lst, View viewRow,
                                     final int position, long id) {
+
                 Resources resources = getResources();
-                final Vehicle vehicleSelect = vehicles.get( position );
+                final Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
+
                 String messageYes = resources.getString( R.string.windows_yes_init_session_vehicle_message ) + " " +
                         vehicleSelect.getRegistrationNumber();
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicleSelect.getRegistrationNumber();
-
 
                     if (vehicleSelect.getDriving() == 1) {
 
@@ -271,7 +237,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                     Session session = new Session("Start" );
 
                     SessionDriving sessionDrivingStart = new SessionDriving( session, user, vehicleSelect );
-                    checkSesion( sessionDrivingStart );
+                    checkSesion( sessionDrivingStart );//Chequea si se puede realizar la operación y si es así la realiza
                     Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getDriving());
                 }
 
@@ -280,6 +246,10 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     }
 
     public void checkSesion( final SessionDriving sessionDrivingStart) {
+
+        final ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
+        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        final ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
 
         //Condición 1
         if (sessionDrivingCurrent.getSession().getTypeSesion().equals( "Start" )) {
@@ -324,15 +294,67 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                 }
             } );
             windowInitSesion.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
-
         }
     }
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        //Destruyo el evento para evitar recursividad
+    public void editVehicle( Vehicle vehicleForEdit){
 
+        //Si se puede editar.
+        if ( vehicleForEdit.getDriving() == 0 ){
+            intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) vehicleForEdit );
+            startActivity(intentForUpdate);
+        }
+        // No se puede editar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
+        else if ( vehicleForEdit.getDriving() == 1 ){
+
+            WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_edit_message );//<-- Show desde onclickItemList
+            windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                @Override
+                public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                    startActivity( intentSesionDriving );
+                }
+
+                @Override
+                public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                    return;
+                }
+            } );
+            windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+        }
+    }
+
+    public void deleteVehicle( Vehicle vehicleForDelete ){
+
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        //Evento childEventListernet Incorporado en Cotrolador Status
+        final String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
+
+        Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicleForDelete.getDriving() );
+
+        // Se puede eliminar si no está en uso por nadie
+        if ( vehicleForDelete.getDriving() == 0 ){
+            controllerDBStatus.removeValue( vehicleForDelete, messageRemove + " " +
+                    vehicleForDelete.getRegistrationNumber() );
+        }
+        // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
+        else if ( vehicleForDelete.getDriving() == 1 ){
+
+            WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList
+            windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                @Override
+                public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
+                    //Lo remito a la actividad para que pueda cerrar sessión si está decidodo a borrarlo
+                    startActivity( intentSesionDriving );
+                }
+
+                @Override
+                public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                    return;
+                }
+            } );
+            windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+
+        }
     }
 
 }

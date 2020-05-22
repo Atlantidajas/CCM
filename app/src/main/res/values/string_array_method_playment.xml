@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="methodPlayment">
+
+        <item>Contado</item>
+        <item>Tarjeta</item>
+        <item>Cheque </item>
+        <item>Contrareembolso</item>
+        <item>Tarjetas de crédito</item>
+        <item>Transferencia electrónica</item>
+        <item>Moneda virtual</item>
+
+    </string-array>
+</resources>

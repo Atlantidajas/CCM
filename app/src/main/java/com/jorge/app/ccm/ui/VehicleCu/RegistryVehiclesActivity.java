@@ -171,16 +171,14 @@ public class RegistryVehiclesActivity extends AppCompatActivity implements Dialo
         dialogFragmentDatePincker.show(getSupportFragmentManager(), "DatePinckerITV");
         Resources res = getResources();
         String value = res.getString(R.string.edit_text_registry_date_itv_vehicle);
-        String day= String.valueOf( dialogFragmentDatePincker.getDay() );
-        String month = String.valueOf( dialogFragmentDatePincker.getMonth()+1 );
-        String year = String.valueOf( dialogFragmentDatePincker.getYear() );
+
         if ( value.equals( editTextDateITV.getText().toString() ) == false ) {
             checkBoxConfirmDateITV.setChecked( true );
         }
         else{
             checkBoxConfirmDateITV.setChecked( false );
         }
-        editTextDateITV.setText( day + "-" + month + "-" + year );
+        editTextDateITV.setText( dialogFragmentDatePincker.getDateFotmat( 1 ) );
     }
 
     public void showSaveRegistry(){

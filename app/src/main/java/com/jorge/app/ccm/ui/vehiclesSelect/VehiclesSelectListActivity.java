@@ -19,7 +19,6 @@ import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
 
 import java.io.Serializable;
 
-
 /**
  * @author Jorge.HL
  */

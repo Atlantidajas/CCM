@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.typeExpenses.TypeExpensesActivity">
+
+
+    <TextView
+        android:id="@+id/textView_1_activity_type_expenses"
+        android:layout_width="339dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Primero seleccione un icono"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:drawableLeft="@mipmap/ic_launcher_arrow_bottom"
+        android:drawableRight="@mipmap/ic_launcher_arrow_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="347dp"
+        android:layout_height="351dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_1_activity_type_expenses">
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button_1_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_fuel"
+                android:padding="10dp"
+                android:text="Combustible" />
+
+            <Button
+                android:id="@+id/button_2_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_wash"
+                android:padding="10dp"
+                android:text="Limpieza" />
+
+            <Button
+                android:id="@+id/button_3_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_repair"
+                android:padding="10dp"
+                android:text="Reparaciones" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button_4_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_revision"
+                android:padding="10dp"
+                android:text="Revisiones" />
+
+            <Button
+                android:id="@+id/button_5_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_oil"
+                android:padding="10dp"
+                android:text="Aceite" />
+
+            <Button
+                android:id="@+id/button_6_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_parking"
+                android:padding="10dp"
+                android:text="Parking" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button_7_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_dolallar"
+                android:padding="10dp"
+                android:text="Varios" />
+
+            <Button
+                android:id="@+id/button_8_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_indicator"
+                android:padding="10dp"
+                android:text="Parabrisas" />
+
+            <Button
+                android:id="@+id/button_9_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_wheel"
+                android:padding="10dp"
+                android:text="Ruedas" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button_10_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_brakes"
+                android:padding="10dp"
+                android:text="Frenos" />
+
+            <Button
+                android:id="@+id/button_11_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_road"
+                android:padding="10dp"
+                android:text="Peajes" />
+
+            <Button
+                android:id="@+id/button_12_activity_type_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0003A9F4"
+                android:drawableTop="@mipmap/ic_launcher_lamp"
+                android:padding="10dp"
+                android:text="Bombillas" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <!-- Será invisible hasta que se active desde actividad -->
+    <EditText
+        android:id="@+id/editText_activity_type_expenses"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:hint="Escribe el concepto"
+        android:drawableLeft="@mipmap/ic_launcher_arrow_right"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <!-- Será invisible hasta que se active desde actividad -->
+    <Button
+        android:id="@+id/button_next_activity_type_expenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Siguiente"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_activity_type_expenses"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

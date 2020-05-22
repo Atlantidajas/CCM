@@ -18,7 +18,7 @@
             android:id="@+id/editText_type_expense_expense_registry"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:drawableLeft="@mipmap/ic_launcher_type_expense"
+            android:drawableLeft="@mipmap/ic_launcher_concep"
             android:hint="@string/editText_type_expense_expense_registry" />
 
         <EditText
@@ -35,13 +35,6 @@
             android:drawableLeft="@mipmap/ic_launcher_calendar"
             android:hint="@string/editText_date_expense_registry" />
 
-        <EditText
-            android:id="@+id/editText_concept_expense_registry"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:drawableLeft="@mipmap/ic_launcher_concep"
-            android:hint="@string/editText_concept_expense_registry" />
-
 
         <EditText
             android:id="@+id/editText_method_of_payment_expense_registry"
@@ -52,6 +45,7 @@
 
         <EditText
             android:id="@+id/editText_total_expense_expense_registry"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:drawableLeft="@mipmap/ic_launcher_total_expense"

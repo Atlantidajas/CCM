@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
@@ -40,22 +41,20 @@ public class AdapterVehicleStatus extends BaseAdapter {
 
     private Context context;
     private ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
-    private TextView textView;
     private ListView listView;
     private Vehicle vehicle;
-    private User userLoging;
-    ControllerDBStatus controllerDBStatus;
 
-    public AdapterVehicleStatus(final Context context, TextView textView, ListView listView) {
+
+    public AdapterVehicleStatus(final Context context, ListView listView) {
         this.context = context;
-        this.textView = textView;
         this.listView = listView;
-        this.userLoging = new User();
-        this.controllerDBStatus = new ControllerDBStatus( context );
 
+    }
+
+    public void loadAndUpdateAdapter( DatabaseReference databaseReference ){
 
         //Eventos de cambios sobre el adaptador
-        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+        databaseReference.addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 getListIntemVehicles().clear();
@@ -87,10 +86,11 @@ public class AdapterVehicleStatus extends BaseAdapter {
         } );
 
         //Cargo con los datos de la db el adapter
-        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        databaseReference.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+
                     setArrayAdapterVehicle(dataSnapshot);
                 }
                 else {
