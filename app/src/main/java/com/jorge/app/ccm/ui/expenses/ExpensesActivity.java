@@ -1,15 +1,14 @@
 package com.jorge.app.ccm.ui.expenses;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,24 +19,29 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 
-import com.jorge.app.ccm.gadget.GadgetSpinner;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 
-import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
-import com.jorge.app.ccm.gadget.notices.GadgetSpinnerGeneric;
+import com.jorge.app.ccm.models.Expenses;
+import com.jorge.app.ccm.models.ExpensesVehicleForUser;
+import com.jorge.app.ccm.models.TypeExpense;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.typeExpenses.TypeExpensesActivity;
 import com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity;
+import com.jorge.app.ccm.utils.DatesTemp;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static com.jorge.app.ccm.ui.typeExpenses.TypeExpensesActivity.TYPE_EXPENSE;
-import static com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.REGISTRATION_NUMBER_VEHICLE_SELECT;
+import static com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT;
 
-public class ExpensesActivity extends AppCompatActivity {
+public class ExpensesActivity extends AppCompatActivity{
 
     private String TAG = "ExpenseActivity";
+    private final String DATES_TEMP_FILE_NAME = "temp" + TAG; //<-- Nombre del fichero con los datos temporales
     private Intent intentCreateVehicle;
     private Intent intentVehiclesSelectList;
     private Intent intentTypeExpenses;
@@ -50,6 +54,8 @@ public class ExpensesActivity extends AppCompatActivity {
     private EditText editTextTotal;
     private Button buttonAcceptExpenses;
     private Button buttonCancelExpenses;
+    private DatesTemp tempExpensesActivity;
+
     private ArrayList<String> listRegistrationNumberVehiclesDb = new ArrayList<>(  );
     SharedPreferences temp;
 
@@ -67,77 +73,125 @@ public class ExpensesActivity extends AppCompatActivity {
 
         buttonAcceptExpenses = findViewById( R.id.button_accept_expense_registry  );
         buttonCancelExpenses = findViewById( R.id.button_cancel_expense_registry  );
-//        GadgetSpinner spinnerMethodPlayment = new GadgetSpinner( getSupportFragmentManager(),  )
+
+        //Fichero para guardar datos de forma temporal
+        tempExpensesActivity = new DatesTemp(  getApplicationContext(), DATES_TEMP_FILE_NAME  );
 
         intentCreateVehicle = new Intent( ExpensesActivity.this, RegistryVehiclesActivity.class );
         intentVehiclesSelectList = new Intent( ExpensesActivity.this, VehiclesSelectListActivity.class );
         intentTypeExpenses = new Intent( ExpensesActivity.this, TypeExpensesActivity.class );
-        temp = getApplicationContext().getSharedPreferences("tempDates", MODE_PRIVATE);
+
+        ExpensesVehicleForUser expensesVehicleForUser = new ExpensesVehicleForUser(  );
 
 
-        String registrationNumberVehicle = getIntent().getStringExtra(REGISTRATION_NUMBER_VEHICLE_SELECT);//<-- Matrícula regresada desde VehiclesSelectListActivity
-        String typeExpense = getIntent().getStringExtra(TYPE_EXPENSE);//<-- Matrícula regresada desde VehiclesSelectListActivity
 
-        loadFieldEditTextSelectVehicle( registrationNumberVehicle );
-        loadFieldEditTextTypeExpense( typeExpense );
+        loadFieldEditTextSelectVehicle();
+        loadFieldEditTextTypeExpense();
         loadFieldEditTextdateExpenses();
         loadFieldEditTextMethodOfPlayment();
         loadFieldButtonAcceptExpenses();
         loadFieldButtonCancelExpenses();
 
 
-    }
-
-    public void loadFieldEditTextSelectVehicle( String registrationNumberVehicle ){
-
-        //La primera vez que se carga la actividad registrationNumberVehicle será nula,
-
-
-        SharedPreferences.Editor editor;
-        editor = temp.edit();
-        editor.putString("a", registrationNumberVehicle);
-        editor.commit();
-
-
-        String resultTempDate = temp.getString("a", "");
-
-
-        editTextSelectVehicle.setText( resultTempDate );
-
         editTextSelectVehicle.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Envío al usuario a seleccionar un vehículo de la lista disponible
-                startActivity( intentVehiclesSelectList );
-                //editTextModel.requestFocus();//<-- Mando el foco a la siguiente posición
-
+                startActivityForResult(intentVehiclesSelectList,1);
             }
         } );
-    }
 
-    public void loadFieldEditTextTypeExpense( String typeExpense ){
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( typeExpense == null) {
-            typeExpense = "";
-        } else {
-            editTextTypeExpense.setText( typeExpense );
-        }
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( typeExpense == null) {
-            typeExpense = "";
-        } else {
-            editTextTypeExpense.setText( typeExpense );
-        }
         editTextTypeExpense.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( intentTypeExpenses );
+                startActivityForResult(intentTypeExpenses,2);
             }
         } );
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle objetoRecibido = data.getExtras();
+        Vehicle vehicleSelect = null;
+        TypeExpense typeExpense = null;
+
+        if (requestCode == 1 ){
+
+            vehicleSelect = (Vehicle) objetoRecibido.getSerializable(VEHICLE_SELECT);
+
+            if ( vehicleSelect !=null )
+
+                tempExpensesActivity.setDateInt( VEHICLE_SELECT + "expenseVehicleLogo", vehicleSelect.getLogoVehicle() );
+                tempExpensesActivity.setDateString( VEHICLE_SELECT + "expenseVehicleRegistrationNumber", vehicleSelect.getRegistrationNumber() );
+                tempExpensesActivity.setDateString( VEHICLE_SELECT + "expenseVehicleBrand", vehicleSelect.getBrand() );
+                tempExpensesActivity.setDateString( VEHICLE_SELECT + "expenseVehicleModel", vehicleSelect.getModel() );
+                tempExpensesActivity.setDateString( VEHICLE_SELECT + "expenseVehicleDateITV", vehicleSelect.getDateITV() );
+                tempExpensesActivity.setDateInt( VEHICLE_SELECT + "expenseVehicleDriving", vehicleSelect.getDriving() );
+                tempExpensesActivity.setDateString( VEHICLE_SELECT + "expenseVehicleDrivingCurrent", vehicleSelect.getDrivingCurrent() );
+
+            Log.i( TAG, "Indice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleLogo" +
+                    "Valor que se guardará: " + vehicleSelect.getLogoVehicle() );
+            Log.i( TAG, "Indice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleRegistrationNumber" +
+                    "Valor que se guardará: " + vehicleSelect.getRegistrationNumber() );
+            Log.i( TAG, "Indice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleBrand" +
+                    "Valor que se guardará: " + vehicleSelect.getBrand() );
+            Log.i( TAG, "Indice con el que se guardará: " + VEHICLE_SELECT + "getModel" +
+                    "Valor que se guardará: " + vehicleSelect.getModel() );
+            Log.i( TAG, "Indice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleDateITV" +
+                    "Valor que se guardará: " + vehicleSelect.getDateITV() );
+            Log.i( TAG, "Indice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleDriving" +
+                    "Valor que se guardará: " + vehicleSelect.getDriving() );
+            Log.i( TAG, "Indice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleDrivingCurrent" +
+                    "Valor que se guardará: " + vehicleSelect.getDrivingCurrent() );
+
+            loadFieldEditTextSelectVehicle();//Actualizo campo.
+        }
+
+        if (requestCode == 2 ){
+
+            typeExpense = (TypeExpense) objetoRecibido.getSerializable(TYPE_EXPENSE);
+
+            if ( typeExpense !=null )
+
+                tempExpensesActivity.setDateString( TYPE_EXPENSE + "expenseTypeName", typeExpense.getTypeName() );
+
+            Log.i( TAG, "Indice con el que se guardará: " + TYPE_EXPENSE + "expenseTypeName" +
+                    "Valor que se guardará: " + typeExpense.getTypeName() );
+
+            loadFieldEditTextTypeExpense();//Actualizo campo.
+        }
+
+    }
+    public void loadFieldEditTextSelectVehicle(){
+
+        //Cargo los datos del fichero temporal.
+        String registrationNumberVehicle = tempExpensesActivity.getDateString( VEHICLE_SELECT + "expenseVehicleRegistrationNumber"  );
+
+        //La primera vez que se carga la actividad typeExpense será nula,
+        if ( registrationNumberVehicle == null) {
+            registrationNumberVehicle = "";
+        }
+        else {
+            editTextSelectVehicle.setText( registrationNumberVehicle );
+        }
+
+    }
+
+    public void loadFieldEditTextTypeExpense(){
+
+        //Cargo los datos del fichero temporal.
+        String typeExpense = tempExpensesActivity.getDateString( TYPE_EXPENSE + "expenseTypeName"  );
+
+        //La primera vez que se carga la actividad typeExpense será nula,
+        if ( typeExpense == null) {
+            typeExpense = "";
+        }
+        else {
+            editTextTypeExpense.setText( typeExpense );
+        }
+
+    }
 
     public void loadFieldEditTextdateExpenses(){
 
@@ -152,6 +206,7 @@ public class ExpensesActivity extends AppCompatActivity {
             }
         } );
     }
+
     public void loadFieldEditTextMethodOfPlayment(){
 
         Resources res = getResources();
@@ -172,12 +227,12 @@ public class ExpensesActivity extends AppCompatActivity {
             {    }
         });
 
-
         //editTextMethodOfPlayment.setText( spinnerMethodPlayment.getItemResult() );
 
     }
 
     public void loadFieldButtonAcceptExpenses(){}
+
     public void loadFieldButtonCancelExpenses(){}
 
     public void windowNoticeCreateVehicle(){
@@ -196,6 +251,6 @@ public class ExpensesActivity extends AppCompatActivity {
             }
         } );
         windowCreateVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
-
     }
+
 }

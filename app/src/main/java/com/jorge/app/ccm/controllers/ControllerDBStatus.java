@@ -18,6 +18,7 @@ public class ControllerDBStatus {
 
     private Context context;
     private DatabaseReference databaseReference;
+    private int countChild;
 
     public ControllerDBStatus( final Context context ) {
         this.context = context;
@@ -54,6 +55,59 @@ public class ControllerDBStatus {
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
         dbRF.setValue( vehicle );
     }
+
+    public int getCountChild(){
+
+        databaseReference.addChildEventListener( new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if ( dataSnapshot.exists() ){
+                    countChild = (int) dataSnapshot.getChildrenCount();
+                }
+                else{
+                    countChild = 0;
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if ( dataSnapshot.exists() ){
+                    countChild = (int) dataSnapshot.getChildrenCount();
+                }
+                else{
+                    countChild = 0;
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                if ( dataSnapshot.exists() ){
+                    countChild = (int) dataSnapshot.getChildrenCount();
+                }
+                else{
+                    countChild = 0;
+                }
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if ( dataSnapshot.exists() ){
+                    countChild = (int) dataSnapshot.getChildrenCount();
+                }
+                else{
+                    countChild = 0;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
+        return this.countChild;
+    }
+
+
 
     public DatabaseReference getDatabaseReferenceSearch( Vehicle vehicle){
         return databaseReference.child( vehicle.getRegistrationNumber() );

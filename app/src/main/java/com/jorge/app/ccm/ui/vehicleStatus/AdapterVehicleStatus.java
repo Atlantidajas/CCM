@@ -3,6 +3,7 @@ package com.jorge.app.ccm.ui.vehicleStatus;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import java.util.Iterator;
 
 public class AdapterVehicleStatus extends BaseAdapter {
 
+    private String TAG = "AdapterVehicleStatus";
     private Context context;
     private ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
     private ListView listView;

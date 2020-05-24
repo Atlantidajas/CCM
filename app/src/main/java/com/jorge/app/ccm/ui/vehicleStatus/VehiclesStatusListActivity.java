@@ -82,6 +82,9 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public void loadArrayAdapter(){
         //Inizializao Adapter para mostrar lista de vehículos
         this.arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplication(), listView);
+
+        Log.i( TAG, String.valueOf( listView.getCount() ) );
+
         //Inizializo controlador para datos del adaptador
         ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
         //Obtengo la referencia para los datos del adpatador

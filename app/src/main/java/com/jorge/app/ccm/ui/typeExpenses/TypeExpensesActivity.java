@@ -3,9 +3,7 @@ package com.jorge.app.ccm.ui.typeExpenses;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.models.TypeExpense;
 import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
+
+import java.io.Serializable;
 
 public class TypeExpensesActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -73,8 +74,6 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
         button11.setOnClickListener( this );
         button12.setOnClickListener( this );
         buttonNext.setOnClickListener( this );
-
-
     }
 
     @Override
@@ -132,17 +131,21 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.button_next_activity_type_expenses:
 
-                System.out.println( editTextTypeExpenses.getText().toString() + "<-------------------------------------------- Resultado" );
-                System.out.println( "<---------------------------------------------------------------------------------------- Resultado" );
-                System.out.println( "<---------------------------------------------------------------------------------------- Resultado" );
-
                 if( editTextTypeExpenses.getText().toString().equals( "" ) ){
                     Toast.makeText( getApplicationContext(), "Debe cumplimentar el campo para seguir.", Toast.LENGTH_SHORT ).show();
                     //editTextTypeExpenses.requestFocus();
                 }else {
-                    intentForExpensesActivity.putExtra( TYPE_EXPENSE, editTextTypeExpenses.getText().toString() );
-                    startActivity( intentForExpensesActivity );
+
+                    TypeExpense typeExpenseSelect = new TypeExpense(  );
+                    typeExpenseSelect.setTypeName( editTextTypeExpenses.getText().toString() );
+                    typeExpenseSelect.setLogo( 0 );
                     Log.i( TAG, "editText -> (Texto) ->" + editTextTypeExpenses.getText().toString() );
+                    Bundle bundle= new Bundle();
+                    bundle.putSerializable( TYPE_EXPENSE, typeExpenseSelect );
+
+                    intentForExpensesActivity.putExtras(bundle);
+                    setResult( RESULT_OK, intentForExpensesActivity );
+                    finish();
                 }
                 break;
         }
@@ -156,7 +159,6 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
             editTextTypeExpenses.setVisibility( View.VISIBLE );
             buttonNext.setVisibility( View.VISIBLE );
 
-
         }
 
         //Oculto textView
@@ -164,5 +166,6 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
             textViewTitle.setVisibility( View.INVISIBLE );
         }
         editTextTypeExpenses.setText( text );
+
     }
 }

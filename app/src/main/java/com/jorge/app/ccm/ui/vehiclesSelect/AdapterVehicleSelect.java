@@ -45,9 +45,8 @@ public class AdapterVehicleSelect extends BaseAdapter {
     private Vehicle vehicle;
     ControllerDBStatus controllerDBStatus;
 
-    public AdapterVehicleSelect(final Context context, TextView textView, ListView listView) {
+    public AdapterVehicleSelect(final Context context, ListView listView) {
         this.context = context;
-        this.textView = textView;
         this.listView = listView;
         this.controllerDBStatus = new ControllerDBStatus( context );
 
