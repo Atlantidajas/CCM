@@ -29,7 +29,7 @@ import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.models.User;
-import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity;
 
 

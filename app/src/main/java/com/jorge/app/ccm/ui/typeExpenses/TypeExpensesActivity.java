@@ -12,10 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.TypeExpense;
+import com.jorge.app.ccm.models.typeExpense.TypeExpense;
 import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
-
-import java.io.Serializable;
 
 public class TypeExpensesActivity extends AppCompatActivity implements View.OnClickListener {
 

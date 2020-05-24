@@ -1,6 +1,9 @@
 package com.jorge.app.ccm.models;
 
-public class Expenses implements ITypeExpense{
+import com.jorge.app.ccm.models.typeExpense.ITypeExpense;
+import com.jorge.app.ccm.models.typeExpense.TypeExpense;
+
+public class Expenses implements ITypeExpense {
 
     private TypeExpense typeExpense;
     private String tickectNumber;

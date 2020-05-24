@@ -1,8 +1,4 @@
-package com.jorge.app.ccm.models;
-
-import android.content.Context;
-
-import com.jorge.app.ccm.utils.DatesTemp;
+package com.jorge.app.ccm.models.typeExpense;
 
 import java.io.Serializable;
 

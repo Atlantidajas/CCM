@@ -3,7 +3,6 @@ package com.jorge.app.ccm.ui.VehicleCu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,11 +15,10 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
 import com.jorge.app.ccm.gadget.GadgetSpinner;
-import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
 public class RegistryVehiclesActivity extends AppCompatActivity implements DialogFragmentSpinner.DialogFragmentListener, View.OnClickListener{

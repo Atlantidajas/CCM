@@ -26,7 +26,7 @@ import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Session;
-import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
@@ -36,7 +36,6 @@ import com.jorge.app.ccm.ui.sessionCrurrent.SessionCurrentActivity;
 import com.jorge.app.ccm.models.User;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * @author Jorge.HL

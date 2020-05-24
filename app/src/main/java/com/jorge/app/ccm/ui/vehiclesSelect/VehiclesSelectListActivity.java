@@ -10,19 +10,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
 

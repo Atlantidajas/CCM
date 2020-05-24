@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.models;
+package com.jorge.app.ccm.models.vehicle;
 
 import com.google.firebase.database.DataSnapshot;
 import java.io.Serializable;

@@ -1,8 +1,6 @@
 package com.jorge.app.ccm.ui.vehiclesSelect;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.User;
-import com.jorge.app.ccm.models.Vehicle;
-import com.jorge.app.ccm.utils.DateHoursUtil;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 
 /**

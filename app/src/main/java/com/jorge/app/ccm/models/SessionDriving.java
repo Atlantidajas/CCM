@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 
 public class SessionDriving {
 

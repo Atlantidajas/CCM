@@ -1,6 +1,6 @@
 package com.jorge.app.ccm.models;
 
-import java.io.Serializable;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 
 public class ExpensesVehicleForUser {
 

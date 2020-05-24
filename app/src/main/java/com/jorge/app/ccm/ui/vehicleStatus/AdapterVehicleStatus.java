@@ -3,7 +3,6 @@ package com.jorge.app.ccm.ui.vehicleStatus;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.Vehicle;
-import com.jorge.app.ccm.models.User;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
 import java.text.ParseException;
