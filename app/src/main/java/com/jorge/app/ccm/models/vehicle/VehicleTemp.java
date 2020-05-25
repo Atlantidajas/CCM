@@ -31,6 +31,7 @@ public class VehicleTemp extends DatesTemp implements IVehicle {
         this.KEY_DRIVING_VEHICLE = PRIMARY_KEY + "drivingVehicle";
         this.KEY_LOGO_VHEICLE = PRIMARY_KEY + "logoVehicle";
         this.KEY_REGISTRATION_NUMBER_VEHICLE = PRIMARY_KEY + "registrationNumberVehicle";
+        this.vehicle = new Vehicle(  );
 
     }
 

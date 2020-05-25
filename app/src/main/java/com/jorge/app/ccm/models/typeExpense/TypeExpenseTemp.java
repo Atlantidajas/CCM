@@ -6,7 +6,7 @@ import com.jorge.app.ccm.utils.DatesTemp;
 
 /**
  * @Author: Jorge.HL
- * Clase con funcionalidades heredades de DatesTemp y atribuciones específicas para un objeto de typo TypeExpense.
+ * Clase con funcionalidades heredades de DatesTemp y atribuciones específicas para un objeto de tipo TypeExpense.
  */
 
 public class TypeExpenseTemp extends DatesTemp implements ITypeExpense {
@@ -81,6 +81,14 @@ public class TypeExpenseTemp extends DatesTemp implements ITypeExpense {
      */
     public String getKEY_TYPE_NAME() {
         return KEY_TYPE_NAME;
+    }
+
+    /*
+     * @Author: Jorge.HL
+     * Devuelve la key principla con la que se guarda en el fichero temporal el objeto de typo TypeExpense
+     */
+    public String getPRIMARY_KEY() {
+        return PRIMARY_KEY;
     }
 
     /*

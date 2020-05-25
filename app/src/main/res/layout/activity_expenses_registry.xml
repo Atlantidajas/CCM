@@ -39,10 +39,16 @@
 
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spinnerMethodplayment"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            app:backgroundTint="#03A9F4"/>
+            app:backgroundTint="#03A9F4">
+        </Spinner>
+
+        <EditText
+            android:id="@+id/editTextMethodplayment"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
 
         <View
             android:id="@+id/divider"
@@ -51,7 +57,7 @@
             android:background="?android:attr/listDivider" />
 
         <EditText
-            android:id="@+id/editText_total_expense_expense_registry"
+            android:id="@+id/editTextTotalImport"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="60dp"

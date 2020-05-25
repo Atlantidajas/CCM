@@ -1,44 +1,35 @@
-package com.jorge.app.ccm.models;
+package com.jorge.app.ccm.models.ticket;
 
-import com.jorge.app.ccm.models.typeExpense.ITypeExpense;
 import com.jorge.app.ccm.models.typeExpense.TypeExpense;
+import com.jorge.app.ccm.models.vehicle.Vehicle;
 
-public class Expenses implements ITypeExpense {
+public class Tickect {
 
-    private TypeExpense typeExpense;
+
     private String tickectNumber;
-    private String comercialEstablishment;
     private String date;
     private String methodOfPlayment;
     private float totalExpense;
 
-    public Expenses(){}
+    public Tickect(){}
 
-    public Expenses( TypeExpense typeExpense, String tickectNumber, String comercialEstablishment, String date, String methodOfPlayment, float totalExpense) {
-        this.typeExpense = typeExpense;
+    public Tickect(Vehicle vehicle,
+                   TypeExpense typeExpense,
+                   String tickectNumber,
+                   String date,
+                   String methodOfPlayment,
+                   float totalExpense) {
+
         this.tickectNumber = tickectNumber;
-        this.comercialEstablishment = comercialEstablishment;
         this.date = date;
         this.methodOfPlayment = methodOfPlayment;
         this.totalExpense = totalExpense;
     }
 
-    @Override
-    public void setLogo( int logo ) {
-        this.typeExpense.setLogo( logo );
-    }
 
-    @Override
-    public void setTypeName( String typeName){
-        this.typeExpense.setTypeName( typeName );
-    }
 
     public void setTickectNumber(String tickectNumber) {
         this.tickectNumber = tickectNumber;
-    }
-
-    public void setComercialEstablishment(String comercialEstablishment) {
-        this.comercialEstablishment = comercialEstablishment;
     }
 
     public void setDate(String date) {
@@ -49,27 +40,12 @@ public class Expenses implements ITypeExpense {
         this.methodOfPlayment = methodOfPlayment;
     }
 
-
-    @Override
-    public int getLogo() {
-        return typeExpense.getLogo();
-    }
-
-    @Override
-    public String getTypeName() {
-        return typeExpense.getTypeName();
-    }
-
     public void setTotalExpense(float totalExpense) {
         this.totalExpense = totalExpense;
     }
 
     public String getTickectNumber() {
         return tickectNumber;
-    }
-
-    public String getComercialEstablishment() {
-        return comercialEstablishment;
     }
 
     public String getDate() {
@@ -86,14 +62,11 @@ public class Expenses implements ITypeExpense {
 
     @Override
     public String toString() {
-        return "Expenses{" +
-                "typeExpense='" + typeExpense + '\'' +
+        return "Ticket{" +
                 ", tickectNumber='" + tickectNumber + '\'' +
-                ", comercialEstablishment='" + comercialEstablishment + '\'' +
                 ", date='" + date + '\'' +
                 ", methodOfPlayment='" + methodOfPlayment + '\'' +
                 ", totalExpense=" + totalExpense +
                 '}';
     }
-
 }
