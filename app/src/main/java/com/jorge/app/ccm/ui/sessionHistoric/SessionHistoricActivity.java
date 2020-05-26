@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
-import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.ui.sessionStatus.SessionStatusActivity;
 
@@ -70,7 +69,7 @@ public class SessionHistoricActivity extends AppCompatActivity {
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
                         Log.i( TAG, sesionsDrivings.get( position ).getSession().getTypeSesion() );
-                        Log.i( TAG, sesionsDrivings.get( position ).getVehicle().getRegistrationNumber() );
+                        Log.i( TAG, sesionsDrivings.get( position ).getVehicle().getVehicleRegistrationNumber() );
 
                         SessionDriving sessionDrivingSelect = sesionsDrivings.get( position );
 

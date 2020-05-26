@@ -26,7 +26,7 @@ import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Session;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
@@ -147,7 +147,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
             // Establezco el título que se muestra en el encabezado del menú. + número de matrúcula para avisar al usuario del cambio
             menu.setHeaderTitle( getString( R.string.menu_contextual_list_view_vehicles_title ) + " " +
-                    vehicleSelect.getRegistrationNumber());
+                    vehicleSelect.getVehicleRegistrationNumber());
 
         }
         // Llamo al OnCreateContextMenu del padre por si quiere añadir algún elemento
@@ -206,11 +206,11 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                 final Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
 
                 String messageYes = resources.getString( R.string.windows_yes_init_session_vehicle_message ) + " " +
-                        vehicleSelect.getRegistrationNumber();
+                        vehicleSelect.getVehicleRegistrationNumber();
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
-                        vehicleSelect.getRegistrationNumber();
+                        vehicleSelect.getVehicleRegistrationNumber();
 
-                    if (vehicleSelect.getDriving() == 1) {
+                    if (vehicleSelect.getVehicleDriving() == 1) {
 
                         Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sessionDrivingCurrent.getSession().getTypeSesion() );
 
@@ -234,13 +234,13 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                             windowNoInitSV.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
                         }
                     }
-                if (vehicleSelect.getDriving() == 0) {
+                if (vehicleSelect.getVehicleDriving() == 0) {
 
                     Session session = new Session("Start" );
 
                     SessionDriving sessionDrivingStart = new SessionDriving( session, user, vehicleSelect );
                     checkSesion( sessionDrivingStart );//Chequea si se puede realizar la operación y si es así la realiza
-                    Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getDriving());
+                    Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getVehicleDriving());
                 }
 
             }
@@ -282,7 +282,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
                     Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSession().getTypeSesion() );
-                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sessionDrivingStart.getVehicle().getDriving() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sessionDrivingStart.getVehicle().getVehicleDriving() );
 
                     controllerDBSessionsCurrents.updateValue( sessionDrivingStart, null );
                     controllerDBStatus.updateValue( sessionDrivingStart.getVehicle(), null);
@@ -302,12 +302,12 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public void editVehicle( Vehicle vehicleForEdit){
 
         //Si se puede editar.
-        if ( vehicleForEdit.getDriving() == 0 ){
+        if ( vehicleForEdit.getVehicleDriving() == 0 ){
             intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) vehicleForEdit );
             startActivity(intentForUpdate);
         }
         // No se puede editar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
-        else if ( vehicleForEdit.getDriving() == 1 ){
+        else if ( vehicleForEdit.getVehicleDriving() == 1 ){
 
             WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_edit_message );//<-- Show desde onclickItemList
             windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
@@ -331,15 +331,15 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         //Evento childEventListernet Incorporado en Cotrolador Status
         final String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
 
-        Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicleForDelete.getDriving() );
+        Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicleForDelete.getVehicleDriving() );
 
         // Se puede eliminar si no está en uso por nadie
-        if ( vehicleForDelete.getDriving() == 0 ){
+        if ( vehicleForDelete.getVehicleDriving() == 0 ){
             controllerDBStatus.removeValue( vehicleForDelete, messageRemove + " " +
-                    vehicleForDelete.getRegistrationNumber() );
+                    vehicleForDelete.getVehicleRegistrationNumber() );
         }
         // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
-        else if ( vehicleForDelete.getDriving() == 1 ){
+        else if ( vehicleForDelete.getVehicleDriving() == 1 ){
 
             WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList
             windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {

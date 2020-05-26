@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
 
@@ -127,7 +127,7 @@ public class VehiclesSelectListActivity extends AppCompatActivity implements Ser
 
                 Vehicle vehicleSelect = (Vehicle) adapterVehicleSelect.getItem( position );
 
-                Log.i( TAG, "Vehículo seleccionado Matrícula (Valor) -> " + vehicleSelect.getRegistrationNumber() );
+                Log.i( TAG, "Vehículo seleccionado Matrícula (Valor) -> " + vehicleSelect.getVehicleRegistrationNumber() );
 
                 Bundle bundle= new Bundle();
                 bundle.putSerializable( VEHICLE_SELECT, vehicleSelect );

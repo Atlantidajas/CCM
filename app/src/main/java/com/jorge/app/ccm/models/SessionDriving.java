@@ -1,7 +1,6 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
 
 public class SessionDriving {
 
@@ -21,17 +20,17 @@ public class SessionDriving {
         switch(session.getTypeSesion()) {
             case "Create":
                 nameRegistry = "a";
-                vehicle.setDriving( 0 );
+                vehicle.setVehicleDriving( 0 );
                 this.vehicle = vehicle;
                 break;
             case "Start":
                 nameRegistry = "b";
-                vehicle.setDriving( 1 );
+                vehicle.setVehicleDriving( 1 );
                 this.vehicle = vehicle;
                 break;
             case "End":
                 nameRegistry = "c";
-                vehicle.setDriving( 0 );
+                vehicle.setVehicleDriving( 0 );
                 this.vehicle = vehicle;
                 break;
             default:

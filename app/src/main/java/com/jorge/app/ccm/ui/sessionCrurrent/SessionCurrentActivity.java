@@ -29,7 +29,7 @@ import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.User;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 
 public class SessionCurrentActivity extends AppCompatActivity{
@@ -115,8 +115,8 @@ public class SessionCurrentActivity extends AppCompatActivity{
     public void loadFieldUserSession( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String userSession = resources.getString( R.string.textViewUserDate );
-        Glide.with( getApplicationContext() ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageViewUserDate );
-        textViewUserDate.setText( userSession + " " + sessionDriving.getUser().getName() );
+        Glide.with( getApplicationContext() ).load( sessionDriving.getUser().getUserPhotoUriString() ).into( imageViewUserDate );
+        textViewUserDate.setText( userSession + " " + sessionDriving.getUser().getUserName() );
     }
 
     public void loadFieldStatuSession( SessionDriving sessionDriving ){
@@ -157,20 +157,20 @@ public class SessionCurrentActivity extends AppCompatActivity{
     public void loadFieldBrandVehicle( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String brandVehicleSession = resources.getString( R.string.textViewBrand );
-        textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicle().getBrand() );
-        imageViewBrand.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
+        textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicle().getVehicleBrand() );
+        imageViewBrand.setImageResource( sessionDriving.getVehicle().getVehiclelogo() );
     }
 
     public void loadFieldModelVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
         String modelVehicleSession = resources.getString( R.string.textViewModel );
-        textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicle().getModel() );
+        textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicle().getVehicleModel() );
     }
 
     public void loadFieldRegistrationNumberVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
         String registrationNumberVehicleSession = resources.getString( R.string.textViewRegistrationNumber );
-        textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicle().getRegistrationNumber() );
+        textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicle().getVehicleRegistrationNumber() );
     }
 
 

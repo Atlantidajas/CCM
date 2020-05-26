@@ -1,6 +1,9 @@
-package com.jorge.app.ccm.models.vehicle;
+package com.jorge.app.ccm.models;
 
-public interface IVehicleTemp {
+import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.models.VehicleTemp;
+
+public interface iVehicleTemp {
 
 
     /*
@@ -12,7 +15,7 @@ public interface IVehicleTemp {
     public void setModel(String model);
     public void setDateITV(String dateITV);
     public void setDriving(int driving);
-    public Vehicle getVehicle();
+    public Vehicle getVehicleTemp();
     public int getLogoVehicle();
     public String getRegistrationNumber();
     public String getBrand();

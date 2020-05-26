@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Vehicle;
 
 public class ControllerDBStatus {
 
@@ -26,7 +26,7 @@ public class ControllerDBStatus {
     }
 
     public void setValue( final Vehicle vehicle ){
-        final DatabaseReference dbRF = databaseReference.child( vehicle.getRegistrationNumber() );
+        final DatabaseReference dbRF = databaseReference.child( vehicle.getVehicleRegistrationNumber() );
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override
@@ -45,13 +45,13 @@ public class ControllerDBStatus {
     }
 
     public void removeValue(final Vehicle vehicle, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( vehicle.getRegistrationNumber() );
+        DatabaseReference dbRF = databaseReference.child( vehicle.getVehicleRegistrationNumber() );
         dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
     public void updateValue( final Vehicle vehicle, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( vehicle.getRegistrationNumber() );
+        DatabaseReference dbRF = databaseReference.child( vehicle.getVehicleRegistrationNumber() );
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
         dbRF.setValue( vehicle );
     }
@@ -110,7 +110,7 @@ public class ControllerDBStatus {
 
 
     public DatabaseReference getDatabaseReferenceSearch( Vehicle vehicle){
-        return databaseReference.child( vehicle.getRegistrationNumber() );
+        return databaseReference.child( vehicle.getVehicleRegistrationNumber() );
     }
 
     public DatabaseReference getDatabaseReference() {

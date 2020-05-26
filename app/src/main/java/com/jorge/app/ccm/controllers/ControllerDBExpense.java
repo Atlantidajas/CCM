@@ -12,8 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jorge.app.ccm.models.Expense.Expense;
-import com.jorge.app.ccm.models.SessionDriving;
+import com.jorge.app.ccm.models.Expense;
 
 public class ControllerDBExpense {
 
@@ -30,7 +29,7 @@ public class ControllerDBExpense {
     }
 
     public void setValue( final Expense expense){
-        final DatabaseReference dbRF = databaseReference.child( expense.getUser().getIdUser() );
+        final DatabaseReference dbRF = databaseReference.child( expense.getUser().getIdUser() ).push();
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override

@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
 import java.text.ParseException;
@@ -126,16 +126,16 @@ public class AdapterVehicleStatus extends BaseAdapter {
         convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_vehicle_status, parent, false );
 
         ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
-        imageView_image.setImageResource( vehicle.getLogoVehicle() );
+        imageView_image.setImageResource( vehicle.getVehiclelogo() );
 
         TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_vehicles );
-        textView_registrationNumber.setText( vehicle.getRegistrationNumber() );
+        textView_registrationNumber.setText( vehicle.getVehicleRegistrationNumber() );
 
         TextView textView_brand = convertView.findViewById( R.id.textView_brand_item_vehicles );
-        textView_brand.setText( vehicle.getBrand() );
+        textView_brand.setText( vehicle.getVehicleBrand() );
 
         TextView textView_model = convertView.findViewById( R.id.textView_model_item_vehicles );
-        textView_model.setText( vehicle.getModel() );
+        textView_model.setText( vehicle.getVehicleModel() );
 
         TextView textView_dateITV = convertView.findViewById( R.id.textView_dateITV_item_vehicles );
 
@@ -149,7 +149,7 @@ public class AdapterVehicleStatus extends BaseAdapter {
         try {
             DateHoursUtil dateHoursUtil = new DateHoursUtil();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date dateRegistry = sdf.parse(vehicle.getDateITV());
+            Date dateRegistry = sdf.parse(vehicle.getVehicleDateITV());
             Date dateSystemCurrent = sdf.parse( day + "-" + month + "-" + year);
 
             //Si la fecha del sistema es mayor que la fecha del registro fecha proxima ITV modifico el TextVies
@@ -162,7 +162,7 @@ public class AdapterVehicleStatus extends BaseAdapter {
             e.printStackTrace();
         }
 
-        textView_dateITV.setText( vehicle.getDateITV() );
+        textView_dateITV.setText( vehicle.getVehicleDateITV() );
 
         //Muestro icono de vehículo libre.
         ImageView imageDriving = convertView.findViewById( R.id.imageView_driving_item_vehicles );
@@ -171,7 +171,7 @@ public class AdapterVehicleStatus extends BaseAdapter {
 
 
         //Muestro el logo o inicial del cliente si inicio sesión con este vehículo
-        if ( vehicle.getDriving() == 1 ){
+        if ( vehicle.getVehicleDriving() == 1 ){
             imageDriving.setBackgroundColor( Color.GRAY );
         }
 

@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Vehicle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -116,16 +116,16 @@ public class AdapterVehicleSelect extends BaseAdapter {
         convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_vehicle_select, parent, false );
 
         ImageView imageView_image = convertView.findViewById( R.id.imageView_image_item_vehicles );
-        imageView_image.setImageResource( vehicle.getLogoVehicle() );
+        imageView_image.setImageResource( vehicle.getVehiclelogo() );
 
         TextView textView_registrationNumber = convertView.findViewById( R.id.textView_registrationNumber_item_vehicles );
-        textView_registrationNumber.setText( vehicle.getRegistrationNumber() );
+        textView_registrationNumber.setText( vehicle.getVehicleRegistrationNumber() );
 
         TextView textView_brand = convertView.findViewById( R.id.textView_brand_item_vehicles );
-        textView_brand.setText( vehicle.getBrand() );
+        textView_brand.setText( vehicle.getVehicleBrand() );
 
         TextView textView_model = convertView.findViewById( R.id.textView_model_item_vehicles );
-        textView_model.setText( vehicle.getModel() );
+        textView_model.setText( vehicle.getVehicleModel() );
 
         return convertView;
     }

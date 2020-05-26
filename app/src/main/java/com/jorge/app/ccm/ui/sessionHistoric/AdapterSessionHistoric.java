@@ -23,7 +23,6 @@ import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.models.SessionDriving;
 import com.jorge.app.ccm.models.User;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -138,12 +137,12 @@ public class AdapterSessionHistoric extends BaseAdapter {
             textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
             imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
 
-            imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getLogoVehicle() );
-            textView_registrationNumber.setText( sessionDriving.getVehicle().getRegistrationNumber() );
+            imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getVehiclelogo() );
+            textView_registrationNumber.setText( sessionDriving.getVehicle().getVehicleRegistrationNumber() );
             textView_date.setText( sessionDriving.getSession().getDate() );
             textView_hours.setText( sessionDriving.getSession().getHours() );
             textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
-            Glide.with( context ).load( sessionDriving.getUser().getPhotoUriString() ).into( imageView_drivind );
+            Glide.with( context ).load( sessionDriving.getUser().getUserPhotoUriString() ).into( imageView_drivind );
 
         return convertView;
     }

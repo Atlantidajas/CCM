@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
 import com.jorge.app.ccm.gadget.GadgetSpinner;
@@ -50,24 +50,24 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
 
         vehicleForUpdate = (Vehicle) getIntent().getExtras().getSerializable( VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE );//<- El Inten
         editTextBrand = findViewById( R.id.edit_text_brand_registry_vehicle);
-        editTextBrand.setText( vehicleForUpdate.getBrand() );
+        editTextBrand.setText( vehicleForUpdate.getVehicleBrand() );
         editTextBrand.setOnClickListener( this );
         checkBoxConfirmBrand = findViewById( R.id.checkBox_brand_registry_vehicle );
 
         editTextModel = findViewById( R.id.edit_text_model_registry_vehicle );
-        editTextModel.setText( vehicleForUpdate.getModel() );
+        editTextModel.setText( vehicleForUpdate.getVehicleModel() );
         checkBoxConfirmModel = findViewById( R.id.checkBox_model_registry_vehicle );
         showRegistryModel();
 
         editTextRegistryNumber = findViewById( R.id.edit_text_registry_number_registry_vehicle );
-        editTextRegistryNumber.setText( vehicleForUpdate.getRegistrationNumber() );
+        editTextRegistryNumber.setText( vehicleForUpdate.getVehicleRegistrationNumber() );
         editTextRegistryNumber.setEnabled( false );//<-- No se puede cambiar matrícula (Se trata tambien del id del vehículo)
         checkBoxConfirmRegistryNumber = findViewById( R.id.checkBox_registry_number_registry_vehicle );
         showRegistryNumber();
 
         checkBoxConfirmDateITV = findViewById( R.id.check_box_registry_date_itv_vehicle );
         editTextDateITV = findViewById( R.id.edit_text_registry_date_itv_vehicle );
-        editTextDateITV.setText( vehicleForUpdate.getDateITV() );
+        editTextDateITV.setText( vehicleForUpdate.getVehicleDateITV() );
         dialogFragmentDatePincker = new DialogFragmentDatePincker(getApplicationContext());
         editTextDateITV.setOnClickListener( this );
 
@@ -209,7 +209,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV,0);
             controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
             String messageUpdateVehicle = getString( R.string.toast_message_changed_vehicle_generic );
-            controllerDBStatus.updateValue( vehicle, messageUpdateVehicle + " " + vehicle.getRegistrationNumber());
+            controllerDBStatus.updateValue( vehicle, messageUpdateVehicle + " " + vehicle.getVehicleRegistrationNumber());
             controllerDBStatus = null;
 
             Intent intent= new Intent ( UpdateVehicleActivity.this, VehiclesStatusListActivity.class);

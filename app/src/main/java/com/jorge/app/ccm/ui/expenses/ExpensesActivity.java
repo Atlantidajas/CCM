@@ -2,19 +2,14 @@ package com.jorge.app.ccm.ui.expenses;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,26 +17,21 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+
 import android.widget.Toast;
-
 import com.jorge.app.ccm.R;
-
-import com.jorge.app.ccm.gadget.WindowDialogFragment;
+import com.jorge.app.ccm.controllers.ControllerDBExpense;
 import com.jorge.app.ccm.gadget.notices.DatePickerFragment;
-import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
-import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 
-import com.jorge.app.ccm.models.Expense.Expense;
-import com.jorge.app.ccm.models.Expense.ExpenseTemp;
-import com.jorge.app.ccm.models.ticket.Tickect;
-import com.jorge.app.ccm.models.typeExpense.TypeExpense;
-import com.jorge.app.ccm.models.vehicle.Vehicle;
+import com.jorge.app.ccm.models.Expense;
+import com.jorge.app.ccm.models.ExpenseTemp;
+
+import com.jorge.app.ccm.models.TypeExpense;
+import com.jorge.app.ccm.models.User;
+import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.typeExpenses.TypeExpensesActivity;
 import com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity;
-
-import java.util.ArrayList;
 
 import static com.jorge.app.ccm.ui.typeExpenses.TypeExpensesActivity.TYPE_EXPENSE;
 import static com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT;
@@ -62,43 +52,29 @@ public class ExpensesActivity extends AppCompatActivity{
     private Button buttonCancelExpenses;
     private ExpenseTemp expenseTemp;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_expenses_registry );
 
         editTextSelectVehicle = findViewById( R.id.editText_vehicle_expense_registry );
-
-
         editTextTypeExpense = findViewById( R.id.editText_type_expense_expense_registry );
-
-
         editTextTickectNumber = findViewById( R.id.editText_ticket_expense_registry  );
-
-
         editTextDateExpenses = findViewById( R.id.editText_date_expense_registry   );
-
-
         spinnerMethodplayment = findViewById( R.id.spinnerMethodplayment );
-
         editTextTotalImport = findViewById( R.id.editTextTotalImport );
-
-
-
         buttonAcceptExpenses = findViewById( R.id.button_accept_expense_registry  );
         buttonCancelExpenses = findViewById( R.id.button_cancel_expense_registry  );
 
         //Fichero para guardar datos de forma temporal objetos tipo expensesVehicleForUserTemp
         expenseTemp = new ExpenseTemp( getApplicationContext(), TAG );
 
-
         //Intens
         intentCreateVehicle = new Intent( ExpensesActivity.this, RegistryVehiclesActivity.class );
         intentVehiclesSelectList = new Intent( ExpensesActivity.this, VehiclesSelectListActivity.class );
         intentTypeExpenses = new Intent( ExpensesActivity.this, TypeExpensesActivity.class );
 
-        final Expense expense = new Expense(  );
+        final Expense expense = new Expense( );
 
         loadFieldEditTextRegistrationNumber();
         loadFieldEditTextTypeExpense();
@@ -152,10 +128,7 @@ public class ExpensesActivity extends AppCompatActivity{
             if ( typeExpense !=null )
 
                 // Guardo los datos en fichero de forma temporar por si el usuario regresa o sale de la actividad para seleccionar Vehículo
-                expenseTemp.setTypeName( typeExpense.getTypeName() );
-
-            Log.i( TAG, "Indice con el que se guardará: " + expenseTemp.getKEY_TYPE_NAME() + "expenseTypeName" +
-                    "Valor que se guardará: " + typeExpense.getTypeName() );
+                expenseTemp.setTypeExpenseName( typeExpense.getTypeExpenseName() );
 
             loadFieldEditTextTypeExpense();//Actualizo campo.
         }
@@ -191,7 +164,7 @@ public class ExpensesActivity extends AppCompatActivity{
         } );
 
         //Cargo los datos del fichero temporal.
-        String typeExpense = expenseTemp.getTypeName();
+        String typeExpense = expenseTemp.getTypeExpenseName();
         editTextTypeExpense.setText( typeExpense );
 
     }
@@ -220,9 +193,8 @@ public class ExpensesActivity extends AppCompatActivity{
             }
         } );
 
-        editTextDateExpenses.setText( expenseTemp.getDate() );
+        editTextDateExpenses.setText( expenseTemp.getTickectDate() );
     }
-
 
     private void showDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance( new DatePickerDialog.OnDateSetListener() {
@@ -230,8 +202,8 @@ public class ExpensesActivity extends AppCompatActivity{
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 Enero es 0.
                 final String selectedDate = day + "-" + ( month+1 ) + "-" + year;
-                expenseTemp.setDate( selectedDate );
-                editTextDateExpenses.setText( expenseTemp.getDate() );
+                expenseTemp.setTickectDate( selectedDate );
+                editTextDateExpenses.setText( expenseTemp.getTickectDate() );
             }
         });
 
@@ -251,7 +223,7 @@ public class ExpensesActivity extends AppCompatActivity{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if( methodPlayments[i] != null ) {
-                    expenseTemp.setMethodOfPlayment( methodPlayments[i] );
+                    expenseTemp.setMethodOfPlaymentNameMethodOfPlayment( methodPlayments[i] );
                     Log.i( TAG, "spinnerMethodplayment -> Item pulsado -> (Valor)" + methodPlayments[i] );
                     System.out.println( "spinnerMethodplayment -> Item pulsado -> (Valor)" + methodPlayments[i] );
                 }
@@ -264,7 +236,7 @@ public class ExpensesActivity extends AppCompatActivity{
         });
 
         //Cargo los datos del fichero temporal.
-        String methodOfPlayment = expenseTemp.getMethodOfPlayment();
+        String methodOfPlayment = expenseTemp.getMethodOfPlaymentNameMethodOfPlayment();
 
         //La primera vez que se carga la actividad methodOfPlayment será nula,
         if ( ( methodOfPlayment == null) || ( methodOfPlayment.equals( "" ) ) ) {
@@ -287,14 +259,13 @@ public class ExpensesActivity extends AppCompatActivity{
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 String text = editTextTotalImport.getText().toString();
-                float textFloat = Float.parseFloat( text ) ;
-                expenseTemp.setTotalExpense( textFloat );
+                if( (text != "") && text != null){
+                    Log.i( TAG, "editTextTotalExpense -> (Valor)" + text );
+                    expenseTemp.setTickectTotalExpense( text );
+                }
             }
         } );
 
-        //Cargo datos desde fichero temporar
-        String textEditTextTotalImport = String.valueOf( expenseTemp.getTotalExpense() );
-        editTextTotalImport.setText( textEditTextTotalImport );
     }
 
     public void loadFieldButtonAcceptExpenses(){
@@ -310,7 +281,16 @@ public class ExpensesActivity extends AppCompatActivity{
                         validateFieldTypeSpinner( spinnerMethodplayment ) &&
                         validateFieldTypeEditText( editTextTotalImport ) ){
 
-                    Expense expense = new Expense(  );
+                    User user = new User();
+
+                    Expense expense = new Expense( expenseTemp.getTickect(),
+                            expenseTemp.getTypeExpense(),
+                            user,
+                            expenseTemp.getVehicleTemp() );
+
+                    saveDatesFormForDB( expense );//<-- Guarda db
+                    expenseTemp.removeTypeExpense();//<-- Borro datos del fichero temporal correspondientes al objeto expenseTemp
+                    finish();
 
                 }
             }
@@ -379,6 +359,14 @@ public class ExpensesActivity extends AppCompatActivity{
         else{
             return true;
         }
+    }
+
+    /**
+     * Guarda objeto de tipo Expense en la DB
+     */
+    public void saveDatesFormForDB( Expense expense ){
+        ControllerDBExpense controllerDBExpense = new ControllerDBExpense( getApplicationContext() );
+        controllerDBExpense.setValue( expense );
     }
 
 }

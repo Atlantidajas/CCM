@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.typeExpense.TypeExpense;
+import com.jorge.app.ccm.models.TypeExpense;
 import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
 
 public class TypeExpensesActivity extends AppCompatActivity implements View.OnClickListener {
@@ -134,9 +134,9 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
                     //editTextTypeExpenses.requestFocus();
                 }else {
 
-                    TypeExpense typeExpenseSelect = new TypeExpense(  );
-                    typeExpenseSelect.setTypeName( editTextTypeExpenses.getText().toString() );
-                    typeExpenseSelect.setLogo( 0 );
+                    TypeExpense typeExpenseSelect = new TypeExpense();
+                    typeExpenseSelect.setTypeExpenseName( editTextTypeExpenses.getText().toString() );
+                    typeExpenseSelect.setTypeExpenseLogo( 0 );
                     Log.i( TAG, "editText -> (Texto) ->" + editTextTypeExpenses.getText().toString() );
                     Bundle bundle= new Bundle();
                     bundle.putSerializable( TYPE_EXPENSE, typeExpenseSelect );
