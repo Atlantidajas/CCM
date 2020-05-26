@@ -2,11 +2,12 @@
 <resources>
     <string-array name="methodPlayment">
 
+        <item>Seleccione una opción</item>
         <item>Contado</item>
-        <item>Tarjeta</item>
+        <item>Tarjeta de empresa</item>
+        <item>Tarjetas de crédito</item>
         <item>Cheque </item>
         <item>Contrareembolso</item>
-        <item>Tarjetas de crédito</item>
         <item>Transferencia electrónica</item>
         <item>Moneda virtual</item>
 

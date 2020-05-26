@@ -7,6 +7,7 @@ public interface IVehicleTemp {
      * @Author: Jorge.HL
      */
     public void setvehicle( Vehicle vehicle );
+    public void setRegistrationNunber(String registrationNunber);
     public void setBrand(String brand);
     public void setModel(String model);
     public void setDateITV(String dateITV);

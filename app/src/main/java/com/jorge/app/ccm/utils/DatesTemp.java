@@ -48,10 +48,11 @@ public class DatesTemp {
      * @Author: Jorge.HL
      * Guarda los datos en fichero con una clave
      */
-    public void setDateFloat( String key, Float value){
+    public void setDateFloat( String key, float value){
         editor.putFloat( key, value);
         editor.apply();
     }
+
 
     /*
      * @Author: Jorge.HL
@@ -75,7 +76,7 @@ public class DatesTemp {
      * @Author: Jorge.HL
      * Devuelve un dato buscado en fichero
      */
-    public Float getDateFloat( String key ){
+    public float getDateFloat( String key ){
         return sharedPreferences.getFloat( key, 0 );
     }
 

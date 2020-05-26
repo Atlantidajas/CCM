@@ -2,6 +2,7 @@ package com.jorge.app.ccm.gadget.notices;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -13,13 +14,16 @@ import java.util.Calendar;
 
 public class DialogFragmentDatePincker extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
+    private Context context;
+    private String TAG;
     private int day;
     private int month;
     private int year;
     private Calendar currentDate;
     private DatePickerDialog datePickerDialog;
 
-    public DialogFragmentDatePincker() {
+    public DialogFragmentDatePincker(Context context) {
+        this.context = context;
         currentDate = Calendar.getInstance();
         day = currentDate.get(Calendar.DAY_OF_MONTH);
         month = currentDate.get(Calendar.MONTH);
@@ -29,7 +33,7 @@ public class DialogFragmentDatePincker extends DialogFragment implements DatePic
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        datePickerDialog = new DatePickerDialog(getContext(), this, year, month, day);
+        datePickerDialog = new DatePickerDialog( context, this, year, month, day);
         return datePickerDialog;
     }
 

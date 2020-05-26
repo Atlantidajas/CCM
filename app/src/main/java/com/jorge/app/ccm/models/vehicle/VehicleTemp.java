@@ -50,13 +50,18 @@ public class VehicleTemp extends DatesTemp implements IVehicle {
 
     }
 
+    @Override
+    public void setRegistrationNumber(String registrationNumber) {
+        this.setDateString( KEY_REGISTRATION_NUMBER_VEHICLE, registrationNumber );
+    }
+
     /*
      * @Author: Jorge.HL
      * Guarda en fichero temporal el atributo brand de un un objeto Vehicle
      */
     @Override
     public void setBrand(String brand) {
-        this.setDateString( KEY_BRAND_VEHICLE, vehicle.getBrand() );
+        this.setDateString( KEY_BRAND_VEHICLE, brand );
     }
 
 
@@ -66,7 +71,7 @@ public class VehicleTemp extends DatesTemp implements IVehicle {
      */
     @Override
     public void setModel(String model) {
-        this.setDateString( KEY_MODEL_VEHICLE, vehicle.getModel() );
+        this.setDateString( KEY_MODEL_VEHICLE, model );
     }
 
     /*
@@ -75,7 +80,7 @@ public class VehicleTemp extends DatesTemp implements IVehicle {
      */
     @Override
     public void setDateITV(String dateITV) {
-        this.setDateString( KEY_DATE_ITV, vehicle.getDateITV() );
+        this.setDateString( KEY_DATE_ITV, dateITV );
     }
 
     /*
@@ -84,7 +89,7 @@ public class VehicleTemp extends DatesTemp implements IVehicle {
      */
     @Override
     public void setDriving(int driving) {
-        this.setDateInt( KEY_DRIVING_VEHICLE, vehicle.getDriving() );
+        this.setDateInt( KEY_DRIVING_VEHICLE, driving );
     }
 
     /*

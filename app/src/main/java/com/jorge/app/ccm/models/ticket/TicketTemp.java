@@ -73,6 +73,8 @@ public class TicketTemp extends DatesTemp implements ITicket{
         this.setDateFloat( KEY_TOTAL_IMPORT, totalExpense );
     }
 
+
+
     /*
      * @Author: Jorge.HL
      * Obtiene del fichero temporal el atributo tickectNumber de un un objeto Ticket

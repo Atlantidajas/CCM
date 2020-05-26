@@ -2,6 +2,7 @@ package com.jorge.app.ccm.models.vehicle;
 
 public interface IVehicle {
 
+    public void setRegistrationNumber(String registrationNumber);
     public void setBrand(String brand);
     public void setModel(String model);
     public void setDateITV(String dateITV);

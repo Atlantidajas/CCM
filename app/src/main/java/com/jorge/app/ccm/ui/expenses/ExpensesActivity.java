@@ -4,26 +4,37 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
+import com.jorge.app.ccm.gadget.notices.DatePickerFragment;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 
 import com.jorge.app.ccm.models.Expense.Expense;
 import com.jorge.app.ccm.models.Expense.ExpenseTemp;
+import com.jorge.app.ccm.models.ticket.Tickect;
 import com.jorge.app.ccm.models.typeExpense.TypeExpense;
 import com.jorge.app.ccm.models.vehicle.Vehicle;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
@@ -45,15 +56,12 @@ public class ExpensesActivity extends AppCompatActivity{
     private EditText editTextTypeExpense;
     private EditText editTextTickectNumber;
     private EditText editTextDateExpenses;
-    private Spinner spinnerMethodPlayment;
-    private EditText editTextMethodplayment;
+    private Spinner spinnerMethodplayment;
     private EditText editTextTotalImport;
     private Button buttonAcceptExpenses;
     private Button buttonCancelExpenses;
     private ExpenseTemp expenseTemp;
 
-    private ArrayList<String> listRegistrationNumberVehiclesDb = new ArrayList<>(  );
-    SharedPreferences temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +69,21 @@ public class ExpensesActivity extends AppCompatActivity{
         setContentView( R.layout.activity_expenses_registry );
 
         editTextSelectVehicle = findViewById( R.id.editText_vehicle_expense_registry );
+
+
         editTextTypeExpense = findViewById( R.id.editText_type_expense_expense_registry );
+
+
         editTextTickectNumber = findViewById( R.id.editText_ticket_expense_registry  );
+
+
         editTextDateExpenses = findViewById( R.id.editText_date_expense_registry   );
-        spinnerMethodPlayment = findViewById( R.id.spinnerMethodplayment  );
-        editTextMethodplayment = findViewById( R.id.editTextMethodplayment );
+
+
+        spinnerMethodplayment = findViewById( R.id.spinnerMethodplayment );
+
         editTextTotalImport = findViewById( R.id.editTextTotalImport );
+
 
 
         buttonAcceptExpenses = findViewById( R.id.button_accept_expense_registry  );
@@ -81,9 +98,9 @@ public class ExpensesActivity extends AppCompatActivity{
         intentVehiclesSelectList = new Intent( ExpensesActivity.this, VehiclesSelectListActivity.class );
         intentTypeExpenses = new Intent( ExpensesActivity.this, TypeExpensesActivity.class );
 
-        Expense expense = new Expense(  );
+        final Expense expense = new Expense(  );
 
-        loadFieldEditTextSelectVehicle();
+        loadFieldEditTextRegistrationNumber();
         loadFieldEditTextTypeExpense();
         loadFieldEditTextTickectNumber();
         loadFieldEditTextMethodOfPlayment();
@@ -91,28 +108,6 @@ public class ExpensesActivity extends AppCompatActivity{
         loadFieldEditTextTotalImport();
         loadFieldButtonAcceptExpenses();
         loadFieldButtonCancelExpenses();
-
-
-        editTextSelectVehicle.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(intentVehiclesSelectList,1);
-            }
-        } );
-
-        editTextTypeExpense.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(intentTypeExpenses,2);
-            }
-        } );
-
-        editTextDateExpenses.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragmentDatePincker.show( getSupportFragmentManager(), TAG );
-            }
-        } );
 
     }
 
@@ -147,7 +142,7 @@ public class ExpensesActivity extends AppCompatActivity{
             Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleDriving" +
                     "Valor que se guardará: " + expenseTemp.getDriving() );
 
-            loadFieldEditTextSelectVehicle();//Actualizo campo.
+            loadFieldEditTextRegistrationNumber();//Actualizo campo.
         }
 
         if (requestCode == 2 ){
@@ -167,141 +162,223 @@ public class ExpensesActivity extends AppCompatActivity{
 
     }
 
-    public void loadFieldEditTextSelectVehicle(){
+    public void loadFieldEditTextRegistrationNumber(){
+
+        //Los datos temporales son grabados a la recepción del Inten en la función -> onActivityResult
+
+        editTextSelectVehicle.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(intentVehiclesSelectList,1);
+            }
+        } );
+
 
         //Cargo los datos del fichero temporal.
-
         String registrationNumberVehicle = expenseTemp.getRegistrationNumber();
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( registrationNumberVehicle == null) {
-            registrationNumberVehicle = "";
-        }
-        else {
-            editTextSelectVehicle.setText( registrationNumberVehicle );
-        }
-
+        editTextSelectVehicle.setText( registrationNumberVehicle );
     }
 
     public void loadFieldEditTextTypeExpense(){
 
+        //Los datos temporales son grabados a la recepción del Inten en la función -> onActivityResult
+
+        editTextTypeExpense.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(intentTypeExpenses,2);
+            }
+        } );
+
         //Cargo los datos del fichero temporal.
         String typeExpense = expenseTemp.getTypeName();
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( typeExpense == null) {
-            typeExpense = "";
-        }
-        else {
-            editTextTypeExpense.setText( typeExpense );
-        }
+        editTextTypeExpense.setText( typeExpense );
 
     }
 
     public void loadFieldEditTextTickectNumber(){
+
+        editTextTickectNumber.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                String text = editTextTickectNumber.getText().toString();
+                expenseTemp.setTickectNumber( text );
+            }
+        } );
+
         //Cargo los datos del fichero temporal.
         String ticketNumber = expenseTemp.getTickectNumber();
-
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( ticketNumber == null) {
-            ticketNumber = "";
-        }
-        else {
-            editTextTotalImport.setText( String.valueOf( ticketNumber ) );
-        }
+        editTextTickectNumber.setText( ticketNumber );
     }
 
     public void loadFieldEditTextdateExpenses(){
 
-        DialogFragmentDatePincker dialogFragmentDatePincker = new DialogFragmentDatePincker();
-
-
-
-        String dateTickect = dialogFragmentDatePincker.getDateFotmat( 1 );
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( dateTickect == null) {
-            dateTickect = "";
-        }
-        else {
-            expenseTemp.setDateITV( dateTickect );
-        }
+        editTextDateExpenses.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        } );
 
         editTextDateExpenses.setText( expenseTemp.getDate() );
+    }
 
 
+    private void showDatePickerDialog() {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance( new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 Enero es 0.
+                final String selectedDate = day + "-" + ( month+1 ) + "-" + year;
+                expenseTemp.setDate( selectedDate );
+                editTextDateExpenses.setText( expenseTemp.getDate() );
+            }
+        });
 
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     public void loadFieldEditTextMethodOfPlayment(){
 
         Resources res = getResources();
         final String[] methodPlayments = res.getStringArray( R.array.methodPlayment );
-        spinnerMethodPlayment.setAdapter( new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, methodPlayments ) );
+        ArrayAdapter <String>adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, methodPlayments );
+        spinnerMethodplayment.setAdapter( adapter );
 
-        spinnerMethodPlayment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        //Funciones ejecutadas al seleccionar un elemento del desplegable
+        spinnerMethodplayment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                expenseTemp.setMethodOfPlayment( methodPlayments[pos]  );
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if( methodPlayments[i] != null ) {
+                    expenseTemp.setMethodOfPlayment( methodPlayments[i] );
+                    Log.i( TAG, "spinnerMethodplayment -> Item pulsado -> (Valor)" + methodPlayments[i] );
+                    System.out.println( "spinnerMethodplayment -> Item pulsado -> (Valor)" + methodPlayments[i] );
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {    }
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spinnerMethodplayment.setSelection( 0 );
+            }
         });
 
         //Cargo los datos del fichero temporal.
         String methodOfPlayment = expenseTemp.getMethodOfPlayment();
 
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( methodOfPlayment == null) {
+        //La primera vez que se carga la actividad methodOfPlayment será nula,
+        if ( ( methodOfPlayment == null) || ( methodOfPlayment.equals( "" ) ) ) {
             methodOfPlayment = "";
         }
         else {
-            editTextMethodplayment.setText( methodOfPlayment );
+            for( int i = 0; i < methodPlayments.length; i++ ){
+
+                if ( methodPlayments[i].equals( methodOfPlayment ) ){
+                    spinnerMethodplayment.setSelection( i );
+                }
+            }
         }
 
     }
 
     public void loadFieldEditTextTotalImport(){
-        //Cargo los datos del fichero temporal.
-        float totalImpot = expenseTemp.getTotalExpense();
 
-
-        //La primera vez que se carga la actividad typeExpense será nula,
-        if ( totalImpot == 0) {
-            totalImpot = 0;
-        }
-        else {
-            editTextTotalImport.setText( String.valueOf( totalImpot ) );
-        }
-    }
-
-    public void loadFieldButtonAcceptExpenses(){}
-
-    public void loadFieldButtonCancelExpenses(){}
-
-    public void windowNoticeCreateVehicle(){
-
-        WindowDialogFragment windowCreateVehicle = new WindowDialogFragment( "No existe ningún vehículo. ¿Desea crearlo?" );
-
-        windowCreateVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+        editTextTotalImport.setOnFocusChangeListener( new View.OnFocusChangeListener() {
             @Override
-            public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-                startActivity( intentCreateVehicle );
-            }
-
-            @Override
-            public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-                return;
+            public void onFocusChange(View v, boolean hasFocus) {
+                String text = editTextTotalImport.getText().toString();
+                float textFloat = Float.parseFloat( text ) ;
+                expenseTemp.setTotalExpense( textFloat );
             }
         } );
-        windowCreateVehicle.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+
+        //Cargo datos desde fichero temporar
+        String textEditTextTotalImport = String.valueOf( expenseTemp.getTotalExpense() );
+        editTextTotalImport.setText( textEditTextTotalImport );
     }
 
+    public void loadFieldButtonAcceptExpenses(){
 
+        buttonAcceptExpenses.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ( validateFieldTypeEditText( editTextSelectVehicle ) &&
+                        validateFieldTypeEditText( editTextTypeExpense ) &&
+                        validateFieldTypeEditText( editTextTickectNumber ) &&
+                        validateFieldTypeEditText( editTextDateExpenses ) &&
+                        validateFieldTypeSpinner( spinnerMethodplayment ) &&
+                        validateFieldTypeEditText( editTextTotalImport ) ){
+
+                    Expense expense = new Expense(  );
+
+                }
+            }
+        } );
+
+    }
+
+    public void loadFieldButtonCancelExpenses(){
+
+        buttonCancelExpenses.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expenseTemp.removeTicket();
+                expenseTemp.removeVehicle();
+                expenseTemp.removeTypeExpense();
+                restartActivity();
+            }
+        } );
+    }
+
+    public void restartActivity(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    public boolean validateFieldTypeEditText( EditText editText ){
+
+        String textForValidate = editText.getText().toString();
+
+        if (TextUtils.isEmpty( textForValidate ) || textForValidate.equals( "0.0" ) ){
+            //Cambio color
+            editText.setBackgroundColor(Color.MAGENTA);
+
+            //Posiciono el foco sobre el editText
+            editText.requestFocus();
+
+            Toast.makeText(this, "Ha dejado el campo vacio", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public boolean validateFieldTypeSpinner( Spinner spinner ){
+
+        String textForValidate = spinner.getSelectedItem().toString();
+
+        Resources resources = getResources();
+        String methodPlayment[] = resources.getStringArray( R.array.methodPlayment );
+
+        // Compruebo que no sea la primera posición. Ya que esta, es el mensaje de campo.
+        if ( TextUtils.isEmpty( textForValidate ) || textForValidate.equals( methodPlayment[0] ) ){
+            //Cambio color
+            spinner.setBackgroundColor(Color.MAGENTA);
+
+            //Posiciono el foco sobre el editText
+            spinner.requestFocus();
+
+            Toast.makeText(this, "Ha dejado el campo vacio", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
 }

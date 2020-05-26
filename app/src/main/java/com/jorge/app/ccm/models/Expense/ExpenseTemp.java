@@ -23,7 +23,6 @@ public class ExpenseTemp implements ITicketTemp, IVehicleTemp, ITypeExpenseTemp 
         this.ticketTemp = new TicketTemp( context, TAG );
         this.vehicleTemp = new VehicleTemp( context, TAG );
         this.typeExpenseTemp = new TypeExpenseTemp( context, TAG );
-
     }
 
     @Override
@@ -57,6 +56,11 @@ public class ExpenseTemp implements ITicketTemp, IVehicleTemp, ITypeExpenseTemp 
     }
 
     @Override
+    public void setRegistrationNunber(String registrationNunber) {
+        this.vehicleTemp.setRegistrationNumber( registrationNunber );
+    }
+
+    @Override
     public void setBrand(String brand) {
         this.vehicleTemp.setBrand( brand );
     }
@@ -75,6 +79,22 @@ public class ExpenseTemp implements ITicketTemp, IVehicleTemp, ITypeExpenseTemp 
     public void setDriving(int driving) {
         this.vehicleTemp.setDriving( driving );
     }
+
+    @Override
+    public void setTypeExpense(TypeExpense typeExpense) {
+        typeExpenseTemp.setTypeExpense( typeExpense );
+    }
+
+    @Override
+    public void setLogo(int logo) {
+        typeExpenseTemp.setLogo( logo );
+    }
+
+    @Override
+    public void setTypeName(String typeName) {
+        typeExpenseTemp.setTypeName( typeName );
+    }
+
 
     @Override
     public Vehicle getVehicle() {
@@ -109,6 +129,76 @@ public class ExpenseTemp implements ITicketTemp, IVehicleTemp, ITypeExpenseTemp 
     @Override
     public int getDriving() {
         return vehicleTemp.getDriving();
+    }
+
+    @Override
+    public TypeExpense getTypeExpense() {
+        return typeExpenseTemp.getTypeExpense();
+    }
+
+    @Override
+    public String getTypeName() {
+        return typeExpenseTemp.getTypeName();
+    }
+
+    @Override
+    public int getLogo() {
+        return typeExpenseTemp.getLogo();
+    }
+
+    @Override
+    public String getKEY_TYPE_NAME() {
+        return typeExpenseTemp.getKEY_TYPE_NAME();
+    }
+
+    @Override
+    public String getKEY_LOGO() {
+        return typeExpenseTemp.getKEY_LOGO();
+    }
+
+    @Override
+    public String getTickectNumber() {
+        return this.ticketTemp.getTickectNumber();
+    }
+
+    @Override
+    public String getDate() {
+        return this.ticketTemp.getDate();
+    }
+
+    @Override
+    public String getMethodOfPlayment() {
+        return this.ticketTemp.getMethodOfPlayment();
+    }
+
+    @Override
+    public float getTotalExpense() {
+        return this.ticketTemp.getTotalExpense();
+    }
+
+    @Override
+    public String getPRIMARY_KEY() {
+        return this.ticketTemp.getPRIMARY_KEY();
+    }
+
+    @Override
+    public String getKEY_TICKET_NUMBER() {
+        return this.ticketTemp.getTickectNumber();
+    }
+
+    @Override
+    public String getKEY_DATE_TICKET() {
+        return this.ticketTemp.getKEY_DATE_TICKET();
+    }
+
+    @Override
+    public String getKEY_METHOD_OF_PLAYMENT() {
+        return this.ticketTemp.getKEY_METHOD_OF_PLAYMENT();
+    }
+
+    @Override
+    public String getKEY_TOTAL_IMPORT() {
+        return this.ticketTemp.getKEY_TOTAL_IMPORT();
     }
 
     @Override
@@ -147,46 +237,6 @@ public class ExpenseTemp implements ITicketTemp, IVehicleTemp, ITypeExpenseTemp 
     }
 
     @Override
-    public void setTypeExpense(TypeExpense typeExpense) {
-        typeExpenseTemp.setTypeExpense( typeExpense );
-    }
-
-    @Override
-    public void setLogo(int logo) {
-        typeExpenseTemp.setLogo( logo );
-    }
-
-    @Override
-    public void setTypeName(String typeName) {
-        typeExpenseTemp.setTypeName( typeName );
-    }
-
-    @Override
-    public TypeExpense getTypeExpense() {
-        return typeExpenseTemp.getTypeExpense();
-    }
-
-    @Override
-    public String getTypeName() {
-        return typeExpenseTemp.getTypeName();
-    }
-
-    @Override
-    public int getLogo() {
-        return typeExpenseTemp.getLogo();
-    }
-
-    @Override
-    public String getKEY_TYPE_NAME() {
-        return typeExpenseTemp.getKEY_TYPE_NAME();
-    }
-
-    @Override
-    public String getKEY_LOGO() {
-        return typeExpenseTemp.getKEY_LOGO();
-    }
-
-    @Override
     public void removeTypeExpense() {
         typeExpenseTemp.removeTypeExpense();
     }
@@ -199,28 +249,6 @@ public class ExpenseTemp implements ITicketTemp, IVehicleTemp, ITypeExpenseTemp 
     @Override
     public void removeLogo() {
         typeExpenseTemp.removeLogo();
-    }
-
-
-
-    @Override
-    public String getTickectNumber() {
-        return this.ticketTemp.getTickectNumber();
-    }
-
-    @Override
-    public String getDate() {
-        return this.ticketTemp.getDate();
-    }
-
-    @Override
-    public String getMethodOfPlayment() {
-        return this.ticketTemp.getMethodOfPlayment();
-    }
-
-    @Override
-    public float getTotalExpense() {
-        return this.ticketTemp.getTotalExpense();
     }
 
     @Override
@@ -248,28 +276,5 @@ public class ExpenseTemp implements ITicketTemp, IVehicleTemp, ITypeExpenseTemp 
         this.ticketTemp.removeKEY_TOTAL_IMPORT();
     }
 
-    @Override
-    public String getPRIMARY_KEY() {
-        return this.ticketTemp.getPRIMARY_KEY();
-    }
 
-    @Override
-    public String getKEY_TICKET_NUMBER() {
-        return this.ticketTemp.getTickectNumber();
-    }
-
-    @Override
-    public String getKEY_DATE_TICKET() {
-        return this.ticketTemp.getKEY_DATE_TICKET();
-    }
-
-    @Override
-    public String getKEY_METHOD_OF_PLAYMENT() {
-        return this.ticketTemp.getKEY_METHOD_OF_PLAYMENT();
-    }
-
-    @Override
-    public String getKEY_TOTAL_IMPORT() {
-        return this.ticketTemp.getKEY_TOTAL_IMPORT();
-    }
 }

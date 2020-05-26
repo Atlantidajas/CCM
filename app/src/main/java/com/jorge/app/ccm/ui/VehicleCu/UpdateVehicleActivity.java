@@ -68,7 +68,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
         checkBoxConfirmDateITV = findViewById( R.id.check_box_registry_date_itv_vehicle );
         editTextDateITV = findViewById( R.id.edit_text_registry_date_itv_vehicle );
         editTextDateITV.setText( vehicleForUpdate.getDateITV() );
-        dialogFragmentDatePincker = new DialogFragmentDatePincker();
+        dialogFragmentDatePincker = new DialogFragmentDatePincker(getApplicationContext());
         editTextDateITV.setOnClickListener( this );
 
         buttonSave = findViewById( R.id.button_registry_save_vehicle );
