@@ -103,20 +103,20 @@ public class ExpensesActivity extends AppCompatActivity{
 
             if ( vehicleSelect !=null )
                 // Guardo los datos en fichero de forma temporar por si el usuario regresa o sale de la actividad para seleccionar typeExpense
-               expenseTemp.setvehicle( vehicleSelect );
+               expenseTemp.setVehicleTemp( this, TAG, vehicleSelect );
 
             Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleLogo" +
-                    "Valor que se guardará: " + expenseTemp.getLogoVehicle() );
+                    "Valor que se guardará: " + expenseTemp.getVehiclelogo() );
             Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleRegistrationNumber" +
-                    "Valor que se guardará: " + expenseTemp.getRegistrationNumber() );
+                    "Valor que se guardará: " + expenseTemp.getVehicleRegistrationNumber() );
             Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleBrand" +
-                    "Valor que se guardará: " + expenseTemp.getBrand() );
+                    "Valor que se guardará: " + expenseTemp.getVehicleBrand() );
             Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "getModel" +
-                    "Valor que se guardará: " + expenseTemp.getModel() );
+                    "Valor que se guardará: " + expenseTemp.getVehicleModel() );
             Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleDateITV" +
-                    "Valor que se guardará: " + expenseTemp.getDateITV() );
+                    "Valor que se guardará: " + expenseTemp.getVehicleDateITV() );
             Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleDriving" +
-                    "Valor que se guardará: " + expenseTemp.getDriving() );
+                    "Valor que se guardará: " + expenseTemp.getVehicleDriving() );
 
             loadFieldEditTextRegistrationNumber();//Actualizo campo.
         }
@@ -148,7 +148,7 @@ public class ExpensesActivity extends AppCompatActivity{
 
 
         //Cargo los datos del fichero temporal.
-        String registrationNumberVehicle = expenseTemp.getRegistrationNumber();
+        String registrationNumberVehicle = expenseTemp.getVehicleRegistrationNumber();
         editTextSelectVehicle.setText( registrationNumberVehicle );
     }
 
@@ -223,7 +223,7 @@ public class ExpensesActivity extends AppCompatActivity{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if( methodPlayments[i] != null ) {
-                    expenseTemp.setMethodOfPlaymentNameMethodOfPlayment( methodPlayments[i] );
+                    expenseTemp.setMethodOfPlaymentValueName( methodPlayments[i] );
                     Log.i( TAG, "spinnerMethodplayment -> Item pulsado -> (Valor)" + methodPlayments[i] );
                     System.out.println( "spinnerMethodplayment -> Item pulsado -> (Valor)" + methodPlayments[i] );
                 }
@@ -236,7 +236,7 @@ public class ExpensesActivity extends AppCompatActivity{
         });
 
         //Cargo los datos del fichero temporal.
-        String methodOfPlayment = expenseTemp.getMethodOfPlaymentNameMethodOfPlayment();
+        String methodOfPlayment = expenseTemp.getMethodOfPlaymentValueName();
 
         //La primera vez que se carga la actividad methodOfPlayment será nula,
         if ( ( methodOfPlayment == null) || ( methodOfPlayment.equals( "" ) ) ) {
@@ -283,8 +283,9 @@ public class ExpensesActivity extends AppCompatActivity{
 
                     User user = new User();
 
-                    Expense expense = new Expense( expenseTemp.getTickect(),
-                            expenseTemp.getTypeExpense(),
+
+                    Expense expense = new Expense( expenseTemp.getTicketTemp(),
+                            expenseTemp.getTypeExpenseTemp(),
                             user,
                             expenseTemp.getVehicleTemp() );
 
@@ -303,9 +304,7 @@ public class ExpensesActivity extends AppCompatActivity{
         buttonCancelExpenses.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expenseTemp.removeTicket();
-                expenseTemp.removeVehicle();
-                expenseTemp.removeTypeExpense();
+                expenseTemp.removeExpenseTemp();
                 restartActivity();
             }
         } );

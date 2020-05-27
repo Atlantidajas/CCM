@@ -7,42 +7,58 @@ public class Tickect extends Provider {
     private String tickectDate;
     private String tickectTotalExpense;
 
-
-
-    public Tickect(String nameMethodOfPlayment,
-                   String nameProvider,
-                   String cifNifProvider,
-                   String telephoneProvider,
+    public Tickect(MethodOfPlayment methodOfPlayment,
+                   Provider provider,
                    String tickectNumber,
-                   String date,
-                   String totalExpense) {
-        super( nameMethodOfPlayment, nameProvider, cifNifProvider, telephoneProvider );
-        this.tickectNumber = tickectNumber;
-        this.tickectDate = date;
-        this.tickectTotalExpense = totalExpense;
+                   String tickectDate,
+                   String tickectTotalExpense) {
+        super( methodOfPlayment.getMethodOfPlaymentLogo(), methodOfPlayment.getMethodOfPlaymentName(), provider.getProviderName(),
+                provider.getProviderCifNif(),
+                provider.getProviderTelephone() );
+                this.tickectNumber = tickectNumber;
+                this.tickectDate = tickectDate;
+                this.tickectTotalExpense = tickectTotalExpense;
     }
 
-    public void setTickectNumber(String tickectNumber) {
-        this.tickectNumber = tickectNumber;
-    }
 
-    public void setTickectDate(String tickectDate) {
+    public Tickect(int methodOfPlaymentLogo,
+                   String methodOfPlaymentName,
+                   String providerName,
+                   String providerCifNif,
+                   String providerTelephone,
+                   String tickectNumber,
+                   String tickectDate,
+                   String tickectTotalExpense) {
+        super( methodOfPlaymentLogo, methodOfPlaymentName,
+                providerName,
+                providerCifNif,
+                providerTelephone );
+        this.tickectNumber = tickectNumber;
         this.tickectDate = tickectDate;
-    }
-
-    public void setTickectTotalExpense(String tickectTotalExpense) {
         this.tickectTotalExpense = tickectTotalExpense;
     }
 
-    public String getTickectNumber() {
+    protected void setTickectNumber(String tickectNumber) {
+        this.tickectNumber = tickectNumber;
+    }
+
+    protected void setTickectDate(String tickectDate) {
+        this.tickectDate = tickectDate;
+    }
+
+    protected void setTickectTotalExpense(String tickectTotalExpense) {
+        this.tickectTotalExpense = tickectTotalExpense;
+    }
+
+    protected String getTickectNumber() {
         return tickectNumber;
     }
 
-    public String getTickectDate() {
+    protected String getTickectDate() {
         return tickectDate;
     }
 
-    public String getTickectTotalExpense() {
+    protected String getTickectTotalExpense() {
         return tickectTotalExpense;
     }
 

@@ -37,6 +37,7 @@
             android:id="@+id/editText_date_expense_registry"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:inputType="date"
             android:drawableLeft="@mipmap/ic_launcher_calendar"
             android:hint="@string/editText_date_expense_registry" />
 
@@ -72,7 +73,6 @@
             android:id="@+id/editTextTotalImport"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:inputType="date"
             android:drawableLeft="@mipmap/ic_launcher_total_expense"
             android:hint="@string/editText_total_expense_expense_registry" />
 

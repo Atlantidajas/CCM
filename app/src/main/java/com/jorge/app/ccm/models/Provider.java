@@ -1,24 +1,30 @@
 package com.jorge.app.ccm.models;
 
-public class Provider extends MethodOfPlayment  {
+public class Provider extends MethodOfPlayment {
 
     private String providerName;
     private String providerCifNif;
     private String providerTelephone;
 
-    public Provider(String nameMethodOfPlayment, String providerName, String providerCifNif, String providerTelephone) {
-        super( nameMethodOfPlayment );
+    public Provider( MethodOfPlayment methodOfPlayment,
+                     String providerName, String providerCifNif,
+                     String providerTelephone) {
+        super( methodOfPlayment.getMethodOfPlaymentLogo(), methodOfPlayment.getMethodOfPlaymentName() );
         this.providerName = providerName;
         this.providerCifNif = providerCifNif;
         this.providerTelephone = providerTelephone;
     }
 
-    public Provider(int logoMethodOfPlayment, String nameMethodOfPlayment, String providerName, String providerCifNif, String providerTelephone) {
-        super( logoMethodOfPlayment, nameMethodOfPlayment );
+    public Provider(int methodOfPlaymentLogo,
+                    String methodOfPlaymentNameMethodOfPlayment,
+                    String providerName, String providerCifNif,
+                    String providerTelephone) {
+        super( methodOfPlaymentLogo, methodOfPlaymentNameMethodOfPlayment );
         this.providerName = providerName;
         this.providerCifNif = providerCifNif;
         this.providerTelephone = providerTelephone;
     }
+
 
     protected void setProviderName(String providerName) {
         this.providerName = providerName;

@@ -5,13 +5,9 @@ public class MethodOfPlayment {
     private int methodOfPlaymentLogo;
     private String methodOfPlaymentName;
 
-    public MethodOfPlayment(int methodOfPlaymentLogo, String methodOfPlaymentNameMethodOfPlayment) {
+    public MethodOfPlayment( int methodOfPlaymentLogo, String methodOfPlaymentName ) {
         this.methodOfPlaymentLogo = methodOfPlaymentLogo;
-        this.methodOfPlaymentName = methodOfPlaymentNameMethodOfPlayment;
-    }
-
-    public MethodOfPlayment(String methodOfPlaymentNameMethodOfPlayment) {
-        this.methodOfPlaymentName = methodOfPlaymentNameMethodOfPlayment;
+        this.methodOfPlaymentName = methodOfPlaymentName;
     }
 
     protected void setMethodOfPlaymentLogo(int methodOfPlaymentLogo) {
@@ -26,7 +22,7 @@ public class MethodOfPlayment {
         return methodOfPlaymentLogo;
     }
 
-    protected String getMethodOfPlaymentNameMethodOfPlayment() {
+    protected String getMethodOfPlaymentName() {
         return methodOfPlaymentName;
     }
 }

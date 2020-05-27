@@ -4,44 +4,125 @@ import android.content.Context;
 
 import com.jorge.app.ccm.utils.DatesTemp;
 
-public class ExpenseTemp extends DatesTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp  {
 
-    private TypeExpenseTemp typeExpenseTemp;
+public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp  {
+
     private TicketTemp ticketTemp;
+    private TypeExpenseTemp typeExpenseTemp;
     private VehicleTemp vehicleTemp;
 
-    public ExpenseTemp( Context context, String TAG ) {
-        super( context, TAG );
-        this.ticketTemp = new TicketTemp( context, TAG );
-        this.vehicleTemp = new VehicleTemp( context, TAG );
+
+    public ExpenseTemp( Context context, String TAG ){
+        this.ticketTemp = new TicketTemp( context,TAG );
         this.typeExpenseTemp = new TypeExpenseTemp( context, TAG );
+        this.vehicleTemp = new VehicleTemp( context, TAG );
     }
 
-    public Tickect getTickect(){
-        Tickect tickect = new Tickect(
-                ticketTemp.getMethodOfPlaymentNameMethodOfPlayment(),
-                ticketTemp.getProviderName(),
-                ticketTemp.getProviderCifNif(),
-                ticketTemp.getProviderTelephone(),
-                ticketTemp.getTickectNumber(),
-                ticketTemp.getTickectDate(),
-                ticketTemp.getTickectTotalExpense());
+    public ExpenseTemp(Context context, String TAG, MethodOfPlayment methodOfPlayment,
+                       Provider provider,
+                       Tickect tickect,
+                       TypeExpense typeExpense,
+                       Vehicle vehicle ) {
+        this.ticketTemp = new TicketTemp( context, TAG, methodOfPlayment, provider, tickect);
+        this.typeExpenseTemp = new TypeExpenseTemp( context, TAG, typeExpense );
+        this.vehicleTemp = new VehicleTemp( context, TAG, vehicle );
+    }
+
+    public ExpenseTemp(Context context, String TAG, int methodOfPlaymentLogo,
+                       String methodOfPlaymentName,
+                       String providerName,
+                       String providerCifNif,
+                       String providerTelephone,
+                       String tickectNumber,
+                       String tickectDate,
+                       String tickectTotalExpense, //<-- Hasta aquí TickectTemp
+                       int typeExpenseLogo,
+                       String typeExpenseName, //<-- Hasta aquí TypeExpenseTemp
+                       int logoVehicle,
+                       String registrationNumber,
+                       String brand,
+                       String model,
+                       String dateITV,
+                       int driving //<--Hasta aquí VehicleTemp
+    ) {
+        this.ticketTemp = new TicketTemp( context, TAG, methodOfPlaymentLogo,
+        methodOfPlaymentName,
+        providerName,
+        providerCifNif,
+        providerTelephone,
+        tickectNumber,
+        tickectDate,
+        tickectTotalExpense  );
+        this.typeExpenseTemp = new TypeExpenseTemp( context, TAG, typeExpenseLogo, typeExpenseName );
+        this.vehicleTemp = new VehicleTemp( context,
+                TAG,
+                logoVehicle,
+                registrationNumber,
+                brand,
+                model,
+                dateITV,
+                driving );
+    }
+
+
+    public void setTicketTemp( Context context, String TAG, MethodOfPlayment methodOfPlayment,
+                               Provider provider,
+                               Tickect tickect ) {
+        this.ticketTemp = new TicketTemp( context,
+                TAG,
+                methodOfPlayment,
+                provider,
+                tickect);
+    }
+
+    public void setTypeExpenseTemp( Context context, String TAG, TypeExpense typeExpense) {
+        this.typeExpenseTemp = new TypeExpenseTemp( context, TAG, typeExpense );
+    }
+
+    public void setVehicleTemp( Context context, String TAG, Vehicle vehicle ) {
+        this.vehicleTemp = new VehicleTemp( context,
+                TAG,
+                vehicle);
+    }
+
+    public Tickect getTicketTemp() {
+
+        Tickect tickect = new Tickect( this.getMethodOfPlaymentValueLogo(),
+        this.getMethodOfPlaymentValueName(),
+        this.getProviderName(),
+        this.getProviderCifNif(),
+        this.getProviderTelephone(),
+        this.getTickectNumber(),
+        this.getTickectDate(),
+        this.getTickectTotalExpense()  );
+
         return tickect;
     }
 
-    public TypeExpenseTemp getTypeExpenseTemp() {
-        return typeExpenseTemp;
+    public TypeExpense getTypeExpenseTemp() {
+
+        TypeExpense typeExpense = new TypeExpense( this.getTypeExpenseLogo(), this.getTypeExpenseName() );
+
+        return typeExpense;
     }
 
-    public TicketTemp getTicketTemp() {
-        return ticketTemp;
+    public Vehicle getVehicleTemp() {
+
+        Vehicle vehicle = new Vehicle( this.getVehiclelogo(),
+                this.getVehicleRegistrationNumber(),
+                this.getVehicleBrand(),
+                this.getVehicleModel(),
+                this.getVehicleDateITV(),
+                this.getVehicleDriving());
+
+        return vehicle;
     }
 
-    @Override
-    public void setTicket(Tickect ticket) {
-        this.ticketTemp.setTickectNumber( ticket.getTickectTotalExpense() );
-        this.ticketTemp.setTickectDate( ticket.getTickectDate() );
-        this.ticketTemp.setTickectTotalExpense( ticket.getTickectTotalExpense() );
+    public void removeExpenseTemp(){
+        this.typeExpenseTemp.removeTypeExpense();
+        this.vehicleTemp.removeVehicle();
+        this.ticketTemp.removeTicket();
+
     }
 
     @Override
@@ -75,56 +156,110 @@ public class ExpenseTemp extends DatesTemp implements iTicketTemp, iTypeExpenseT
     }
 
     @Override
-    public void setMethodOfPlaymentNameMethodOfPlayment(String methodOfPlaymentNameMethodOfPlayment) {
-        this.typeExpenseTemp.setTypeExpenseName( methodOfPlaymentNameMethodOfPlayment );
-    }
-
-    @Override
-    public int getMethodOfPlaymentLogo() {
-        return this.typeExpenseTemp.getTypeExpenseLogo();
-    }
-
-    @Override
-    public String getMethodOfPlaymentNameMethodOfPlayment() {
-        return this.typeExpenseTemp.getTypeExpenseName();
-    }
-
-    @Override
     public void removeTicket() {
         this.ticketTemp.removeTicket();
     }
 
     @Override
-    public void removeKEY_TOTAL_IMPORT() {
-        this.ticketTemp.removeKEY_TOTAL_IMPORT();
+    public void removeTickectNumber() {
+        this.ticketTemp.removeTicket();
     }
 
     @Override
-    public void removeKEY_TICKET_NUMBER() {
-        this.ticketTemp.removeKEY_TICKET_NUMBER();
+    public void removeTickectDate() {
+        this.ticketTemp.removeTickectDate();
     }
 
     @Override
-    public void removeKEY_DATE_TICKET() {
-        this.ticketTemp.removeKEY_DATE_TICKET();
+    public void removeTickectTotalExpense() {
+        this.ticketTemp.removeTickectTotalExpense();
     }
 
     @Override
-    public void removeKEY_METHOD_OF_PLAYMENT() {
-        this.ticketTemp.removeKEY_METHOD_OF_PLAYMENT();
-    }
-
-
-    @Override
-    public void setTypeExpense(TypeExpense typeExpense) {
-        typeExpenseTemp.setTypeExpenseName( typeExpense.getTypeExpenseName() );
-        typeExpenseTemp.setTypeExpenseLogo( typeExpense.getTypeExpenseLogo() );
+    public void setProviderName(String providerName) {
+        this.ticketTemp.setProviderName( providerName );
     }
 
     @Override
-    public TypeExpense getTypeExpense() {
-        return this.typeExpenseTemp.getTypeExpense();
+    public void setProviderCifNif(String providerCifNif) {
+        this.ticketTemp.setProviderCifNif( providerCifNif );
     }
+
+    @Override
+    public void setProviderTelephone(String providerTelephone) {
+        this.ticketTemp.setProviderTelephone( providerTelephone );
+    }
+
+    @Override
+    public String getProviderName() {
+        return this.ticketTemp.getProviderName();
+    }
+
+    @Override
+    public String getProviderCifNif() {
+        return this.ticketTemp.getProviderCifNif();
+    }
+
+    @Override
+    public String getProviderTelephone() {
+        return this.ticketTemp.getProviderTelephone();
+    }
+
+    @Override
+    public void removeProvider() {
+        this.ticketTemp.removeProvider();
+    }
+
+    @Override
+    public void removeProviderName() {
+        this.ticketTemp.removeProviderName();
+    }
+
+    @Override
+    public void removeProviderCifNif() {
+        this.ticketTemp.removeProviderCifNif();
+    }
+
+    @Override
+    public void removeProviderTelephone() {
+        this.ticketTemp.removeProviderTelephone();
+    }
+
+    @Override
+    public void setMethodOfPlaymentValueLogo(int methodOfPlaymentValueLogo) {
+        this.ticketTemp.setMethodOfPlaymentValueLogo( methodOfPlaymentValueLogo );
+    }
+
+    @Override
+    public void setMethodOfPlaymentValueName(String methodOfPlaymentValueName) {
+        this.ticketTemp.setMethodOfPlaymentValueName( methodOfPlaymentValueName );
+    }
+
+    @Override
+    public int getMethodOfPlaymentValueLogo() {
+        return this.ticketTemp.getMethodOfPlaymentValueLogo();
+    }
+
+    @Override
+    public String getMethodOfPlaymentValueName() {
+        return this.ticketTemp.getMethodOfPlaymentValueName();
+    }
+
+    @Override
+    public void removeMethodOfPlayment() {
+        this.ticketTemp.removeMethodOfPlayment();
+    }
+
+    @Override
+    public void removeMethodOfPlaymentLogo() {
+        this.ticketTemp.removeMethodOfPlaymentLogo();
+    }
+
+    @Override
+    public void removeMethodOfPlaymentName() {
+        this.ticketTemp.removeMethodOfPlaymentName();
+    }
+
 
     @Override
     public void setTypeExpenseLogo(int typeExpenseLogo) {
@@ -147,118 +282,122 @@ public class ExpenseTemp extends DatesTemp implements iTicketTemp, iTypeExpenseT
     }
 
     @Override
-    public void removeTypeName() {
-        this.typeExpenseTemp.removeTypeName();
-    }
-
-    @Override
-    public void removeLogo() {
-        this.typeExpenseTemp.removeLogo();
-    }
-
-    @Override
     public void removeTypeExpense() {
         this.typeExpenseTemp.removeTypeExpense();
     }
 
-
     @Override
-    public void setvehicle(Vehicle vehicle) {
-        this.vehicleTemp.setvehicle( vehicle );
+    public void removeTypeExpenseName() {
+        this.typeExpenseTemp.removeTypeExpenseName();
     }
 
     @Override
-    public void setRegistrationNunber(String registrationNunber) {
-        this.vehicleTemp.setVehicleRegistrationNumber( registrationNunber );
+    public void removeTypeExpenseLogo() {
+        this.typeExpenseTemp.removeTypeExpenseLogo();
     }
 
     @Override
-    public void setBrand(String brand) {
-        this.vehicleTemp.setVehicleBrand( brand );
+    public void setVehiclelogo(int vehiclelogo) {
+        this.vehicleTemp.setVehiclelogo( vehiclelogo );
     }
 
     @Override
-    public void setModel(String model) {
-        this.vehicleTemp.setVehicleModel( model );
+    public void setVehicleRegistrationNumber(String vehicleRegistrationNumber) {
+        this.vehicleTemp.setVehicleRegistrationNumber( vehicleRegistrationNumber );
     }
 
     @Override
-    public void setDateITV(String dateITV) {
-        this.vehicleTemp.setVehicleDateITV( dateITV );
+    public void setVehicleBrand(String vehicleBrand) {
+        this.vehicleTemp.setVehicleBrand( vehicleBrand );
     }
 
     @Override
-    public void setDriving(int driving) {
-        this.vehicleTemp.setVehicleDriving( driving );
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleTemp.setVehicleModel( vehicleModel );
     }
 
     @Override
-    public Vehicle getVehicleTemp() {
-        return vehicleTemp.getVehicleTemp();
+    public void setVehicleDateITV(String vehicleDateITV) {
+        this.vehicleTemp.setVehicleDateITV( vehicleDateITV );
     }
 
     @Override
-    public int getLogoVehicle() {
+    public void setVehicleDriving(int vehicleDriving) {
+        this.vehicleTemp.setVehicleDriving( vehicleDriving );
+    }
+
+    @Override
+    public void setVehicleDrivingCurrent(String vehicleDrivingCurrent) {
+        this.vehicleTemp.setVehicleDrivingCurrent( vehicleDrivingCurrent );
+    }
+
+    @Override
+    public int getVehiclelogo() {
         return this.vehicleTemp.getVehiclelogo();
     }
 
     @Override
-    public String getRegistrationNumber() {
+    public String getVehicleRegistrationNumber() {
         return this.vehicleTemp.getVehicleRegistrationNumber();
     }
 
     @Override
-    public String getBrand() {
+    public String getVehicleBrand() {
         return this.vehicleTemp.getVehicleBrand();
     }
 
     @Override
-    public String getModel() {
+    public String getVehicleModel() {
         return this.vehicleTemp.getVehicleModel();
     }
 
     @Override
-    public String getDateITV() {
+    public String getVehicleDateITV() {
         return this.vehicleTemp.getVehicleDateITV();
     }
 
     @Override
-    public int getDriving() {
+    public int getVehicleDriving() {
         return this.vehicleTemp.getVehicleDriving();
     }
 
     @Override
-    public void removeKEY_BRAND_VEHICLE() {
-        this.vehicleTemp.removeKEY_VEHICLE_BRAND();
-    }
-
-    @Override
-    public void removeKEY_MODEL_VEHICLE() {
-        this.vehicleTemp.removeKEY_VEHICLE_MODEL();
-    }
-
-    @Override
-    public void removeKEY_DATE_ITV() {
-        this.vehicleTemp.removeKEY_VEHICLE_DATE_ITV();
-    }
-
-    @Override
-    public void removeKEY_DRIVING_VEHICLE() {
-        this.vehicleTemp.removeKEY_VEHICLE_DRIVING_VEHICLE();
-    }
-
-    @Override
-    public void removeKEY_LOGO_VHEICLE() {
-        this.vehicleTemp.removeKEY_VEHICLE_LOGO();
-    }
-
-    @Override
-    public void removeKEY_REGISTRATION_NUMBER_VEHICLE() {
-        this.vehicleTemp.removeKEY_VEHICLE_REGISTRATION_NUMBER();
+    public String getVehicleDrivingCurrent() {
+        return this.vehicleTemp.getVehicleDrivingCurrent();
     }
 
     @Override
     public void removeVehicle() {
         this.vehicleTemp.removeVehicle();
+    }
+
+    @Override
+    public void removeVehicleLogo() {
+        this.vehicleTemp.removeVehicleLogo();
+    }
+
+    @Override
+    public void removeVehicleRegistrationNumber() {
+        this.vehicleTemp.removeVehicleRegistrationNumber();
+    }
+
+    @Override
+    public void removeVehicleBrand() {
+        this.vehicleTemp.removeVehicleBrand();
+    }
+
+    @Override
+    public void removeVehicleModel() {
+        this.vehicleTemp.removeVehicleModel();
+    }
+
+    @Override
+    public void removeVehicleDateItv() {
+        this.vehicleTemp.removeVehicleDateItv();
+    }
+
+    @Override
+    public void removeVehicleDriving() {
+        this.vehicleTemp.removeVehicleDriving();
     }
 }

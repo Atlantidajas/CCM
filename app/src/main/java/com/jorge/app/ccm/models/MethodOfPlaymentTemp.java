@@ -4,55 +4,60 @@ import android.content.Context;
 
 import com.jorge.app.ccm.utils.DatesTemp;
 
-public class MethodOfPlaymentTemp extends DatesTemp implements iMethodOfPlayment{
+public class MethodOfPlaymentTemp extends DatesTemp {
 
-    private final String PRIMARY_KEY;
-    private final String KEY_METHOD_OF_PLAYMENT_LOGO;
-    private final String KEY_METHOD_OF_PLAYMENT_NAME;
+    private final String PRIMARY_KEY = getFILE_NAME() + "methodOfPlayment";;
+    private final String KEY_METHOD_OF_PLAYMENT_LOGO = PRIMARY_KEY + "Logo";;
+    private final String KEY_METHOD_OF_PLAYMENT_NAME = PRIMARY_KEY + "Name";
 
-    public MethodOfPlaymentTemp(Context context, String TAG) {
+    public MethodOfPlaymentTemp(Context context,
+                                String TAG ){
+        super(context, TAG);
+    }
+
+    public MethodOfPlaymentTemp(Context context,
+                                String TAG,
+                                MethodOfPlayment methodOfPlaymentValueLogo) {
         super( context, TAG );
-        PRIMARY_KEY = getFILE_NAME() + "ticket";
-        this.KEY_METHOD_OF_PLAYMENT_LOGO = PRIMARY_KEY + "ticketDate";
-        this.KEY_METHOD_OF_PLAYMENT_NAME = PRIMARY_KEY + "methodOfPlayment";
+        this.setDateInt( KEY_METHOD_OF_PLAYMENT_LOGO, methodOfPlaymentValueLogo.getMethodOfPlaymentLogo() );
+        this.setDateString( KEY_METHOD_OF_PLAYMENT_NAME, methodOfPlaymentValueLogo.getMethodOfPlaymentName() );
     }
 
-    public void setMethodOfPlayment( MethodOfPlaymentTemp methodOfPlayment ) {
-        this.setDateInt( KEY_METHOD_OF_PLAYMENT_LOGO, methodOfPlayment.getMethodOfPlaymentLogo() );
-        this.setDateString( KEY_METHOD_OF_PLAYMENT_NAME, methodOfPlayment.getMethodOfPlaymentNameMethodOfPlayment() );
+    public MethodOfPlaymentTemp(Context context,
+                                String TAG,
+                                int methodOfPlaymentValueLogo,
+                                String methodOfPlaymentValueName) {
+        super( context, TAG );
+        this.setDateInt( KEY_METHOD_OF_PLAYMENT_LOGO, methodOfPlaymentValueLogo );
+        this.setDateString( KEY_METHOD_OF_PLAYMENT_NAME, methodOfPlaymentValueName );
     }
 
-    @Override
-    public void setMethodOfPlaymentLogo(int methodOfPlaymentLogo) {
-        this.setDateInt( KEY_METHOD_OF_PLAYMENT_LOGO, methodOfPlaymentLogo );
+    protected void setMethodOfPlaymentValueLogo(int methodOfPlaymentValueLogo) {
+        this.setDateInt( KEY_METHOD_OF_PLAYMENT_LOGO, methodOfPlaymentValueLogo );
     }
 
-    @Override
-    public void setMethodOfPlaymentNameMethodOfPlayment(String methodOfPlaymentNameMethodOfPlayment) {
-        this.setDateString( KEY_METHOD_OF_PLAYMENT_NAME, methodOfPlaymentNameMethodOfPlayment );
+    protected void setMethodOfPlaymentValueName(String methodOfPlaymentValueName) {
+        this.setDateString( KEY_METHOD_OF_PLAYMENT_NAME, methodOfPlaymentValueName );
     }
 
-    @Override
-    public int getMethodOfPlaymentLogo() {
+    protected int getMethodOfPlaymentValueLogo() {
         return this.getDateInt( KEY_METHOD_OF_PLAYMENT_LOGO );
     }
 
-    @Override
-    public String getMethodOfPlaymentNameMethodOfPlayment() {
+    protected String getMethodOfPlaymentValueName() {
         return this.getDateString( KEY_METHOD_OF_PLAYMENT_NAME );
     }
 
-    public void removeTicket(){
+    protected void removeMethodOfPlayment(){
         this.removeDate( KEY_METHOD_OF_PLAYMENT_LOGO );
         this.removeDate( KEY_METHOD_OF_PLAYMENT_NAME );
     }
 
-    public void removeKEY_METHOD_OF_PLAYMENT_LOGO(){
+    protected void removeMethodOfPlaymentLogo() {
         this.removeDate( KEY_METHOD_OF_PLAYMENT_LOGO );
     }
 
-    public void removeKEY_METHOD_OF_PLAYMENT_NAME(){
+    protected void removeMethodOfPlaymentName() {
         this.removeDate( KEY_METHOD_OF_PLAYMENT_NAME );
     }
-
 }

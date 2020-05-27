@@ -5,28 +5,25 @@ import com.jorge.app.ccm.models.VehicleTemp;
 
 public interface iVehicleTemp {
 
-
-    /*
-     * @Author: Jorge.HL
-     */
-    public void setvehicle( Vehicle vehicle );
-    public void setRegistrationNunber(String registrationNunber);
-    public void setBrand(String brand);
-    public void setModel(String model);
-    public void setDateITV(String dateITV);
-    public void setDriving(int driving);
-    public Vehicle getVehicleTemp();
-    public int getLogoVehicle();
-    public String getRegistrationNumber();
-    public String getBrand();
-    public String getModel();
-    public String getDateITV();
-    public int getDriving();
-    public void removeKEY_BRAND_VEHICLE();
-    public void removeKEY_MODEL_VEHICLE();
-    public void removeKEY_DATE_ITV();
-    public void removeKEY_DRIVING_VEHICLE();
-    public void removeKEY_LOGO_VHEICLE();
-    public void removeKEY_REGISTRATION_NUMBER_VEHICLE();
+    public void setVehiclelogo(int vehiclelogo);
+    public void setVehicleRegistrationNumber(String vehicleRegistrationNumber);
+    public void setVehicleBrand(String vehicleBrand);
+    public void setVehicleModel(String vehicleModel);
+    public void setVehicleDateITV(String vehicleDateITV);
+    public void setVehicleDriving(int vehicleDriving);
+    public void setVehicleDrivingCurrent(String vehicleDrivingCurrent);
+    public int getVehiclelogo();
+    public String getVehicleRegistrationNumber();
+    public String getVehicleBrand();
+    public String getVehicleModel();
+    public String getVehicleDateITV();
+    public int getVehicleDriving();
+    public String getVehicleDrivingCurrent();
     public void removeVehicle();
+    public void removeVehicleLogo();
+    public void removeVehicleRegistrationNumber();
+    public void removeVehicleBrand();
+    public void removeVehicleModel();
+    public void removeVehicleDateItv();
+    public void removeVehicleDriving();
 }

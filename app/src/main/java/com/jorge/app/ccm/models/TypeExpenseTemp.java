@@ -11,35 +11,42 @@ import com.jorge.app.ccm.utils.DatesTemp;
 
 public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
 
-    private final String PRIMARY_KEY;
-    private final String KEY_TYPE_NAME;
-    private final String KEY_LOGO;
-    private TypeExpense typeExpense;
+    private String PRIMARY_KEY;
+    private String KEY_TYPE_EXPENSE_LOGO;
+    private String KEY_TYPE_EXPENSE_NAME;
 
-    public TypeExpenseTemp( Context context, final String TAG ) {
+
+    public TypeExpenseTemp(Context context,
+                       final String TAG){
         super( context, TAG );
         PRIMARY_KEY = getFILE_NAME() + "typeExpense";
-        this.KEY_TYPE_NAME = PRIMARY_KEY + "typeName";
-        this.KEY_LOGO = PRIMARY_KEY + "logo";
+        KEY_TYPE_EXPENSE_LOGO = PRIMARY_KEY + "Logo";
+        KEY_TYPE_EXPENSE_NAME = PRIMARY_KEY + "TypeName";
     }
 
+    public TypeExpenseTemp( Context context,
+                            final String TAG,
+                            TypeExpense typeExpense ) {
+        super( context, TAG );
+        PRIMARY_KEY = getFILE_NAME() + "typeExpense";
+        KEY_TYPE_EXPENSE_LOGO = PRIMARY_KEY + "Logo";
+        KEY_TYPE_EXPENSE_NAME = PRIMARY_KEY + "TypeName";
+        this.setDateInt( KEY_TYPE_EXPENSE_LOGO, typeExpense.getTypeExpenseLogo() );
+        this.setDateString( KEY_TYPE_EXPENSE_NAME, typeExpense.getTypeExpenseName() );
 
-
-    /*
-     * @Author: Jorge.HL
-     * Guarda en fichero temporal objeto TypeExpense
-     */
-    public void setTypeExpense( TypeExpense  typeExpense ) {
-        this.setDateString( KEY_TYPE_NAME, typeExpense.getTypeExpenseName() );
-        this.setDateInt( KEY_LOGO, typeExpense.getTypeExpenseLogo() );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Devuelve después de leer en fichero temp objeto TypeExpense
-     */
-    public TypeExpense getTypeExpense(){
-        return typeExpense = new TypeExpense( this.getDateInt( KEY_LOGO ), this.getDateString( KEY_TYPE_NAME ) );
+    public TypeExpenseTemp( Context context,
+                            final String TAG,
+                            int typeExpenseLogo,
+                            String typeExpenseName ) {
+        super( context, TAG );
+        PRIMARY_KEY = getFILE_NAME() + "typeExpense";
+        KEY_TYPE_EXPENSE_LOGO = PRIMARY_KEY + "Logo";
+        KEY_TYPE_EXPENSE_NAME = PRIMARY_KEY + "TypeName";
+        this.setDateInt( KEY_TYPE_EXPENSE_LOGO, typeExpenseLogo );
+        this.setDateString( KEY_TYPE_EXPENSE_NAME, typeExpenseName );
+
     }
 
     /*
@@ -48,7 +55,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
      */
     @Override
     public void setTypeExpenseLogo(int typeExpenseLogo) {
-        this.setDateInt( KEY_LOGO, typeExpenseLogo );
+        this.setDateInt( KEY_TYPE_EXPENSE_LOGO, typeExpenseLogo );
     }
 
     /*
@@ -57,7 +64,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
      */
     @Override
     public void setTypeExpenseName(String typeExpenseName) {
-        this.setDateString( KEY_TYPE_NAME, typeExpenseName );
+        this.setDateString( KEY_TYPE_EXPENSE_NAME, typeExpenseName );
     }
 
     /*
@@ -66,7 +73,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
      */
     @Override
     public int getTypeExpenseLogo() {
-        return this.getDateInt( KEY_LOGO );
+        return this.getDateInt( KEY_TYPE_EXPENSE_LOGO );
     }
 
     /*
@@ -75,23 +82,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
      */
     @Override
     public String getTypeExpenseName() {
-        return this.getDateString( KEY_TYPE_NAME );
-    }
-
-    /*
-     * @Author: Jorge.HL
-     * Borrar del fichero temporal el dato correspodiente a la clave TYPE_NAME
-     */
-    public void removeTypeName(){
-        this.removeDate( KEY_TYPE_NAME );
-    }
-
-    /*
-     * * @Author: Jorge.HL
-     * Borrar del fichero temporal el dato correspodiente a la clave lOGO
-     */
-    public void removeLogo(){
-        this.removeDate( KEY_LOGO );
+        return this.getDateString( KEY_TYPE_EXPENSE_NAME );
     }
 
     /*
@@ -99,7 +90,25 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
      * Borrar del fichero temporal los datos correspodiente al objeto TypeExpense
      */
     public void removeTypeExpense(){
-        this.removeDate( KEY_TYPE_NAME );
-        this.removeDate( KEY_LOGO );
+        this.removeDate( KEY_TYPE_EXPENSE_NAME );
+        this.removeDate( KEY_TYPE_EXPENSE_LOGO );
     }
+
+    /*
+     * @Author: Jorge.HL
+     * Borrar del fichero temporal el dato correspodiente a la clave TYPE_NAME
+     */
+    public void removeTypeExpenseName(){
+        this.removeDate( KEY_TYPE_EXPENSE_NAME );
+    }
+
+    /*
+     * * @Author: Jorge.HL
+     * Borrar del fichero temporal el dato correspodiente a la clave lOGO
+     */
+    public void removeTypeExpenseLogo(){
+        this.removeDate( KEY_TYPE_EXPENSE_LOGO );
+    }
+
+
 }

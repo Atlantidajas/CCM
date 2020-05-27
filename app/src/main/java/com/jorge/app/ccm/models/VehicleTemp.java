@@ -13,79 +13,73 @@ import com.jorge.app.ccm.utils.DatesTemp;
 
 public class VehicleTemp extends DatesTemp implements iVehicle {
 
-    private final String PRIMARY_KEY;
-    private final String KEY_VEHICLE_BRAND;
-    private final String KEY_VEHICLE_MODEL;
-    private final String KEY_VEHICLE_DATE_ITV;
-    private final String KEY_VEHICLE_DRIVING;
-    private final String KEY_VEHICLE_LOGO;
-    private final String KEY_VEHICLE_REGISTRATION_NUMBER;
-    private final String KEY_VEHICLE_DRIVING_CURRENT;
-    private Vehicle vehicleTemp;
+    private String PRIMARY_KEY;
+    private String KEY_VEHICLE_LOGO;
+    private String KEY_VEHICLE_REGISTRATION_NUMBER;
+    private String KEY_VEHICLE_BRAND;
+    private String KEY_VEHICLE_MODEL;
+    private String KEY_VEHICLE_DATE_ITV;
+    private String KEY_VEHICLE_DRIVING;
+    private String KEY_VEHICLE_DRIVING_CURRENT;
 
-    public VehicleTemp(Context context, final String TAG ) {
+    public VehicleTemp(Context context,
+                       final String TAG){
         super( context, TAG );
         PRIMARY_KEY = getFILE_NAME() + "vehicle";
-        this.KEY_VEHICLE_BRAND = PRIMARY_KEY + "brand";
-        this.KEY_VEHICLE_MODEL = PRIMARY_KEY + "model";
-        this.KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "dateItv";
-        this.KEY_VEHICLE_DRIVING = PRIMARY_KEY + "driving";
-        this.KEY_VEHICLE_LOGO = PRIMARY_KEY + "logo";
-        this.KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "registrationNumber";
-        this.KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "drivingCurrent";
-        this.vehicleTemp = new Vehicle();
-
+        KEY_VEHICLE_LOGO = PRIMARY_KEY + "Logo";
+        KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "RegistrationNumber";
+        KEY_VEHICLE_BRAND = PRIMARY_KEY + "Brand";
+        KEY_VEHICLE_MODEL = PRIMARY_KEY + "Model";
+        KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "DateItv";
+        KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
+        KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
     }
 
-
-    public void setVehicleTemp(Vehicle vehicleTemp) {
-        this.vehicleTemp = vehicleTemp;
-    }
-
-
-
-    /*
-     * @Author: Jorge.HL
-     * Guarda en fichero temporal objeto Vehicle
-     */
-    public void setvehicle( Vehicle vehicle ) {
-
-        this.setDateString( KEY_VEHICLE_BRAND, vehicle.getVehicleBrand());
+    public VehicleTemp(Context context,
+                       final String TAG,
+                       Vehicle vehicle ) {
+        super( context, TAG );
+        PRIMARY_KEY = getFILE_NAME() + "vehicle";
+        KEY_VEHICLE_LOGO = PRIMARY_KEY + "Logo";
+        KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "RegistrationNumber";
+        KEY_VEHICLE_BRAND = PRIMARY_KEY + "Brand";
+        KEY_VEHICLE_MODEL = PRIMARY_KEY + "Model";
+        KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "DateItv";
+        KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
+        KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
+        this.setDateInt( KEY_VEHICLE_LOGO, vehicle.getVehiclelogo() );
+        this.setDateString( KEY_VEHICLE_REGISTRATION_NUMBER, vehicle.getVehicleRegistrationNumber() );
+        this.setDateString( KEY_VEHICLE_BRAND, vehicle.getVehicleBrand() );
         this.setDateString( KEY_VEHICLE_MODEL, vehicle.getVehicleModel() );
         this.setDateString( KEY_VEHICLE_DATE_ITV, vehicle.getVehicleDateITV() );
         this.setDateInt( KEY_VEHICLE_DRIVING, vehicle.getVehicleDriving() );
-        this.setDateInt( KEY_VEHICLE_LOGO, vehicle.getVehiclelogo() );
-        this.setDateString( KEY_VEHICLE_REGISTRATION_NUMBER, vehicle.getVehicleRegistrationNumber() );
-
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Devuelve después de leer en fichero temporal objeto vehicle
-     */
-    public Vehicle getVehicleTemp(){
-
-        vehicleTemp = new Vehicle( this.getDateInt( KEY_VEHICLE_LOGO),
-                this.getDateString( KEY_VEHICLE_REGISTRATION_NUMBER),
-                this.getDateString( KEY_VEHICLE_BRAND ),
-                this.getDateString( KEY_VEHICLE_MODEL ),
-                this.getDateString( KEY_VEHICLE_DATE_ITV ),
-                this.getDateInt( KEY_VEHICLE_DRIVING ));
-        return vehicleTemp;
+    public VehicleTemp(Context context,
+                       final String TAG,
+                       int logoVehicle,
+                       String registrationNumber,
+                       String brand,
+                       String model,
+                       String dateITV,
+                       int driving ) {
+        super( context, TAG );
+        PRIMARY_KEY = getFILE_NAME() + "vehicle";
+        KEY_VEHICLE_LOGO = PRIMARY_KEY + "Logo";
+        KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "RegistrationNumber";
+        KEY_VEHICLE_BRAND = PRIMARY_KEY + "Brand";
+        KEY_VEHICLE_MODEL = PRIMARY_KEY + "Model";
+        KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "DateItv";
+        KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
+        KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
+        this.setDateInt( KEY_VEHICLE_LOGO, logoVehicle );
+        this.setDateString( KEY_VEHICLE_REGISTRATION_NUMBER, registrationNumber );
+        this.setDateString( KEY_VEHICLE_BRAND, brand );
+        this.setDateString( KEY_VEHICLE_MODEL, model );
+        this.setDateString( KEY_VEHICLE_DATE_ITV, dateITV );
+        this.setDateInt( KEY_VEHICLE_DRIVING, driving );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Borrar del fichero temporal los datos correspodiente al objeto Vehicle
-     */
-    public void removeVehicle(){
-        this.removeDate( KEY_VEHICLE_BRAND );
-        this.removeDate( KEY_VEHICLE_MODEL );
-        this.removeDate( KEY_VEHICLE_DATE_ITV );
-        this.removeDate( KEY_VEHICLE_DRIVING );
-        this.removeDate( KEY_VEHICLE_LOGO );
-        this.removeDate( KEY_VEHICLE_REGISTRATION_NUMBER );
-    }
 
     @Override
     public void setVehiclelogo(int vehiclelogo) {
@@ -136,6 +130,21 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
     @Override
     public void setVehicleDrivingCurrent(String vehicleDrivingCurrent) {
         this.setDateString( KEY_VEHICLE_DRIVING, vehicleDrivingCurrent );
+    }
+
+    /*
+     * @Author: Jorge.HL
+     * Devuelve después de leer en fichero temporal objeto vehicle
+     */
+    public Vehicle getVehicleTemp(){
+
+        Vehicle vehicle = new Vehicle( this.getDateInt( KEY_VEHICLE_LOGO),
+                this.getDateString( KEY_VEHICLE_REGISTRATION_NUMBER),
+                this.getDateString( KEY_VEHICLE_BRAND ),
+                this.getDateString( KEY_VEHICLE_MODEL ),
+                this.getDateString( KEY_VEHICLE_DATE_ITV ),
+                this.getDateInt( KEY_VEHICLE_DRIVING ));
+        return vehicle;
     }
 
     /*
@@ -198,42 +207,25 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
     }
 
     /*
-     * * @Author: Jorge.HL
-     * Borrar del fichero temporal el dato correspodiente a la clave KEY_BRAND_VEHICLE
+     * @Author: Jorge.HL
+     * Borrar del fichero temporal los datos correspodiente al objeto Vehicle
      */
-    public void removeKEY_VEHICLE_BRAND(){
+    public void removeVehicle(){
+
+        this.removeDate( KEY_VEHICLE_LOGO );
+        this.removeDate( KEY_VEHICLE_REGISTRATION_NUMBER );
         this.removeDate( KEY_VEHICLE_BRAND );
-    }
-
-    /*
-     * * @Author: Jorge.HL
-     * Borrar del fichero temporal el dato correspodiente a la clave KEY_BRAND_VEHICLE
-     */
-    public void removeKEY_VEHICLE_MODEL(){
         this.removeDate( KEY_VEHICLE_MODEL );
-    }
-
-    /*
-     * * @Author: Jorge.HL
-     * Borrar del fichero temporal el dato correspodiente a la clave KEY_DATE_ITV
-     */
-    public void removeKEY_VEHICLE_DATE_ITV(){
         this.removeDate( KEY_VEHICLE_DATE_ITV );
-    }
-
-    /*
-     * * @Author: Jorge.HL
-     * Borrar del fichero temporal el dato correspodiente a la clave KEY_DRIVING_VEHICLE
-     */
-    public void removeKEY_VEHICLE_DRIVING_VEHICLE(){
         this.removeDate( KEY_VEHICLE_DRIVING );
+
     }
 
     /*
      * * @Author: Jorge.HL
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_LOGO_VHEICLE
      */
-    public void removeKEY_VEHICLE_LOGO(){
+    public void removeVehicleLogo(){
         this.removeDate( KEY_VEHICLE_LOGO );
     }
 
@@ -241,7 +233,41 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
      * * @Author: Jorge.HL
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_REGISTRATION_NUMBER_VEHICLE
      */
-    public void removeKEY_VEHICLE_REGISTRATION_NUMBER(){
+    public void removeVehicleRegistrationNumber(){
         this.removeDate( KEY_VEHICLE_REGISTRATION_NUMBER );
     }
+
+    /*
+     * * @Author: Jorge.HL
+     * Borrar del fichero temporal el dato correspodiente a la clave KEY_BRAND_VEHICLE
+     */
+    public void removeVehicleBrand(){
+        this.removeDate( KEY_VEHICLE_BRAND );
+    }
+
+    /*
+     * * @Author: Jorge.HL
+     * Borrar del fichero temporal el dato correspodiente a la clave KEY_BRAND_VEHICLE
+     */
+    public void removeVehicleModel(){
+        this.removeDate( KEY_VEHICLE_MODEL );
+    }
+
+    /*
+     * * @Author: Jorge.HL
+     * Borrar del fichero temporal el dato correspodiente a la clave KEY_DATE_ITV
+     */
+    public void removeVehicleDateItv(){
+        this.removeDate( KEY_VEHICLE_DATE_ITV );
+    }
+
+    /*
+     * * @Author: Jorge.HL
+     * Borrar del fichero temporal el dato correspodiente a la clave KEY_DRIVING_VEHICLE
+     */
+    public void removeVehicleDriving(){
+        this.removeDate( KEY_VEHICLE_DRIVING );
+    }
+
+
 }

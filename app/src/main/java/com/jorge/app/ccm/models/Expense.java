@@ -11,7 +11,9 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
     private User user;
     private Vehicle vehicle;
 
-    public Expense(){}
+    public Expense(){
+
+    }
 
     public Expense(Tickect tickect, TypeExpense typeExpense, User user, Vehicle vehicle) {
         this.tickect = tickect;
@@ -127,9 +129,9 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         return this.tickect.getMethodOfPlaymentLogo();
     }
 
-    @Override @Exclude
-    public String getMethodOfPlaymentNameMethodOfPlayment() {
-        return this.tickect.getMethodOfPlaymentNameMethodOfPlayment();
+    @Override
+    public String getMethodOfPlaymentName() {
+        return this.tickect.getMethodOfPlaymentName();
     }
 
     @Override
