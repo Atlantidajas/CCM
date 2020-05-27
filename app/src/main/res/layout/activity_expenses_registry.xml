@@ -34,6 +34,13 @@
             android:hint="@string/editText_ticket_expense_registry" />
 
         <EditText
+            android:id="@+id/editText_ticket_provider_name_expense_registry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableLeft="@mipmap/ic_launcher_provider"
+            android:hint="@string/editText_ticket_provider_name_expense_registry" />
+
+        <EditText
             android:id="@+id/editText_date_expense_registry"
             android:layout_width="match_parent"
             android:layout_height="60dp"

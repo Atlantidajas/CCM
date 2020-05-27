@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.models;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.google.firebase.database.Exclude;
 
@@ -17,6 +18,18 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.tickect = tickect;
         this.typeExpense = typeExpense;
         this.user = user;
+        this.vehicle = vehicle;
+    }
+
+    public Expense( Tickect tickect ) {
+        this.tickect = tickect;
+    }
+
+    public Expense( TypeExpense typeExpense ) {
+        this.typeExpense = typeExpense;
+    }
+
+    public Expense( Vehicle vehicle ) {
         this.vehicle = vehicle;
     }
 
@@ -261,4 +274,5 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
     public String getVehicleDrivingCurrent() {
         return this.vehicle.getVehicleDrivingCurrent();
     }
+
 }

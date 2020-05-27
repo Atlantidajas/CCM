@@ -1,7 +1,9 @@
 package com.jorge.app.ccm.models;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.google.firebase.database.Exclude;
 import com.jorge.app.ccm.utils.DatesTemp;
 
 
@@ -140,17 +142,17 @@ public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp 
         this.ticketTemp.setTickectTotalExpense( tickectTotalExpense );
     }
 
-    @Override
+    @Override @Exclude
     public String getTickectNumber() {
         return this.ticketTemp.getTickectNumber();
     }
 
-    @Override
+    @Override @Exclude
     public String getTickectDate() {
         return this.ticketTemp.getTickectDate();
     }
 
-    @Override
+    @Override @Exclude
     public String getTickectTotalExpense() {
         return this.ticketTemp.getTickectTotalExpense();
     }
@@ -190,17 +192,17 @@ public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp 
         this.ticketTemp.setProviderTelephone( providerTelephone );
     }
 
-    @Override
+    @Override @Exclude
     public String getProviderName() {
         return this.ticketTemp.getProviderName();
     }
 
-    @Override
+    @Override @Exclude
     public String getProviderCifNif() {
         return this.ticketTemp.getProviderCifNif();
     }
 
-    @Override
+    @Override @Exclude
     public String getProviderTelephone() {
         return this.ticketTemp.getProviderTelephone();
     }
@@ -235,12 +237,12 @@ public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp 
         this.ticketTemp.setMethodOfPlaymentValueName( methodOfPlaymentValueName );
     }
 
-    @Override
+    @Override @Exclude
     public int getMethodOfPlaymentValueLogo() {
         return this.ticketTemp.getMethodOfPlaymentValueLogo();
     }
 
-    @Override
+    @Override @Exclude
     public String getMethodOfPlaymentValueName() {
         return this.ticketTemp.getMethodOfPlaymentValueName();
     }
@@ -271,12 +273,12 @@ public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp 
         this.typeExpenseTemp.setTypeExpenseName( typeExpenseName );
     }
 
-    @Override
+    @Override @Exclude
     public int getTypeExpenseLogo() {
         return this.typeExpenseTemp.getTypeExpenseLogo();
     }
 
-    @Override
+    @Override @Exclude
     public String getTypeExpenseName() {
         return this.typeExpenseTemp.getTypeExpenseName();
     }
@@ -331,37 +333,37 @@ public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp 
         this.vehicleTemp.setVehicleDrivingCurrent( vehicleDrivingCurrent );
     }
 
-    @Override
+    @Override @Exclude
     public int getVehiclelogo() {
         return this.vehicleTemp.getVehiclelogo();
     }
 
-    @Override
+    @Override @Exclude
     public String getVehicleRegistrationNumber() {
         return this.vehicleTemp.getVehicleRegistrationNumber();
     }
 
-    @Override
+    @Override @Exclude
     public String getVehicleBrand() {
         return this.vehicleTemp.getVehicleBrand();
     }
 
-    @Override
+    @Override @Exclude
     public String getVehicleModel() {
         return this.vehicleTemp.getVehicleModel();
     }
 
-    @Override
+    @Override @Exclude
     public String getVehicleDateITV() {
         return this.vehicleTemp.getVehicleDateITV();
     }
 
-    @Override
+    @Override @Exclude
     public int getVehicleDriving() {
         return this.vehicleTemp.getVehicleDriving();
     }
 
-    @Override
+    @Override @Exclude
     public String getVehicleDrivingCurrent() {
         return this.vehicleTemp.getVehicleDrivingCurrent();
     }

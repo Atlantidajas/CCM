@@ -76,6 +76,8 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         intentForUpdate= new Intent ( VehiclesStatusListActivity.this, UpdateVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesStatusListActivity.this, SessionCurrentActivity.class );
 
+
+
     }
 
     public void loadArrayAdapter(){

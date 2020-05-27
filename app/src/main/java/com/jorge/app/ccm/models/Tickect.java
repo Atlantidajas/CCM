@@ -12,7 +12,9 @@ public class Tickect extends Provider {
                    String tickectNumber,
                    String tickectDate,
                    String tickectTotalExpense) {
-        super( methodOfPlayment.getMethodOfPlaymentLogo(), methodOfPlayment.getMethodOfPlaymentName(), provider.getProviderName(),
+        super( methodOfPlayment.getMethodOfPlaymentLogo(),
+                methodOfPlayment.getMethodOfPlaymentName(),
+                provider.getProviderName(),
                 provider.getProviderCifNif(),
                 provider.getProviderTelephone() );
                 this.tickectNumber = tickectNumber;

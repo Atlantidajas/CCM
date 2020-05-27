@@ -1,5 +1,7 @@
 package com.jorge.app.ccm.models;
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import java.io.Serializable;
 
@@ -26,7 +28,6 @@ public class Vehicle implements Serializable {
         this.vehicleDateITV = dateITV;
         this.vehicleDriving = driving;
     }
-
 
 
     public Vehicle() {
@@ -97,4 +98,5 @@ public class Vehicle implements Serializable {
     public String getVehicleDrivingCurrent() {
         return vehicleDrivingCurrent;
     }
+
 }

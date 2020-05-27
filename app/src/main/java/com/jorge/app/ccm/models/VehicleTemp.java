@@ -1,7 +1,9 @@
 package com.jorge.app.ccm.models;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.google.firebase.database.Exclude;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.models.iVehicle;
 import com.jorge.app.ccm.utils.DatesTemp;
@@ -113,6 +115,7 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
      * @Author: Jorge.HL
      * Devuelve después de leer en fichero temporal objeto vehicle
      */
+    @Exclude
     public Vehicle getVehicleTemp(){
 
         Vehicle vehicle = new Vehicle( this.getDateInt( KEY_VEHICLE_LOGO),
@@ -128,7 +131,7 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
      * @Author: Jorge.HL
      * Obtiene del fichero temporal el atributo logoVehicle de un un objeto Vehicle
      */
-    @Override
+    @Override @Exclude
     public int getVehiclelogo() {
         return this.getDateInt( KEY_VEHICLE_LOGO );
     }
@@ -137,7 +140,7 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
      * @Author: Jorge.HL
      * Obtiene del fichero temporal el atributo registrationNumber de un un objeto Vehicle
      */
-    @Override
+    @Override @Exclude
     public String getVehicleRegistrationNumber() {
         return this.getDateString( KEY_VEHICLE_REGISTRATION_NUMBER );
     }
@@ -146,7 +149,7 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
      * @Author: Jorge.HL
      * Obtiene del fichero temporal el atributo brand de un un objeto Vehicle
      */
-    @Override
+    @Override @Exclude
     public String getVehicleBrand() {
         return  this.getDateString( KEY_VEHICLE_BRAND );
     }
@@ -155,7 +158,7 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
      * @Author: Jorge.HL
      * Obtiene del fichero temporal el atributo modelVehicle de un un objeto Vehicle
      */
-    @Override
+    @Override @Exclude
     public String getVehicleModel() {
         return  this.getDateString( KEY_VEHICLE_MODEL );
     }
@@ -164,7 +167,7 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
      * @Author: Jorge.HL
      * Obtiene del fichero temporal el atributo dateItv de un un objeto Vehicle
      */
-    @Override
+    @Override @Exclude
     public String getVehicleDateITV() {
         return  this.getDateString( KEY_VEHICLE_DATE_ITV );
     }
@@ -178,7 +181,7 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
         return  this.getDateInt( KEY_VEHICLE_DRIVING );
     }
 
-    @Override
+    @Override @Exclude
     public String getVehicleDrivingCurrent() {
         return this.getDateString( KEY_VEHICLE_DRIVING_CURRENT );
     }

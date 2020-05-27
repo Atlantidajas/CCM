@@ -46,6 +46,7 @@ public class ExpensesActivity extends AppCompatActivity{
     private EditText editTextSelectVehicle;
     private EditText editTextTypeExpense;
     private EditText editTextTickectNumber;
+    private EditText editTextTicketProviderName;
     private EditText editTextDateExpenses;
     private Spinner spinnerMethodplayment;
     private EditText editTextTotalImport;
@@ -61,6 +62,7 @@ public class ExpensesActivity extends AppCompatActivity{
         editTextSelectVehicle = findViewById( R.id.editText_vehicle_expense_registry );
         editTextTypeExpense = findViewById( R.id.editText_type_expense_expense_registry );
         editTextTickectNumber = findViewById( R.id.editText_ticket_expense_registry  );
+        editTextTicketProviderName = findViewById( R.id.editText_ticket_provider_name_expense_registry );
         editTextDateExpenses = findViewById( R.id.editText_date_expense_registry   );
         spinnerMethodplayment = findViewById( R.id.spinnerMethodplayment );
         editTextTotalImport = findViewById( R.id.editTextTotalImport );
@@ -81,6 +83,7 @@ public class ExpensesActivity extends AppCompatActivity{
         loadFieldEditTextTypeExpense();
         loadFieldEditTextTickectNumber();
         loadFieldEditTextMethodOfPlayment();
+        loadFieldEdittextProviderNameExpense();
         loadFieldEditTextdateExpenses();
         loadFieldEditTextTotalImport();
         loadFieldButtonAcceptExpenses();
@@ -186,6 +189,25 @@ public class ExpensesActivity extends AppCompatActivity{
         editTextTickectNumber.setText( ticketNumber );
     }
 
+    public void loadFieldEdittextProviderNameExpense(){
+
+        editTextTicketProviderName.setOnKeyListener( new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                String text = editTextTicketProviderName.getText().toString();
+                expenseTemp.setProviderName( text );
+                return false;
+            }
+        } );
+
+        //Cargo los datos del fichero temporal.
+        String providerName = expenseTemp.getProviderName();
+        editTextTicketProviderName.setText( providerName );
+
+
+    }
+
     public void loadFieldEditTextdateExpenses(){
 
         editTextDateExpenses.setOnClickListener( new View.OnClickListener() {
@@ -286,17 +308,46 @@ public class ExpensesActivity extends AppCompatActivity{
                         validateFieldTypeSpinner( spinnerMethodplayment ) &&
                         validateFieldTypeEditText( editTextTotalImport ) ){
 
-                    User user = new User();
+                    Expense expenseVehicle = new Expense( expenseTemp.getVehicleTemp() );
+
+                    System.out.println( "--------------------------------------------------------------------------------------------------" );
+                    System.out.println(  String.valueOf( expenseVehicle.getVehiclelogo() ) );
+                    System.out.println( expenseVehicle.getVehicleRegistrationNumber() );
+                    System.out.println( expenseVehicle.getVehicleBrand() );
+                    System.out.println( expenseVehicle.getVehicleModel() );
+                    System.out.println( expenseVehicle.getVehicleDateITV() );
+                    System.out.println( String.valueOf( expenseVehicle.getVehicleDriving() ) );
+                    System.out.println( "--------------------------------------------------------------------------------------------------" );
+
+                    expenseTemp.getTypeExpenseTemp();
+
+                    Expense expenseType = new Expense( expenseTemp.getTypeExpenseTemp() );
+                    System.out.println( "--------------------------------------------------------------------------------------------------" );
+
+                    System.out.println( expenseTemp.getTypeExpenseLogo() );
+                    System.out.println( expenseTemp.getTypeExpenseName() );
+                    System.out.println( expenseType.getTypeExpenseLogo() );
+                    System.out.println( expenseType.getTypeExpenseName() );
+                    System.out.println( "--------------------------------------------------------------------------------------------------" );
+
+                    System.out.println( "--------------------------------------------------------------------------------------------------" );
+                    Expense expenseTickect = new Expense( expenseTemp.getTicketTemp() );
+                    System.out.println( expenseTemp.getTypeExpenseLogo() );
+                    System.out.println( expenseTemp.getTypeExpenseName() );
+                    System.out.println( expenseTickect.getTickectTotalExpense() );
+                    System.out.println( expenseTickect.getProviderName() );
+                    System.out.println( "--------------------------------------------------------------------------------------------------" );
 
 
-                    Expense expense = new Expense( expenseTemp.getTicketTemp(),
-                            expenseTemp.getTypeExpenseTemp(),
-                            user,
-                            expenseTemp.getVehicleTemp() );
 
-                    saveDatesFormForDB( expense );//<-- Guarda db
-                    expenseTemp.removeTypeExpense();//<-- Borro datos del fichero temporal correspondientes al objeto expenseTemp
-                    finish();
+
+
+
+
+
+                   // saveDatesFormForDB( expense );//<-- Guarda db
+                   // expenseTemp.removeTypeExpense();//<-- Borro datos del fichero temporal correspondientes al objeto expenseTemp
+                   // finish();
 
                 }
             }
