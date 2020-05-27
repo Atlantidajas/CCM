@@ -11,9 +11,7 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
     private User user;
     private Vehicle vehicle;
 
-    public Expense(){
-
-    }
+    public Expense(){ }
 
     public Expense(Tickect tickect, TypeExpense typeExpense, User user, Vehicle vehicle) {
         this.tickect = tickect;

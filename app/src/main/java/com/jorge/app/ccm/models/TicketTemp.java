@@ -8,18 +8,14 @@ import android.content.Context;
  */
 public class TicketTemp extends ProviderTemp {
 
-    private String PRIMARY_KEY;
-    private String KEY_TICKET_NUMBER;
-    private String KEY_TICKET_DATE;
-    private String KEY_TICKET_TOTAL_IMPORT;
+    private String PRIMARY_KEY = getFILE_NAME() + "ticket";
+    private String KEY_TICKET_NUMBER = PRIMARY_KEY + "Number";
+    private String KEY_TICKET_DATE = PRIMARY_KEY + "Date";
+    private String KEY_TICKET_TOTAL_IMPORT = "TotalImport";
 
     public TicketTemp(Context context,
                         String TAG ){
         super(context, TAG);
-        PRIMARY_KEY = getFILE_NAME() + "ticket";
-        KEY_TICKET_NUMBER = PRIMARY_KEY + "Number";
-        KEY_TICKET_DATE = PRIMARY_KEY + "Date";
-        KEY_TICKET_TOTAL_IMPORT = "TotalImport";
     }
 
 
@@ -29,10 +25,6 @@ public class TicketTemp extends ProviderTemp {
                       Provider provider,
                       Tickect tickect ) {
         super( context, TAG, methodOfPlayment, provider );
-        PRIMARY_KEY = getFILE_NAME() + "ticket";
-        KEY_TICKET_NUMBER = PRIMARY_KEY + "Number";
-        KEY_TICKET_DATE = PRIMARY_KEY + "Date";
-        KEY_TICKET_TOTAL_IMPORT = "TotalImport";
         this.setDateString( KEY_TICKET_NUMBER, tickect.getTickectNumber() );
         this.setDateString( KEY_TICKET_DATE, tickect.getTickectDate());
         this.setDateString( KEY_TICKET_TOTAL_IMPORT, tickect.getTickectTotalExpense() );
@@ -49,10 +41,6 @@ public class TicketTemp extends ProviderTemp {
                         String tickectDate,
                         String tickectTotalExpense ) {
         super( context, TAG, methodOfPlaymentLogo, methodOfPlaymentName, providerName, providerCifNif, providerTelephone );
-        PRIMARY_KEY = getFILE_NAME() + "ticket";
-        KEY_TICKET_NUMBER = PRIMARY_KEY + "Number";
-        KEY_TICKET_DATE = PRIMARY_KEY + "Date";
-        KEY_TICKET_TOTAL_IMPORT = "TotalImport";
         this.setDateString( KEY_TICKET_NUMBER, tickectNumber );
         this.setDateString( KEY_TICKET_DATE, tickectDate );
         this.setDateString( KEY_TICKET_TOTAL_IMPORT, tickectTotalExpense );

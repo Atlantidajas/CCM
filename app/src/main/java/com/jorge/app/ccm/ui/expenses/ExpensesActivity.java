@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -171,11 +172,12 @@ public class ExpensesActivity extends AppCompatActivity{
 
     public void loadFieldEditTextTickectNumber(){
 
-        editTextTickectNumber.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+        editTextTickectNumber.setOnKeyListener( new View.OnKeyListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
                 String text = editTextTickectNumber.getText().toString();
                 expenseTemp.setTickectNumber( text );
+                return false;
             }
         } );
 
@@ -255,16 +257,19 @@ public class ExpensesActivity extends AppCompatActivity{
 
     public void loadFieldEditTextTotalImport(){
 
-        editTextTotalImport.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+        editTextTotalImport.setOnKeyListener( new View.OnKeyListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
                 String text = editTextTotalImport.getText().toString();
-                if( (text != "") && text != null){
-                    Log.i( TAG, "editTextTotalExpense -> (Valor)" + text );
-                    expenseTemp.setTickectTotalExpense( text );
-                }
+                expenseTemp.setTickectTotalExpense( text );
+                return false;
             }
         } );
+
+        //Cargo los datos del fichero temporal.
+        String totalImportExpense = expenseTemp.getTickectTotalExpense();
+        editTextTotalImport.setText( totalImportExpense );
 
     }
 

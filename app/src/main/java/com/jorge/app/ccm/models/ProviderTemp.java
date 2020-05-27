@@ -4,17 +4,14 @@ import android.content.Context;
 
 public class ProviderTemp extends MethodOfPlaymentTemp {
 
-    private String  PRIMARY_KEY;
-    private String  KEY_PROVIDER_NAME;
-    private String  KEY_PROVIDER_CIF_NIF;
-    private String  KEY_PROVIDER_TELEPHONE;
+    private final String PRIMARY_KEY = getFILE_NAME() + "provider";
+    private final String KEY_PROVIDER_NAME = PRIMARY_KEY + "Name";
+    private final String KEY_PROVIDER_CIF_NIF = PRIMARY_KEY + "CifNif";
+    private final String KEY_PROVIDER_TELEPHONE = PRIMARY_KEY + "Telephone";
 
     public ProviderTemp(Context context,
                                 String TAG ){
         super(context, TAG);
-        KEY_PROVIDER_NAME = PRIMARY_KEY + "Name";
-        KEY_PROVIDER_CIF_NIF = PRIMARY_KEY + "CifNif";
-        KEY_PROVIDER_TELEPHONE = PRIMARY_KEY + "Telephone";
     }
 
     public ProviderTemp(Context context,
@@ -22,10 +19,6 @@ public class ProviderTemp extends MethodOfPlaymentTemp {
                         MethodOfPlayment methodOfPlayment,
                         Provider provider ) {
         super( context, TAG, methodOfPlayment );
-        PRIMARY_KEY = getFILE_NAME() + "provider";
-        KEY_PROVIDER_NAME = PRIMARY_KEY + "Name";
-        KEY_PROVIDER_CIF_NIF = PRIMARY_KEY + "CifNif";
-        KEY_PROVIDER_TELEPHONE = PRIMARY_KEY + "Telephone";
         this.setDateString( KEY_PROVIDER_NAME, provider.getProviderName() );
         this.setDateString( KEY_PROVIDER_CIF_NIF, provider.getProviderName());
         this.setDateString( KEY_PROVIDER_TELEPHONE, provider.getProviderName() );
@@ -39,10 +32,6 @@ public class ProviderTemp extends MethodOfPlaymentTemp {
                         String providerCifNif,
                         String providerTelephone ) {
         super( context, TAG, methodOfPlaymentLogo, methodOfPlaymentName );
-        KEY_PROVIDER_NAME = PRIMARY_KEY + "Name";
-        KEY_PROVIDER_CIF_NIF = PRIMARY_KEY + "CifNif";
-        KEY_PROVIDER_TELEPHONE = PRIMARY_KEY + "Telephone";
-
         this.setDateString( KEY_PROVIDER_NAME, providerName );
         this.setDateString( KEY_PROVIDER_CIF_NIF, providerCifNif );
         this.setDateString( KEY_PROVIDER_TELEPHONE, providerTelephone );

@@ -13,40 +13,25 @@ import com.jorge.app.ccm.utils.DatesTemp;
 
 public class VehicleTemp extends DatesTemp implements iVehicle {
 
-    private String PRIMARY_KEY;
-    private String KEY_VEHICLE_LOGO;
-    private String KEY_VEHICLE_REGISTRATION_NUMBER;
-    private String KEY_VEHICLE_BRAND;
-    private String KEY_VEHICLE_MODEL;
-    private String KEY_VEHICLE_DATE_ITV;
-    private String KEY_VEHICLE_DRIVING;
-    private String KEY_VEHICLE_DRIVING_CURRENT;
+    private String PRIMARY_KEY = getFILE_NAME() + "vehicle";
+    private String KEY_VEHICLE_LOGO = PRIMARY_KEY + "Logo";
+    private String KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "RegistrationNumber";
+    private String KEY_VEHICLE_BRAND = PRIMARY_KEY + "Brand";
+    private String KEY_VEHICLE_MODEL = PRIMARY_KEY + "Model";
+    private String KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "DateItv";
+    private String KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
+    private String KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
 
     public VehicleTemp(Context context,
                        final String TAG){
         super( context, TAG );
-        PRIMARY_KEY = getFILE_NAME() + "vehicle";
-        KEY_VEHICLE_LOGO = PRIMARY_KEY + "Logo";
-        KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "RegistrationNumber";
-        KEY_VEHICLE_BRAND = PRIMARY_KEY + "Brand";
-        KEY_VEHICLE_MODEL = PRIMARY_KEY + "Model";
-        KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "DateItv";
-        KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
-        KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
+
     }
 
     public VehicleTemp(Context context,
                        final String TAG,
                        Vehicle vehicle ) {
         super( context, TAG );
-        PRIMARY_KEY = getFILE_NAME() + "vehicle";
-        KEY_VEHICLE_LOGO = PRIMARY_KEY + "Logo";
-        KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "RegistrationNumber";
-        KEY_VEHICLE_BRAND = PRIMARY_KEY + "Brand";
-        KEY_VEHICLE_MODEL = PRIMARY_KEY + "Model";
-        KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "DateItv";
-        KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
-        KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
         this.setDateInt( KEY_VEHICLE_LOGO, vehicle.getVehiclelogo() );
         this.setDateString( KEY_VEHICLE_REGISTRATION_NUMBER, vehicle.getVehicleRegistrationNumber() );
         this.setDateString( KEY_VEHICLE_BRAND, vehicle.getVehicleBrand() );
@@ -64,14 +49,6 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
                        String dateITV,
                        int driving ) {
         super( context, TAG );
-        PRIMARY_KEY = getFILE_NAME() + "vehicle";
-        KEY_VEHICLE_LOGO = PRIMARY_KEY + "Logo";
-        KEY_VEHICLE_REGISTRATION_NUMBER = PRIMARY_KEY + "RegistrationNumber";
-        KEY_VEHICLE_BRAND = PRIMARY_KEY + "Brand";
-        KEY_VEHICLE_MODEL = PRIMARY_KEY + "Model";
-        KEY_VEHICLE_DATE_ITV = PRIMARY_KEY + "DateItv";
-        KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
-        KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
         this.setDateInt( KEY_VEHICLE_LOGO, logoVehicle );
         this.setDateString( KEY_VEHICLE_REGISTRATION_NUMBER, registrationNumber );
         this.setDateString( KEY_VEHICLE_BRAND, brand );

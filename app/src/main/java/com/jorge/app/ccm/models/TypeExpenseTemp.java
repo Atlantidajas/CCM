@@ -11,26 +11,20 @@ import com.jorge.app.ccm.utils.DatesTemp;
 
 public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
 
-    private String PRIMARY_KEY;
-    private String KEY_TYPE_EXPENSE_LOGO;
-    private String KEY_TYPE_EXPENSE_NAME;
-
+    private String PRIMARY_KEY = getFILE_NAME() + "typeExpense";
+    private String KEY_TYPE_EXPENSE_LOGO = PRIMARY_KEY + "Logo";
+    private String KEY_TYPE_EXPENSE_NAME = PRIMARY_KEY + "TypeName";
 
     public TypeExpenseTemp(Context context,
                        final String TAG){
         super( context, TAG );
-        PRIMARY_KEY = getFILE_NAME() + "typeExpense";
-        KEY_TYPE_EXPENSE_LOGO = PRIMARY_KEY + "Logo";
-        KEY_TYPE_EXPENSE_NAME = PRIMARY_KEY + "TypeName";
+
     }
 
     public TypeExpenseTemp( Context context,
                             final String TAG,
                             TypeExpense typeExpense ) {
         super( context, TAG );
-        PRIMARY_KEY = getFILE_NAME() + "typeExpense";
-        KEY_TYPE_EXPENSE_LOGO = PRIMARY_KEY + "Logo";
-        KEY_TYPE_EXPENSE_NAME = PRIMARY_KEY + "TypeName";
         this.setDateInt( KEY_TYPE_EXPENSE_LOGO, typeExpense.getTypeExpenseLogo() );
         this.setDateString( KEY_TYPE_EXPENSE_NAME, typeExpense.getTypeExpenseName() );
 
@@ -41,12 +35,8 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
                             int typeExpenseLogo,
                             String typeExpenseName ) {
         super( context, TAG );
-        PRIMARY_KEY = getFILE_NAME() + "typeExpense";
-        KEY_TYPE_EXPENSE_LOGO = PRIMARY_KEY + "Logo";
-        KEY_TYPE_EXPENSE_NAME = PRIMARY_KEY + "TypeName";
         this.setDateInt( KEY_TYPE_EXPENSE_LOGO, typeExpenseLogo );
         this.setDateString( KEY_TYPE_EXPENSE_NAME, typeExpenseName );
-
     }
 
     /*
