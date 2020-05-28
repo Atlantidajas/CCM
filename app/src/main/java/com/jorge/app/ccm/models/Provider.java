@@ -25,6 +25,13 @@ public class Provider extends MethodOfPlayment {
         this.providerTelephone = providerTelephone;
     }
 
+    public Provider( ExpenseTemp expenseTemp ) {
+        super( expenseTemp );
+        this.providerName = expenseTemp.getProviderName();
+        this.providerCifNif = expenseTemp.getProviderCifNif();
+        this.providerTelephone = expenseTemp.getProviderTelephone();
+    }
+
 
     protected void setProviderName(String providerName) {
         this.providerName = providerName;
@@ -38,15 +45,15 @@ public class Provider extends MethodOfPlayment {
         this.providerTelephone = providerTelephone;
     }
 
-    protected String getProviderName() {
+    public String getProviderName() {
         return providerName;
     }
 
-    protected String getProviderCifNif() {
+    public String getProviderCifNif() {
         return providerCifNif;
     }
 
-    protected String getProviderTelephone() {
+    public String getProviderTelephone() {
         return providerTelephone;
     }
 }

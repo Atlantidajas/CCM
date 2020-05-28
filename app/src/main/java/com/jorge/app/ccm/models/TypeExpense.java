@@ -14,6 +14,11 @@ public class TypeExpense implements Serializable {
         this.typeExpenseName = typeExpenseName;
     }
 
+    public TypeExpense( ExpenseTemp expenseTemp) {
+        this.typeExpenseLogo = expenseTemp.getTypeExpenseLogo();
+        this.typeExpenseName = expenseTemp.getTypeExpenseName();
+    }
+
     public void setTypeExpenseLogo(int typeExpenseLogo) {
         this.typeExpenseLogo = typeExpenseLogo;
     }

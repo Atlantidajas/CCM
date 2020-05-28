@@ -29,6 +29,15 @@ public class Vehicle implements Serializable {
         this.vehicleDriving = driving;
     }
 
+    public Vehicle( ExpenseTemp expenseTemp ) {
+        this.vehiclelogo = expenseTemp.getVehiclelogo();
+        this.vehicleRegistrationNumber = expenseTemp.getVehicleRegistrationNumber();
+        this.vehicleBrand = expenseTemp.getVehicleBrand();
+        this.vehicleModel = expenseTemp.getVehicleModel();
+        this.vehicleDateITV = expenseTemp.getVehicleDateITV();
+        this.vehicleDriving = expenseTemp.getVehicleDriving();
+    }
+
 
     public Vehicle() {
     }

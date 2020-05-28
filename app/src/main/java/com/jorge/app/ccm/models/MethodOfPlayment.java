@@ -10,6 +10,11 @@ public class MethodOfPlayment {
         this.methodOfPlaymentName = methodOfPlaymentName;
     }
 
+    public MethodOfPlayment( ExpenseTemp expenseTemp ) {
+        this.methodOfPlaymentLogo = expenseTemp.getMethodOfPlaymentValueLogo();
+        this.methodOfPlaymentName = expenseTemp.getMethodOfPlaymentValueName();
+    }
+
     protected void setMethodOfPlaymentLogo(int methodOfPlaymentLogo) {
         this.methodOfPlaymentLogo = methodOfPlaymentLogo;
     }
@@ -18,11 +23,11 @@ public class MethodOfPlayment {
         this.methodOfPlaymentName = methodOfPlaymentNameMethodOfPlayment;
     }
 
-    protected int getMethodOfPlaymentLogo() {
+    public int getMethodOfPlaymentLogo() {
         return methodOfPlaymentLogo;
     }
 
-    protected String getMethodOfPlaymentName() {
+    public String getMethodOfPlaymentName() {
         return methodOfPlaymentName;
     }
 }

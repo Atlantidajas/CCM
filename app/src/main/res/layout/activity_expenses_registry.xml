@@ -80,6 +80,7 @@
             android:id="@+id/editTextTotalImport"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:inputType="numberDecimal"
             android:drawableLeft="@mipmap/ic_launcher_total_expense"
             android:hint="@string/editText_total_expense_expense_registry" />
 

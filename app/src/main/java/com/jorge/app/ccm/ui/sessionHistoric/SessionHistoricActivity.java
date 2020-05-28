@@ -38,13 +38,10 @@ public class SessionHistoricActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView_sessions_historic);
         intentSessionStatus  = new Intent( SessionHistoricActivity.this, SessionStatusActivity.class );
 
-
-
         //Inizializao Adapter para mostrar lista de sesiones
         adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView);
         sesionsDrivings = new ArrayList<>(  );
         sesionsDrivings = adapterSessionHistoric.getListIntemSesions();
-
 
     }
 

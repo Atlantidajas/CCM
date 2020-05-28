@@ -17,7 +17,7 @@
   <string name="toast_message_empty_fields">Faltan campos por rellenar</string>
 
   <string name="toast_message_si_registry">Datos guardados</string>
-  <string name="toast_message_no_registry">Se han registrado los datos</string>
+  <string name="toast_message_no_registry">No se han registrado los datos</string>
 
   <string name="toast_message_no_data">No hay datos para mostrar</string>
 

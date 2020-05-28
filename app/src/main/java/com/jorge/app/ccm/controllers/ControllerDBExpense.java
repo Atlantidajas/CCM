@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.models.Expense;
 
 public class ControllerDBExpense {
@@ -39,6 +40,7 @@ public class ControllerDBExpense {
                 }
                 else {
                     dbRF.setValue( expense );
+                    Toast.makeText( context, R.string.toast_message_si_registry, Toast.LENGTH_SHORT ).show();
                 }
             }
 

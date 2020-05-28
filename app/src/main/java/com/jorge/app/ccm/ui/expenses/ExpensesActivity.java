@@ -97,9 +97,10 @@ public class ExpensesActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         Bundle objetoRecibido = data.getExtras();
         Vehicle vehicleSelect = null;
-        TypeExpense typeExpense = null;
+        TypeExpense typeExpenseSelect = null;
 
         if (requestCode == 1 ){
 
@@ -127,12 +128,12 @@ public class ExpensesActivity extends AppCompatActivity{
 
         if (requestCode == 2 ){
 
-            typeExpense = (TypeExpense) objetoRecibido.getSerializable(TYPE_EXPENSE);
+            typeExpenseSelect = (TypeExpense) objetoRecibido.getSerializable(TYPE_EXPENSE);
 
-            if ( typeExpense !=null )
+            if ( typeExpenseSelect !=null )
 
                 // Guardo los datos en fichero de forma temporar por si el usuario regresa o sale de la actividad para seleccionar Vehículo
-                expenseTemp.setTypeExpenseName( typeExpense.getTypeExpenseName() );
+                expenseTemp.setTypeExpenseTemp( this, TAG, typeExpenseSelect );
 
             loadFieldEditTextTypeExpense();//Actualizo campo.
         }
@@ -159,13 +160,13 @@ public class ExpensesActivity extends AppCompatActivity{
     public void loadFieldEditTextTypeExpense(){
 
         //Los datos temporales son grabados a la recepción del Inten en la función -> onActivityResult
-
         editTextTypeExpense.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(intentTypeExpenses,2);
             }
         } );
+
 
         //Cargo los datos del fichero temporal.
         String typeExpense = expenseTemp.getTypeExpenseName();
@@ -308,46 +309,12 @@ public class ExpensesActivity extends AppCompatActivity{
                         validateFieldTypeSpinner( spinnerMethodplayment ) &&
                         validateFieldTypeEditText( editTextTotalImport ) ){
 
-                    Expense expenseVehicle = new Expense( expenseTemp.getVehicleTemp() );
+                    User user = new User(  );
+                    Expense expense = new Expense( expenseTemp );
 
-                    System.out.println( "--------------------------------------------------------------------------------------------------" );
-                    System.out.println(  String.valueOf( expenseVehicle.getVehiclelogo() ) );
-                    System.out.println( expenseVehicle.getVehicleRegistrationNumber() );
-                    System.out.println( expenseVehicle.getVehicleBrand() );
-                    System.out.println( expenseVehicle.getVehicleModel() );
-                    System.out.println( expenseVehicle.getVehicleDateITV() );
-                    System.out.println( String.valueOf( expenseVehicle.getVehicleDriving() ) );
-                    System.out.println( "--------------------------------------------------------------------------------------------------" );
-
-                    expenseTemp.getTypeExpenseTemp();
-
-                    Expense expenseType = new Expense( expenseTemp.getTypeExpenseTemp() );
-                    System.out.println( "--------------------------------------------------------------------------------------------------" );
-
-                    System.out.println( expenseTemp.getTypeExpenseLogo() );
-                    System.out.println( expenseTemp.getTypeExpenseName() );
-                    System.out.println( expenseType.getTypeExpenseLogo() );
-                    System.out.println( expenseType.getTypeExpenseName() );
-                    System.out.println( "--------------------------------------------------------------------------------------------------" );
-
-                    System.out.println( "--------------------------------------------------------------------------------------------------" );
-                    Expense expenseTickect = new Expense( expenseTemp.getTicketTemp() );
-                    System.out.println( expenseTemp.getTypeExpenseLogo() );
-                    System.out.println( expenseTemp.getTypeExpenseName() );
-                    System.out.println( expenseTickect.getTickectTotalExpense() );
-                    System.out.println( expenseTickect.getProviderName() );
-                    System.out.println( "--------------------------------------------------------------------------------------------------" );
-
-
-
-
-
-
-
-
-                   // saveDatesFormForDB( expense );//<-- Guarda db
-                   // expenseTemp.removeTypeExpense();//<-- Borro datos del fichero temporal correspondientes al objeto expenseTemp
-                   // finish();
+                    saveDatesFormForDB( expense );//<-- Guarda db
+                    expenseTemp.removeTypeExpense();//<-- Borro datos del fichero temporal correspondientes al objeto expenseTemp
+                    finish();
 
                 }
             }

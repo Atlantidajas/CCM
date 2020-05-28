@@ -87,38 +87,6 @@ public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp 
                 vehicle);
     }
 
-    public Tickect getTicketTemp() {
-
-        Tickect tickect = new Tickect( this.getMethodOfPlaymentValueLogo(),
-        this.getMethodOfPlaymentValueName(),
-        this.getProviderName(),
-        this.getProviderCifNif(),
-        this.getProviderTelephone(),
-        this.getTickectNumber(),
-        this.getTickectDate(),
-        this.getTickectTotalExpense()  );
-
-        return tickect;
-    }
-
-    public TypeExpense getTypeExpenseTemp() {
-
-        TypeExpense typeExpense = new TypeExpense( this.getTypeExpenseLogo(), this.getTypeExpenseName() );
-
-        return typeExpense;
-    }
-
-    public Vehicle getVehicleTemp() {
-
-        Vehicle vehicle = new Vehicle( this.getVehiclelogo(),
-                this.getVehicleRegistrationNumber(),
-                this.getVehicleBrand(),
-                this.getVehicleModel(),
-                this.getVehicleDateITV(),
-                this.getVehicleDriving());
-
-        return vehicle;
-    }
 
     public void removeExpenseTemp(){
         this.typeExpenseTemp.removeTypeExpense();

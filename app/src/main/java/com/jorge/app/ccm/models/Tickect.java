@@ -40,6 +40,13 @@ public class Tickect extends Provider {
         this.tickectTotalExpense = tickectTotalExpense;
     }
 
+    public Tickect(ExpenseTemp expenseTemp) {
+        super( expenseTemp );
+        this.tickectNumber = expenseTemp.getTickectNumber();
+        this.tickectDate = expenseTemp.getTickectDate();
+        this.tickectTotalExpense = expenseTemp.getTickectTotalExpense();
+    }
+
     protected void setTickectNumber(String tickectNumber) {
         this.tickectNumber = tickectNumber;
     }
@@ -52,15 +59,15 @@ public class Tickect extends Provider {
         this.tickectTotalExpense = tickectTotalExpense;
     }
 
-    protected String getTickectNumber() {
+    public String getTickectNumber() {
         return tickectNumber;
     }
 
-    protected String getTickectDate() {
+    public String getTickectDate() {
         return tickectDate;
     }
 
-    protected String getTickectTotalExpense() {
+    public String getTickectTotalExpense() {
         return tickectTotalExpense;
     }
 
