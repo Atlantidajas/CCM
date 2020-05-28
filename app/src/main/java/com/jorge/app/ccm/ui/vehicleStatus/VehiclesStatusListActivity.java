@@ -99,7 +99,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
      */
     public void readSesionCurrent(){
 
-        User user = new User(  );
+        User user = new User( true );
         ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
             @Override
@@ -190,14 +190,14 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         //Sesion de inicio por si es la primera ves que inicia sesión
         ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         Session sessionCreate = new Session( "Create" );
-        User user = new User();
+        User user = new User( true );
         SessionDriving sessionDrivingCreate = new SessionDriving( sessionCreate, user );
         controllerDBSessionsCurrents.setValue( sessionDrivingCreate );
     }
 
     public void onclickItemList(){
 
-        final User user = new User(  );
+        final User user = new User( true );
         // Creo el listener para cuando se hace click en un item de la lista.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

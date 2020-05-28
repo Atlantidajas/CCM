@@ -1,11 +1,15 @@
 package com.jorge.app.ccm.models;
 
 
+import com.google.firebase.database.DataSnapshot;
+
 public class Tickect extends Provider {
 
     private String tickectNumber;
     private String tickectDate;
     private String tickectTotalExpense;
+
+    public Tickect(){}
 
     public Tickect(MethodOfPlayment methodOfPlayment,
                    Provider provider,
@@ -22,7 +26,6 @@ public class Tickect extends Provider {
                 this.tickectTotalExpense = tickectTotalExpense;
     }
 
-
     public Tickect(int methodOfPlaymentLogo,
                    String methodOfPlaymentName,
                    String providerName,
@@ -38,6 +41,13 @@ public class Tickect extends Provider {
         this.tickectNumber = tickectNumber;
         this.tickectDate = tickectDate;
         this.tickectTotalExpense = tickectTotalExpense;
+    }
+
+    public Tickect( DataSnapshot dataSnapshotExpese ) {
+        super( dataSnapshotExpese );
+        //tickectNumber = String.valueOf( dataSnapshotExpese.child("tickectNumber").getValue() );
+        //this.tickectDate = String.valueOf( dataSnapshotExpese.child("tickectDate").getValue() );
+        //this.tickectTotalExpense = String.valueOf( dataSnapshotExpese.child("tickectTotalExpense").getValue() );
     }
 
     public Tickect(ExpenseTemp expenseTemp) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/resgistreExpense"
+        android:icon="@drawable/ic_action_control_point"
+        android:title="@string/toolbar_expese_histotic_list_button_resgistre_expese_title"
+        app:showAsAction="always"/>
+</menu>
+

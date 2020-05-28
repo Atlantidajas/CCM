@@ -50,7 +50,7 @@ public class AdapterSessionHistoric extends BaseAdapter {
         this.textView = textView;
         this.listView = listView;
         this.controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( context );
-        user = new User(  );
+        user = new User( true );
 
         listIntemSessions = new ArrayList<>(  );
 

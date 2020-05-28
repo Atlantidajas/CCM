@@ -84,7 +84,7 @@ public class SessionStatusActivity extends AppCompatActivity {
         controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
-        user = new User();
+        user = new User( true );
 
         intentCloseSesion  = new Intent( SessionStatusActivity.this, SessionHistoricActivity.class );
 

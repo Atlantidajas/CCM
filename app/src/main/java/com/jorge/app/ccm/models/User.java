@@ -20,15 +20,21 @@ public class User implements Serializable {
     private String UserEmail;
     private String UserTelephone;
 
-    public User(){
-        this.mAuth = FirebaseAuth.getInstance();
-        this.currentUser = mAuth.getCurrentUser();
-        this.userName = currentUser.getDisplayName();
-        this.idUser = currentUser.getUid();
-        this.UserPhotoUriString = String.valueOf( currentUser.getPhotoUrl() );
-        this.UserPhotoUri = currentUser.getPhotoUrl();
-        this.UserEmail = currentUser.getEmail();
-        this.UserTelephone = currentUser.getPhoneNumber();
+    public User(){}
+
+    public User( Boolean on ){
+
+        if( on == true ){
+            this.mAuth = FirebaseAuth.getInstance();
+            this.currentUser = mAuth.getCurrentUser();
+            this.userName = currentUser.getDisplayName();
+            this.idUser = currentUser.getUid();
+            this.UserPhotoUriString = String.valueOf( currentUser.getPhotoUrl() );
+            this.UserPhotoUri = currentUser.getPhotoUrl();
+            this.UserEmail = currentUser.getEmail();
+            this.UserTelephone = currentUser.getPhoneNumber();
+        }
+
     }
 
     public User(DataSnapshot dataSnapshotUser){

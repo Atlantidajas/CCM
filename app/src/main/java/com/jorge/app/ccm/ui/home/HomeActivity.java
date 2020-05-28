@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.jorge.app.ccm.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.firebase.auth.FirebaseUser;
+import com.jorge.app.ccm.ui.expenses.ExpenseHistoricActivity;
 import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
 import com.jorge.app.ccm.ui.location.LocationActivity;
 import com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity;
@@ -31,7 +32,7 @@ public class HomeActivity extends AppCompatActivity  {
     private GoogleSignInClient mGoogleSignInClient;
     private String nameUser;
     private Button buttonVehiclesStatus;
-    private Button buttonExpenses;
+    private Button buttonExpensesHistoric;
     private Button getButtonHistoricSesions;
     private Button buttonLocation;
 
@@ -50,11 +51,11 @@ public class HomeActivity extends AppCompatActivity  {
             }
         });
 
-        buttonExpenses = findViewById(R.id.button_expenses);
-        buttonExpenses.setOnClickListener(new View.OnClickListener() {
+        buttonExpensesHistoric = findViewById(R.id.button_expenses);
+        buttonExpensesHistoric.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent (HomeActivity.this, ExpensesActivity.class);
+                Intent intent= new Intent (HomeActivity.this, ExpenseHistoricActivity.class);
                 startActivity(intent);
             }
         });

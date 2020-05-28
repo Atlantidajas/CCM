@@ -10,6 +10,7 @@ public class MethodOfPlaymentTemp extends DatesTemp {
     private final String KEY_METHOD_OF_PLAYMENT_LOGO = PRIMARY_KEY + "Logo";;
     private final String KEY_METHOD_OF_PLAYMENT_NAME = PRIMARY_KEY + "Name";
 
+
     public MethodOfPlaymentTemp(Context context,
                                 String TAG ){
         super(context, TAG);

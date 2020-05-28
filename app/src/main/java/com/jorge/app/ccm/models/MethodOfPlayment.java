@@ -1,9 +1,13 @@
 package com.jorge.app.ccm.models;
 
+import com.google.firebase.database.DataSnapshot;
+
 public class MethodOfPlayment {
 
     private int methodOfPlaymentLogo;
     private String methodOfPlaymentName;
+
+    public MethodOfPlayment(){}
 
     public MethodOfPlayment( int methodOfPlaymentLogo, String methodOfPlaymentName ) {
         this.methodOfPlaymentLogo = methodOfPlaymentLogo;
@@ -13,6 +17,11 @@ public class MethodOfPlayment {
     public MethodOfPlayment( ExpenseTemp expenseTemp ) {
         this.methodOfPlaymentLogo = expenseTemp.getMethodOfPlaymentValueLogo();
         this.methodOfPlaymentName = expenseTemp.getMethodOfPlaymentValueName();
+    }
+
+    public MethodOfPlayment( DataSnapshot dataSnapshotExpense ) {
+//        this.methodOfPlaymentLogo = Integer.parseInt( String.valueOf( dataSnapshotExpense.child("methodOfPlaymentLogo").getValue() ) );
+        this.methodOfPlaymentName = String.valueOf( dataSnapshotExpense.child("methodOfPlaymentName").getValue() );
     }
 
     protected void setMethodOfPlaymentLogo(int methodOfPlaymentLogo) {

@@ -29,6 +29,7 @@ public class ControllerDBSessionsHistoric {
     }
 
     public void setValue( final SessionDriving sessionDriving){
+
         final DatabaseReference dbRF = databaseReference.push();
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {

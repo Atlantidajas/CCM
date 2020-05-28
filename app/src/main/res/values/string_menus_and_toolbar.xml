@@ -13,5 +13,8 @@
     <!-- Vehicles toolbar -->
     <string name="toolbar_vehicle_list_button_resgistreVehicle_title">Craer nuevo vehículo</string>
 
+    <!-- Expense Historic toolbar -->
+    <string name="toolbar_expese_histotic_list_button_resgistre_expese_title">Crar nuevo registro de gasto</string>
+
 
 </resources>

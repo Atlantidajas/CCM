@@ -2,7 +2,9 @@ package com.jorge.app.ccm.models;
 
 import android.net.Uri;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
+
 
 public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
 
@@ -23,8 +25,15 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
     public Expense( ExpenseTemp expenseTemp) {
         this.tickect = new Tickect( expenseTemp );
         this.typeExpense = new TypeExpense( expenseTemp );
-        this.user = new User();
+        this.user = new User( true );
         this.vehicle = new Vehicle( expenseTemp );
+    }
+
+    public Expense( DataSnapshot dataSnapshotExpense ) {
+        this.tickect = new Tickect( dataSnapshotExpense );
+        this.typeExpense = new TypeExpense( dataSnapshotExpense );
+        this.user = new User( dataSnapshotExpense );
+        this.vehicle = new Vehicle( dataSnapshotExpense );
     }
 
     public Expense( Vehicle vehicle ) {

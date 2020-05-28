@@ -1,5 +1,7 @@
 package com.jorge.app.ccm.models;
 
+import com.google.firebase.database.DataSnapshot;
+
 import java.io.Serializable;
 
 public class TypeExpense implements Serializable {
@@ -17,6 +19,11 @@ public class TypeExpense implements Serializable {
     public TypeExpense( ExpenseTemp expenseTemp) {
         this.typeExpenseLogo = expenseTemp.getTypeExpenseLogo();
         this.typeExpenseName = expenseTemp.getTypeExpenseName();
+    }
+
+    public TypeExpense( DataSnapshot dataSnapshotExpense ) {
+//        this.typeExpenseLogo = (int) dataSnapshotExpense.child("typeExpenseLogo").getValue() ;
+        this.typeExpenseName = String.valueOf( dataSnapshotExpense.child("typeExpenseName").getValue() );
     }
 
     public void setTypeExpenseLogo(int typeExpenseLogo) {

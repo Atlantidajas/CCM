@@ -15,6 +15,9 @@ public class Vehicle implements Serializable {
     private int vehicleDriving;
     private String vehicleDrivingCurrent;
 
+    public Vehicle() {
+    }
+
     public Vehicle( int logoVehicle,
                    String registrationNumber,
                    String brand,
@@ -36,10 +39,6 @@ public class Vehicle implements Serializable {
         this.vehicleModel = expenseTemp.getVehicleModel();
         this.vehicleDateITV = expenseTemp.getVehicleDateITV();
         this.vehicleDriving = expenseTemp.getVehicleDriving();
-    }
-
-
-    public Vehicle() {
     }
 
     public Vehicle(DataSnapshot dataSnapshot ) {

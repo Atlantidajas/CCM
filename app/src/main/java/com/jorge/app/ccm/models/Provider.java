@@ -1,10 +1,14 @@
 package com.jorge.app.ccm.models;
 
+import com.google.firebase.database.DataSnapshot;
+
 public class Provider extends MethodOfPlayment {
 
     private String providerName;
     private String providerCifNif;
     private String providerTelephone;
+
+    public Provider(){}
 
     public Provider( MethodOfPlayment methodOfPlayment,
                      String providerName, String providerCifNif,
@@ -30,6 +34,13 @@ public class Provider extends MethodOfPlayment {
         this.providerName = expenseTemp.getProviderName();
         this.providerCifNif = expenseTemp.getProviderCifNif();
         this.providerTelephone = expenseTemp.getProviderTelephone();
+    }
+
+    public Provider( DataSnapshot dataSnapshotExpense ) {
+        super( dataSnapshotExpense );
+        this.providerName = String.valueOf( dataSnapshotExpense.child("providerName").getValue() );
+        this.providerCifNif = String.valueOf( dataSnapshotExpense.child("providerCifNif").getValue() );
+        this.providerTelephone = String.valueOf( dataSnapshotExpense.child("providerTelephone").getValue() );
     }
 
 

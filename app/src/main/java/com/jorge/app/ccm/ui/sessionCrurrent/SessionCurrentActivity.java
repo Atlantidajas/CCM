@@ -78,7 +78,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
         controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
         controllerDBStatus = new ControllerDBStatus( getApplication() );
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
-        user = new User();
+        user = new User( true );
 
         intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesStatusListActivity.class );
 

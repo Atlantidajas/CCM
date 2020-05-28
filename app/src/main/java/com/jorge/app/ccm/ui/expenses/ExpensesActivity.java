@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -90,6 +92,8 @@ public class ExpensesActivity extends AppCompatActivity{
         loadFieldButtonCancelExpenses();
 
     }
+
+
 
     /**
      * Guardo comprueba la correcta recepción de los datos recibidos por medio de Items
@@ -309,7 +313,7 @@ public class ExpensesActivity extends AppCompatActivity{
                         validateFieldTypeSpinner( spinnerMethodplayment ) &&
                         validateFieldTypeEditText( editTextTotalImport ) ){
 
-                    User user = new User(  );
+                    User user = new User( true );
                     Expense expense = new Expense( expenseTemp );
 
                     saveDatesFormForDB( expense );//<-- Guarda db
