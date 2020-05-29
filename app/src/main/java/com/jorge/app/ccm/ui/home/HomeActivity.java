@@ -19,7 +19,6 @@ import com.jorge.app.ccm.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.firebase.auth.FirebaseUser;
 import com.jorge.app.ccm.ui.expenses.ExpenseHistoricActivity;
-import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
 import com.jorge.app.ccm.ui.location.LocationActivity;
 import com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity;
 import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;

@@ -21,7 +21,7 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
-import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
+import com.jorge.app.ccm.ui.expenses.ExpensesResgistryActivity;
 
 import java.io.Serializable;
 
@@ -49,7 +49,7 @@ public class VehiclesSelectListActivity extends AppCompatActivity implements Ser
         this.adapterVehicleSelect = new AdapterVehicleSelect( getApplication(), listView);
 
         intentRegistryVehicles = new Intent( VehiclesSelectListActivity.this, RegistryVehiclesActivity.class );
-        intentExpensesActivity = new Intent( VehiclesSelectListActivity.this, ExpensesActivity.class );
+        intentExpensesActivity = new Intent( VehiclesSelectListActivity.this, ExpensesResgistryActivity.class );
 
         fieldLoadTextViewTitle();
 

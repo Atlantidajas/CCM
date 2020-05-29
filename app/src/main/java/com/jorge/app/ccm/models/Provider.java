@@ -56,15 +56,15 @@ public class Provider extends MethodOfPlayment {
         this.providerTelephone = providerTelephone;
     }
 
-    public String getProviderName() {
+    protected String getProviderName() {
         return providerName;
     }
 
-    public String getProviderCifNif() {
+    protected String getProviderCifNif() {
         return providerCifNif;
     }
 
-    public String getProviderTelephone() {
+    protected String getProviderTelephone() {
         return providerTelephone;
     }
 }

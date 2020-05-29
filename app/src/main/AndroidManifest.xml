@@ -14,7 +14,7 @@
         <activity android:name=".ui.typeExpenses.TypeExpensesActivity"/>
         <activity android:name=".ui.sessionStatus.SessionStatusActivity" />
         <activity android:name=".ui.location.LocationActivity" />
-        <activity android:name=".ui.expenses.ExpensesActivity" />
+        <activity android:name=".ui.expenses.ExpensesResgistryActivity" />
         <activity android:name=".ui.expenses.ExpenseHistoricActivity" />
         <activity android:name=".ui.sessionHistoric.SessionHistoricActivity" />
         <activity android:name=".ui.VehicleCu.UpdateVehicleActivity" />

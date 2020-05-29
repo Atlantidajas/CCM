@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.Exclude;
 
 public class MethodOfPlayment {
 
@@ -32,6 +33,7 @@ public class MethodOfPlayment {
         this.methodOfPlaymentName = methodOfPlaymentNameMethodOfPlayment;
     }
 
+    @Exclude
     public int getMethodOfPlaymentLogo() {
         return methodOfPlaymentLogo;
     }

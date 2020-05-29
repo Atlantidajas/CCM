@@ -2,6 +2,7 @@ package com.jorge.app.ccm.models;
 
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.Exclude;
 
 public class Tickect extends Provider {
 
@@ -45,9 +46,9 @@ public class Tickect extends Provider {
 
     public Tickect( DataSnapshot dataSnapshotExpese ) {
         super( dataSnapshotExpese );
-        //tickectNumber = String.valueOf( dataSnapshotExpese.child("tickectNumber").getValue() );
-        //this.tickectDate = String.valueOf( dataSnapshotExpese.child("tickectDate").getValue() );
-        //this.tickectTotalExpense = String.valueOf( dataSnapshotExpese.child("tickectTotalExpense").getValue() );
+        tickectNumber = String.valueOf( dataSnapshotExpese.child("tickectNumber").getValue() );
+        this.tickectDate = String.valueOf( dataSnapshotExpese.child("tickectDate").getValue() );
+        this.tickectTotalExpense = String.valueOf( dataSnapshotExpese.child("tickectTotalExpense").getValue() );
     }
 
     public Tickect(ExpenseTemp expenseTemp) {

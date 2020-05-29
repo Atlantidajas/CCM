@@ -104,10 +104,7 @@ public class AdapterExpenseHistoric extends BaseAdapter {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-
-                   System .out.println( dataSnapshot.getRef().getKey() + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
-
-                    //setArrayAdapterHistoric(dataSnapshot);
+                    setArrayAdapterHistoric(dataSnapshot);
                 }
                 else {
                     Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
@@ -149,9 +146,9 @@ public class AdapterExpenseHistoric extends BaseAdapter {
             textViewTotalImportExpense = convertView.findViewById( R.id.textView_total_import_expese_item_expense );
             imageViewLogoUserExpense = convertView.findViewById( R.id.imageView_user_logo_item_expense );
 
-            imageViewTypeExpense.setImageResource( 0 );
-            textViewNameTypeExpense.setText( expense.getVehicleRegistrationNumber());
-            textViewDateExpense.setText( expense.getTickectNumber());
+            imageViewTypeExpense.setImageResource( expense.getVehiclelogo() );
+            textViewNameTypeExpense.setText( expense.getVehicleRegistrationNumber() );
+            textViewDateExpense.setText( expense.getTickectNumber() );
             textViewMenthodPlamentExpense.setText( expense.getMethodOfPlaymentName() );
             textViewTotalImportExpense.setText( expense.getTickectTotalExpense() );
             Glide.with( context ).load( expense.getUserPhotoUriString() ).into( imageViewLogoUserExpense );
@@ -159,9 +156,6 @@ public class AdapterExpenseHistoric extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * @Jorge.HL
-     */
 
     /**
      * @Jorge.HL

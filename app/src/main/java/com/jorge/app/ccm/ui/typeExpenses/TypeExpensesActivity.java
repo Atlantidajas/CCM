@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.models.TypeExpense;
-import com.jorge.app.ccm.ui.expenses.ExpensesActivity;
+import com.jorge.app.ccm.ui.expenses.ExpensesResgistryActivity;
 
 public class TypeExpensesActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,7 +41,7 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_type_expenses );
 
-        intentForExpensesActivity = new Intent( TypeExpensesActivity.this, ExpensesActivity.class );
+        intentForExpensesActivity = new Intent( TypeExpensesActivity.this, ExpensesResgistryActivity.class );
 
         textViewTitle = findViewById( R.id.textView_1_activity_type_expenses );
         button1 = findViewById( R.id.button_1_activity_type_expenses );

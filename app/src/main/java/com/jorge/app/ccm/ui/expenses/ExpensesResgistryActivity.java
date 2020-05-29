@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,7 +37,7 @@ import com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity;
 import static com.jorge.app.ccm.ui.typeExpenses.TypeExpensesActivity.TYPE_EXPENSE;
 import static com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT;
 
-public class ExpensesActivity extends AppCompatActivity{
+public class ExpensesResgistryActivity extends AppCompatActivity{
 
     private String TAG = "ExpenseActivity";
     private Intent intentCreateVehicle;
@@ -75,9 +73,9 @@ public class ExpensesActivity extends AppCompatActivity{
         expenseTemp = new ExpenseTemp( getApplicationContext(), TAG );
 
         //Intens
-        intentCreateVehicle = new Intent( ExpensesActivity.this, RegistryVehiclesActivity.class );
-        intentVehiclesSelectList = new Intent( ExpensesActivity.this, VehiclesSelectListActivity.class );
-        intentTypeExpenses = new Intent( ExpensesActivity.this, TypeExpensesActivity.class );
+        intentCreateVehicle = new Intent( ExpensesResgistryActivity.this, RegistryVehiclesActivity.class );
+        intentVehiclesSelectList = new Intent( ExpensesResgistryActivity.this, VehiclesSelectListActivity.class );
+        intentTypeExpenses = new Intent( ExpensesResgistryActivity.this, TypeExpensesActivity.class );
 
         final Expense expense = new Expense( );
 

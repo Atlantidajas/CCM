@@ -17,9 +17,6 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.models.Expense;
-import com.jorge.app.ccm.models.SessionDriving;
-import com.jorge.app.ccm.models.Vehicle;
-import com.jorge.app.ccm.ui.sessionHistoric.AdapterSessionHistoric;
 import com.jorge.app.ccm.ui.sessionStatus.SessionStatusActivity;
 
 import java.io.Serializable;
@@ -44,7 +41,7 @@ public class ExpenseHistoricActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView_expense_historic);
 
         intentSessionStatus  = new Intent( ExpenseHistoricActivity.this, SessionStatusActivity.class );
-        intentForRegistryExpense = new Intent( ExpenseHistoricActivity.this, ExpensesActivity.class );
+        intentForRegistryExpense = new Intent( ExpenseHistoricActivity.this, ExpensesResgistryActivity.class );
 
         //Inizializao Adapter para mostrar lista de gastos
         adapterExpenseHistoric = new AdapterExpenseHistoric( getApplication(), textView, listView);

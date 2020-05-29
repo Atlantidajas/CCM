@@ -3,6 +3,7 @@ package com.jorge.app.ccm.ui.VehicleCu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,11 +11,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
+import com.jorge.app.ccm.gadget.notices.DatePickerFragment;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentDatePincker;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentSpinner;
@@ -165,26 +168,27 @@ public class RegistryVehiclesActivity extends AppCompatActivity implements Dialo
         });
     }
 
-    public void showRegistryDateITV(){
-        dialogFragmentDatePincker.show(getSupportFragmentManager(), "DatePinckerITV");
-        Resources res = getResources();
-        String value = res.getString(R.string.edit_text_registry_date_itv_vehicle);
+    private void showRegistryDateITV() {
 
-        if ( value.equals( editTextDateITV.getText().toString() ) == false ) {
-            checkBoxConfirmDateITV.setChecked( true );
-        }
-        else{
-            checkBoxConfirmDateITV.setChecked( false );
-        }
-        editTextDateITV.setText( dialogFragmentDatePincker.getDateFotmat( 1 ) );
+        DatePickerFragment newFragment = DatePickerFragment.newInstance( new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 Enero es 0.
+                final String selectedDate = day + "-" + ( month+1 ) + "-" + year;
+
+                editTextDateITV.setText( selectedDate );
+            }
+        });
+
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
 
     public void showSaveRegistry(){
 
         if( checkBoxConfirmBrand.isChecked() &&
             checkBoxConfirmModel.isChecked() &&
-            checkBoxConfirmRegistryNumber.isChecked() &&
-            checkBoxConfirmDateITV.isChecked() ){
+            checkBoxConfirmRegistryNumber.isChecked() ){
 
             Resources resource = getResources();
             BrandsUtil brandsUtil = new BrandsUtil( resource );

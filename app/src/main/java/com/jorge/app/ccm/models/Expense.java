@@ -56,18 +56,22 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.vehicle = vehicle;
     }
 
+    @Exclude
     public Tickect getTickect() {
         return tickect;
     }
 
+    @Exclude
     public TypeExpense getTypeExpense() {
         return typeExpense;
     }
 
+    @Exclude
     public User getUser() {
         return user;
     }
 
+    @Exclude
     public Vehicle getVehicle() {
         return vehicle;
     }
@@ -87,17 +91,17 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.tickect.setTickectTotalExpense( tickectTotalExpense );
     }
 
-    @Override @Exclude
+    @Override
     public String getTickectNumber() {
         return this.tickect.getTickectNumber();
     }
 
-    @Override @Exclude
+    @Override
     public String getTickectDate() {
         return this.tickect.getTickectTotalExpense();
     }
 
-    @Override @Exclude
+    @Override
     public String getTickectTotalExpense() {
         return this.tickect.getTickectTotalExpense();
     }
@@ -117,17 +121,17 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.tickect.setProviderTelephone( providerTelephone );
     }
 
-    @Override @Exclude
+    @Override
     public String getProviderName() {
         return this.tickect.getProviderName();
     }
 
-    @Override @Exclude
+    @Override
     public String getProviderCifNif() {
         return this.tickect.getProviderCifNif();
     }
 
-    @Override @Exclude
+    @Override
     public String getProviderTelephone() {
         return this.tickect.getProviderTelephone();
     }
@@ -142,12 +146,12 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.tickect.setMethodOfPlaymentNameMethodOfPlayment( methodOfPlaymentNameMethodOfPlayment );
     }
 
-    @Override @Exclude
+    @Override
     public int getMethodOfPlaymentLogo() {
         return this.tickect.getMethodOfPlaymentLogo();
     }
 
-    @Override @Exclude
+    @Override
     public String getMethodOfPlaymentName() {
         return this.tickect.getMethodOfPlaymentName();
     }
@@ -162,12 +166,12 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.typeExpense.setTypeExpenseName( typeExpenseName );
     }
 
-    @Override @Exclude
+    @Override
     public int getTypeExpenseLogo() {
         return this.typeExpense.getTypeExpenseLogo();
     }
 
-    @Override @Exclude
+    @Override
     public String getTypeExpenseName() {
         return this.typeExpense.getTypeExpenseName();
     }
@@ -182,27 +186,27 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.user.setUserTelephone( telephone );
     }
 
-    @Override @Exclude
+    @Override
     public String getIdUser() {
         return this.user.getIdUser();
     }
 
-    @Override @Exclude
+    @Override
     public String getUserName() {
         return this.user.getUserName();
     }
 
-    @Override @Exclude
+    @Override
     public String getUserPhotoUriString() {
         return this.user.getUserPhotoUriString();
     }
 
-    @Override @Exclude
+    @Override
     public String getUserEmail() {
         return this.user.getUserEmail();
     }
 
-    @Override @Exclude
+    @Override
     public String getUserTelephone() {
         return this.user.getUserTelephone();
     }
@@ -247,37 +251,37 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         this.vehicle.setVehicleDrivingCurrent( vehicleDrivingCurrent );
     }
 
-    @Override @Exclude
+    @Override
     public int getVehiclelogo() {
         return this.vehicle.getVehiclelogo();
     }
 
-    @Override @Exclude
+    @Override
     public String getVehicleRegistrationNumber() {
         return this.vehicle.getVehicleRegistrationNumber();
     }
 
-    @Override @Exclude
+    @Override
     public String getVehicleBrand() {
         return this.vehicle.getVehicleBrand();
     }
 
-    @Override @Exclude
+    @Override
     public String getVehicleModel() {
         return this.vehicle.getVehicleModel();
     }
 
-    @Override @Exclude
+    @Override
     public String getVehicleDateITV() {
         return this.vehicle.getVehicleDateITV();
     }
 
-    @Override @Exclude
+    @Override
     public int getVehicleDriving() {
         return this.vehicle.getVehicleDriving();
     }
 
-    @Override @Exclude
+    @Override
     public String getVehicleDrivingCurrent() {
         return this.vehicle.getVehicleDrivingCurrent();
     }

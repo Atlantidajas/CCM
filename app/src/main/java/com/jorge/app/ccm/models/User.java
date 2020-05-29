@@ -38,12 +38,12 @@ public class User implements Serializable {
     }
 
     public User(DataSnapshot dataSnapshotUser){
-        this.userName = String.valueOf( dataSnapshotUser.child("name").getValue() );
+        this.userName = String.valueOf( dataSnapshotUser.child("userName").getValue() );
         this.idUser = String.valueOf( dataSnapshotUser.child( "idUser" ).getValue() );
-        this.UserPhotoUriString = String.valueOf( dataSnapshotUser.child( "photoUriString" ).getValue() );
-        this.UserPhotoUri = Uri.parse( String.valueOf( dataSnapshotUser.child( "photoUriString" ).getValue() ) );
-        this.UserEmail = String.valueOf( dataSnapshotUser.child("email").getValue() );
-        this.UserTelephone = String.valueOf( dataSnapshotUser.child("telephone").getValue() );
+        this.UserPhotoUriString = String.valueOf( dataSnapshotUser.child( "userPhotoUriString" ).getValue() );
+        this.UserPhotoUri = Uri.parse( String.valueOf( dataSnapshotUser.child( "userPhotoUriString" ).getValue() ) );
+        this.UserEmail = String.valueOf( dataSnapshotUser.child("userEmail").getValue() );
+        this.UserTelephone = String.valueOf( dataSnapshotUser.child("userTelephone").getValue() );
     }
 
     public void setIdUser(String idUser) {

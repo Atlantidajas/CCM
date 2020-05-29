@@ -107,8 +107,6 @@ public class ControllerDBStatus {
         return this.countChild;
     }
 
-
-
     public DatabaseReference getDatabaseReferenceSearch( Vehicle vehicle){
         return databaseReference.child( vehicle.getVehicleRegistrationNumber() );
     }

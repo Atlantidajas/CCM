@@ -1,8 +1,8 @@
 package com.jorge.app.ccm.models;
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 
 public class Vehicle implements Serializable {
@@ -42,13 +42,14 @@ public class Vehicle implements Serializable {
     }
 
     public Vehicle(DataSnapshot dataSnapshot ) {
-        this.vehiclelogo = Integer.parseInt( String.valueOf( dataSnapshot.child("logoVehicle").getValue() ) );
-        this.vehicleRegistrationNumber =String.valueOf( dataSnapshot.child("registrationNumber").getValue() );
-        this.vehicleBrand = String.valueOf( dataSnapshot.child("brand").getValue() );
-        this.vehicleModel = String.valueOf( dataSnapshot.child("model").getValue() );
-        this.vehicleDateITV = String.valueOf( dataSnapshot.child("dateITV").getValue() );
-        this.vehicleDriving = Integer.parseInt( String.valueOf( dataSnapshot.child("driving").getValue() ) );
-        this.vehicleDrivingCurrent = String.valueOf( dataSnapshot.child("drivingCurrent").getValue() );
+        this.vehiclelogo = Integer.parseInt( String.valueOf( dataSnapshot.child("vehiclelogo").getValue() ) );
+        this.vehicleRegistrationNumber =String.valueOf( dataSnapshot.child("vehicleRegistrationNumber").getValue() );
+        this.vehicleBrand = String.valueOf( dataSnapshot.child("vehicleBrand").getValue() );
+        this.vehicleModel = String.valueOf( dataSnapshot.child("vehicleModel").getValue() );
+        this.vehicleDateITV = String.valueOf( dataSnapshot.child("vehicleDateITV").getValue() );
+        this.vehicleDriving = Integer.parseInt( String.valueOf( dataSnapshot.child("vehicleDriving").getValue() ) );
+        this.vehicleDrivingCurrent = String.valueOf( dataSnapshot.child("vehicleDrivingCurrent").getValue() );
+
     }
 
     public void setVehiclelogo(int vehiclelogo) {
@@ -103,6 +104,7 @@ public class Vehicle implements Serializable {
         return vehicleDriving;
     }
 
+    @Exclude
     public String getVehicleDrivingCurrent() {
         return vehicleDrivingCurrent;
     }
