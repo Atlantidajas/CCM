@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,15 +37,15 @@ import java.util.Iterator;
 
 public class AdapterExpenseHistoric extends BaseAdapter {
 
-    private ImageView imageViewTypeExpense;
-    private TextView textViewNameTypeExpense;
-    private TextView textViewDateExpense;
-    private TextView textViewMenthodPlamentExpense;
-    private TextView textViewTotalImportExpense;
-    ImageView imageViewLogoUserExpense;
+    private ImageView imageViewItemLogoTypeExpense;
+    private ImageView imageViewItemLogoVehicleExpense;
+    private TextView textViewRegistrationNumberVehicleItemExpense;
+    private TextView textViewExpenseDateItemExpense;
+    private TextView textViewMethodPlaymentItemExpense;
+    private ImageView imageViewUserLogoItemExpense;
     private Context context;
     private ArrayList<Expense> listIntemExpense;
-    private TextView textView;
+    private LinearLayout linearLayout;
     private ListView listView;
     private Expense expense;
     private ControllerDBExpense controllerDBExpense;
@@ -53,9 +54,9 @@ public class AdapterExpenseHistoric extends BaseAdapter {
 
     public AdapterExpenseHistoric(){}
 
-    public AdapterExpenseHistoric(final Context context, TextView textView, ListView listView) {
+    public AdapterExpenseHistoric(final Context context, LinearLayout linearLayout, ListView listView) {
         this.context = context;
-        this.textView = textView;
+        this.linearLayout  = linearLayout;
         this.listView = listView;
         this.controllerDBExpense = new ControllerDBExpense( context );
         user = new User( true );
@@ -139,19 +140,19 @@ public class AdapterExpenseHistoric extends BaseAdapter {
         this.expense = (Expense) getItem(position);
         convertView = LayoutInflater.from( context ).inflate(R.layout.list_item_view_expense, parent, false );
 
-            imageViewTypeExpense = convertView.findViewById( R.id.imageView_item_logo_type_expense );
-            textViewNameTypeExpense = convertView.findViewById( R.id.textView_type_expense_name_item_expense );
-            textViewDateExpense = convertView.findViewById( R.id.textView_expense_date_item_expense );
-            textViewMenthodPlamentExpense = convertView.findViewById( R.id.textView_method_playment_item_expense );
-            textViewTotalImportExpense = convertView.findViewById( R.id.textView_total_import_expese_item_expense );
-            imageViewLogoUserExpense = convertView.findViewById( R.id.imageView_user_logo_item_expense );
+        imageViewItemLogoTypeExpense = convertView.findViewById( R.id.imageView_item_logo_type_expense );
+        imageViewItemLogoVehicleExpense = convertView.findViewById( R.id.imageView_item_logo_vehicle_expense );
+        textViewRegistrationNumberVehicleItemExpense = convertView.findViewById( R.id.textView_registration_number_vehicle_item_expense );
+        textViewExpenseDateItemExpense = convertView.findViewById( R.id.textView_expense_date_item_expense );
+        textViewMethodPlaymentItemExpense = convertView.findViewById( R.id.textView_method_playment_item_expense );
+        imageViewUserLogoItemExpense = convertView.findViewById( R.id.imageView_user_logo_item_expense );
 
-            imageViewTypeExpense.setImageResource( expense.getVehiclelogo() );
-            textViewNameTypeExpense.setText( expense.getVehicleRegistrationNumber() );
-            textViewDateExpense.setText( expense.getTickectNumber() );
-            textViewMenthodPlamentExpense.setText( expense.getMethodOfPlaymentName() );
-            textViewTotalImportExpense.setText( expense.getTickectTotalExpense() );
-            Glide.with( context ).load( expense.getUserPhotoUriString() ).into( imageViewLogoUserExpense );
+        imageViewItemLogoTypeExpense.setImageResource( expense.getTypeExpenseLogo() );
+        imageViewItemLogoVehicleExpense.setImageResource( expense.getVehiclelogo() );
+        textViewRegistrationNumberVehicleItemExpense.setText( expense.getVehicleRegistrationNumber() );
+        textViewExpenseDateItemExpense.setText( expense.getTickectDate() );
+        textViewMethodPlaymentItemExpense.setText( expense.getMethodOfPlaymentName() );
+        Glide.with( context ).load( expense.getUserPhotoUriString() ).into( imageViewUserLogoItemExpense );
 
         return convertView;
     }

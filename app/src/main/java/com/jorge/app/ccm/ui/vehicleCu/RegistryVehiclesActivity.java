@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.VehicleCu;
+package com.jorge.app.ccm.ui.vehicleCu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;

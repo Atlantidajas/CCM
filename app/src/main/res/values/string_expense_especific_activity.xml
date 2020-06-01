@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--1-->
+    <string name="textView_numberTickect_expense">Número de tickect: </string>
+    <!--2-->
+    <string name="textView_dateTickect_expense">Fecha tickect: </string>
+    <!--3-->
+    <string name="textView_TotalExpenseTickect_expense">Importe total : </string>
+    <!--4-->
+    <string name="textView_providerNameProvider_expense">Proveedor: </string>
+    <!--5-->
+    <string name="textView_providerCifNifProvider_expense">Proveedor CIF - NIF: </string>
+    <!--6-->
+    <string name="textView_providerTelephoneProvider_expense">Proveedor Teléfono: </string>
+    <!--7-->
+    <string name="textView_methodOfPlaymentNamePlayment_expense">Forma de pago: </string>
+    <!--8-->
+    <string name="textView_methodOfPlaymentNameTypeExpense_expense">Concept del gato: </string>
+    <!--9-->
+    <string name="textView_userNameUser_expense">Usuario nombre: </string>
+    <!--10-->
+    <string name="textView_userEmailUser_expense">Usuario email: </string>
+    <!--11-->
+    <string name="textView_userTelephoneNumberUser_expense">Usuario teléfono: </string>
+    <!--12-->
+    <string name="textView_vehicleRegistrationNumberVehicle_expense">Vehículo matrícula: </string>
+    <!--13-->
+    <string name="textView_vehicleBrandVehicle_expense">Vehículo marca: </string>
+    <!--14-->
+    <string name="textView_vehicleModelVehicle_expense">Vehículo modelo: </string>
+
+
+</resources>

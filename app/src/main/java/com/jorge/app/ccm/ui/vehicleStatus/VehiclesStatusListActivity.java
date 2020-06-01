@@ -30,8 +30,8 @@ import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
-import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
-import com.jorge.app.ccm.ui.VehicleCu.UpdateVehicleActivity;
+import com.jorge.app.ccm.ui.vehicleCu.RegistryVehiclesActivity;
+import com.jorge.app.ccm.ui.vehicleCu.UpdateVehicleActivity;
 import com.jorge.app.ccm.ui.sessionCrurrent.SessionCurrentActivity;
 import com.jorge.app.ccm.models.User;
 

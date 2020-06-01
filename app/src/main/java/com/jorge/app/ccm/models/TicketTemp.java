@@ -2,11 +2,13 @@ package com.jorge.app.ccm.models;
 
 import android.content.Context;
 
+import java.io.Serializable;
+
 /**
  * @Author: Jorge.HL
  * Clase con funcionalidades heredades de DatesTemp y atribuciones específicas para un objeto de tipo TicketTemp.
  */
-public class TicketTemp extends ProviderTemp {
+public class TicketTemp extends ProviderTemp implements Serializable {
 
     private String PRIMARY_KEY = getFILE_NAME() + "ticket";
     private String KEY_TICKET_NUMBER = PRIMARY_KEY + "Number";

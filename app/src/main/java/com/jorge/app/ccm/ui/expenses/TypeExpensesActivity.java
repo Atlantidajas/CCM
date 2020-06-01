@@ -1,8 +1,9 @@
-package com.jorge.app.ccm.ui.typeExpenses;
+package com.jorge.app.ccm.ui.expenses;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.models.TypeExpense;
-import com.jorge.app.ccm.ui.expenses.ExpensesResgistryActivity;
+import com.jorge.app.ccm.utils.BrandsUtil;
+
+import java.io.Serializable;
 
 public class TypeExpensesActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +38,7 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
     private EditText editTextTypeExpenses;
     private Button buttonNext;
     public static final String TYPE_EXPENSE = "com.jorge.app.ccm.ui.typeExpenses.TypeExpenses.TYPE_EXPENSE";
+    private TypeExpense typeExpenseSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,8 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
         button11.setOnClickListener( this );
         button12.setOnClickListener( this );
         buttonNext.setOnClickListener( this );
+
+        typeExpenseSelect = new TypeExpense();
     }
 
     @Override
@@ -79,52 +85,53 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
         switch (v.getId()) {
 
             case R.id.button_1_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button1.getText().toString() );
+
+                effectsVisibleAndInvisibleField( button1.getText().toString(), "ic_launcher_fuel" );
                 break;
 
             case R.id.button_2_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button2.getText().toString() );
+                effectsVisibleAndInvisibleField( button2.getText().toString(), "ic_launcher_wash" );
                 break;
 
             case R.id.button_3_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button3.getText().toString() );
+                effectsVisibleAndInvisibleField( button3.getText().toString(), "ic_launcher_repair" );
                 break;
 
             case R.id.button_4_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button4.getText().toString() );
+                effectsVisibleAndInvisibleField( button4.getText().toString(), "ic_launcher_revision" );
                 break;
 
             case R.id.button_5_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button5.getText().toString() );
+                effectsVisibleAndInvisibleField( button5.getText().toString(), "R.id.ic_launcher_oil" );
                 break;
 
             case R.id.button_6_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button6.getText().toString() );
+                effectsVisibleAndInvisibleField( button6.getText().toString() , "ic_launcher_parking" );
                 break;
 
             case R.id.button_7_activity_type_expenses:
                 //El usuario será el que lo cumplimente.
-                effectsVisibleAndInvisibleField( "" );
+                effectsVisibleAndInvisibleField( "", "ic_launcher_dolallar" );
                 break;
 
             case R.id.button_8_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button8.getText().toString() );
+                effectsVisibleAndInvisibleField( button8.getText().toString(), "ic_launcher_indicator" );
                 break;
 
             case R.id.button_9_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button9.getText().toString() );
+                effectsVisibleAndInvisibleField( button9.getText().toString(), "ic_launcher_wheel" );
                 break;
 
             case R.id.button_10_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button10.getText().toString() );
+                effectsVisibleAndInvisibleField( button10.getText().toString(), "ic_launcher_brakes" );
                 break;
 
             case R.id.button_11_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button11.getText().toString() );
+                effectsVisibleAndInvisibleField( button11.getText().toString(), "ic_launcher_road" );
                 break;
 
             case R.id.button_12_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button12.getText().toString() );
+                effectsVisibleAndInvisibleField( button12.getText().toString(), "ic_launcher_lamp" );
                 break;
 
             case R.id.button_next_activity_type_expenses:
@@ -134,22 +141,21 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
                     //editTextTypeExpenses.requestFocus();
                 }else {
 
-                    TypeExpense typeExpenseSelect = new TypeExpense();
-                    typeExpenseSelect.setTypeExpenseName( editTextTypeExpenses.getText().toString() );
-                    typeExpenseSelect.setTypeExpenseLogo( 0 );
                     Log.i( TAG, "editText -> (Texto) ->" + editTextTypeExpenses.getText().toString() );
                     Bundle bundle= new Bundle();
-                    bundle.putSerializable( TYPE_EXPENSE, typeExpenseSelect );
+                    bundle.putSerializable( TYPE_EXPENSE, (Serializable) typeExpenseSelect );
 
                     intentForExpensesActivity.putExtras(bundle);
                     setResult( RESULT_OK, intentForExpensesActivity );
                     finish();
+
+
                 }
                 break;
         }
     }
 
-    public void effectsVisibleAndInvisibleField( String text ){
+    public void effectsVisibleAndInvisibleField( String text, String nameResource ){
 
         //Muestro en pantalla editTexta y botón de continuar
         if ( ( editTextTypeExpenses.getVisibility() == View.INVISIBLE ) && ( buttonNext.getVisibility() == View.INVISIBLE )){
@@ -163,7 +169,15 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
         if( textViewTitle.getVisibility() == View.VISIBLE ){
             textViewTitle.setVisibility( View.INVISIBLE );
         }
+
         editTextTypeExpenses.setText( text );
+
+        Resources resources = getResources();
+        BrandsUtil brandsUtil = new BrandsUtil( resources );
+        int idDrawableButton = brandsUtil.getIdResourceTypeExpense( nameResource );
+
+        typeExpenseSelect.setTypeExpenseLogo( idDrawableButton );
+        typeExpenseSelect.setTypeExpenseName( editTextTypeExpenses.getText().toString() );
 
     }
 }

@@ -104,7 +104,6 @@ public class Vehicle implements Serializable {
         return vehicleDriving;
     }
 
-    @Exclude
     public String getVehicleDrivingCurrent() {
         return vehicleDrivingCurrent;
     }

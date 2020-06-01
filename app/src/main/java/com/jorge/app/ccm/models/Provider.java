@@ -4,13 +4,13 @@ import com.google.firebase.database.DataSnapshot;
 
 public class Provider extends MethodOfPlayment {
 
-    private String providerName;
-    private String providerCifNif;
-    private String providerTelephone;
+    protected String providerName;
+    protected String providerCifNif;
+    protected String providerTelephone;
 
-    public Provider(){}
+    protected Provider(){}
 
-    public Provider( MethodOfPlayment methodOfPlayment,
+    protected Provider( MethodOfPlayment methodOfPlayment,
                      String providerName, String providerCifNif,
                      String providerTelephone) {
         super( methodOfPlayment.getMethodOfPlaymentLogo(), methodOfPlayment.getMethodOfPlaymentName() );
@@ -19,7 +19,7 @@ public class Provider extends MethodOfPlayment {
         this.providerTelephone = providerTelephone;
     }
 
-    public Provider(int methodOfPlaymentLogo,
+    protected Provider(int methodOfPlaymentLogo,
                     String methodOfPlaymentNameMethodOfPlayment,
                     String providerName, String providerCifNif,
                     String providerTelephone) {
@@ -29,14 +29,14 @@ public class Provider extends MethodOfPlayment {
         this.providerTelephone = providerTelephone;
     }
 
-    public Provider( ExpenseTemp expenseTemp ) {
+    protected Provider( ExpenseTemp expenseTemp ) {
         super( expenseTemp );
         this.providerName = expenseTemp.getProviderName();
         this.providerCifNif = expenseTemp.getProviderCifNif();
         this.providerTelephone = expenseTemp.getProviderTelephone();
     }
 
-    public Provider( DataSnapshot dataSnapshotExpense ) {
+    protected Provider( DataSnapshot dataSnapshotExpense ) {
         super( dataSnapshotExpense );
         this.providerName = String.valueOf( dataSnapshotExpense.child("providerName").getValue() );
         this.providerCifNif = String.valueOf( dataSnapshotExpense.child("providerCifNif").getValue() );
@@ -44,27 +44,27 @@ public class Provider extends MethodOfPlayment {
     }
 
 
-    protected void setProviderName(String providerName) {
+    public void setProviderName(String providerName) {
         this.providerName = providerName;
     }
 
-    protected void setProviderCifNif(String providerCifNif) {
+    public void setProviderCifNif(String providerCifNif) {
         this.providerCifNif = providerCifNif;
     }
 
-    protected void setProviderTelephone(String providerTelephone) {
+    public void setProviderTelephone(String providerTelephone) {
         this.providerTelephone = providerTelephone;
     }
 
-    protected String getProviderName() {
+    public String getProviderName() {
         return providerName;
     }
 
-    protected String getProviderCifNif() {
+    public String getProviderCifNif() {
         return providerCifNif;
     }
 
-    protected String getProviderTelephone() {
+    public String getProviderTelephone() {
         return providerTelephone;
     }
 }

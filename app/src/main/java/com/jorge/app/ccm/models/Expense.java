@@ -5,8 +5,7 @@ import android.net.Uri;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
 
-
-public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
+public class Expense implements iTickect, iTypeExpense, iUser, iVehicle{
 
     private Tickect tickect;
     private TypeExpense typeExpense;
@@ -98,7 +97,7 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
 
     @Override
     public String getTickectDate() {
-        return this.tickect.getTickectTotalExpense();
+        return this.tickect.getTickectDate();
     }
 
     @Override
@@ -281,7 +280,7 @@ public class Expense implements iTickect, iTypeExpense, iUser, iVehicle {
         return this.vehicle.getVehicleDriving();
     }
 
-    @Override
+    @Override @Exclude
     public String getVehicleDrivingCurrent() {
         return this.vehicle.getVehicleDrivingCurrent();
     }

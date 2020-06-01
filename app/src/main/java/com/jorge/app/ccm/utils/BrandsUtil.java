@@ -48,6 +48,11 @@ public class BrandsUtil {
                 typeNameResource, packegeNameResource);
     }
 
+    public int getIdResourceTypeExpense( String nameResource ) {
+        return idResource = this.resources.getIdentifier( nameResource,
+                typeNameResource, packegeNameResource);
+    }
+
     public ArrayList<String> namesLogosMipMap(){
 
         Class<R.mipmap> resourceMimap = R.mipmap.class;

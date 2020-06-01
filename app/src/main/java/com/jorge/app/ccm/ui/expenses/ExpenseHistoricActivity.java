@@ -7,44 +7,54 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.models.Expense;
-import com.jorge.app.ccm.ui.sessionStatus.SessionStatusActivity;
+import com.jorge.app.ccm.models.Tickect;
+import com.jorge.app.ccm.models.TypeExpense;
+import com.jorge.app.ccm.models.User;
+import com.jorge.app.ccm.models.Vehicle;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ExpenseHistoricActivity extends AppCompatActivity {
+public class ExpenseHistoricActivity extends AppCompatActivity{
 
     private final String TAG = "ExpenseHistoricActivity";
     private AdapterExpenseHistoric adapterExpenseHistoric;
-    private Intent intentSessionStatus;
+    private Intent intentExpenseEspecific;
     private Intent intentForRegistryExpense;
-    private TextView textView;
+    private LinearLayout linearLayout;
     private ListView listView;
     private ArrayList<Expense> expenses;
-    public static final String EXPENSE_HISTORIC = "Expense";
+    public static final String EXPENSE_SELECT_TICKET = "com.jorge.app.ccm.ui.expense.ExpenseHistoricActivity.EXPENSE_SELECT_TICKET";
+    public static final String EXPENSE_SELECT_TYPE_EXPENSE = "com.jorge.app.ccm.ui.expense.ExpenseHistoricActivity.EXPENSE_SELECT_TYPE_EXPENSE";
+    public static final String EXPENSE_SELECT_VEHICLE = "com.jorge.app.ccm.ui.expense.ExpenseHistoricActivity.EXPENSE_SELECT_VEHICLE";
+    static final int EXPENSE_SELECT_REQUEST = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_expense_historic );
-        textView = findViewById(R.id.textView_expense_historic);
+        linearLayout = findViewById(R.id.textView_expense_historic);
         listView = findViewById(R.id.listView_expense_historic);
 
-        intentSessionStatus  = new Intent( ExpenseHistoricActivity.this, SessionStatusActivity.class );
+        intentExpenseEspecific  = new Intent( ExpenseHistoricActivity.this, ExpenseEspecificActivity.class );
         intentForRegistryExpense = new Intent( ExpenseHistoricActivity.this, ExpensesResgistryActivity.class );
 
         //Inizializao Adapter para mostrar lista de gastos
-        adapterExpenseHistoric = new AdapterExpenseHistoric( getApplication(), textView, listView);
+        adapterExpenseHistoric = new AdapterExpenseHistoric( getApplication(), linearLayout, listView);
         expenses = new ArrayList<>(  );
         expenses = adapterExpenseHistoric.getListIntemExpense();
 
@@ -66,7 +76,6 @@ public class ExpenseHistoricActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -80,19 +89,25 @@ public class ExpenseHistoricActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> lst, View viewRow,
                                     final int position, long id) {
 
-                WindowDialogFragment windowNotice = new WindowDialogFragment( R.string.windowNoticeSesionHistoricActivity );
+                WindowDialogFragment windowNotice = new WindowDialogFragment( R.string.windowNoticeExpenseHistoricActivity );
 
                 windowNotice.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        Log.i( TAG, expenses.get( position ).getVehicleRegistrationNumber() );
-                        Log.i( TAG, expenses.get( position ).getVehicleRegistrationNumber() );
+                        Tickect expenseSelectTickect = expenses.get( position ).getTickect();
+                        TypeExpense expenseSelectTypeExpense = expenses.get( position ).getTypeExpense();
+                        Vehicle expenseSelectTypeVehicle = expenses.get( position ).getVehicle();
 
-                        Expense expenseSelect = expenses.get( position );
+                        Bundle bundle= new Bundle();
+                        bundle.putSerializable( EXPENSE_SELECT_TICKET, (Serializable) expenseSelectTickect );
+                        bundle.putSerializable( EXPENSE_SELECT_TYPE_EXPENSE, (Serializable) expenseSelectTypeExpense );
+                        bundle.putSerializable( EXPENSE_SELECT_VEHICLE, (Serializable) expenseSelectTypeVehicle );
 
-                        intentSessionStatus.putExtra(EXPENSE_HISTORIC, (Serializable) expenseSelect );
-                        startActivity(intentSessionStatus);
+                        intentExpenseEspecific.putExtras( bundle );
+                        setResult( RESULT_OK, intentExpenseEspecific );
+                        startActivityForResult( intentExpenseEspecific, EXPENSE_SELECT_REQUEST );
+                        finish();
 
                     }
 
@@ -106,8 +121,6 @@ public class ExpenseHistoricActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     @Override
     public void onDestroy(){

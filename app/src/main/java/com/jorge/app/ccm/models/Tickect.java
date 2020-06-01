@@ -2,9 +2,11 @@ package com.jorge.app.ccm.models;
 
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.Exclude;
 
-public class Tickect extends Provider {
+
+import java.io.Serializable;
+
+public class Tickect extends Provider implements Serializable{
 
     private String tickectNumber;
     private String tickectDate;
@@ -58,15 +60,15 @@ public class Tickect extends Provider {
         this.tickectTotalExpense = expenseTemp.getTickectTotalExpense();
     }
 
-    protected void setTickectNumber(String tickectNumber) {
+    public void setTickectNumber(String tickectNumber) {
         this.tickectNumber = tickectNumber;
     }
 
-    protected void setTickectDate(String tickectDate) {
+    public void setTickectDate(String tickectDate) {
         this.tickectDate = tickectDate;
     }
 
-    protected void setTickectTotalExpense(String tickectTotalExpense) {
+    public void setTickectTotalExpense(String tickectTotalExpense) {
         this.tickectTotalExpense = tickectTotalExpense;
     }
 

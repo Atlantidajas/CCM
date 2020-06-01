@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/layout_numberTickect_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_numberTickect_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_ticket_expense"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_numberTickect_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> Tickect -> TickectNumber 1-->
+        <LinearLayout
+            android:id="@+id/layout_dateTickect_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_dateTickect_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_calendar"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_dateTickect_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta  Expense -> Tickect -> dateNumber 2-->
+        <LinearLayout
+            android:id="@+id/layout_totalExpenseTickect_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_totalExpenseTickect_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_total_expense"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_TotalExpenseTickect_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta  Expense -> Tickect -> TotalExpense 3-->
+        <LinearLayout
+            android:id="@+id/layout_providerNameProvider_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_providerNameProvider_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_provider"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_providerNameProvider_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> Tickect -> Provider -> ProviderName 4-->
+
+        <LinearLayout
+            android:id="@+id/layout_providerCifNifProvider_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_providerCifNifProvider_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_provider_cif"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_providerCifNifProvider_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> Tickect -> Provider -> providerCifNif 5-->
+
+        <LinearLayout
+            android:id="@+id/layout_providerTelephoneProvider_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_providerTelephoneProvider_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_telephone"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_providerTelephoneProvider_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> Tickect ->Provider -> providerTelephone 6-->
+
+        <LinearLayout
+            android:id="@+id/layout_methodOfPlaymentNamePlayment_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_methodOfPlaymentNamePlayment_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_methodOfPlaymentNamePlayment_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> Tickect -> Provider -> MethodPlayment -> methodOfPlaymentName 7-->
+
+        <LinearLayout
+            android:id="@+id/layout_type_expensename_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_type_expensename_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_type_expensename_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> TypeExpense -> name 8-->
+        <LinearLayout
+            android:id="@+id/layout_userNameUser_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_userNameUser_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_userNameUser_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> User -> userName 9-->
+
+        <LinearLayout
+            android:id="@+id/layout_userEmailUser_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_userEmailUser_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_email"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+            <TextView
+                android:id="@+id/textView_userEmailUser_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> User -> UserEmail 10-->
+        <LinearLayout
+            android:id="@+id/layout_userTelephoneNumberUser_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_userTelephoneNumberUser_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_telephone"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_userTelephoneNumberUser_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+
+        <!-- Hasta Expense -> User -> userTelephoneNumberUser 11-->
+        <LinearLayout
+            android:id="@+id/layout_vehicleRegistrationNumberVehicle_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_vehicleRegistrationNumberVehicle_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_license_plate"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_vehicleRegistrationNumberVehicle_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta ­ Expense -> Vehicle -> registrationNumber 12-->
+
+        <LinearLayout
+            android:id="@+id/layout_vehicleBrandVehicle_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_vehicleBrandVehicle_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_vehicleBrandVehicle_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!-- Hasta Expense -> Vehicle -> brand 13-->
+        <LinearLayout
+            android:id="@+id/layout_vehicleModelVehicle_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_vehicleModelVehicle_expense"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/ic_launcher_car"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="10dp" />
+
+
+            <TextView
+                android:id="@+id/textView_vehicleModelVehicle_expense"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

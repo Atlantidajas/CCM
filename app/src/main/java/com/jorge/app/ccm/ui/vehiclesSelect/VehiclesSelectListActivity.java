@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
-import com.jorge.app.ccm.ui.VehicleCu.RegistryVehiclesActivity;
+import com.jorge.app.ccm.ui.vehicleCu.RegistryVehiclesActivity;
 import com.jorge.app.ccm.ui.expenses.ExpensesResgistryActivity;
 
 import java.io.Serializable;
@@ -37,6 +37,7 @@ public class VehiclesSelectListActivity extends AppCompatActivity implements Ser
     private TextView textView;
     private ListView listView;
     public static final String VEHICLE_SELECT = "com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT";
+    static final int REGISTRY_ESPECIFIC_EXPENSE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,6 @@ public class VehiclesSelectListActivity extends AppCompatActivity implements Ser
         intentExpensesActivity = new Intent( VehiclesSelectListActivity.this, ExpensesResgistryActivity.class );
 
         fieldLoadTextViewTitle();
-
     }
 
     /**

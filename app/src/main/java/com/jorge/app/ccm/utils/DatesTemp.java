@@ -21,7 +21,6 @@ public class DatesTemp {
         this.FILE_NAME = "temp" + TAG;//<-- Nombre específico temp + el nombre de la actividad
         this.sharedPreferences = context.getSharedPreferences( FILE_NAME, context.getApplicationContext().MODE_PRIVATE );
         this.editor = sharedPreferences.edit();
-
     }
 
 
