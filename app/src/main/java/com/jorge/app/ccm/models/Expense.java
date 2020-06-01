@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
+import com.jorge.app.ccm.models.temp.ExpenseTemp;
 
 public class Expense implements iTickect, iTypeExpense, iUser, iVehicle{
 

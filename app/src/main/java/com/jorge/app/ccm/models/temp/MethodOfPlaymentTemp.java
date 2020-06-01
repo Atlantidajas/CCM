@@ -1,7 +1,8 @@
-package com.jorge.app.ccm.models;
+package com.jorge.app.ccm.models.temp;
 
 import android.content.Context;
 
+import com.jorge.app.ccm.models.MethodOfPlayment;
 import com.jorge.app.ccm.utils.DatesTemp;
 
 public class MethodOfPlaymentTemp extends DatesTemp {
@@ -11,12 +12,12 @@ public class MethodOfPlaymentTemp extends DatesTemp {
     private final String KEY_METHOD_OF_PLAYMENT_NAME = PRIMARY_KEY + "Name";
 
 
-    public MethodOfPlaymentTemp(Context context,
+    protected MethodOfPlaymentTemp(Context context,
                                 String TAG ){
         super(context, TAG);
     }
 
-    public MethodOfPlaymentTemp(Context context,
+    protected MethodOfPlaymentTemp(Context context,
                                 String TAG,
                                 MethodOfPlayment methodOfPlaymentValueLogo) {
         super( context, TAG );
@@ -24,7 +25,7 @@ public class MethodOfPlaymentTemp extends DatesTemp {
         this.setDateString( KEY_METHOD_OF_PLAYMENT_NAME, methodOfPlaymentValueLogo.getMethodOfPlaymentName() );
     }
 
-    public MethodOfPlaymentTemp(Context context,
+    protected MethodOfPlaymentTemp(Context context,
                                 String TAG,
                                 int methodOfPlaymentValueLogo,
                                 String methodOfPlaymentValueName) {

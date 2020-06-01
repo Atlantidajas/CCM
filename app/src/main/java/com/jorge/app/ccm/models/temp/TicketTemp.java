@@ -1,6 +1,10 @@
-package com.jorge.app.ccm.models;
+package com.jorge.app.ccm.models.temp;
 
 import android.content.Context;
+
+import com.jorge.app.ccm.models.MethodOfPlayment;
+import com.jorge.app.ccm.models.Provider;
+import com.jorge.app.ccm.models.Tickect;
 
 import java.io.Serializable;
 

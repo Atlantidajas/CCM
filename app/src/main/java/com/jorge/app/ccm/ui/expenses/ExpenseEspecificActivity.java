@@ -1,13 +1,9 @@
 package com.jorge.app.ccm.ui.expenses;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +21,7 @@ import static com.jorge.app.ccm.ui.expenses.ExpenseHistoricActivity.EXPENSE_SELE
 import static com.jorge.app.ccm.ui.expenses.ExpenseHistoricActivity.EXPENSE_SELECT_TYPE_EXPENSE;
 import static com.jorge.app.ccm.ui.expenses.ExpenseHistoricActivity.EXPENSE_SELECT_VEHICLE;
 import static com.jorge.app.ccm.ui.expenses.ExpenseHistoricActivity.EXPENSE_SELECT_REQUEST;
+
 
 public class ExpenseEspecificActivity extends AppCompatActivity implements Serializable {
 
@@ -85,12 +82,14 @@ public class ExpenseEspecificActivity extends AppCompatActivity implements Seria
     private LinearLayout layoutVehicleModelVehicle;
     private ImageView imageViewVehicleModelVehicle;
     private TextView textViewVehicleModelVehicle;
-
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_expense_especific );
+
+        user = new User(  );
 
         //[1]
         layoutNumberTickect = findViewById( R.id.layout_numberTickect_expense );
@@ -190,6 +189,7 @@ public class ExpenseEspecificActivity extends AppCompatActivity implements Seria
         // imageViewVehicleModelVehicle.setImageResource( 0 );
         //textViewVehicleModelVehicle.setText( "14" );
 
+
         onActivityResult( EXPENSE_SELECT_REQUEST, RESULT_OK, getIntent() );
     }
 
@@ -203,17 +203,18 @@ public class ExpenseEspecificActivity extends AppCompatActivity implements Seria
         try {
             super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == 1  && resultCode  == RESULT_OK) {
+            if (requestCode == EXPENSE_SELECT_REQUEST  && resultCode  == RESULT_OK) {
 
-                Bundle objetoIn = data.getExtras();
+                Bundle objetIn = data.getExtras();
                 Tickect expenseSelectTickect = null;
                 TypeExpense expenseSelectTypeExpense = null;
                 Vehicle expenseSelectVehicle = null;
-                User user = new User();
+                User user = new User( true );
 
-                expenseSelectTickect = (Tickect) objetoIn.getSerializable( EXPENSE_SELECT_TICKET );
-                expenseSelectTypeExpense = (TypeExpense) objetoIn.getSerializable( EXPENSE_SELECT_TYPE_EXPENSE );
-                expenseSelectVehicle = (Vehicle) objetoIn.getSerializable( EXPENSE_SELECT_VEHICLE );
+
+                expenseSelectTickect = (Tickect) objetIn.getSerializable( EXPENSE_SELECT_TICKET );
+                expenseSelectTypeExpense = (TypeExpense) objetIn.getSerializable( EXPENSE_SELECT_TYPE_EXPENSE );
+                expenseSelectVehicle = (Vehicle) objetIn.getSerializable( EXPENSE_SELECT_VEHICLE );
 
 
                 //[1]
@@ -261,9 +262,9 @@ public class ExpenseEspecificActivity extends AppCompatActivity implements Seria
 
                 //[9]
                 //layoutUserNameUser;
-                String StringTextViewUserNameUserExpense = getString( R.string.textView_userNameUser_expense );
+                String stringTextViewUserNameUserExpense = getString( R.string.textView_userNameUser_expense );
                 Glide.with( getApplicationContext() ).load( user.getUserPhotoUriString() ).into( imageViewUserNameUser );
-                textViewUserNameUser.setText( StringTextViewUserNameUserExpense + user.getUserName() );
+                textViewUserNameUser.setText( stringTextViewUserNameUserExpense + user.getUserName() );
 
                 //[10]
                 //layoutUserEmailUser;

@@ -1,10 +1,13 @@
-package com.jorge.app.ccm.models;
+package com.jorge.app.ccm.models.temp;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.firebase.database.Exclude;
-import com.jorge.app.ccm.utils.DatesTemp;
+import com.jorge.app.ccm.models.TypeExpense;
+import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.models.MethodOfPlayment;
+import com.jorge.app.ccm.models.Provider;
+import com.jorge.app.ccm.models.Tickect;
 
 
 public class ExpenseTemp implements iTicketTemp, iTypeExpenseTemp, iVehicleTemp  {

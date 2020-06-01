@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
+import com.jorge.app.ccm.models.temp.ExpenseTemp;
 
 public class Provider extends MethodOfPlayment {
 
@@ -36,11 +37,11 @@ public class Provider extends MethodOfPlayment {
         this.providerTelephone = expenseTemp.getProviderTelephone();
     }
 
-    protected Provider( DataSnapshot dataSnapshotExpense ) {
-        super( dataSnapshotExpense );
-        this.providerName = String.valueOf( dataSnapshotExpense.child("providerName").getValue() );
-        this.providerCifNif = String.valueOf( dataSnapshotExpense.child("providerCifNif").getValue() );
-        this.providerTelephone = String.valueOf( dataSnapshotExpense.child("providerTelephone").getValue() );
+    protected Provider( DataSnapshot dataSnapshotExpese ) {
+        super( dataSnapshotExpese );
+        this.providerName = String.valueOf( dataSnapshotExpese.child("providerName").getValue() );
+        this.providerCifNif = String.valueOf( dataSnapshotExpese.child("providerCifNif").getValue() );
+        this.providerTelephone = String.valueOf( dataSnapshotExpese.child("providerTelephone").getValue() );
     }
 
 

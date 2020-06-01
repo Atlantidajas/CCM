@@ -19,7 +19,7 @@ public class DatesTemp {
     public DatesTemp( Context context, String TAG ) {
         this.context = context;
         this.FILE_NAME = "temp" + TAG;//<-- Nombre específico temp + el nombre de la actividad
-        this.sharedPreferences = context.getSharedPreferences( FILE_NAME, context.getApplicationContext().MODE_PRIVATE );
+        this.sharedPreferences = context.getSharedPreferences( FILE_NAME, context.MODE_PRIVATE );
         this.editor = sharedPreferences.edit();
     }
 
@@ -32,7 +32,7 @@ public class DatesTemp {
      */
     public void setDateString( String key, String value){
         editor.putString( key, value);
-        editor.apply();
+        editor.commit();
     }
 
     /*
@@ -41,7 +41,7 @@ public class DatesTemp {
      */
     public void setDateInt( String key, int value){
         editor.putInt( key, value);
-        editor.apply();
+        editor.commit();
     }
 
 
@@ -51,7 +51,7 @@ public class DatesTemp {
      */
     public void setDateFloat( String key, float value){
         editor.putFloat( key, value);
-        editor.apply();
+        editor.commit();
     }
 
 
@@ -61,7 +61,7 @@ public class DatesTemp {
      */
     public void setDateBoolean( String key, boolean value){
         editor.putBoolean( key, value);
-        editor.apply();
+        editor.commit();
     }
 
     /*

@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehiclesSelect;
+package com.jorge.app.ccm.ui.expenses;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -21,23 +21,20 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.vehicleCu.RegistryVehiclesActivity;
-import com.jorge.app.ccm.ui.expenses.ExpensesResgistryActivity;
 
 import java.io.Serializable;
 
 /**
  * @author Jorge.HL
  */
-public class VehiclesSelectListActivity extends AppCompatActivity implements Serializable{
+public class ExpensesVehiclesListActivity extends AppCompatActivity implements Serializable{
 
     private String TAG = "VehiclesSelectListActivity";
-    private AdapterVehicleSelect adapterVehicleSelect;
+    private AdapterExpensesVehicles adapterVehicleSelect;
     private Intent intentRegistryVehicles;
-    private Intent intentExpensesActivity;
     private TextView textView;
     private ListView listView;
     public static final String VEHICLE_SELECT = "com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT";
-    static final int REGISTRY_ESPECIFIC_EXPENSE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +44,10 @@ public class VehiclesSelectListActivity extends AppCompatActivity implements Ser
         listView = findViewById(R.id.listView_vehicles_vehicle_select_list);
 
         //Inizializao Adapter para mostrar lista de vehículos
-        this.adapterVehicleSelect = new AdapterVehicleSelect( getApplication(), listView);
+        this.adapterVehicleSelect = new AdapterExpensesVehicles( getApplication(), listView);
 
-        intentRegistryVehicles = new Intent( VehiclesSelectListActivity.this, RegistryVehiclesActivity.class );
-        intentExpensesActivity = new Intent( VehiclesSelectListActivity.this, ExpensesResgistryActivity.class );
+        intentRegistryVehicles = new Intent( ExpensesVehiclesListActivity.this, RegistryVehiclesActivity.class );
+
 
         fieldLoadTextViewTitle();
     }
@@ -131,8 +128,8 @@ public class VehiclesSelectListActivity extends AppCompatActivity implements Ser
 
                 Bundle bundle= new Bundle();
                 bundle.putSerializable( VEHICLE_SELECT, vehicleSelect );
-                intentExpensesActivity.putExtras(bundle);
-                setResult( RESULT_OK, intentExpensesActivity );
+                intentRegistryVehicles.putExtras(bundle);
+                setResult( RESULT_OK, intentRegistryVehicles );
                 finish();
             }
         });

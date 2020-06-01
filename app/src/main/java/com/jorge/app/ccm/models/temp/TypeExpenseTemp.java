@@ -1,7 +1,9 @@
-package com.jorge.app.ccm.models;
+package com.jorge.app.ccm.models.temp;
 
 import android.content.Context;
 
+import com.jorge.app.ccm.models.TypeExpense;
+import com.jorge.app.ccm.models.iTypeExpense;
 import com.jorge.app.ccm.utils.DatesTemp;
 
 /**

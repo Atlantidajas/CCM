@@ -1,9 +1,7 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.Exclude;
-
-import java.io.Serializable;
+import com.jorge.app.ccm.models.temp.ExpenseTemp;
 
 public class MethodOfPlayment {
 
@@ -22,9 +20,9 @@ public class MethodOfPlayment {
         this.methodOfPlaymentName = expenseTemp.getMethodOfPlaymentValueName();
     }
 
-    protected MethodOfPlayment( DataSnapshot dataSnapshotExpense ) {
-//        this.methodOfPlaymentLogo = Integer.parseInt( String.valueOf( dataSnapshotExpense.child("methodOfPlaymentLogo").getValue() ) );
-        this.methodOfPlaymentName = String.valueOf( dataSnapshotExpense.child("methodOfPlaymentName").getValue() );
+    protected MethodOfPlayment( DataSnapshot dataSnapshotExpese ) {
+        this.methodOfPlaymentLogo = Integer.parseInt( String.valueOf( dataSnapshotExpese.child("methodOfPlaymentLogo").getValue() ) );
+        this.methodOfPlaymentName = String.valueOf( dataSnapshotExpese.child("methodOfPlaymentName").getValue() );
     }
 
     public void setMethodOfPlaymentLogo(int methodOfPlaymentLogo) {

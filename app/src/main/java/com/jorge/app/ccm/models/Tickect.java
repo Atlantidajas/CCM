@@ -2,6 +2,7 @@ package com.jorge.app.ccm.models;
 
 
 import com.google.firebase.database.DataSnapshot;
+import com.jorge.app.ccm.models.temp.ExpenseTemp;
 
 
 import java.io.Serializable;
@@ -48,7 +49,7 @@ public class Tickect extends Provider implements Serializable{
 
     public Tickect( DataSnapshot dataSnapshotExpese ) {
         super( dataSnapshotExpese );
-        tickectNumber = String.valueOf( dataSnapshotExpese.child("tickectNumber").getValue() );
+        this.tickectNumber = String.valueOf( dataSnapshotExpese.child("tickectNumber").getValue() );
         this.tickectDate = String.valueOf( dataSnapshotExpese.child("tickectDate").getValue() );
         this.tickectTotalExpense = String.valueOf( dataSnapshotExpese.child("tickectTotalExpense").getValue() );
     }

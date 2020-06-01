@@ -20,7 +20,7 @@
         <activity android:name=".ui.sessionHistoric.SessionHistoricActivity" />
         <activity android:name=".ui.vehicleCu.UpdateVehicleActivity" />
         <activity android:name=".ui.vehicleCu.RegistryVehiclesActivity" />
-        <activity android:name=".ui.vehiclesSelect.VehiclesSelectListActivity" />
+        <activity android:name=".ui.expenses.ExpensesVehiclesListActivity" />
         <activity android:name=".ui.vehicleStatus.VehiclesStatusListActivity" />
         <activity android:name=".ui.location.LocationActivity" />
         <activity android:name=".ui.home.HomeActivity" />

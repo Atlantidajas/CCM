@@ -1,6 +1,9 @@
-package com.jorge.app.ccm.models;
+package com.jorge.app.ccm.models.temp;
 
 import android.content.Context;
+
+import com.jorge.app.ccm.models.MethodOfPlayment;
+import com.jorge.app.ccm.models.Provider;
 
 public class ProviderTemp extends MethodOfPlaymentTemp {
 
@@ -9,12 +12,12 @@ public class ProviderTemp extends MethodOfPlaymentTemp {
     private final String KEY_PROVIDER_CIF_NIF = PRIMARY_KEY + "CifNif";
     private final String KEY_PROVIDER_TELEPHONE = PRIMARY_KEY + "Telephone";
 
-    public ProviderTemp(Context context,
+    protected ProviderTemp(Context context,
                                 String TAG ){
         super(context, TAG);
     }
 
-    public ProviderTemp(Context context,
+    protected ProviderTemp(Context context,
                         String TAG,
                         MethodOfPlayment methodOfPlayment,
                         Provider provider ) {
@@ -24,7 +27,7 @@ public class ProviderTemp extends MethodOfPlaymentTemp {
         this.setDateString( KEY_PROVIDER_TELEPHONE, provider.getProviderName() );
     }
 
-    public ProviderTemp(Context context,
+    protected ProviderTemp(Context context,
                         String TAG,
                         int methodOfPlaymentLogo,
                         String methodOfPlaymentName,

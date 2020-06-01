@@ -102,7 +102,7 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.button_5_activity_type_expenses:
-                effectsVisibleAndInvisibleField( button5.getText().toString(), "R.id.ic_launcher_oil" );
+                effectsVisibleAndInvisibleField( button5.getText().toString(), "ic_launcher_oil" );
                 break;
 
             case R.id.button_6_activity_type_expenses:

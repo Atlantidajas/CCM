@@ -1,7 +1,7 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.Exclude;
+import com.jorge.app.ccm.models.temp.ExpenseTemp;
 
 import java.io.Serializable;
 

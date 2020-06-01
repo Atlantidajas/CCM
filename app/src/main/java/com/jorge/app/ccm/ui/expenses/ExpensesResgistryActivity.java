@@ -1,6 +1,5 @@
 package com.jorge.app.ccm.ui.expenses;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -25,16 +24,15 @@ import com.jorge.app.ccm.controllers.ControllerDBExpense;
 import com.jorge.app.ccm.gadget.notices.DatePickerFragment;
 
 import com.jorge.app.ccm.models.Expense;
-import com.jorge.app.ccm.models.ExpenseTemp;
+import com.jorge.app.ccm.models.temp.ExpenseTemp;
 
 import com.jorge.app.ccm.models.TypeExpense;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.vehicleCu.RegistryVehiclesActivity;
-import com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity;
 
 import static com.jorge.app.ccm.ui.expenses.TypeExpensesActivity.TYPE_EXPENSE;
-import static com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT;
+import static com.jorge.app.ccm.ui.expenses.ExpensesVehiclesListActivity.VEHICLE_SELECT;
 
 public class ExpensesResgistryActivity extends AppCompatActivity{
 
@@ -52,6 +50,8 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
     private Button buttonAcceptExpenses;
     private Button buttonCancelExpenses;
     private ExpenseTemp expenseTemp;
+    private static final int REQUEST_INTENT_VEHICLE_SELECT = 1;
+    private static final int REQUEST_INTENT_TYPE_EXPENSE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
 
         //Intens
         intentCreateVehicle = new Intent( ExpensesResgistryActivity.this, RegistryVehiclesActivity.class );
-        intentVehiclesSelectList = new Intent( ExpensesResgistryActivity.this, VehiclesSelectListActivity.class );
+        intentVehiclesSelectList = new Intent( ExpensesResgistryActivity.this, ExpensesVehiclesListActivity.class );
         intentTypeExpenses = new Intent( ExpensesResgistryActivity.this, TypeExpensesActivity.class );
 
         final Expense expense = new Expense( );
@@ -99,7 +99,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
         try {
             super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == 1  && resultCode  == resultCode) {
+            if (requestCode == REQUEST_INTENT_VEHICLE_SELECT  && resultCode  == RESULT_OK) {
 
                 Bundle objetoIn = data.getExtras();
                 Vehicle vehicleSelect = null;
@@ -123,22 +123,24 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
                 Log.i( TAG, "Índice con el que se guardará: " + VEHICLE_SELECT + "expenseVehicleDriving" +
                         "Valor que se guardará: " + expenseTemp.getVehicleDriving() );
 
+                editTextSelectVehicle.setText( expenseTemp.getVehicleRegistrationNumber() );
+
             }
 
-            if (requestCode == 2  && resultCode  == resultCode) {
+            if (requestCode == REQUEST_INTENT_TYPE_EXPENSE  && resultCode  == RESULT_OK) {
 
-                Bundle objetoIn = data.getExtras();
+                Bundle objetIn = data.getExtras();
                 Vehicle vehicleSelect = null;
                 TypeExpense typeExpenseSelect = null;
 
-                typeExpenseSelect = (TypeExpense) objetoIn.getSerializable(TYPE_EXPENSE);
+                typeExpenseSelect = (TypeExpense) objetIn.getSerializable(TYPE_EXPENSE);
 
                 if ( typeExpenseSelect !=null )
 
                     // Guardo los datos en fichero de forma temporar por si el usuario regresa o sale de la actividad para seleccionar Vehículo
 
                     expenseTemp.setTypeExpenseTemp( this, TAG, typeExpenseSelect );
-
+                    editTextTypeExpense.setText( expenseTemp.getTypeExpenseName() );
             }
 
 
@@ -157,7 +159,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
         editTextSelectVehicle.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(intentVehiclesSelectList,1);
+                startActivityForResult(intentVehiclesSelectList, REQUEST_INTENT_VEHICLE_SELECT);
             }
         } );
 
@@ -173,7 +175,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
         editTextTypeExpense.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(intentTypeExpenses,2);
+                startActivityForResult(intentTypeExpenses, REQUEST_INTENT_TYPE_EXPENSE);
             }
         } );
 
@@ -315,6 +317,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
                 if ( validateFieldTypeEditText( editTextSelectVehicle ) &&
                         validateFieldTypeEditText( editTextTypeExpense ) &&
                         validateFieldTypeEditText( editTextTickectNumber ) &&
+                        validateFieldTypeEditText( editTextTicketProviderName ) &&
                         validateFieldTypeEditText( editTextDateExpenses ) &&
                         validateFieldTypeSpinner( spinnerMethodplayment ) &&
                         validateFieldTypeEditText( editTextTotalImport ) ){
@@ -323,7 +326,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
                     Expense expense = new Expense( expenseTemp );
 
                     saveDatesFormForDB( expense );//<-- Guarda db
-                    expenseTemp.removeTypeExpense();//<-- Borro datos del fichero temporal correspondientes al objeto expenseTemp
+                    expenseTemp.removeExpenseTemp();//<-- Borro datos del fichero temporal correspondientes al objeto expenseTemp
                     finish();
 
                 }
@@ -379,12 +382,12 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
         // Compruebo que no sea la primera posición. Ya que esta, es el mensaje de campo.
         if ( TextUtils.isEmpty( textForValidate ) || textForValidate.equals( methodPlayment[0] ) ){
             //Cambio color
-            spinner.setBackgroundColor(Color.MAGENTA);
+            spinner.setBackgroundColor(Color.BLUE);
 
             //Posiciono el foco sobre el editText
             spinner.requestFocus();
 
-            Toast.makeText(this, "Ha dejado el campo vacio", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.toast_message_empty_fields, Toast.LENGTH_LONG).show();
 
             return false;
         }

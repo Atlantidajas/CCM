@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.ui.vehiclesSelect;
+package com.jorge.app.ccm.ui.expenses;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -28,7 +28,7 @@ import java.util.Iterator;
  * @author Jorge.HL
  */
 
-public class AdapterVehicleSelect extends BaseAdapter {
+public class AdapterExpensesVehicles extends BaseAdapter {
 
     private Context context;
     private ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
@@ -37,7 +37,7 @@ public class AdapterVehicleSelect extends BaseAdapter {
     private Vehicle vehicle;
     ControllerDBStatus controllerDBStatus;
 
-    public AdapterVehicleSelect(final Context context, ListView listView) {
+    public AdapterExpensesVehicles(final Context context, ListView listView) {
         this.context = context;
         this.listView = listView;
         this.controllerDBStatus = new ControllerDBStatus( context );
