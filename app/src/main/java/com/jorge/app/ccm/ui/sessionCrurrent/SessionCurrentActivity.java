@@ -35,7 +35,6 @@ import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 public class SessionCurrentActivity extends AppCompatActivity{
 
     private final String TAG = "SessionDrivingActivity";
-    private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
     private ControllerDBStatus controllerDBStatus;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
@@ -75,7 +74,6 @@ public class SessionCurrentActivity extends AppCompatActivity{
         buttonCloseSesionCurrent = findViewById( R.id.button_close_session_session_driving_crurrent );
 
 
-        controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
         controllerDBStatus = new ControllerDBStatus( getApplication(), TAG );
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         user = new User( true );
@@ -83,7 +81,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
         intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesStatusListActivity.class );
 
         // Cargo array adapte
-        this.controllerDBSessionsCurrents.getDatabaseReferenceSessionsCurrents().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
+        this.controllerDBSessionsHistoric.getDatabaseReferenceSessionsCurrents().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
 
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
@@ -210,7 +208,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
                             //Condicion 1
                             if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
                                 controllerDBStatus.updateStatusVehicle( sessionDriving.getVehicle(), null );
-                                controllerDBSessionsCurrents.updateValueSessionsCurrents( sessionDriving, null );
+                                controllerDBSessionsHistoric.updateValueSessionsCurrents( sessionDriving, null );
                                 controllerDBSessionsHistoric.setValueSessionsHistoric( sessionDriving );
                                 Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
                                 startActivity( intentCloseSesion );

@@ -41,7 +41,6 @@ import static com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity.SESSI
 public class SessionStatusActivity extends AppCompatActivity {
 
     private final String TAG = "SessionStatusActivity";
-    private ControllerDBSessionsCurrents controllerDBSessionsCurrents;
     private ControllerDBStatus controllerDBStatus;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
     private SessionDriving sessionDriving;
@@ -80,8 +79,6 @@ public class SessionStatusActivity extends AppCompatActivity {
         textViewRegistrationNumber = findViewById(R.id.textViewRegistrationNumber);
         buttonCloseSesionCurrent = findViewById( R.id.button_close_session_session_driving_crurrent );
 
-
-        controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
         controllerDBStatus = new ControllerDBStatus( getApplication(), TAG );
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         user = new User( true );
@@ -243,7 +240,7 @@ public class SessionStatusActivity extends AppCompatActivity {
                             //Condicion 1
                             if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
                                 controllerDBStatus.updateStatusVehicle( sessionDriving.getVehicle(), null );
-                                controllerDBSessionsCurrents.updateValueSessionsCurrents( sessionDriving, null );
+                                controllerDBSessionsHistoric.updateValueSessionsCurrents( sessionDriving, null );
                                 controllerDBSessionsHistoric.setValueSessionsHistoric( sessionDriving );
                                 Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
                                 startActivity( intentCloseSesion );

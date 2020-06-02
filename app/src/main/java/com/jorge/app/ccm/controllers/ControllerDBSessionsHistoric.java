@@ -14,13 +14,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.models.SessionDriving;
 
-public class ControllerDBSessionsHistoric {
+public class ControllerDBSessionsHistoric extends ControllerDBSessionsCurrents {
 
     private String TAG;
     private Context context;
     private DatabaseReference databaseReference;
 
-    public ControllerDBSessionsHistoric(final Context context, String TAG) {
+    public ControllerDBSessionsHistoric(Context context, String TAG) {
+        super( context, TAG );
         this.context = context;
         this.TAG = TAG;
         this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "SessionsHistorics" );
