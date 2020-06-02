@@ -28,6 +28,7 @@ import java.util.Iterator;
 
 public class AdapterSessionHistoric extends BaseAdapter {
 
+    private String TAG;
     private ImageView imageViewLogoVehicle;
     private TextView textView_registrationNumber;
     private TextView textView_date;
@@ -45,17 +46,18 @@ public class AdapterSessionHistoric extends BaseAdapter {
 
     public AdapterSessionHistoric(){}
 
-    public AdapterSessionHistoric(final Context context, TextView textView, ListView listView) {
+    public AdapterSessionHistoric(final Context context, TextView textView, ListView listView, String TAG) {
         this.context = context;
         this.textView = textView;
         this.listView = listView;
-        this.controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( context );
+        this.TAG = TAG;
+        this.controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( context, TAG );
         user = new User( true );
 
         listIntemSessions = new ArrayList<>(  );
 
         //Eventos de cambios sobre el adaptador
-        controllerDBSessionsHistoric.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+        controllerDBSessionsHistoric.getDatabaseReferenceSessionsHistoric().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 listIntemSessions.clear();
@@ -88,7 +90,7 @@ public class AdapterSessionHistoric extends BaseAdapter {
 
 
         // Cargo array adapte
-        this.controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        this.controllerDBSessionsHistoric.getDatabaseReferenceSessionsHistoric().addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
 

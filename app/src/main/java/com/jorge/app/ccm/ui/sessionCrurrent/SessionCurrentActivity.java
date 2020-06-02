@@ -77,7 +77,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
 
         controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
         controllerDBStatus = new ControllerDBStatus( getApplication(), TAG );
-        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         user = new User( true );
 
         intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesStatusListActivity.class );
@@ -211,7 +211,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
                             if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
                                 controllerDBStatus.updateStatusVehicle( sessionDriving.getVehicle(), null );
                                 controllerDBSessionsCurrents.updateValueSessionsCurrents( sessionDriving, null );
-                                controllerDBSessionsHistoric.setValue( sessionDriving );
+                                controllerDBSessionsHistoric.setValueSessionsHistoric( sessionDriving );
                                 Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
                                 startActivity( intentCloseSesion );
                             } else {

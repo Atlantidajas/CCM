@@ -253,7 +253,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
         final ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
         final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-        final ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
+        final ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
         //Condición 1
         if (sessionDrivingCurrent.getSessionTypeSesion().equals( "Start" )) {
@@ -288,7 +288,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
                     controllerDBSessionsCurrents.updateValueSessionsCurrents( sessionDrivingStart, null );
                     controllerDBStatus.updateStatusVehicle( sessionDrivingStart.getVehicle(), null);
-                    controllerDBSessionsHistoric.setValue( sessionDrivingStart );
+                    controllerDBSessionsHistoric.setValueSessionsHistoric( sessionDrivingStart );
                     startActivity( intentSesionDriving );
                 }
 

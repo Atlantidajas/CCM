@@ -39,7 +39,7 @@ public class SessionHistoricActivity extends AppCompatActivity {
         intentSessionStatus  = new Intent( SessionHistoricActivity.this, SessionStatusActivity.class );
 
         //Inizializao Adapter para mostrar lista de sesiones
-        adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView);
+        adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView, TAG);
         sesionsDrivings = new ArrayList<>(  );
         sesionsDrivings = adapterSessionHistoric.getListIntemSesions();
 

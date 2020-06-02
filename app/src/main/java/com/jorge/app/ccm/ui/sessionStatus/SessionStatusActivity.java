@@ -83,7 +83,7 @@ public class SessionStatusActivity extends AppCompatActivity {
 
         controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
         controllerDBStatus = new ControllerDBStatus( getApplication(), TAG );
-        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         user = new User( true );
 
         intentCloseSesion  = new Intent( SessionStatusActivity.this, SessionHistoricActivity.class );
@@ -92,7 +92,7 @@ public class SessionStatusActivity extends AppCompatActivity {
         final ArrayList<SessionDriving>listSessionDriving = new ArrayList<>(  );
 
         // Cargo array adapte
-        this.controllerDBSessionsHistoric.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        this.controllerDBSessionsHistoric.getDatabaseReferenceSessionsHistoric().addValueEventListener( new ValueEventListener() {
 
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
@@ -244,7 +244,7 @@ public class SessionStatusActivity extends AppCompatActivity {
                             if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
                                 controllerDBStatus.updateStatusVehicle( sessionDriving.getVehicle(), null );
                                 controllerDBSessionsCurrents.updateValueSessionsCurrents( sessionDriving, null );
-                                controllerDBSessionsHistoric.setValue( sessionDriving );
+                                controllerDBSessionsHistoric.setValueSessionsHistoric( sessionDriving );
                                 Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
                                 startActivity( intentCloseSesion );
                             } else {

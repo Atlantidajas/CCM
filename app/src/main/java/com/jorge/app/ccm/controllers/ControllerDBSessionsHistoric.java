@@ -16,19 +16,21 @@ import com.jorge.app.ccm.models.SessionDriving;
 
 public class ControllerDBSessionsHistoric {
 
+    private String TAG;
     private Context context;
     private DatabaseReference databaseReference;
 
-    public ControllerDBSessionsHistoric(final Context context) {
+    public ControllerDBSessionsHistoric(final Context context, String TAG) {
         this.context = context;
+        this.TAG = TAG;
         this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "SessionsHistorics" );
     }
 
-    public DatabaseReference getDatabaseReference() {
+    public DatabaseReference getDatabaseReferenceSessionsHistoric() {
         return databaseReference;
     }
 
-    public void setValue( final SessionDriving sessionDriving){
+    public void setValueSessionsHistoric( final SessionDriving sessionDriving){
 
         final DatabaseReference dbRF = databaseReference.push();
 
@@ -48,7 +50,7 @@ public class ControllerDBSessionsHistoric {
         dbRF.addValueEventListener( valueEventListenerSetVehicle );
     }
 
-    public ChildEventListener setChildEventListener(final String messageOnChildChanged,
+    public ChildEventListener setChildEventListenerSessionsHistoric(final String messageOnChildChanged,
                                                     final String messageOnChildRemoved,
                                                     final String messageOnChildMoved ) {
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -88,7 +90,7 @@ public class ControllerDBSessionsHistoric {
         return childEventListener;
     }
 
-    public DatabaseReference getDatabaseReferenceSearch( SessionDriving sessionDriving){
+    public DatabaseReference getDatabaseReferenceSessionsHistoricSearch( SessionDriving sessionDriving){
         return databaseReference.child( sessionDriving.getIdUser() );
     }
 }
