@@ -16,20 +16,22 @@ import com.jorge.app.ccm.models.SessionDriving;
 
 public class ControllerDBSessionsCurrents {
 
+    private String TAG;
     private Context context;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceSessionsCurrents;
 
-    public ControllerDBSessionsCurrents(final Context context) {
+    public ControllerDBSessionsCurrents(final Context context, String TAG) {
         this.context = context;
-        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "SessionsCurrents" );
+        this.TAG = TAG;
+        this.databaseReferenceSessionsCurrents = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "SessionsCurrents" );
     }
 
-    public DatabaseReference getDatabaseReference() {
-        return databaseReference;
+    public DatabaseReference getDatabaseReferenceSessionsCurrents() {
+        return databaseReferenceSessionsCurrents;
     }
 
-    public void setValue( final SessionDriving sessionDriving){
-        final DatabaseReference dbRF = databaseReference.child( sessionDriving.getIdUser() );
+    public void setValueSessionsCurrents( final SessionDriving sessionDriving){
+        final DatabaseReference dbRF = databaseReferenceSessionsCurrents.child( sessionDriving.getIdUser() );
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override
@@ -50,20 +52,20 @@ public class ControllerDBSessionsCurrents {
         dbRF.addValueEventListener( valueEventListenerSetVehicle );
     }
 
-    public void removeValue(final SessionDriving sessionDriving, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( sessionDriving.getIdUser() );
-        dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
+    public void removeValueSessionsCurrents(final SessionDriving sessionDriving, String messageOnChildRemoved ){
+        DatabaseReference dbRF = databaseReferenceSessionsCurrents.child( sessionDriving.getIdUser() );
+        dbRF.addChildEventListener( setChildEventListenerSessionsCurrents(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
-    public void updateValue(final SessionDriving sessionDriving, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( sessionDriving.getIdUser() );
-        dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
+    public void updateValueSessionsCurrents(final SessionDriving sessionDriving, String messageOnChildChanged  ){
+        DatabaseReference dbRF = databaseReferenceSessionsCurrents.child( sessionDriving.getIdUser() );
+        dbRF.addChildEventListener( setChildEventListenerSessionsCurrents( messageOnChildChanged, null, null ) );
         dbRF.setValue( sessionDriving );
     }
 
 
-    public ChildEventListener setChildEventListener(final String messageOnChildChanged,
+    public ChildEventListener setChildEventListenerSessionsCurrents(final String messageOnChildChanged,
                                                     final String messageOnChildRemoved,
                                                     final String messageOnChildMoved ) {
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -103,8 +105,8 @@ public class ControllerDBSessionsCurrents {
         return childEventListener;
     }
 
-    public DatabaseReference getDatabaseReferenceSearch( SessionDriving sessionDriving){
-        return databaseReference.child( sessionDriving.getIdUser() );
+    public DatabaseReference getDatabaseReferenceSessionsCurrentsSearch( SessionDriving sessionDriving){
+        return databaseReferenceSessionsCurrents.child( sessionDriving.getIdUser() );
     }
 
 }

@@ -16,17 +16,19 @@ import com.jorge.app.ccm.models.Vehicle;
 
 public class ControllerDBStatus {
 
+    private String TAG;
     private Context context;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceStatus;
     private int countChild;
 
-    public ControllerDBStatus( final Context context ) {
+    public ControllerDBStatus( final Context context, String TAG ) {
         this.context = context;
-        this.databaseReference = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Status" );
+        this.TAG = TAG;
+        this.databaseReferenceStatus = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Status" );
     }
 
-    public void setValue( final Vehicle vehicle ){
-        final DatabaseReference dbRF = databaseReference.child( vehicle.getVehicleRegistrationNumber() );
+    public void setStatusVehicle( final Vehicle vehicle ){
+        final DatabaseReference dbRF = databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override
@@ -44,21 +46,21 @@ public class ControllerDBStatus {
         dbRF.addValueEventListener( valueEventListenerSetVehicle );
     }
 
-    public void removeValue(final Vehicle vehicle, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( vehicle.getVehicleRegistrationNumber() );
-        dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
+    public void removeStatusVehicle(final Vehicle vehicle, String messageOnChildRemoved ){
+        DatabaseReference dbRF = databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
+        dbRF.addChildEventListener( setChildEventListenerStatus(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
-    public void updateValue( final Vehicle vehicle, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( vehicle.getVehicleRegistrationNumber() );
-        dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
+    public void updateStatusVehicle( final Vehicle vehicle, String messageOnChildChanged  ){
+        DatabaseReference dbRF = databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
+        dbRF.addChildEventListener( setChildEventListenerStatus( messageOnChildChanged, null, null ) );
         dbRF.setValue( vehicle );
     }
 
-    public int getCountChild(){
+    public int getCountChildStatus(){
 
-        databaseReference.addChildEventListener( new ChildEventListener() {
+        databaseReferenceStatus.addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if ( dataSnapshot.exists() ){
@@ -107,16 +109,16 @@ public class ControllerDBStatus {
         return this.countChild;
     }
 
-    public DatabaseReference getDatabaseReferenceSearch( Vehicle vehicle){
-        return databaseReference.child( vehicle.getVehicleRegistrationNumber() );
+    public DatabaseReference getDatabaseReferenceStatusSearch( Vehicle vehicle){
+        return databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
     }
 
     public DatabaseReference getDatabaseReference() {
-        return databaseReference;
+        return databaseReferenceStatus;
     }
 
 
-    public ChildEventListener setChildEventListener( final String messageOnChildChanged,
+    public ChildEventListener setChildEventListenerStatus( final String messageOnChildChanged,
                                        final String messageOnChildRemoved,
                                        final String messageOnChildMoved ) {
         ChildEventListener childEventListener = new ChildEventListener() {

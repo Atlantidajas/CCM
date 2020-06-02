@@ -207,9 +207,9 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
             int logo = brandsUtil.getIdResource( brand );
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV,0);
-            controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+            controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
             String messageUpdateVehicle = getString( R.string.toast_message_changed_vehicle_generic );
-            controllerDBStatus.updateValue( vehicle, messageUpdateVehicle + " " + vehicle.getVehicleRegistrationNumber());
+            controllerDBStatus.updateStatusVehicle( vehicle, messageUpdateVehicle + " " + vehicle.getVehicleRegistrationNumber());
             controllerDBStatus = null;
 
             Intent intent= new Intent ( UpdateVehicleActivity.this, VehiclesStatusListActivity.class);

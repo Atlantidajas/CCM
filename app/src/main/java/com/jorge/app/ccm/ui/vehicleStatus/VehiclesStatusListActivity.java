@@ -87,7 +87,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         Log.i( TAG, String.valueOf( listView.getCount() ) );
 
         //Inizializo controlador para datos del adaptador
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
         //Obtengo la referencia para los datos del adpatador
         DatabaseReference dbrfSatus = controllerDBStatus.getDatabaseReference();
         //Cargo el adaptador con los datos
@@ -100,8 +100,8 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public void readSesionCurrent(){
 
         User user = new User( true );
-        ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
-        controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
+        ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
+        controllerDBSessionsCurrents.getDatabaseReferenceSessionsCurrents().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -162,7 +162,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         // Posición lista pulsado
         int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
         final Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
 
         // Información al usuario sobre menú pulsado.
         switch (item.getItemId()) {
@@ -188,11 +188,11 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public void onSesionDrinvingCreate(){
 
         //Sesion de inicio por si es la primera ves que inicia sesión
-        ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
+        ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
         Session sessionCreate = new Session( "Create" );
         User user = new User( true );
         SessionDriving sessionDrivingCreate = new SessionDriving( sessionCreate, user );
-        controllerDBSessionsCurrents.setValue( sessionDrivingCreate );
+        controllerDBSessionsCurrents.setValueSessionsCurrents( sessionDrivingCreate );
     }
 
     public void onclickItemList(){
@@ -251,8 +251,8 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
     public void checkSesion( final SessionDriving sessionDrivingStart) {
 
-        final ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
-        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        final ControllerDBSessionsCurrents controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
+        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
         final ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
 
         //Condición 1
@@ -286,8 +286,8 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                     Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSessionTypeSesion() );
                     Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sessionDrivingStart.getVehicle().getVehicleDriving() );
 
-                    controllerDBSessionsCurrents.updateValue( sessionDrivingStart, null );
-                    controllerDBStatus.updateValue( sessionDrivingStart.getVehicle(), null);
+                    controllerDBSessionsCurrents.updateValueSessionsCurrents( sessionDrivingStart, null );
+                    controllerDBStatus.updateStatusVehicle( sessionDrivingStart.getVehicle(), null);
                     controllerDBSessionsHistoric.setValue( sessionDrivingStart );
                     startActivity( intentSesionDriving );
                 }
@@ -329,7 +329,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
     public void deleteVehicle( Vehicle vehicleForDelete ){
 
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
         //Evento childEventListernet Incorporado en Cotrolador Status
         final String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
 
@@ -337,7 +337,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
         // Se puede eliminar si no está en uso por nadie
         if ( vehicleForDelete.getVehicleDriving() == 0 ){
-            controllerDBStatus.removeValue( vehicleForDelete, messageRemove + " " +
+            controllerDBStatus.removeStatusVehicle( vehicleForDelete, messageRemove + " " +
                     vehicleForDelete.getVehicleRegistrationNumber() );
         }
         // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.

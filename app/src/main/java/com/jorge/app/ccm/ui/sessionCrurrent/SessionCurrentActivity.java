@@ -75,15 +75,15 @@ public class SessionCurrentActivity extends AppCompatActivity{
         buttonCloseSesionCurrent = findViewById( R.id.button_close_session_session_driving_crurrent );
 
 
-        controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext() );
-        controllerDBStatus = new ControllerDBStatus( getApplication() );
+        controllerDBSessionsCurrents = new ControllerDBSessionsCurrents( getApplicationContext(), TAG );
+        controllerDBStatus = new ControllerDBStatus( getApplication(), TAG );
         controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
         user = new User( true );
 
         intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesStatusListActivity.class );
 
         // Cargo array adapte
-        this.controllerDBSessionsCurrents.getDatabaseReference().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
+        this.controllerDBSessionsCurrents.getDatabaseReferenceSessionsCurrents().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
 
             @Override
             public void onDataChange( DataSnapshot dataSnapshot ) {
@@ -209,8 +209,8 @@ public class SessionCurrentActivity extends AppCompatActivity{
                             //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
                             //Condicion 1
                             if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
-                                controllerDBStatus.updateValue( sessionDriving.getVehicle(), null );
-                                controllerDBSessionsCurrents.updateValue( sessionDriving, null );
+                                controllerDBStatus.updateStatusVehicle( sessionDriving.getVehicle(), null );
+                                controllerDBSessionsCurrents.updateValueSessionsCurrents( sessionDriving, null );
                                 controllerDBSessionsHistoric.setValue( sessionDriving );
                                 Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
                                 startActivity( intentCloseSesion );

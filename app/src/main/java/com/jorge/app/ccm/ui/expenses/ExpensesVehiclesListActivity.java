@@ -44,7 +44,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
         listView = findViewById(R.id.listView_vehicles_vehicle_select_list);
 
         //Inizializao Adapter para mostrar lista de vehículos
-        this.adapterVehicleSelect = new AdapterExpensesVehicles( getApplication(), listView);
+        this.adapterVehicleSelect = new AdapterExpensesVehicles( getApplication(), listView, TAG);
 
         intentRegistryVehicles = new Intent( ExpensesVehiclesListActivity.this, RegistryVehiclesActivity.class );
 
@@ -57,7 +57,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
      */
     public void fieldLoadTextViewTitle(){
 
-        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
+        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
         //Cargo con los datos de la db el adapter
         controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
             @Override
@@ -67,7 +67,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
 
                 if (dataSnapshot.exists()) {
 
-                    Log.i( TAG, "fieldLoadTextViewTitle() -> StatusDB -> getCountChild: " + String.valueOf( controllerDBStatus.getCountChild() ) );
+                    Log.i( TAG, "fieldLoadTextViewTitle() -> StatusDB -> getCountChild: " + String.valueOf( controllerDBStatus.getCountChildStatus() ) );
                     textView.setText( R.string.textView_vehicles_select_list_activity_false );
                     img = getApplicationContext().getResources().getDrawable( R.mipmap.ic_launcher_select_multiple );
                 }

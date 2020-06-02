@@ -202,8 +202,8 @@ public class RegistryVehiclesActivity extends AppCompatActivity implements Dialo
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV, 0 );
 
-            controllerDBStatus = new ControllerDBStatus( getApplicationContext() );
-            controllerDBStatus.setValue( vehicle );
+            controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
+            controllerDBStatus.setStatusVehicle( vehicle );
             //Lo envío a la actividad de la que proviene, ya que se pueden crear vehículos desde diferentes actividades
             finish();
         }

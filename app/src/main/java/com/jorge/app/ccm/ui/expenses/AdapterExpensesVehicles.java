@@ -30,6 +30,7 @@ import java.util.Iterator;
 
 public class AdapterExpensesVehicles extends BaseAdapter {
 
+    private String TAG;
     private Context context;
     private ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
     private TextView textView;
@@ -37,10 +38,11 @@ public class AdapterExpensesVehicles extends BaseAdapter {
     private Vehicle vehicle;
     ControllerDBStatus controllerDBStatus;
 
-    public AdapterExpensesVehicles(final Context context, ListView listView) {
+    public AdapterExpensesVehicles(final Context context, ListView listView, String TAG) {
         this.context = context;
         this.listView = listView;
-        this.controllerDBStatus = new ControllerDBStatus( context );
+        this.TAG = TAG;
+        this.controllerDBStatus = new ControllerDBStatus( context, TAG );
 
 
         //Eventos de cambios sobre el adaptador
