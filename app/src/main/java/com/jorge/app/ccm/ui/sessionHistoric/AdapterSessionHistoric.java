@@ -137,12 +137,12 @@ public class AdapterSessionHistoric extends BaseAdapter {
             textView_typeSesion = convertView.findViewById( R.id.textView_session_type_item_sessions );
             imageView_drivind = convertView.findViewById( R.id.imageView_driving_item_sessions );
 
-            imageViewLogoVehicle.setImageResource( sessionDriving.getVehicle().getVehiclelogo() );
-            textView_registrationNumber.setText( sessionDriving.getVehicle().getVehicleRegistrationNumber() );
-            textView_date.setText( sessionDriving.getSession().getDate() );
-            textView_hours.setText( sessionDriving.getSession().getHours() );
-            textView_typeSesion.setText( sessionDriving.getSession().getTypeSesion() );
-            Glide.with( context ).load( sessionDriving.getUser().getUserPhotoUriString() ).into( imageView_drivind );
+            imageViewLogoVehicle.setImageResource( sessionDriving.getVehiclelogo() );
+            textView_registrationNumber.setText( sessionDriving.getVehicleRegistrationNumber() );
+            textView_date.setText( sessionDriving.getSessionDate() );
+            textView_hours.setText( sessionDriving.getSessionHours() );
+            textView_typeSesion.setText( sessionDriving.getSessionTypeSesion() );
+            Glide.with( context ).load( sessionDriving.getUserPhotoUriString() ).into( imageView_drivind );
 
         return convertView;
     }
@@ -158,7 +158,7 @@ public class AdapterSessionHistoric extends BaseAdapter {
         do{
             SessionDriving sessionDriving = new SessionDriving( dataSnapshots.next() );
 
-            if( sessionDriving.getUser().getIdUser().equals( user.getIdUser() ) ) {
+            if( sessionDriving.getIdUser().equals( user.getIdUser() ) ) {
 
                 listIntemSessions.add( sessionDriving );
 

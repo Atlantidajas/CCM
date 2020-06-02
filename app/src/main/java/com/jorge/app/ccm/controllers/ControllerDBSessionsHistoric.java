@@ -89,6 +89,6 @@ public class ControllerDBSessionsHistoric {
     }
 
     public DatabaseReference getDatabaseReferenceSearch( SessionDriving sessionDriving){
-        return databaseReference.child( sessionDriving.getUser().getIdUser() );
+        return databaseReference.child( sessionDriving.getIdUser() );
     }
 }

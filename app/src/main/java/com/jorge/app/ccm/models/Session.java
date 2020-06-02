@@ -7,48 +7,47 @@ import java.io.Serializable;
 
 public class Session implements Serializable {
 
-    private String date;
-    private String hours;
-    private String typeSesion;
+    private String sessionDate;
+    private String sessionHours;
+    private String sessionTypeSesion;
 
     public Session( String typeSesion) {
         DateHoursUtil dateHoursUtil = new DateHoursUtil();
-        this.date = dateHoursUtil.getDateFormatString();
-        this.hours = dateHoursUtil.getHourFormatString();
-        this.typeSesion = typeSesion;
+        this.sessionDate = dateHoursUtil.getDateFormatString();
+        this.sessionHours = dateHoursUtil.getHourFormatString();
+        this.sessionTypeSesion = typeSesion;
     }
 
     public Session( DataSnapshot dataSnapshotSesion ) {
         DateHoursUtil dateHoursUtil = new DateHoursUtil();
-        this.date = dateHoursUtil.getDateFormatString();
-        this.hours = dateHoursUtil.getHourFormatString();
-        this.typeSesion = String.valueOf( dataSnapshotSesion.child("typeSesion").getValue() );
-        this.date = String.valueOf( dataSnapshotSesion.child("date").getValue() );
-        this.hours = String.valueOf( dataSnapshotSesion.child("hours").getValue() );
+        this.sessionDate = dateHoursUtil.getDateFormatString();
+        this.sessionHours = dateHoursUtil.getHourFormatString();
+        this.sessionDate = String.valueOf( dataSnapshotSesion.child("sessionDate").getValue() );
+        this.sessionHours = String.valueOf( dataSnapshotSesion.child("sessionHours").getValue() );
+        this.sessionTypeSesion = String.valueOf( dataSnapshotSesion.child("sessionTypeSesion").getValue() );
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setSessionDate(String sessionDate) {
+        this.sessionDate = sessionDate;
     }
 
-    public void setHours(String hours) {
-        this.hours = hours;
+    public void setSessionHours(String sessionHours) {
+        this.sessionHours = sessionHours;
     }
 
-    public void setTypeSesion(String typeSesion) {
-        this.typeSesion = typeSesion;
+    public void setSessionTypeSesion(String sessionTypeSesion) {
+        this.sessionTypeSesion = sessionTypeSesion;
     }
 
-    public String getTypeSesion() {
-        return typeSesion;
+    public String getSessionDate() {
+        return sessionDate;
     }
 
-    public String getDate() {
-        return date;
+    public String getSessionHours() {
+        return sessionHours;
     }
 
-    public String getHours() {
-        return hours;
+    public String getSessionTypeSesion() {
+        return sessionTypeSesion;
     }
-
 }

@@ -104,7 +104,7 @@ public class SessionStatusActivity extends AppCompatActivity {
                     do{
                         SessionDriving sessionDriving = new SessionDriving( dataSnapshots.next() );
 
-                        if( sessionDriving.getUser().getIdUser().equals( user.getIdUser() ) ) {
+                        if( sessionDriving.getIdUser().equals( user.getIdUser() ) ) {
 
                             //Listado de todas las sessiones históricas de la db
                             listSessionDriving.add( sessionDriving );
@@ -118,8 +118,8 @@ public class SessionStatusActivity extends AppCompatActivity {
                     for( int i = 0; i < listSessionDriving.size(); i++ ){
 
                         //Solo me quedo con las sesiones del usuario y con la que tenga el mismo registro de tiempo que la recibida por el intent
-                        if( listSessionDriving.get( i ).getUser().getIdUser().equals( user.getIdUser() )  &&
-                                ( listSessionDriving.get( i ).getSession().getHours().equals( sessionIntent.getHours() ) )  ){
+                        if( listSessionDriving.get( i ).getIdUser().equals( user.getIdUser() )  &&
+                                ( listSessionDriving.get( i ).getSessionHours().equals( sessionIntent.getSessionHours() ) )  ){
 
                             sessionDriving = listSessionDriving.get( i );
 
@@ -128,7 +128,7 @@ public class SessionStatusActivity extends AppCompatActivity {
                              */
                             boolean REAL_STATUS_SESSION = realEstateSessionHistoric( i, listSessionDriving.size() );
 
-                            Log.i( TAG, sessionDriving.getUser().getIdUser() );
+                            Log.i( TAG, sessionDriving.getIdUser() );
 
                             //Cargo todos los campos
                             loadFieldUserSession( sessionDriving );
@@ -159,8 +159,8 @@ public class SessionStatusActivity extends AppCompatActivity {
     public void loadFieldUserSession( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String userSession = resources.getString( R.string.textViewUserDate );
-        Glide.with( getApplicationContext() ).load( sessionDriving.getUser().getUserPhotoUriString() ).into( imageViewUserDate );
-        textViewUserDate.setText( userSession + " " + sessionDriving.getUser().getUserName() );
+        Glide.with( getApplicationContext() ).load( sessionDriving.getUserPhotoUriString() ).into( imageViewUserDate );
+        textViewUserDate.setText( userSession + " " + sessionDriving.getUserName() );
     }
 
     public void loadFieldStatuSession( boolean realStatusSesion ){
@@ -183,32 +183,32 @@ public class SessionStatusActivity extends AppCompatActivity {
     public void loadFieldDateSession( SessionDriving sessionDriving){
         Resources resources = getResources();
         String dateSession = resources.getString( R.string.textViewDate );
-        textViewDate.setText( dateSession + " " + sessionDriving.getSession().getDate() );
+        textViewDate.setText( dateSession + " " + sessionDriving.getSessionDate() );
     }
 
     public void loadFieldHoursSession( SessionDriving sessionDriving){
         Resources resources = getResources();
         String hoursSession = resources.getString( R.string.textViewHours );
-        textViewHours.setText( hoursSession  + " " + sessionDriving.getSession().getHours() );
+        textViewHours.setText( hoursSession  + " " + sessionDriving.getSessionHours() );
     }
 
     public void loadFieldBrandVehicle( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String brandVehicleSession = resources.getString( R.string.textViewBrand );
-        textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicle().getVehicleBrand() );
-        imageViewBrand.setImageResource( sessionDriving.getVehicle().getVehiclelogo() );
+        textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicleBrand() );
+        imageViewBrand.setImageResource( sessionDriving.getVehiclelogo() );
     }
 
     public void loadFieldModelVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
         String modelVehicleSession = resources.getString( R.string.textViewModel );
-        textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicle().getVehicleModel() );
+        textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicleModel() );
     }
 
     public void loadFieldRegistrationNumberVehicle(){
         Resources resources = getResources();
         String registrationNumberVehicleSession = resources.getString( R.string.textViewRegistrationNumber );
-        textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicle().getVehicleRegistrationNumber() );
+        textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicleRegistrationNumber() );
     }
 
     public void loadButtonCloseSession(final SessionDriving sessionDriving, final boolean REAL_STATUS_SESSION ){
@@ -235,13 +235,13 @@ public class SessionStatusActivity extends AppCompatActivity {
 
                             final SessionDriving sessionDriving = new SessionDriving( sessionEnd, user, vehicleSelect );
 
-                            Log.i( TAG, "SesionDriving idUser(Valor): --> " + sessionDriving.getUser().getIdUser() );
+                            Log.i( TAG, "SesionDriving idUser(Valor): --> " + sessionDriving.getIdUser() );
                             Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
 
 
                             //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
                             //Condicion 1
-                            if (sessionDriving.getUser().getIdUser().equals( user.getIdUser() )) {
+                            if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
                                 controllerDBStatus.updateValue( sessionDriving.getVehicle(), null );
                                 controllerDBSessionsCurrents.updateValue( sessionDriving, null );
                                 controllerDBSessionsHistoric.setValue( sessionDriving );

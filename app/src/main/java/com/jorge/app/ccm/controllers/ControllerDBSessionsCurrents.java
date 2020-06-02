@@ -29,7 +29,7 @@ public class ControllerDBSessionsCurrents {
     }
 
     public void setValue( final SessionDriving sessionDriving){
-        final DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() );
+        final DatabaseReference dbRF = databaseReference.child( sessionDriving.getIdUser() );
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
             @Override
@@ -51,13 +51,13 @@ public class ControllerDBSessionsCurrents {
     }
 
     public void removeValue(final SessionDriving sessionDriving, String messageOnChildRemoved ){
-        DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() );
+        DatabaseReference dbRF = databaseReference.child( sessionDriving.getIdUser() );
         dbRF.addChildEventListener( setChildEventListener(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
     public void updateValue(final SessionDriving sessionDriving, String messageOnChildChanged  ){
-        DatabaseReference dbRF = databaseReference.child( sessionDriving.getUser().getIdUser() );
+        DatabaseReference dbRF = databaseReference.child( sessionDriving.getIdUser() );
         dbRF.addChildEventListener( setChildEventListener( messageOnChildChanged, null, null ) );
         dbRF.setValue( sessionDriving );
     }
@@ -104,7 +104,7 @@ public class ControllerDBSessionsCurrents {
     }
 
     public DatabaseReference getDatabaseReferenceSearch( SessionDriving sessionDriving){
-        return databaseReference.child( sessionDriving.getUser().getIdUser() );
+        return databaseReference.child( sessionDriving.getIdUser() );
     }
 
 }

@@ -65,7 +65,7 @@ public class SessionHistoricActivity extends AppCompatActivity {
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                        Log.i( TAG, sesionsDrivings.get( position ).getSession().getTypeSesion() );
+                        Log.i( TAG, sesionsDrivings.get( position ).getSessionTypeSesion() );
                         Log.i( TAG, sesionsDrivings.get( position ).getVehicle().getVehicleRegistrationNumber() );
 
                         SessionDriving sessionDrivingSelect = sesionsDrivings.get( position );

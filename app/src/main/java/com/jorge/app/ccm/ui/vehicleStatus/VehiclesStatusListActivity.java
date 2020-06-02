@@ -214,9 +214,9 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
                     if (vehicleSelect.getVehicleDriving() == 1) {
 
-                        Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sessionDrivingCurrent.getSession().getTypeSesion() );
+                        Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sessionDrivingCurrent.getSessionTypeSesion() );
 
-                        if (sessionDrivingCurrent.getSession().getTypeSesion().equals( "Create" ) ) {
+                        if (sessionDrivingCurrent.getSessionTypeSesion().equals( "Create" ) ) {
                             Toast.makeText( getApplicationContext(), "Este vehículo está siendo usado por otro usuario, no puede iniciar sesión", Toast.LENGTH_SHORT ).show();
                         }
                         else {
@@ -256,9 +256,9 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         final ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext() );
 
         //Condición 1
-        if (sessionDrivingCurrent.getSession().getTypeSesion().equals( "Start" )) {
+        if (sessionDrivingCurrent.getSessionTypeSesion().equals( "Start" )) {
 
-            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSession().getTypeSesion() );
+            Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSessionTypeSesion() );
 
             WindowDialogFragment windowForActivictiSesionDriving = new WindowDialogFragment( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
             windowForActivictiSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
@@ -276,14 +276,14 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         }
 
         //Condición 3
-        else if (sessionDrivingCurrent.getSession().getTypeSesion() != "Start") {
+        else if (sessionDrivingCurrent.getSessionTypeSesion() != "Start") {
 
             WindowDialogFragment windowInitSesion = new WindowDialogFragment( "Deses iniciar sesión" );
             windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSession().getTypeSesion() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSessionTypeSesion() );
                     Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sessionDrivingStart.getVehicle().getVehicleDriving() );
 
                     controllerDBSessionsCurrents.updateValue( sessionDrivingStart, null );

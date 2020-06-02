@@ -115,8 +115,8 @@ public class SessionCurrentActivity extends AppCompatActivity{
     public void loadFieldUserSession( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String userSession = resources.getString( R.string.textViewUserDate );
-        Glide.with( getApplicationContext() ).load( sessionDriving.getUser().getUserPhotoUriString() ).into( imageViewUserDate );
-        textViewUserDate.setText( userSession + " " + sessionDriving.getUser().getUserName() );
+        Glide.with( getApplicationContext() ).load( sessionDriving.getUserPhotoUriString() ).into( imageViewUserDate );
+        textViewUserDate.setText( userSession + " " + sessionDriving.getUserName() );
     }
 
     public void loadFieldStatuSession( SessionDriving sessionDriving ){
@@ -125,7 +125,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
         String typeSessionStart = resources.getString( R.string.textViewTypeSessionStart );
         String typeSessionEnd = resources.getString( R.string.textViewTypeSessionEnd );
 
-        switch ( sessionDriving.getSession().getTypeSesion() ){
+        switch ( sessionDriving.getSessionTypeSesion() ){
             case "Start":
                 imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_open_lock );
                 textViewTypeSession.setTextColor( Color.BLUE );
@@ -137,7 +137,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
                 break;
             default:
                 imageViewTypeSession.setImageResource( R.mipmap.ic_launcher_open_lock );
-                textViewTypeSession.setText( sessionDriving.getSession().getTypeSesion() );
+                textViewTypeSession.setText( sessionDriving.getSessionTypeSesion() );
                 break;
         }
     }
@@ -145,32 +145,32 @@ public class SessionCurrentActivity extends AppCompatActivity{
     public void loadFieldDateSession( SessionDriving sessionDriving){
         Resources resources = getResources();
         String dateSession = resources.getString( R.string.textViewDate );
-        textViewDate.setText( dateSession + " " + sessionDriving.getSession().getDate() );
+        textViewDate.setText( dateSession + " " + sessionDriving.getSessionDate() );
     }
 
     public void loadFieldHoursSession( SessionDriving sessionDriving){
         Resources resources = getResources();
         String hoursSession = resources.getString( R.string.textViewHours );
-        textViewHours.setText( hoursSession  + " " + sessionDriving.getSession().getHours() );
+        textViewHours.setText( hoursSession  + " " + sessionDriving.getSessionHours() );
     }
 
     public void loadFieldBrandVehicle( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String brandVehicleSession = resources.getString( R.string.textViewBrand );
-        textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicle().getVehicleBrand() );
-        imageViewBrand.setImageResource( sessionDriving.getVehicle().getVehiclelogo() );
+        textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicleBrand() );
+        imageViewBrand.setImageResource( sessionDriving.getVehiclelogo() );
     }
 
     public void loadFieldModelVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
         String modelVehicleSession = resources.getString( R.string.textViewModel );
-        textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicle().getVehicleModel() );
+        textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicleModel() );
     }
 
     public void loadFieldRegistrationNumberVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
         String registrationNumberVehicleSession = resources.getString( R.string.textViewRegistrationNumber );
-        textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicle().getVehicleRegistrationNumber() );
+        textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicleRegistrationNumber() );
     }
 
 
@@ -186,7 +186,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 //Una sesión que ya está cerrada no se puede volver a cerrar.
-                if (sessionDriving.getSession().getTypeSesion().equals( "End" )) {
+                if (sessionDriving.getSessionTypeSesion().equals( "End" )) {
                     Toast.makeText( getApplicationContext(), "No puede cerrar una sesión que ya lo está", Toast.LENGTH_SHORT ).show();
                 } else {
 
@@ -202,13 +202,13 @@ public class SessionCurrentActivity extends AppCompatActivity{
 
                             final SessionDriving sessionDriving = new SessionDriving( sessionEnd, user, vehicleSelect );
 
-                            Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sessionDriving.getUser().getIdUser() );
+                            Log.i( TAG, "SesionDriving seleccionado onclickItem (Valor): --> " + sessionDriving.getIdUser() );
                             Log.i( TAG, "id usuario en uso (Valor): --> " + user.getIdUser() );
 
 
                             //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
                             //Condicion 1
-                            if (sessionDriving.getUser().getIdUser().equals( user.getIdUser() )) {
+                            if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
                                 controllerDBStatus.updateValue( sessionDriving.getVehicle(), null );
                                 controllerDBSessionsCurrents.updateValue( sessionDriving, null );
                                 controllerDBSessionsHistoric.setValue( sessionDriving );
