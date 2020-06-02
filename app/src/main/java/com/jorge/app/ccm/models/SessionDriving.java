@@ -1,9 +1,19 @@
 package com.jorge.app.ccm.models;
 
+import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.fragment.app.DialogFragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
+import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
+import com.jorge.app.ccm.controllers.ControllerDBStatus;
+import com.jorge.app.ccm.gadget.WindowDialogFragment;
+import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 
 import java.io.Serializable;
 
@@ -214,5 +224,15 @@ public class SessionDriving implements Serializable, iSession, iUser, iVehicle {
     @Override @Exclude
     public String getVehicleDrivingCurrent() {
         return this.vehicle.getVehicleDrivingCurrent();
+    }
+
+    public boolean checkSesion() {
+
+        if (this.getSessionTypeSesion().equals( "Start" )) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

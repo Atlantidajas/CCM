@@ -81,7 +81,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     }
 
     public void loadArrayAdapter(){
-        //Inizializao Adapter para mostrar lista de vehículos
+        //Inizializo adapter para mostrar lista de vehículos
         this.arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplication(), listView);
 
         Log.i( TAG, String.valueOf( listView.getCount() ) );
@@ -162,7 +162,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         // Posición lista pulsado
         int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
         final Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
 
         // Información al usuario sobre menú pulsado.
         switch (item.getItemId()) {
@@ -170,13 +169,13 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
             //Editar
             case R.id.menu_contextual_list_view_vehicles_item_edit:
 
-                //Eliminar un vehículo de la db
+                //Editar un vehículo de la db
                 editVehicle( vehicleSelect );
 
                 break;
 
             case R.id.menu_contextual_list_view_vehicles_item_delete:
-
+                //Eliminar un vehículo de la db
                 deleteVehicle( vehicleSelect );
 
             default:
@@ -189,10 +188,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
         //Sesion de inicio por si es la primera ves que inicia sesión
         ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
-        Session sessionCreate = new Session( "Create" );
-        User user = new User( true );
-        SessionDriving sessionDrivingCreate = new SessionDriving( sessionCreate, user );
-        controllerDBSessionsHistoric.setValueSessionsCurrents( sessionDrivingCreate );
+        controllerDBSessionsHistoric.onSesionDrinvingCreate();
     }
 
     public void onclickItemList(){
@@ -212,7 +208,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                 String messageNo = resources.getString( R.string.windows_no_init_session_vehicle_message ) + " " +
                         vehicleSelect.getVehicleRegistrationNumber();
 
-                    if (vehicleSelect.getVehicleDriving() == 1) {
+                    if ( vehicleSelect.getVehicleDriving() == 1 ) {
 
                         Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sessionDrivingCurrent.getSessionTypeSesion() );
 
@@ -254,9 +250,29 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
         final ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
-        //Condición 1
-        if (sessionDrivingCurrent.getSessionTypeSesion().equals( "Start" )) {
+        //Si puede iniciar
+        if ( sessionDrivingCurrent.checkSesion() ){
+            WindowDialogFragment windowInitSesion = new WindowDialogFragment( "Deses iniciar sesión" );
+            windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
+                @Override
+                public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSessionTypeSesion() );
+                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sessionDrivingStart.getVehicle().getVehicleDriving() );
+
+                    controllerDBSessionsHistoric.registrySessionHistoric(sessionDrivingStart);
+                    startActivity( intentSesionDriving );
+                }
+
+                @Override
+                public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
+                    return;
+                }
+            } );
+            windowInitSesion.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
+        }
+        //No puede iniciar
+        else {
             Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSessionTypeSesion() );
 
             WindowDialogFragment windowForActivictiSesionDriving = new WindowDialogFragment( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
@@ -274,30 +290,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
             windowForActivictiSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
         }
 
-        //Condición 3
-        else if (sessionDrivingCurrent.getSessionTypeSesion() != "Start") {
-
-            WindowDialogFragment windowInitSesion = new WindowDialogFragment( "Deses iniciar sesión" );
-            windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
-                @Override
-                public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
-
-                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSessionTypeSesion() );
-                    Log.i( TAG, "checkSesion() Condición 3 -> sesionDrivingStart -> vehigle -> driving (Valor) " + sessionDrivingStart.getVehicle().getVehicleDriving() );
-
-                    controllerDBSessionsHistoric.updateValueSessionsCurrents( sessionDrivingStart, null );
-                    controllerDBStatus.updateStatusVehicle( sessionDrivingStart.getVehicle(), null);
-                    controllerDBSessionsHistoric.setValueSessionsHistoric( sessionDrivingStart );
-                    startActivity( intentSesionDriving );
-                }
-
-                @Override
-                public void onDialogFragmentNoticeNegativeClick(DialogFragment dialog) {
-                    return;
-                }
-            } );
-            windowInitSesion.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
-        }
     }
 
     public void editVehicle( Vehicle vehicleForEdit){
@@ -329,19 +321,13 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public void deleteVehicle( Vehicle vehicleForDelete ){
 
         ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-        //Evento childEventListernet Incorporado en Cotrolador Status
-        final String messageRemove = getString( R.string.toast_message_removed_vehicle_generic );
-
-        Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicleForDelete.getVehicleDriving() );
 
         // Se puede eliminar si no está en uso por nadie
-        if ( vehicleForDelete.getVehicleDriving() == 0 ){
-            controllerDBStatus.removeStatusVehicle( vehicleForDelete, messageRemove + " " +
-                    vehicleForDelete.getVehicleRegistrationNumber() );
+        if ( controllerDBStatus.removeStatusVehicle( vehicleForDelete ) ){
+            //Borrar en el propio controlador
         }
         // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
-        else if ( vehicleForDelete.getVehicleDriving() == 1 ){
-
+        else {
             WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList
             windowCloseRedirecSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override

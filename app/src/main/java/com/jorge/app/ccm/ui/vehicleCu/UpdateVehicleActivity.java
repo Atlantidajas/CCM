@@ -208,12 +208,8 @@ public class UpdateVehicleActivity extends AppCompatActivity implements DialogFr
 
             Vehicle vehicle = new Vehicle( logo, registrationNumber, brand, model, dateITV,0);
             controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-            String messageUpdateVehicle = getString( R.string.toast_message_changed_vehicle_generic );
-            controllerDBStatus.updateStatusVehicle( vehicle, messageUpdateVehicle + " " + vehicle.getVehicleRegistrationNumber());
-            controllerDBStatus = null;
-
-            Intent intent= new Intent ( UpdateVehicleActivity.this, VehiclesStatusListActivity.class);
-            startActivity(intent);
+            controllerDBStatus.updateStatusVehicle( vehicle );
+            finish();
         }
         else{
             Toast.makeText(getApplicationContext(), R.string.toast_message_empty_fields, Toast.LENGTH_SHORT).show();

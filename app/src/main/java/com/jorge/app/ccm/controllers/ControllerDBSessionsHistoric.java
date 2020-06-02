@@ -12,7 +12,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.SessionDriving;
+import com.jorge.app.ccm.models.User;
 
 public class ControllerDBSessionsHistoric extends ControllerDBSessionsCurrents {
 
@@ -93,5 +95,20 @@ public class ControllerDBSessionsHistoric extends ControllerDBSessionsCurrents {
 
     public DatabaseReference getDatabaseReferenceSessionsHistoricSearch( SessionDriving sessionDriving){
         return databaseReference.child( sessionDriving.getIdUser() );
+    }
+
+    public void registrySessionHistoric( SessionDriving sessionDriving ){
+        this.updateValueSessionsCurrents( sessionDriving, null );
+        this.updateStatusVehicleForRegistrisHistoric( sessionDriving.getVehicle() );
+        this.setValueSessionsHistoric( sessionDriving );
+    }
+
+    public void onSesionDrinvingCreate(){
+
+        //Sesion de inicio por si es la primera ves que inicia sesión
+        Session sessionCreate = new Session( "Create" );
+        User user = new User( true );
+        SessionDriving sessionDrivingCreate = new SessionDriving( sessionCreate, user );
+        this.setValueSessionsCurrents( sessionDrivingCreate );
     }
 }

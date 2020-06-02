@@ -31,7 +31,7 @@ public class ControllerDBSessionsCurrents extends ControllerDBStatus{
         return databaseReferenceSessionsCurrents;
     }
 
-    public void setValueSessionsCurrents( final SessionDriving sessionDriving){
+    protected void setValueSessionsCurrents( final SessionDriving sessionDriving){
         final DatabaseReference dbRF = databaseReferenceSessionsCurrents.child( sessionDriving.getIdUser() );
 
         final ValueEventListener valueEventListenerSetVehicle = new ValueEventListener() {
@@ -53,20 +53,20 @@ public class ControllerDBSessionsCurrents extends ControllerDBStatus{
         dbRF.addValueEventListener( valueEventListenerSetVehicle );
     }
 
-    public void removeValueSessionsCurrents(final SessionDriving sessionDriving, String messageOnChildRemoved ){
+    protected void removeValueSessionsCurrents(final SessionDriving sessionDriving, String messageOnChildRemoved ){
         DatabaseReference dbRF = databaseReferenceSessionsCurrents.child( sessionDriving.getIdUser() );
         dbRF.addChildEventListener( setChildEventListenerSessionsCurrents(null, messageOnChildRemoved, null ) );
         dbRF.removeValue();
     }
 
-    public void updateValueSessionsCurrents(final SessionDriving sessionDriving, String messageOnChildChanged  ){
+    protected void updateValueSessionsCurrents(final SessionDriving sessionDriving, String messageOnChildChanged  ){
         DatabaseReference dbRF = databaseReferenceSessionsCurrents.child( sessionDriving.getIdUser() );
         dbRF.addChildEventListener( setChildEventListenerSessionsCurrents( messageOnChildChanged, null, null ) );
         dbRF.setValue( sessionDriving );
     }
 
 
-    public ChildEventListener setChildEventListenerSessionsCurrents(final String messageOnChildChanged,
+    protected ChildEventListener setChildEventListenerSessionsCurrents(final String messageOnChildChanged,
                                                     final String messageOnChildRemoved,
                                                     final String messageOnChildMoved ) {
         ChildEventListener childEventListener = new ChildEventListener() {

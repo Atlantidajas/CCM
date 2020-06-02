@@ -239,9 +239,9 @@ public class SessionStatusActivity extends AppCompatActivity {
                             //Controlo que sea el usuario en uso el que cierre su sesion abierta, no la de otro.
                             //Condicion 1
                             if (sessionDriving.getIdUser().equals( user.getIdUser() )) {
-                                controllerDBStatus.updateStatusVehicle( sessionDriving.getVehicle(), null );
-                                controllerDBSessionsHistoric.updateValueSessionsCurrents( sessionDriving, null );
-                                controllerDBSessionsHistoric.setValueSessionsHistoric( sessionDriving );
+
+                                controllerDBSessionsHistoric.registrySessionHistoric( sessionDriving );
+
                                 Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
                                 startActivity( intentCloseSesion );
                             } else {

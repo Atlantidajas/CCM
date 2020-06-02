@@ -21,5 +21,7 @@
 
   <string name="toast_message_no_data">No hay datos para mostrar</string>
 
+    <string name="toast_sessio_driving_checkSession">Este vehículo está siendo usado por otro usuario, no puede iniciar sesión</string>
+
 
 </resources>
