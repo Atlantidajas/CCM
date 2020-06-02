@@ -24,7 +24,7 @@ import com.jorge.app.ccm.controllers.ControllerDBExpense;
 import com.jorge.app.ccm.gadget.notices.DatePickerFragment;
 
 import com.jorge.app.ccm.models.Expense;
-import com.jorge.app.ccm.models.temp.ExpenseTemp;
+import com.jorge.app.ccm.models.ExpenseTemp;
 
 import com.jorge.app.ccm.models.TypeExpense;
 import com.jorge.app.ccm.models.User;

@@ -1,9 +1,10 @@
 package com.jorge.app.ccm.models;
 
 import com.google.firebase.database.DataSnapshot;
-import com.jorge.app.ccm.models.temp.ExpenseTemp;
 
-public class Provider extends MethodOfPlayment {
+import java.io.Serializable;
+
+public class Provider extends MethodOfPlayment implements Serializable {
 
     protected String providerName;
     protected String providerCifNif;
@@ -43,7 +44,6 @@ public class Provider extends MethodOfPlayment {
         this.providerCifNif = String.valueOf( dataSnapshotExpese.child("providerCifNif").getValue() );
         this.providerTelephone = String.valueOf( dataSnapshotExpese.child("providerTelephone").getValue() );
     }
-
 
     public void setProviderName(String providerName) {
         this.providerName = providerName;

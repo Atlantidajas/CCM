@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.models.temp;
+package com.jorge.app.ccm.models;
 
 import android.content.Context;
 

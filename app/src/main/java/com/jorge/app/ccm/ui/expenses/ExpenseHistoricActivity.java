@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 
@@ -21,6 +22,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBExpense;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
@@ -31,10 +33,8 @@ import com.jorge.app.ccm.models.TypeExpense;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ExpenseHistoricActivity extends AppCompatActivity{
 
@@ -58,44 +58,32 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_expense_historic );
         listView = findViewById(R.id.listView_expense_historic);
+        adapterExpenseHistoric = new AdapterExpenseHistoric( getApplicationContext(), expenses );
 
         intentExpenseEspecific  = new Intent( ExpenseHistoricActivity.this, ExpenseEspecificActivity.class );
         intentForRegistryExpense = new Intent( ExpenseHistoricActivity.this, ExpensesResgistryActivity.class );
 
 
+        //Cargo con los datos de la db el adapter con datos de la db
         final User user = new User( true );
-
-        //Cargo con los datos de la db el adapter
         ControllerDBExpense controllerDBExpense = new ControllerDBExpense( getApplicationContext() );
         controllerDBExpense.getDatabaseReference().child( user.getIdUser() ).addChildEventListener( new ChildEventListener() {
-
-
 
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String prevChildKey) {
 
                 if( dataSnapshot.exists() ) {
-
                     expenses.add( new Expense( dataSnapshot ) );
-                    adapterExpenseHistoric = new AdapterExpenseHistoric( getApplicationContext(), expenses );
 
-                    keyExpenses.add( prevChildKey );
                     Log.i( TAG, "Expense -> Key" + keyExpenses);
-
-                }
-                if ( adapterExpenseHistoric.getCount() <= 0 ){//<-- Controlo que tenga almenos un gasto registrado, en caso contrario muestro mensaje
-
-                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-
-                }else{
-
-                    adapterExpenseHistoric = new AdapterExpenseHistoric( getApplicationContext(), expenses );
                     listView.setAdapter( adapterExpenseHistoric );
+
+                    keyExpenses.add( prevChildKey );//Las keys de expense
 
                 }
 
             }
-
+            //Mantengo actualizado el adaptador si hay cambios
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 adapterExpenseHistoric.getListIntemExpense().clear();
@@ -119,6 +107,10 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
 
             }
         });
+        //Mensaje por pantalla en caso de no haber datos.
+        if( adapterExpenseHistoric.getCount() <= 0 ){
+            Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -157,12 +149,6 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
                     @Override
                     public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
 
-
-                        for ( int i = 0; i < keyExpenses.size(); i++ ){
-                            Log.i( TAG, "Expense -> Key" + keyExpenses.get( i ));
-
-                        }
-
                         Tickect expenseSelectTickect = expenses.get( position ).getTickect();
                         TypeExpense expenseSelectTypeExpense = expenses.get( position ).getTypeExpense();
                         Vehicle expenseSelectTypeVehicle = expenses.get( position ).getVehicle();
@@ -174,6 +160,7 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
 
                         Log.i( TAG, "onclickItemList() -> Expenses -> Vehicle -> registrationNumbre: (Valor) " + expenses.get( position ).getVehicleRegistrationNumber()  );
                         Log.i( TAG, "onclickItemList() -> Expenses -> Tickect -> numberTickect: (Valor) " + expenses.get( position ).getTickectNumber()  );
+                        Log.i( TAG, "onclickItemList() -> Expenses -> Tickect -> numberTickect: (Valor) " + expenses.get( position ).getProviderName()  );
 
                         System.out.println( "onclickItemList() -> Expenses -> Vehicle -> registrationNumbre: (Valor) " + expenses.get( position ).getVehicleRegistrationNumber()  );
                         System.out.println( "onclickItemList() -> Expenses -> Tickect -> numberTickect: (Valor) " + expenses.get( position ).getTickectNumber()  );
@@ -204,4 +191,6 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
     public void onDestroy(){
         super.onDestroy();
     }
+
+
 }

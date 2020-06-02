@@ -1,4 +1,4 @@
-package com.jorge.app.ccm.models.temp;
+package com.jorge.app.ccm.models;
 
 public interface iVehicleTemp {
 

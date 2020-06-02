@@ -1,9 +1,6 @@
-package com.jorge.app.ccm.models.temp;
+package com.jorge.app.ccm.models;
 
 import android.content.Context;
-
-import com.jorge.app.ccm.models.MethodOfPlayment;
-import com.jorge.app.ccm.models.Provider;
 
 public class ProviderTemp extends MethodOfPlaymentTemp {
 
