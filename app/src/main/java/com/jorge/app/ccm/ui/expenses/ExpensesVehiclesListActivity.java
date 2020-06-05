@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
-import com.jorge.app.ccm.ui.vehicleCu.RegistryVehiclesActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.RegistryVehiclesActivity;
 
 import java.io.Serializable;
 
@@ -47,7 +47,6 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
         this.adapterVehicleSelect = new AdapterExpensesVehicles( getApplication(), listView, TAG);
 
         intentRegistryVehicles = new Intent( ExpensesVehiclesListActivity.this, RegistryVehiclesActivity.class );
-
 
         fieldLoadTextViewTitle();
     }
@@ -89,7 +88,6 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
 
             }
         });
-
     }
 
     @Override

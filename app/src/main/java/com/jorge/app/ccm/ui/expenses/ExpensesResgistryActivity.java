@@ -29,7 +29,7 @@ import com.jorge.app.ccm.models.ExpenseTemp;
 import com.jorge.app.ccm.models.TypeExpense;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
-import com.jorge.app.ccm.ui.vehicleCu.RegistryVehiclesActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.RegistryVehiclesActivity;
 
 import static com.jorge.app.ccm.ui.expenses.TypeExpensesActivity.TYPE_EXPENSE;
 import static com.jorge.app.ccm.ui.expenses.ExpensesVehiclesListActivity.VEHICLE_SELECT;

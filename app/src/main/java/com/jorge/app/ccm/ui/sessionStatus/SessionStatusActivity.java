@@ -58,7 +58,6 @@ public class SessionStatusActivity extends AppCompatActivity {
     private TextView textViewRegistrationNumber;
     private Button buttonCloseSesionCurrent;
 
-
     private Intent intentCloseSesion;
     private User user;
 

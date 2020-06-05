@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSessionsCurrents;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Session;
@@ -30,8 +29,6 @@ import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
-import com.jorge.app.ccm.ui.vehicleCu.RegistryVehiclesActivity;
-import com.jorge.app.ccm.ui.vehicleCu.UpdateVehicleActivity;
 import com.jorge.app.ccm.ui.sessionCrurrent.SessionCurrentActivity;
 import com.jorge.app.ccm.models.User;
 
@@ -46,7 +43,8 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     public Intent intentSesionDriving;
     public Intent intentForUpdate;
     public Intent intentForRegistryVehicles;
-    public static final String VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.vehicles.VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE";
+    public static final String VEHICLE_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.ui.vehiclesStatus.VehiclesStatusListActivity.VEHICLE_FOR_UPDATE_VEHICLE";
+    public static final int REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE = 0;
 
     private AdapterVehicleStatus arrayAdapterVehicleStatus;
     private TextView textView;
@@ -75,8 +73,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         intentForRegistryVehicles = new Intent ( VehiclesStatusListActivity.this, RegistryVehiclesActivity.class);
         intentForUpdate= new Intent ( VehiclesStatusListActivity.this, UpdateVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesStatusListActivity.this, SessionCurrentActivity.class );
-
-
 
     }
 
@@ -161,7 +157,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
         // Posición lista pulsado
         int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-        final Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
+        Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
 
         // Información al usuario sobre menú pulsado.
         switch (item.getItemId()) {
@@ -240,7 +236,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
                     checkSesion( sessionDrivingStart );//Chequea si se puede realizar la operación y si es así la realiza
                     Log.i( TAG, "vehicleSelect (Valor)" + vehicleSelect.getVehicleDriving());
                 }
-
             }
         });
     }
@@ -296,8 +291,14 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
         //Si se puede editar.
         if ( vehicleForEdit.getVehicleDriving() == 0 ){
-            intentForUpdate.putExtra(VEHICLE_REGISTRY_NUMBER_FOR_UPDATE_VEHICLE, (Serializable) vehicleForEdit );
-            startActivity(intentForUpdate);
+
+            Bundle bundle= new Bundle();
+            bundle.putSerializable( VEHICLE_FOR_UPDATE_VEHICLE, vehicleForEdit );
+            intentForUpdate.putExtras(bundle);
+            setResult( RESULT_OK, intentForUpdate );
+
+            startActivityForResult(intentForUpdate, REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE);
+
         }
         // No se puede editar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
         else if ( vehicleForEdit.getVehicleDriving() == 1 ){

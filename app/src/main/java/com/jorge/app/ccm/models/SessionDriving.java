@@ -9,11 +9,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
-import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
-import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.gadget.WindowDialogFragment;
-import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
+
 
 import java.io.Serializable;
 

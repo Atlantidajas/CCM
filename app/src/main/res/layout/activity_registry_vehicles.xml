@@ -1,187 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.vehicleCu.RegistryVehiclesActivity">
-
-
-    <TextView
-        android:id="@+id/textView_title_registry_vehicle"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:id="@+id/linear_layout_line1"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_title_registry_vehicle"
-        app:layout_constraintVertical_bias="0.0"
-        android:gravity="center_horizontal">
-
-        <EditText
-            android:id="@+id/edit_text_brand_registry_vehicle"
-            android:drawableLeft="@mipmap/ic_launcher_brand"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:inputType="textCapSentences"
-            android:focusable="false"
-            android:clickable="true"
-            android:maxLines="1"
-            android:text="@string/edit_text_brand_registry_vehicle"/>
-
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0" />
-
-        <CheckBox
-            android:id="@+id/checkBox_brand_registry_vehicle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:clickable="false" />
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
 
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/linear_layout_line2"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_line1"
-        app:layout_constraintVertical_bias="0.0">
+            <ImageView
+                android:id="@+id/imageView_image_item_vehicles"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="8dp"
+                android:src="@mipmap/ic_launcher_brand"/>
+            <Spinner
+                android:id="@+id/spinner_brand_registry_vehicle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:spinnerMode="dialog"
+                app:backgroundTint="#03A9F4">
+            </Spinner>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#B3AEAE" />
+
 
         <EditText
             android:id="@+id/edit_text_model_registry_vehicle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:drawableLeft="@mipmap/ic_launcher_car"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:inputType="text"
-            android:singleLine="true"
-            android:text="@string/edit_text_model_registry_vehicle" />
+            android:hint="@string/edit_text_model_registry_vehicle" />
 
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0" />
-
-        <CheckBox
-            android:id="@+id/checkBox_model_registry_vehicle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:clickable="false" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_layout_line3"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_line2"
-        app:layout_constraintVertical_bias="0.0">
 
         <EditText
             android:id="@+id/edit_text_registry_number_registry_vehicle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:drawableLeft="@mipmap/ic_launcher_license_plate"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:text="@string/edit_text_registry_number_registry_vehicle" />
-
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0" />
-
-        <CheckBox
-            android:id="@+id/checkBox_registry_number_registry_vehicle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:clickable="false" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_layout_line4"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_line3"
-        app:layout_constraintVertical_bias="0.0">
+            android:hint="@string/edit_text_registry_number_registry_vehicle" />
 
         <EditText
             android:id="@+id/edit_text_registry_date_itv_vehicle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:inputType="date"
             android:drawableLeft="@mipmap/ic_launcher_calendar"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:inputType="textCapSentences"
-            android:focusable="false"
-            android:clickable="true"
-            android:maxLines="1"
-            android:text="@string/edit_text_registry_date_itv_vehicle"/>
+            android:hint="@string/edit_text_registry_date_itv_vehicle" />
 
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="88dp"
+            android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/check_box_registry_date_itv_vehicle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:clickable="false" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linear_layout_line5"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_line4"
-        app:layout_constraintVertical_bias="0.698">
+            <Button
+                android:id="@+id/button_cancel_vehicleRegistry"
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="45dp"
+                android:text="@string/button_cancel" />
 
-        <Button
-            android:id="@+id/button_registry_save_vehicle"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:text="@string/button_registry_save_vehicle"/>
+            <Button
+                android:id="@+id/button_accept_vehicleRegistry"
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="45dp"
+                android:text="@string/button_accept" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
