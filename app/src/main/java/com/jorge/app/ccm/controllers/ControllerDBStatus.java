@@ -52,7 +52,7 @@ public class ControllerDBStatus {
 
         if( vehicle.getVehicleDriving() == 0 ){
             DatabaseReference dbRF = databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
-            dbRF.addChildEventListener( setChildEventListenerStatus(0, R.string.toast_message_removed_vehicle_generic, 0 ) );
+            //dbRF.addChildEventListener( setChildEventListenerStatus(0, R.string.toast_message_removed_vehicle_generic, 0 ) );
             dbRF.removeValue();
             Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicle.getVehicleDriving() );
             return true;

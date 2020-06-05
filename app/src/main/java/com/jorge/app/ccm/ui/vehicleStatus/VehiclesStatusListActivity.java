@@ -1,6 +1,7 @@
 package com.jorge.app.ccm.ui.vehicleStatus;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -17,13 +18,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBExpense;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
+import com.jorge.app.ccm.models.Expense;
 import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
@@ -33,6 +37,8 @@ import com.jorge.app.ccm.ui.sessionCrurrent.SessionCurrentActivity;
 import com.jorge.app.ccm.models.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author Jorge.HL
@@ -50,6 +56,8 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
     private TextView textView;
     private ListView listView;
     private SessionDriving sessionDrivingCurrent;//<-- Inicializada desde función readSesionCurrent()
+    private ArrayList<Vehicle> vehicles = new ArrayList<>(  );
+    private ArrayList<String> keysVehicles = new ArrayList<>(  );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +66,12 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         textView = findViewById(R.id.testView_title_registrarion_numbre);
         listView = findViewById(R.id.listView_vehicles_status_list);
 
+
         //Si es la primera vez que usa la app, creo una primera sesión de tipo Create (Esta no será mostrada al usuario)
         onSesionDrinvingCreate();
 
         //Inicializo sessionDrivingCurrent
         readSesionCurrent();
-
-        loadArrayAdapter();//<-- El adaptador
 
         registerForContextMenu( listView );
         onclickItemList();
@@ -73,22 +80,67 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         intentForRegistryVehicles = new Intent ( VehiclesStatusListActivity.this, RegistryVehiclesActivity.class);
         intentForUpdate= new Intent ( VehiclesStatusListActivity.this, UpdateVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesStatusListActivity.this, SessionCurrentActivity.class );
+        arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplicationContext(), vehicles );
 
-    }
-
-    public void loadArrayAdapter(){
-        //Inizializo adapter para mostrar lista de vehículos
-        this.arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplication(), listView);
-
-        Log.i( TAG, String.valueOf( listView.getCount() ) );
-
-        //Inizializo controlador para datos del adaptador
         ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-        //Obtengo la referencia para los datos del adpatador
-        DatabaseReference dbrfSatus = controllerDBStatus.getDatabaseReference();
-        //Cargo el adaptador con los datos
-        arrayAdapterVehicleStatus.loadAndUpdateAdapter( dbrfSatus );
+
+        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if( dataSnapshot.exists() ) {
+
+                    vehicles.add( new Vehicle( dataSnapshot ) );
+
+                    Log.i( TAG, "Expense -> Key" + keysVehicles);
+                    listView.setAdapter( arrayAdapterVehicleStatus );
+                }
+                else {
+                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        } );
+
+
+
+        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String prevChildKey) {
+
+            }
+            //Mantengo actualizado el adaptador si hay cambios
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
+                arrayAdapterVehicleStatus.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
+
+
+
 
     /**
      * Inicializa sessionDrivingCurrent
@@ -141,7 +193,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
             MenuItem itemMenu1 = menu.findItem( R.id.menu_contextual_list_view_vehicles_item_edit );
 
-            Vehicle vehicleSelect = arrayAdapterVehicleStatus.getListIntemVehicles().get( position );
+            Vehicle vehicleSelect = arrayAdapterVehicleStatus.getItem( position );
 
             // Establezco el título que se muestra en el encabezado del menú. + número de matrúcula para avisar al usuario del cambio
             menu.setHeaderTitle( getString( R.string.menu_contextual_list_view_vehicles_title ) + " " +
@@ -324,9 +376,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
 
         // Se puede eliminar si no está en uso por nadie
-        if ( controllerDBStatus.removeStatusVehicle( vehicleForDelete ) ){
-            //Borrar en el propio controlador
-        }
+        if ( controllerDBStatus.removeStatusVehicle( vehicleForDelete ) ){ }
         // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
         else {
             WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList

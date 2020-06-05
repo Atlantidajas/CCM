@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.models.Expense;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
@@ -37,70 +38,15 @@ import java.util.Iterator;
 
 public class AdapterVehicleStatus extends BaseAdapter {
 
-    private String TAG = "AdapterVehicleStatus";
     private Context context;
-    private ArrayList<Vehicle> listIntemVehicles = new ArrayList<Vehicle>();
-    private ListView listView;
+    private ArrayList<Vehicle> listIntemVehicles;
     private Vehicle vehicle;
 
+    public AdapterVehicleStatus(){}
 
-    public AdapterVehicleStatus(final Context context, ListView listView) {
+    public AdapterVehicleStatus(final Context context, ArrayList<Vehicle> listVehicles ) {
         this.context = context;
-        this.listView = listView;
-
-    }
-
-    public void loadAndUpdateAdapter( DatabaseReference databaseReference ){
-
-        //Eventos de cambios sobre el adaptador
-        databaseReference.addChildEventListener( new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                getListIntemVehicles().clear();
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                getListIntemVehicles().clear();
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                getListIntemVehicles().clear();
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                getListIntemVehicles().clear();
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
-
-        //Cargo con los datos de la db el adapter
-        databaseReference.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    setArrayAdapterVehicle(dataSnapshot);
-                }
-                else {
-                    Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( context, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        listIntemVehicles = listVehicles;
     }
 
     @Override
@@ -109,13 +55,13 @@ public class AdapterVehicleStatus extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Vehicle getItem(int position) {
         return listIntemVehicles.get( position );
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -178,24 +124,6 @@ public class AdapterVehicleStatus extends BaseAdapter {
         return convertView;
     }
 
-
-    /**
-     * @Jorge.HL
-     */
-
-    public void setArrayAdapterVehicle(DataSnapshot dataSnapshot){
-
-        Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
-        do{
-            listIntemVehicles.add( new Vehicle( dataSnapshots.next() ) );
-        }while (dataSnapshots.hasNext());
-
-        if ( this.getCount() <= 0 ){//<-- Controlo que tenga almenos un vehículo registrado, en caso contrario muestro mensaje
-            Toast.makeText( context, R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-        }else{
-            listView.setAdapter(this);
-        }
-    }
 
     public ArrayList<Vehicle> getListIntemVehicles() {
         return listIntemVehicles;
