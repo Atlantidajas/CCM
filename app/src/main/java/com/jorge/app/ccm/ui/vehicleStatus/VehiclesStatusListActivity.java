@@ -82,21 +82,32 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         intentSesionDriving = new Intent( VehiclesStatusListActivity.this, SessionCurrentActivity.class );
         arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplicationContext(), vehicles );
 
+
         ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
 
-        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if( dataSnapshot.exists() ) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
+                arrayAdapterVehicleStatus.notifyDataSetChanged();
+            }
 
-                    vehicles.add( new Vehicle( dataSnapshot ) );
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
+                arrayAdapterVehicleStatus.notifyDataSetChanged();
+            }
 
-                    Log.i( TAG, "Expense -> Key" + keysVehicles);
-                    listView.setAdapter( arrayAdapterVehicleStatus );
-                }
-                else {
-                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT).show();
-                }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
+                arrayAdapterVehicleStatus.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
+                arrayAdapterVehicleStatus.notifyDataSetChanged();
             }
 
             @Override
@@ -106,34 +117,26 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         } );
 
 
-
-        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
-
+        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String prevChildKey) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                if (dataSnapshot.exists()) {
+
+                    Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
+                    do {
+                        vehicles.add( new Vehicle( dataSnapshots.next() ) );
+
+                    } while (dataSnapshots.hasNext());
+                    listView.setAdapter( arrayAdapterVehicleStatus );
+                }
+                else {
+                    Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT ).show();
+                }
             }
-            //Mantengo actualizado el adaptador si hay cambios
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
-                arrayAdapterVehicleStatus.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
