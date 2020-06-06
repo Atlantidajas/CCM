@@ -24,10 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBExpense;
 import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
-import com.jorge.app.ccm.models.Expense;
 import com.jorge.app.ccm.models.Session;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
@@ -40,24 +38,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
 /**
  * @author Jorge.HL
  */
-public class VehiclesStatusListActivity extends AppCompatActivity implements Serializable{
+public class VehiclesStatusListActivity extends AppCompatActivity {
 
     private final String TAG = "VehiclesListActivity";
     public Intent intentSesionDriving;
     public Intent intentForUpdate;
+    public Intent intentForDelete;
     public Intent intentForRegistryVehicles;
     public static final String VEHICLE_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.ui.vehiclesStatus.VehiclesStatusListActivity.VEHICLE_FOR_UPDATE_VEHICLE";
+    public static final String VEHICLE_FOR_DELETE_VEHICLE = "com.jorge.app.ccm.ui.vehiclesStatus.VehiclesStatusListActivity.VEHICLE_FOR_DELETE_VEHICLE";
     public static final int REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE = 0;
+    public static final int REQUEST_INTENT_VEHICLE_FOR_DELETE_VEHICLE = 1;
+
 
     private AdapterVehicleStatus arrayAdapterVehicleStatus;
     private TextView textView;
     private ListView listView;
     private SessionDriving sessionDrivingCurrent;//<-- Inicializada desde función readSesionCurrent()
-    private ArrayList<Vehicle> vehicles = new ArrayList<>(  );
-    private ArrayList<String> keysVehicles = new ArrayList<>(  );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,71 +79,40 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
 
         //Intens
         intentForRegistryVehicles = new Intent ( VehiclesStatusListActivity.this, RegistryVehiclesActivity.class);
-        intentForUpdate= new Intent ( VehiclesStatusListActivity.this, UpdateVehicleActivity.class);
+        intentForUpdate = new Intent ( VehiclesStatusListActivity.this, UpdateVehicleActivity.class);
+        intentForDelete = new Intent ( VehiclesStatusListActivity.this, DeleteVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesStatusListActivity.this, SessionCurrentActivity.class );
-        arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplicationContext(), vehicles );
-
-
+        arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplicationContext() );
         ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
 
-        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
-                arrayAdapterVehicleStatus.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
-                arrayAdapterVehicleStatus.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
-                arrayAdapterVehicleStatus.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapterVehicleStatus.getListIntemVehicles().clear();
-                arrayAdapterVehicleStatus.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        } );
-
-
-        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+       DatabaseReference databaseReference = controllerDBStatus.getDatabaseReference();
+       databaseReference.addValueEventListener(  new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
 
                     Iterator<DataSnapshot> dataSnapshots = dataSnapshot.getChildren().iterator();
+                    ArrayList<Vehicle>vehicles = new ArrayList<>(  );
                     do {
                         vehicles.add( new Vehicle( dataSnapshots.next() ) );
-
                     } while (dataSnapshots.hasNext());
+
+                    arrayAdapterVehicleStatus.setListIntemVehicles( vehicles );
                     listView.setAdapter( arrayAdapterVehicleStatus );
                 }
                 else {
                     Toast.makeText( getApplicationContext(), R.string.toast_message_no_data, Toast.LENGTH_SHORT ).show();
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
-
 
 
     /**
@@ -228,6 +198,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
             case R.id.menu_contextual_list_view_vehicles_item_delete:
                 //Eliminar un vehículo de la db
                 deleteVehicle( vehicleSelect );
+
 
             default:
                 return super.onContextItemSelected(item);
@@ -374,12 +345,19 @@ public class VehiclesStatusListActivity extends AppCompatActivity implements Ser
         }
     }
 
-    public void deleteVehicle( Vehicle vehicleForDelete ){
+    public void deleteVehicle(Vehicle vehicleForDelete){
 
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
+        //Si se puede editar.
+        if ( vehicleForDelete.getVehicleDriving() == 0 ){
 
-        // Se puede eliminar si no está en uso por nadie
-        if ( controllerDBStatus.removeStatusVehicle( vehicleForDelete ) ){ }
+            Bundle bundle= new Bundle();
+            bundle.putSerializable( VEHICLE_FOR_DELETE_VEHICLE, vehicleForDelete );
+            intentForDelete.putExtras(bundle);
+            setResult( RESULT_OK, intentForDelete );
+            startActivityForResult(intentForDelete, REQUEST_INTENT_VEHICLE_FOR_DELETE_VEHICLE);
+            finish();
+
+        }
         // No se puede eliminar ya que hay una sesión abierta y esta quedaría así hasta la perpetuidad, causando incoherencia en históricos.
         else {
             WindowDialogFragment windowCloseRedirecSesionDriving = new WindowDialogFragment( R.string.windowCloseRedirecSesionDriving_remove_message );//<-- Show desde onclickItemList

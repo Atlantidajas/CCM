@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.models.Vehicle;
 
-public class ControllerDBStatus {
+public class ControllerDBStatus  {
 
     private String TAG;
     private Context context;
@@ -27,6 +27,8 @@ public class ControllerDBStatus {
         this.context = context;
         this.TAG = TAG;
         this.databaseReferenceStatus = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Status" );
+
+        databaseReferenceStatus.keepSynced(true);
     }
 
     public void setStatusVehicle( final Vehicle vehicle ){
@@ -51,10 +53,10 @@ public class ControllerDBStatus {
     public boolean removeStatusVehicle(final Vehicle vehicle ){
 
         if( vehicle.getVehicleDriving() == 0 ){
+            Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicle.getVehicleDriving() );
             DatabaseReference dbRF = databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
             //dbRF.addChildEventListener( setChildEventListenerStatus(0, R.string.toast_message_removed_vehicle_generic, 0 ) );
             dbRF.removeValue();
-            Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicle.getVehicleDriving() );
             return true;
 
         }
@@ -64,13 +66,17 @@ public class ControllerDBStatus {
         }
     }
 
+
+
     public boolean updateStatusVehicle( final Vehicle vehicle  ){
 
         if( vehicle.getVehicleDriving() == 0 ){
+            Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicle.getVehicleDriving() );
             DatabaseReference dbRF = databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
             dbRF.addChildEventListener( setChildEventListenerStatus( R.string.toast_message_changed_vehicle_generic, 0, 0 ) );
             dbRF.setValue( vehicle );
-            Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicle.getVehicleDriving() );
+
+
             return true;
         }
         else {
@@ -82,10 +88,10 @@ public class ControllerDBStatus {
     public boolean updateStatusVehicle( final Vehicle vehicle, String messageOnChildChanged  ){
 
         if( vehicle.getVehicleDriving() == 0 ) {
+            Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicle.getVehicleDriving() );
             DatabaseReference dbRF = databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
             dbRF.addChildEventListener( setChildEventListenerStatus( messageOnChildChanged, null, null ) );
             dbRF.setValue( vehicle );
-            Log.i( TAG, "OncontextItemSeled() -> Delete -> VegicleSelect -> Driving -> (Valor)" + vehicle.getVehicleDriving() );
             return true;
         }
         else {
@@ -241,4 +247,8 @@ public class ControllerDBStatus {
         };
         return childEventListener;
     }
+
+
+
+
 }

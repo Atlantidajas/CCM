@@ -7,7 +7,6 @@
     tools:context=".ui.expenses.ExpenseHistoricActivity">
 
 
-
     <LinearLayout
         android:id="@+id/textView_expense_historic"
         android:layout_width="match_parent"

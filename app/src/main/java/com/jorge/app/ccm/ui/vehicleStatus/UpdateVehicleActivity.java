@@ -56,6 +56,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         findViewById( R.id.button_accept_vehicleRegistry ).setOnClickListener( this );
         findViewById( R.id.button_cancel_vehicleRegistry ).setOnClickListener( this );
 
+
         //Fichero para guardar datos de forma temporal objetos tipo expensesVehicleForUserTemp
         vehicleTemp = new ExpenseTemp( getApplicationContext(), TAG );
         vehicleTemp.setVehicleDriving( 0 );//<-- Nadie lo conduce ya que se acaba de crear.
@@ -75,7 +76,6 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
 
             if ( requestCode == REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE  && resultCode  == RESULT_OK ) {
 
-                System.out.println( "Entró en 2 <--------------------------------------------------------------------------------------------" );
                 Bundle objetoIn = data.getExtras();
                 Vehicle vehicleSelect = null;
 

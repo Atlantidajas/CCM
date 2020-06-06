@@ -65,8 +65,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
                 final Drawable img;
 
                 if (dataSnapshot.exists()) {
-
-                    Log.i( TAG, "fieldLoadTextViewTitle() -> StatusDB -> getCountChild: " + String.valueOf( controllerDBStatus.getCountChildStatus() ) );
+                    
                     textView.setText( R.string.textView_vehicles_select_list_activity_false );
                     img = getApplicationContext().getResources().getDrawable( R.mipmap.ic_launcher_select_multiple );
                 }

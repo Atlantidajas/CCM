@@ -10,18 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.models.Expense;
+
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.utils.DateHoursUtil;
 
@@ -30,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+
 
 /**
  * @author Jorge.HL
@@ -44,14 +34,22 @@ public class AdapterVehicleStatus extends BaseAdapter {
 
     public AdapterVehicleStatus(){}
 
-    public AdapterVehicleStatus(final Context context, ArrayList<Vehicle> listVehicles ) {
+    public AdapterVehicleStatus(final Context context ) {
         this.context = context;
-        listIntemVehicles = listVehicles;
+    }
+
+    public void setListIntemVehicles( ArrayList<Vehicle>vehicles ){
+        this.listIntemVehicles = vehicles;
     }
 
     @Override
     public int getCount() {
         return listIntemVehicles.size();
+    }
+
+    public void updateAdapter(){
+        this.listIntemVehicles.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -128,4 +126,5 @@ public class AdapterVehicleStatus extends BaseAdapter {
     public ArrayList<Vehicle> getListIntemVehicles() {
         return listIntemVehicles;
     }
+
 }

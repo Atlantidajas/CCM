@@ -154,9 +154,6 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
                         Vehicle expenseSelectTypeVehicle = expenses.get( position ).getVehicle();
 
                         System.out.println( expenses.get( position).getTickectNumber() + "<<< Tickeckt Number" );
-                        System.out.println( "-------------------------------------------------------------------" );
-                        System.out.println( "-------------------------------------------------------------------" );
-                        System.out.println( "-------------------------------------------------------------------" );
 
                         Log.i( TAG, "onclickItemList() -> Expenses -> Vehicle -> registrationNumbre: (Valor) " + expenses.get( position ).getVehicleRegistrationNumber()  );
                         Log.i( TAG, "onclickItemList() -> Expenses -> Tickect -> numberTickect: (Valor) " + expenses.get( position ).getTickectNumber()  );

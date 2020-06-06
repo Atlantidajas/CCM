@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/textView_alert_delete_vehicle"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:textColor="#F44336"
+            android:layout_marginTop="100dp"
+            android:hint="Está seguro de borrar el vehículo" />
+
+    <ImageView
+        android:id="@+id/image_alert_delete_vehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_ballot_alert"
+        android:layout_below="@id/textView_alert_delete_vehicle" />
+
+    <LinearLayout
+        android:id="@+id/menuLinearLayout"
+        android:layout_below="@+id/image_alert_delete_vehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="100dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/buttonDeleteCancelVehicle"
+            android:text="@string/button_cancel"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_width="10dp" />
+
+        <Button
+            android:id="@+id/buttonDeleteAcceptVehicle"
+            android:layout_height="50dp"
+            android:layout_width="10dp"
+            android:text="@string/button_accept"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

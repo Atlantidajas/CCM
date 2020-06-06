@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.expenses.ExpenseEspecificActivity"/>
+        <activity android:name=".ui.vehicleStatus.DeleteVehicleActivity"></activity>
+        <activity android:name=".ui.expenses.ExpenseEspecificActivity" />
         <activity android:name=".ui.expenses.ExpenseHistoricActivity" />
         <activity android:name=".ui.expenses.ExpensesResgistryActivity" />
         <activity android:name=".ui.expenses.TypeExpensesActivity" />

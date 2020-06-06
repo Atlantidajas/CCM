@@ -180,7 +180,6 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
                         validateFieldTypeEditText( editTextRegistryNumber ) &&
                         validateFieldTypeEditText( editTextDateITV ) ){
 
-                    User user = new User( true );
                     Vehicle vehicle = new Vehicle( vehicleTemp );
 
                     saveDatesFormForDB( vehicle );//<-- Guarda db
