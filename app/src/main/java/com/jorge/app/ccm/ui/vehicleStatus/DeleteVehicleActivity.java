@@ -35,7 +35,7 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
     private Button buttonDeleteCancelVehicle;
     private Button buttonDeleteAcceptVehicle;
     @VisibleForTesting
-    public ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,7 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
             public void onClick(View v) {
 
                 if ( controllerDBStatus.removeStatusVehicle( vehicle ) ){
+
                     mProgressDialog.show();
                     buttonDeleteAcceptVehicle.setVisibility( View.INVISIBLE );
                     buttonDeleteCancelVehicle.setVisibility( View.INVISIBLE );

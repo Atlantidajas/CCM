@@ -46,11 +46,11 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
 
 
     private final String TAG = "VehiclesListActivity";
-    public Intent intentHome;
-    public Intent intentSesionDriving;
-    public Intent intentForUpdate;
-    public Intent intentForDelete;
-    public Intent intentForRegistryVehicles;
+    private Intent intentHome;
+    private Intent intentSesionDriving;
+    private Intent intentForUpdate;
+    private Intent intentForDelete;
+    private Intent intentForRegistryVehicles;
     public static final String VEHICLE_FOR_UPDATE_VEHICLE = "com.jorge.app.ccm.ui.vehiclesStatus.VehiclesStatusListActivity.VEHICLE_FOR_UPDATE_VEHICLE";
     public static final String VEHICLE_FOR_DELETE_VEHICLE = "com.jorge.app.ccm.ui.vehiclesStatus.VehiclesStatusListActivity.VEHICLE_FOR_DELETE_VEHICLE";
     public static final int REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE = 0;
@@ -115,6 +115,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /**
      * Inicializa sessionDrivingCurrent
@@ -382,6 +383,5 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
             windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
         }
     }
-
 
 }
