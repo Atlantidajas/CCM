@@ -9,11 +9,8 @@
     <string name="button_close_session">Cerrar sesión</string>
     <string name="spiner_buttom_neutral_records_vehicles_expense_registry">No existe</string>
 
-
     <!-- Formulario registro de marcas -->
     <string name="form_registry_brans_title">Selecione una marca</string>
-
-
 
     <string name="button_vehicles_status">Flota</string>
     <string name="button_expenses">Gastos</string>

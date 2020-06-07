@@ -64,11 +64,11 @@
     <string name="window_notice_registry_yes_vehicle_message">Registro realizado</string>
     <!-- Window Notice Yes RegistryVehicle -->
     <string name="windows_yes_init_session_vehicle_message">Va a iniciar sesión con el vehículo</string>
-    <string name="windows_no_init_session_vehicle_message">El vehículo ya está en uso</string>
+    <string name="windows_no_init_session_vehicle_message">El vehículo ya está ocupado</string>
 
     <!-- Windows Notice (WindowCloseRedirecSesionDriving) -->
-    <string name="windowCloseRedirecSesionDriving_remove_message">El vehículo está en uso, debe cerrar la sesión antes de eliminarlo.\n ¿Desea cerrarla?</string>
-    <string name="windowCloseRedirecSesionDriving_edit_message">El vehículo está en uso, debe cerrar la sesión antes de editarlo.\n ¿Desea cerrarla?</string>
+    <string name="windowCloseRedirecSesionDriving_remove_message">El vehículo está ocupado, debe cerrar la sesión antes de eliminarlo.\n ¿Desea cerrarla?</string>
+    <string name="windowCloseRedirecSesionDriving_edit_message">El vehículo está ocupado, debe cerrar la sesión antes de editarlo.\n ¿Desea cerrarla?</string>
     <string name="windowInitOnUser">Ya tiene una sesión abierta con otro vehículo.\n ¡Ciérrela primero!</string>
     <string name="windowSesionNo">El vehículo está ocupado por otro usuario, no puede iniciar sesión</string>
     <string name="windowInitSession">¿Iniciar sesión?</string>

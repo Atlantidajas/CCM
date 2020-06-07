@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="methodPlayment">
+
+        <item>Select an option</item>
+        <item>Cash</item>
+        <item>Business card</item>
+        <item>Credit card</item>
+        <item>Bank check</item>
+        <item>Cash on delivery</item>
+        <item>Electronic transfer</item>
+        <item>Virtual currency</item>
+
+    </string-array>
+</resources>

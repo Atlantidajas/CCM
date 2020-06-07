@@ -2,26 +2,26 @@
 <resources>
 
 
-    <string name="sesionDrivingOpen">Este usuario ya tiene un sesion abierta, ciérrela para abrir otra</string>
+    <string name="sesionDrivingOpen">El usuario ya tiene un sesion abierta, ciérrela para abrir otra</string>
     <string name="toast_message_save_vehicle_generic">Guardar vehículo </string>
     <string name="toast_message_changed_vehicle_generic">Se modificó los datos del vehículo</string>
     <string name="toast_message_removed_vehicle_generic">Eliminado vehículo</string>
     <string name="toast_message_moved_vehicle_generic">Pendiente de asignar mensaje</string>
 
-  <string name="toast_message_init_sesion">Iniciada sesión de uso de vehículo</string>
-  <string name="toast_message_close_sesion">Cerrarada sesión de uso de vehículo</string>
-  <string name="toast_message_vehicle_already_exists">Ya hay un vehículo con esa matrícula</string>
+    <string name="toast_message_init_sesion">Iniciada sesión de uso de vehículo</string>
+    <string name="toast_message_close_sesion">Cerrarada sesión de uso de vehículo</string>
+    <string name="toast_message_vehicle_already_exists">Ya hay un vehículo con esa matrícula</string>
 
-  <string name="toast_message_logout_error">No puede cerrar una sesión de otro usuario</string>
+    <string name="toast_message_logout_error">No puede cerrar una sesión de otro usuario</string>
 
-  <string name="toast_message_empty_fields">Faltan campos por rellenar</string>
+    <string name="toast_message_empty_fields">Faltan campos por rellenar</string>
 
-  <string name="toast_message_si_registry">Datos guardados</string>
-  <string name="toast_message_no_registry">No se han registrado los datos</string>
+    <string name="toast_message_si_registry">Datos guardados</string>
+    <string name="toast_message_no_registry">No se han registrado los datos</string>
 
-  <string name="toast_message_no_data">No hay datos para mostrar</string>
+    <string name="toast_message_no_data">No hay datos para mostrar</string>
 
-    <string name="toast_sessio_driving_checkSession">Este vehículo está siendo usado por otro usuario, no puede iniciar sesión</string>
+    <string name="toast_sessio_driving_checkSession">El vehículo está siendo usado por otro usuario, no puede iniciar sesión</string>
 
 
 </resources>

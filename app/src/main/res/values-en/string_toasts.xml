@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesionDrivingOpen">The user already has an open session, close the session to opne another</string>
+    <string name="toast_message_save_vehicle_generic">Save vehicle</string>
+    <string name="toast_message_changed_vehicle_generic">Modifield vehicle date</string>
+    <string name="toast_message_removed_vehicle_generic">Removed vehicle</string>
+    <string name="toast_message_moved_vehicle_generic"></string>
+    <string name="toast_message_init_sesion">Vehicle use session started</string>
+    <string name="toast_message_close_sesion">Closed session use of vehicle</string>
+    <string name="toast_message_vehicle_already_exists">There is already a vehicle with that registration</string>
+    <string name="toast_message_logout_error">Cant´t close another user´s session</string>
+    <string name="toast_message_empty_fields">Missing unfilled fields</string>
+    <string name="toast_message_si_registry">Saved data</string>
+    <string name="toast_message_no_registry">Data has not been recorded</string>
+    <string name="toast_message_no_data">No data to display</string>
+    <string name="toast_sessio_driving_checkSession">This vehicle is being used by another user, you cannot login</string>
+</resources>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Car Control Manager</string>
+    <string name="dummy_content">Car Control\nManager</string>
+    <string name="fieldNumberTickect">Tickect number</string>
+    <string name="fieldDateTickect">Tickect date</string>
+    <string name="fieldTotalTickect">amount</string>
+    <string name="fieldProviderName">Provider</string>
+    <string name="fieldProviderCifNif">Provider CIF - NIF</string>
+    <string name="fieldProviderTelephone">Provider phone</string>
+    <string name="fieldMethodOfPlaymentName">Payment method</string>
+    <string name="fieldConceptExpense">Type</string>
+    <string name="fieldUserNameUser">Name user</string>
+    <string name="fieldUserEmailUser">User email</string>
+    <string name="fieldUserTelephoneNumber">User phone</string>
+    <string name="fieldVehicleRegistration">Registration number</string>
+    <string name="fieldVehicleBrand">Brand</string>
+    <string name="fieldVehicleModel">Model</string>
+    <string name="fieldUser">User</string>
+    <string name="fieldVehicleDateITV">ITV date</string>
+
+    <string name="fieldITV">ITV</string>
+    <string name="fieldStatus">Status</string>
+
+    <string name="fieldSessionDate">Session date</string>
+    <string name="fieldSessionHours">Session hours</string>
+    <string name="fieldSessionTypeSessionStart">Current status of the session: Init</string>
+    <string name="fieldSessionTypeSessionEnd">Current status of the session: Finished</string>
+
+    <string name="fieldFuel">Fuel</string>
+    <string name="fieldScouring">Cleaning</string>
+    <string name="fieldRepair">Repairs</string>
+    <string name="fieldMaintenance">Maintenace</string>
+    <string name="fieldOil">Oil</string>
+    <string name="fieldParking">Parking</string>
+    <string name="fieldSpecify">Others</string>
+    <string name="fieldWiperWasher">Wiper blade</string>
+    <string name="fieldWheel">Wheel</string>
+    <string name="fieldBrakes">Brakes</string>
+    <string name="fieldTollHighway">Toll</string>
+    <string name="fieldLamp">Lamp</string>
+    <string name="fieldSelectIcon">First select the type expense</string>
+    <string name="fieldTypeExpenseEmpty">Fill in the required field</string>
+
+    <string name="spiner_title_records_vehicles">Vehicles in the system</string>
+    <string name="editText_vehicle_expense_registry">Select a vehecle</string>
+    <string name="editText_type_expense_expense_registry">Expense type</string>
+    <string name="editText_concept_expense_registry">Concept</string>
+
+
+    <!-- Windows -->
+    <string name="fieldAttention">Attention</string>
+    <string name="windowNoticeExpenseHistoricActivity">See more details</string>
+
+    <!-- Window Notice No RegistryVehicle -->
+
+    <string name="window_notice_registry_no_vehicle_message">There is a vehicle with the number of that registation</string>
+    <!-- Window Notice Yes RegistryVehicle -->
+
+    <string name="window_notice_registry_yes_vehicle_message">Registration made</string>
+    <!-- Window Notice Yes RegistryVehicle -->
+    <string name="windows_yes_init_session_vehicle_message">Do you want to log in with the vehicle?</string>
+    <string name="windows_no_init_session_vehicle_message">The vehicle is busy</string>
+
+    <!-- Windows Notice (WindowCloseRedirecSesionDriving) -->
+    <string name="windowCloseRedirecSesionDriving_remove_message">The vehicle is busy.\n Do you want to close it?</string>
+    <string name="windowCloseRedirecSesionDriving_edit_message">The vehicle is busy, you must log out before deleting it.\n Do you want to close it?</string>
+    <string name="windowInitOnUser">You have an open session with another vehicle.\n Close it first!</string>
+    <string name="windowSesionNo">The vehicle is occupied by another user, unable to login</string>
+    <string name="windowInitSession">Log in?</string>
+    <string name="windowAttentionSessionClose">Sign off?</string>
+    <string name="windowAttetionSessionClosenoClose">This session is already closed</string>
+    <string name="windowCloseSession">Closing session</string>
+
+
+    <!-- Windows Notice (SesionHistoricActivity) -->
+    <string name="windowNoticeSesionHistoricActivity">See session details</string>
+
+    <!-- Form Registry ITV -->
+    <string name="form_registry_itv_title">Next ITV date</string>
+
+    <!-- Registro vehículo -->
+    <string name="edit_text_brand_registry_vehicle">Select brand</string>
+
+    <!-- Form Registry marca -->
+    <string name="form_registry_model_title">Vehicle records</string>
+
+    <string name="textView_vehicles_select_list_activity_true">There is no vehicle, create it</string>
+    <string name="textView_vehicles_select_list_activity_false">Select a vehicle</string>
+</resources>
