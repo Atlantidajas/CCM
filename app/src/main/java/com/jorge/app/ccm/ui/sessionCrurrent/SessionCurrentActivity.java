@@ -199,10 +199,10 @@ public class SessionCurrentActivity extends AppCompatActivity{
 
                 //Una sesión que ya está cerrada no se puede volver a cerrar.
                 if (sessionDriving.getSessionTypeSesion().equals( "End" )) {
-                    Toast.makeText( getApplicationContext(), "No puede cerrar una sesión que ya lo está", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( getApplicationContext(), R.string.windowAttetionSessionClosenoClose, Toast.LENGTH_SHORT ).show();
                 } else {
 
-                    WindowDialogFragment windowCloseSesionVehicle = new WindowDialogFragment( "Desea cerrar sesion" );
+                    WindowDialogFragment windowCloseSesionVehicle = new WindowDialogFragment( R.string.windowAttentionSessionClose );
 
                     windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                         @Override

@@ -228,11 +228,11 @@ public class SessionStatusActivity extends AppCompatActivity {
 
                 //Una sesión que ya está cerrada no se puede volver a cerrar.
                 if (REAL_STATUS_SESSION == false) {
-                    Toast.makeText( getApplicationContext(), "No puede cerrar una sesión que ya lo está", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( getApplicationContext(), R.string.windowAttetionSessionClosenoClose, Toast.LENGTH_SHORT ).show();
                 }
                 else {
 
-                    WindowDialogFragment windowCloseSesionVehicle = new WindowDialogFragment( "Desea cerrar sesion" );
+                    WindowDialogFragment windowCloseSesionVehicle = new WindowDialogFragment( R.string.windowAttentionSessionClose );
 
                     windowCloseSesionVehicle.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                         @Override
@@ -254,7 +254,7 @@ public class SessionStatusActivity extends AppCompatActivity {
 
                                 controllerDBSessionsHistoric.registrySessionHistoric( sessionDriving );
 
-                                Toast.makeText( getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT ).show();
+                                Toast.makeText( getApplicationContext(), R.string.windowCloseSession, Toast.LENGTH_SHORT ).show();
                                 startActivity( intentCloseSesion );
                             } else {
                                 Toast.makeText( getApplicationContext(), R.string.toast_message_logout_error, Toast.LENGTH_SHORT ).show();

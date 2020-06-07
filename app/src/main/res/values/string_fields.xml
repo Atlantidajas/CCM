@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Car control manager</string>
+    <string name="app_name">Car Control Manager</string>
     <string name="dummy_content">Car Control\nManager</string>
     <string name="fieldNumberTickect">Número de tickect</string>
     <string name="fieldDateTickect">Fecha de tickect</string>
@@ -24,8 +24,8 @@
     <string name="fieldStatus">Estado</string>
 
 
-    <string name="fieldSessionDate">Fecha de sesión:</string>
-    <string name="fieldSessionHours">Hora de sesión:</string>
+    <string name="fieldSessionDate">Fecha de sesión</string>
+    <string name="fieldSessionHours">Hora de sesión</string>
     <string name="fieldSessionTypeSessionStart">Estado actual de la sesión: Iniciada</string>
     <string name="fieldSessionTypeSessionEnd">Estado actual de la sesión: Finalizada</string>
 
@@ -42,7 +42,7 @@
     <string name="fieldTollHighway">Peajes</string>
     <string name="fieldLamp">Bombillas</string>
     <string name="fieldSelectIcon">Primero seleccione el tipo de gasto</string>
-    <string name="fieldTypeExpenseEmpty">Debe cumplimentar el campo para seguir.</string>
+    <string name="fieldTypeExpenseEmpty">Debe cumplimentar el campo para seguir</string>
 
 
 
@@ -64,14 +64,18 @@
     <string name="window_notice_registry_yes_vehicle_message">Registro realizado</string>
     <!-- Window Notice Yes RegistryVehicle -->
     <string name="windows_yes_init_session_vehicle_message">Va a iniciar sesión con el vehículo</string>
-    <string name="windows_no_init_session_vehicle_message">Este vehículo ya está en uso</string>
+    <string name="windows_no_init_session_vehicle_message">El vehículo ya está en uso</string>
 
     <!-- Windows Notice (WindowCloseRedirecSesionDriving) -->
-    <string name="windowCloseRedirecSesionDriving_remove_message">Este vehículo está en uso, debe cerrar la sesión antes de eliminarlo.\n ¿Desea cerrarla?</string>
-    <string name="windowCloseRedirecSesionDriving_edit_message">Este vehículo está en uso, debe cerrar la sesión antes de editarlo.\n ¿Desea cerrarla?</string>
-    <string name="windowInitOnUser">Ya tiene una sesión abierta con otro vehículo.\n ¡Cierrela primero!</string>
-    <string name="windowSesionNo">Este vehículo en usopor otro usuario, no puede iniciar sesión</string>
+    <string name="windowCloseRedirecSesionDriving_remove_message">El vehículo está en uso, debe cerrar la sesión antes de eliminarlo.\n ¿Desea cerrarla?</string>
+    <string name="windowCloseRedirecSesionDriving_edit_message">El vehículo está en uso, debe cerrar la sesión antes de editarlo.\n ¿Desea cerrarla?</string>
+    <string name="windowInitOnUser">Ya tiene una sesión abierta con otro vehículo.\n ¡Ciérrela primero!</string>
+    <string name="windowSesionNo">El vehículo está ocupado por otro usuario, no puede iniciar sesión</string>
     <string name="windowInitSession">¿Iniciar sesión?</string>
+    <string name="windowAttentionSessionClose">¿Desea cerrar sesión?</string>
+    <string name="windowAttetionSessionClosenoClose">No puede cerrar una sesión que ya lo está</string>
+    <string name="windowCloseSession">Cerrando sesión</string>
+
 
     <!-- Windows Notice (SesionHistoricActivity) -->
     <string name="windowNoticeSesionHistoricActivity">Ver datos de la sesión</string>
@@ -83,13 +87,9 @@
     <string name="edit_text_brand_registry_vehicle">Seleccione marca</string>
 
     <!-- Form Registry marca -->
-    <string name="form_registry_model_title">Registro de vehículo</string>
+    <string name="form_registry_model_title">Registros del vehículo</string>
 
-    <string name="textView_vehicles_select_list_activity_true">No existen vehículos, créalo</string>
+    <string name="textView_vehicles_select_list_activity_true">No existen nungún vehículo, créalo</string>
     <string name="textView_vehicles_select_list_activity_false">Seleccione un vehículo</string>
-
-
-
-
 
 </resources>
