@@ -29,8 +29,7 @@
                 android:id="@+id/textView_numberTickect_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -54,8 +53,7 @@
                 android:id="@+id/textView_dateTickect_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -79,8 +77,7 @@
                 android:id="@+id/textView_TotalExpenseTickect_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -104,8 +101,7 @@
                 android:id="@+id/textView_providerNameProvider_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -130,8 +126,7 @@
                 android:id="@+id/textView_providerCifNifProvider_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -156,8 +151,7 @@
                 android:id="@+id/textView_providerTelephoneProvider_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -182,8 +176,7 @@
                 android:id="@+id/textView_methodOfPlaymentNamePlayment_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -198,7 +191,7 @@
             <ImageView
                 android:id="@+id/imageView_type_expensename_expense"
                 android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:layout_height="40dp"
                 android:layout_marginHorizontal="40dp"
                 android:layout_marginVertical="10dp" />
 
@@ -207,8 +200,7 @@
                 android:id="@+id/textView_type_expensename_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -231,8 +223,7 @@
                 android:id="@+id/textView_userNameUser_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -256,8 +247,7 @@
                 android:id="@+id/textView_userEmailUser_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -281,8 +271,7 @@
                 android:id="@+id/textView_userTelephoneNumberUser_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -307,8 +296,7 @@
                 android:id="@+id/textView_vehicleRegistrationNumberVehicle_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -332,8 +320,7 @@
                 android:id="@+id/textView_vehicleBrandVehicle_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -357,8 +344,7 @@
                 android:id="@+id/textView_vehicleModelVehicle_expense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:textAlignment="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 

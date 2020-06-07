@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,6 +59,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_session_current );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
 
         imageViewTypeSession = findViewById( R.id.imageViewTypeSession );
@@ -110,9 +112,21 @@ public class SessionCurrentActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == android.R.id.home ){
+            finish();
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
+    }
+
     public void loadFieldUserSession( SessionDriving sessionDriving ){
         Resources resources = getResources();
-        String userSession = resources.getString( R.string.textViewUserDate );
+        String userSession = resources.getString( R.string.fieldUserNameUser );
         Glide.with( getApplicationContext() ).load( sessionDriving.getUserPhotoUriString() ).into( imageViewUserDate );
         textViewUserDate.setText( userSession + " " + sessionDriving.getUserName() );
     }
@@ -120,8 +134,8 @@ public class SessionCurrentActivity extends AppCompatActivity{
     public void loadFieldStatuSession( SessionDriving sessionDriving ){
 
         Resources resources = getResources();
-        String typeSessionStart = resources.getString( R.string.textViewTypeSessionStart );
-        String typeSessionEnd = resources.getString( R.string.textViewTypeSessionEnd );
+        String typeSessionStart = resources.getString( R.string.fieldSessionTypeSessionStart );
+        String typeSessionEnd = resources.getString( R.string.fieldSessionTypeSessionEnd );
 
         switch ( sessionDriving.getSessionTypeSesion() ){
             case "Start":
@@ -142,32 +156,32 @@ public class SessionCurrentActivity extends AppCompatActivity{
 
     public void loadFieldDateSession( SessionDriving sessionDriving){
         Resources resources = getResources();
-        String dateSession = resources.getString( R.string.textViewDate );
+        String dateSession = resources.getString( R.string.fieldSessionDate );
         textViewDate.setText( dateSession + " " + sessionDriving.getSessionDate() );
     }
 
     public void loadFieldHoursSession( SessionDriving sessionDriving){
         Resources resources = getResources();
-        String hoursSession = resources.getString( R.string.textViewHours );
+        String hoursSession = resources.getString( R.string.fieldSessionHours );
         textViewHours.setText( hoursSession  + " " + sessionDriving.getSessionHours() );
     }
 
     public void loadFieldBrandVehicle( SessionDriving sessionDriving ){
         Resources resources = getResources();
-        String brandVehicleSession = resources.getString( R.string.textViewBrand );
+        String brandVehicleSession = resources.getString( R.string.fieldVehicleBrand );
         textViewBrand.setText( brandVehicleSession +  " " + sessionDriving.getVehicleBrand() );
         imageViewBrand.setImageResource( sessionDriving.getVehiclelogo() );
     }
 
     public void loadFieldModelVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
-        String modelVehicleSession = resources.getString( R.string.textViewModel );
+        String modelVehicleSession = resources.getString( R.string.fieldVehicleModel );
         textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicleModel() );
     }
 
     public void loadFieldRegistrationNumberVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
-        String registrationNumberVehicleSession = resources.getString( R.string.textViewRegistrationNumber );
+        String registrationNumberVehicleSession = resources.getString( R.string.fieldVehicleRegistration );
         textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicleRegistrationNumber() );
     }
 

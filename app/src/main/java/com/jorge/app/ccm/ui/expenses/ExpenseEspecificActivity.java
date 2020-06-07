@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,6 +77,7 @@ public class ExpenseEspecificActivity extends AppCompatActivity implements Seria
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_expense_especific );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
         user = new User(  );
 
@@ -140,6 +142,18 @@ public class ExpenseEspecificActivity extends AppCompatActivity implements Seria
         onActivityResult( EXPENSE_SELECT_REQUEST, RESULT_OK, getIntent() );
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == android.R.id.home ){
+            finish();
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
+    }
+
     /*
      * Guardo comprueba la correcta recepción de los datos recibidos por medio de Items
      */
@@ -163,77 +177,77 @@ public class ExpenseEspecificActivity extends AppCompatActivity implements Seria
 
                 //[1]
                 //layoutNumberTickect;
-                String stringTextView_numberTickect_expense = getString( R.string.textView_numberTickect_expense );
-                textViewNumberTickect.setText( stringTextView_numberTickect_expense + expenseSelectTickect.getTickectNumber() );
+                String stringTextView_numberTickect_expense = getString( R.string.fieldNumberTickect );
+                textViewNumberTickect.setText( stringTextView_numberTickect_expense + " " + expenseSelectTickect.getTickectNumber() );
 
                 //[2]
                 //layoutDateTickect;
-                String stringTextViewDateTickectExpense = getString( R.string.textView_dateTickect_expense );
-                textViewDateTickect.setText( stringTextViewDateTickectExpense + expenseSelectTickect.getTickectDate() );
+                String stringTextViewDateTickectExpense = getString( R.string.fieldDateTickect );
+                textViewDateTickect.setText( stringTextViewDateTickectExpense + " " + expenseSelectTickect.getTickectDate() );
 
                 //[3]
                 //layoutTotalExpenseTickect;
-                String stringTextViewTotalExpenseTickectExpense = getString( R.string.textView_TotalExpenseTickect_expense );
-                textViewTotalExpenseTickect.setText( stringTextViewTotalExpenseTickectExpense + expenseSelectTickect.getTickectTotalExpense() );
+                String stringTextViewTotalExpenseTickectExpense = getString( R.string.fieldTotalTickect );
+                textViewTotalExpenseTickect.setText( stringTextViewTotalExpenseTickectExpense + " " + expenseSelectTickect.getTickectTotalExpense() );
 
                 //[4]
                 //layoutProviderNameProvider;
-                String stringTextViewProviderNameProviderExpense = getString( R.string.textView_providerNameProvider_expense );
-                textViewProviderNameProvider.setText( stringTextViewProviderNameProviderExpense + expenseSelectTickect.getProviderName() );
+                String stringTextViewProviderNameProviderExpense = getString( R.string.fieldProviderName );
+                textViewProviderNameProvider.setText( stringTextViewProviderNameProviderExpense + " " + expenseSelectTickect.getProviderName() );
 
                 //[5]
                 //layoutProviderCifNifProvider;
-                String stringTextViewProviderCifNifProviderExpense = getString( R.string.textView_providerCifNifProvider_expense );
-                textViewProviderCifNifProvider.setText( stringTextViewProviderCifNifProviderExpense + expenseSelectTickect.getProviderCifNif() );
+                String stringTextViewProviderCifNifProviderExpense = getString( R.string.fieldProviderCifNif );
+                textViewProviderCifNifProvider.setText( stringTextViewProviderCifNifProviderExpense + " " + expenseSelectTickect.getProviderCifNif() );
 
                 //[6]
                 //layoutProviderTelephoneProvider;
-                String stringTextViewProviderTelephoneProviderExpense = getString( R.string.textView_providerTelephoneProvider_expense );
-                textViewProviderTelephoneProvider.setText( stringTextViewProviderTelephoneProviderExpense + expenseSelectTickect.getProviderTelephone() );
+                String stringTextViewProviderTelephoneProviderExpense = getString( R.string.fieldProviderTelephone );
+                textViewProviderTelephoneProvider.setText( stringTextViewProviderTelephoneProviderExpense + " " + expenseSelectTickect.getProviderTelephone() );
 
                 //[7]
                 //layoutMethodOfPlaymentNamePlayment;
-                String stringTextViewMethodOfPlaymentNamePlaymentExpense = getString( R.string.textView_methodOfPlaymentNamePlayment_expense );
-                imageViewMethodOfPlaymentNamePlayment.setImageResource( expenseSelectTickect.getMethodOfPlaymentLogo() );
-                textViewMethodOfPlaymentNamePlayment.setText( stringTextViewMethodOfPlaymentNamePlaymentExpense + expenseSelectTickect.getMethodOfPlaymentName() );
+                String stringTextViewMethodOfPlaymentNamePlaymentExpense = getString( R.string.fieldMethodOfPlaymentName );
+               // imageViewMethodOfPlaymentNamePlayment.setImageResource( expenseSelectTickect.getMethodOfPlaymentLogo() );
+                textViewMethodOfPlaymentNamePlayment.setText( stringTextViewMethodOfPlaymentNamePlaymentExpense + " " + expenseSelectTickect.getMethodOfPlaymentName() );
 
                 //[8]
                 //layoutTypeExpensename;
-                String stringTextViewMethodOfPlaymentNameTypeExpenseExpense = getString( R.string.textView_methodOfPlaymentNameTypeExpense_expense );
+                String stringTextViewMethodOfPlaymentNameTypeExpenseExpense = getString( R.string.fieldConceptExpense );
                 imageViewTypeExpensename.setImageResource( expenseSelectTypeExpense.getTypeExpenseLogo() );
-                textViewTypeExpensename.setText( stringTextViewMethodOfPlaymentNameTypeExpenseExpense + expenseSelectTypeExpense.getTypeExpenseName() );
+                textViewTypeExpensename.setText( stringTextViewMethodOfPlaymentNameTypeExpenseExpense + " " + expenseSelectTypeExpense.getTypeExpenseName() );
 
                 //[9]
                 //layoutUserNameUser;
-                String stringTextViewUserNameUserExpense = getString( R.string.textView_userNameUser_expense );
+                String stringTextViewUserNameUserExpense = getString( R.string.fieldUserNameUser );
                 Glide.with( getApplicationContext() ).load( user.getUserPhotoUriString() ).into( imageViewUserNameUser );
                 textViewUserNameUser.setText( stringTextViewUserNameUserExpense + user.getUserName() );
 
                 //[10]
                 //layoutUserEmailUser;
-                String stringTextViewUserEmailUserExpense = getString( R.string.textView_userEmailUser_expense );
-                textViewUserEmailUser.setText( stringTextViewUserEmailUserExpense + user.getUserEmail() );
+                String stringTextViewUserEmailUserExpense = getString( R.string.fieldUserEmailUser );
+                textViewUserEmailUser.setText( stringTextViewUserEmailUserExpense + " " + user.getUserEmail() );
 
                 //[11]
                 //layoutUserTelephoneNumberUser;
-                String stringTextViewUserTelephoneNumberUserExpense = getString( R.string.textView_userTelephoneNumberUser_expense );
-                textViewUserTelephoneNumberUser.setText( stringTextViewUserTelephoneNumberUserExpense + user.getUserTelephone() );
+                String stringTextViewUserTelephoneNumberUserExpense = getString( R.string.fieldUserTelephoneNumber );
+                textViewUserTelephoneNumberUser.setText( stringTextViewUserTelephoneNumberUserExpense + " " + user.getUserTelephone() );
 
                 //[12]
                 //layoutVehicleRegistrationNumberVehicle;
-                String stringTextViewVehicleRegistrationNumberVehicleExpense = getString( R.string.textView_vehicleRegistrationNumberVehicle_expense );
-                textViewVehicleRegistrationNumberVehicle.setText( stringTextViewVehicleRegistrationNumberVehicleExpense + expenseSelectVehicle.getVehicleRegistrationNumber() );
+                String stringTextViewVehicleRegistrationNumberVehicleExpense = getString( R.string.fieldVehicleRegistration );
+                textViewVehicleRegistrationNumberVehicle.setText( stringTextViewVehicleRegistrationNumberVehicleExpense + " " + expenseSelectVehicle.getVehicleRegistrationNumber() );
 
                 //[13]
                 //layoutVehicleBrandVehicle;
-                String stringTextViewVehicleBrandVehicleExpense = getString( R.string.textView_vehicleBrandVehicle_expense );
+                String stringTextViewVehicleBrandVehicleExpense = getString( R.string.fieldVehicleBrand );
                 imageViewVehicleBrandVehicle.setImageResource( expenseSelectVehicle.getVehiclelogo() );
-                textViewVehicleBrandVehicle.setText( stringTextViewVehicleBrandVehicleExpense + expenseSelectVehicle.getVehicleBrand() );
+                textViewVehicleBrandVehicle.setText( stringTextViewVehicleBrandVehicleExpense + " " + expenseSelectVehicle.getVehicleBrand() );
 
                 //[14]
                 //layoutVehicleModelVehicle;
-                String stringTextViewVehicleModelVehicleExpense = getString( R.string.textView_vehicleModelVehicle_expense );
-                textViewVehicleModelVehicle.setText( stringTextViewVehicleModelVehicleExpense + expenseSelectVehicle.getVehicleModel() );
+                String stringTextViewVehicleModelVehicleExpense = getString( R.string.fieldVehicleModel );
+                textViewVehicleModelVehicle.setText( stringTextViewVehicleModelVehicleExpense + " " + expenseSelectVehicle.getVehicleModel() );
             }
         } catch (Exception ex) {
             Toast.makeText( ExpenseEspecificActivity.this, ex.toString(),

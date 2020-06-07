@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +45,7 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_type_expenses );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
         intentForExpensesActivity = new Intent( TypeExpensesActivity.this, ExpensesResgistryActivity.class );
 
@@ -78,6 +80,18 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
         buttonNext.setOnClickListener( this );
 
         typeExpenseSelect = new TypeExpense();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == android.R.id.home ){
+            finish();
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
     @Override
@@ -137,7 +151,7 @@ public class TypeExpensesActivity extends AppCompatActivity implements View.OnCl
             case R.id.button_next_activity_type_expenses:
 
                 if( editTextTypeExpenses.getText().toString().equals( "" ) ){
-                    Toast.makeText( getApplicationContext(), "Debe cumplimentar el campo para seguir.", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( getApplicationContext(), R.string.fieldTypeExpenseEmpty, Toast.LENGTH_SHORT ).show();
                     //editTextTypeExpenses.requestFocus();
                 }else {
 

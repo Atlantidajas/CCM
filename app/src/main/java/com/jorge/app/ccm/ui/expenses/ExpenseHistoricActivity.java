@@ -32,6 +32,8 @@ import com.jorge.app.ccm.models.Tickect;
 import com.jorge.app.ccm.models.TypeExpense;
 import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
+import com.jorge.app.ccm.ui.home.HomeActivity;
+import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
     private final String TAG = "ExpenseHistoricActivity";
     private ListView listView;
     private AdapterExpenseHistoric adapterExpenseHistoric;
-
+    public Intent intentHome;
     private Intent intentExpenseEspecific;
     private Intent intentForRegistryExpense;
     private ArrayList<Expense> expenses = new ArrayList<>(  );
@@ -59,7 +61,9 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
         setContentView( R.layout.activity_expense_historic );
         listView = findViewById(R.id.listView_expense_historic);
         adapterExpenseHistoric = new AdapterExpenseHistoric( getApplicationContext(), expenses );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
+        intentHome = new Intent( ExpenseHistoricActivity.this, HomeActivity.class);
         intentExpenseEspecific  = new Intent( ExpenseHistoricActivity.this, ExpenseEspecificActivity.class );
         intentForRegistryExpense = new Intent( ExpenseHistoricActivity.this, ExpensesResgistryActivity.class );
 
@@ -126,6 +130,11 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
 
         if ( id == R.id.resgistreExpense ) {
             startActivity(intentForRegistryExpense);
+        }
+        if ( id == android.R.id.home ){
+            finish();
+            startActivity( intentHome );
+            return true;
         }
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }

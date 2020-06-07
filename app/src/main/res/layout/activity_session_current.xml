@@ -208,14 +208,14 @@
             android:layout_width="140dp"
             android:layout_height="60dp"
             android:layout_marginLeft="50dp"
-            android:text="@string/button_return_session_session_driving_crurrent" />
+            android:text="@string/button_return" />
 
         <Button
             android:id="@+id/button_close_session_session_driving_crurrent"
             android:layout_width="140dp"
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
-            android:text="@string/button_close_session_session_driving_crurrent" />
+            android:text="@string/button_close_session" />
 
 
     </LinearLayout>

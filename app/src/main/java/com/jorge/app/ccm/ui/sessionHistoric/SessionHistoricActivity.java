@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +16,8 @@ import com.jorge.app.ccm.R;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
+import com.jorge.app.ccm.ui.expenses.ExpenseHistoricActivity;
+import com.jorge.app.ccm.ui.home.HomeActivity;
 import com.jorge.app.ccm.ui.sessionStatus.SessionStatusActivity;
 
 import java.io.Serializable;
@@ -27,6 +30,7 @@ public class SessionHistoricActivity extends AppCompatActivity {
     private TextView textView;
     private ListView listView;
     private ArrayList<SessionDriving> sesionsDrivings;
+    public Intent intentHome;
     private Intent intentSessionStatus;
     public static final String SESSION_HISTORIC = "SessionDriving"; //<-- Objeto Session
 
@@ -36,7 +40,9 @@ public class SessionHistoricActivity extends AppCompatActivity {
         setContentView( R.layout.activity_sesion_historic );
         textView = findViewById(R.id.textView_Sesions_historic);
         listView = findViewById(R.id.listView_sessions_historic);
+        intentHome = new Intent( SessionHistoricActivity.this, HomeActivity.class);
         intentSessionStatus  = new Intent( SessionHistoricActivity.this, SessionStatusActivity.class );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
         //Inizializao Adapter para mostrar lista de sesiones
         adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView, TAG);
@@ -50,6 +56,18 @@ public class SessionHistoricActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         onclickItemList();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == android.R.id.home ){
+            finish();
+            startActivity( intentHome );
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
     public void onclickItemList(){

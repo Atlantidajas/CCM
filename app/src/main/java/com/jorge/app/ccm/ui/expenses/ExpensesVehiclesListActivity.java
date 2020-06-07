@@ -36,6 +36,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
     private ListView listView;
     public static final String VEHICLE_SELECT = "com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
 
         fieldLoadTextViewTitle();
     }
+
 
     /**
      * Muestra dos mensajes e iconos dependiendo de si hay elementos en la lista, en ambos caso misma funcionalidad en su evento onclick

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- Botones link Activiti Home -->
-    <string name="button_vehicles_status">Flota</string>
-    <string name="button_expenses">Gastos</string>
-    <string name="button_historic_sesions">Históricos</string>
-    <string name="button_location">Localizaciones</string>
-</resources>

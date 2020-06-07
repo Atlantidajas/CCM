@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="progress_dialog_delete_vehicle">Eliminando vehículo</string>
+    <string name="loading">Cargando</string>
 </resources>

@@ -12,6 +12,7 @@ import android.content.res.Resources;
 
 import android.os.Bundle;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_delete_vehicle );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
         imageViewAlert = findViewById( R.id.image_alert_delete_vehicle );
         buttonDeleteCancelVehicle = findViewById( R.id.buttonDeleteCancelVehicle );
@@ -52,6 +54,17 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
         loadFieldButtonCancelExpenses();
 
         intentVehicleList = new Intent( DeleteVehicleActivity.this, VehiclesStatusListActivity.class );
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == android.R.id.home ){
+            finish();
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
 
@@ -112,6 +125,7 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
             @Override
             public void onClick(View v) {
                 finish();
+                startActivity( intentVehicleList );
             }
         } );
     }

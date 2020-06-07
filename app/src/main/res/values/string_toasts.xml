@@ -2,9 +2,9 @@
 <resources>
 
 
-    <string name="sesionDrivingOpen">Este usuario ya tiene un sesion abierta, cierrela para abrir otra</string>
-    <string name="toast_message_save_vehicle_generic">Guardar vehículo con matrícula</string>
-    <string name="toast_message_changed_vehicle_generic">Se modifico los datos del vehículo con la matrícula</string>
+    <string name="sesionDrivingOpen">Este usuario ya tiene un sesion abierta, ciérrela para abrir otra</string>
+    <string name="toast_message_save_vehicle_generic">Guardar vehículo </string>
+    <string name="toast_message_changed_vehicle_generic">Se modificó los datos del vehículo</string>
     <string name="toast_message_removed_vehicle_generic">Eliminado vehículo</string>
     <string name="toast_message_moved_vehicle_generic">Pendiente de asignar mensaje</string>
 

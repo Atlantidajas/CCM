@@ -13,7 +13,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Primero seleccione un icono"
+        android:text="@string/fieldSelectIcon"
         android:textAlignment="center"
         android:textStyle="bold"
         android:drawableLeft="@mipmap/ic_launcher_arrow_bottom"
@@ -42,7 +42,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_fuel"
                 android:padding="10dp"
-                android:text="Combustible" />
+                android:text="@string/fieldFuel" />
 
             <Button
                 android:id="@+id/button_2_activity_type_expenses"
@@ -51,7 +51,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_wash"
                 android:padding="10dp"
-                android:text="Limpieza" />
+                android:text="@string/fieldScouring" />
 
             <Button
                 android:id="@+id/button_3_activity_type_expenses"
@@ -60,7 +60,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_repair"
                 android:padding="10dp"
-                android:text="Reparaciones" />
+                android:text="@string/fieldRepair" />
         </TableRow>
 
         <TableRow
@@ -74,7 +74,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_revision"
                 android:padding="10dp"
-                android:text="Revisiones" />
+                android:text="@string/fieldMaintenance" />
 
             <Button
                 android:id="@+id/button_5_activity_type_expenses"
@@ -83,7 +83,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_oil"
                 android:padding="10dp"
-                android:text="Aceite" />
+                android:text="@string/fieldOil" />
 
             <Button
                 android:id="@+id/button_6_activity_type_expenses"
@@ -92,7 +92,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_parking"
                 android:padding="10dp"
-                android:text="Parking" />
+                android:text="@string/fieldParking" />
         </TableRow>
 
         <TableRow
@@ -106,7 +106,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_dolallar"
                 android:padding="10dp"
-                android:text="Varios" />
+                android:text="@string/fieldSpecify" />
 
             <Button
                 android:id="@+id/button_8_activity_type_expenses"
@@ -115,7 +115,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_indicator"
                 android:padding="10dp"
-                android:text="Parabrisas" />
+                android:text="@string/fieldWiperWasher" />
 
             <Button
                 android:id="@+id/button_9_activity_type_expenses"
@@ -124,7 +124,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_wheel"
                 android:padding="10dp"
-                android:text="Ruedas" />
+                android:text="@string/fieldWheel" />
 
         </TableRow>
 
@@ -139,7 +139,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_brakes"
                 android:padding="10dp"
-                android:text="Frenos" />
+                android:text="@string/fieldBrakes" />
 
             <Button
                 android:id="@+id/button_11_activity_type_expenses"
@@ -148,7 +148,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_road"
                 android:padding="10dp"
-                android:text="Peajes" />
+                android:text="@string/fieldTollHighway" />
 
             <Button
                 android:id="@+id/button_12_activity_type_expenses"
@@ -157,7 +157,7 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_lamp"
                 android:padding="10dp"
-                android:text="Bombillas" />
+                android:text="@string/fieldLamp" />
 
         </TableRow>
 

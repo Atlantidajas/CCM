@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -57,6 +58,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_expenses_registry );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
         editTextSelectVehicle = findViewById( R.id.editText_vehicle_expense_registry );
         editTextTypeExpense = findViewById( R.id.editText_type_expense_expense_registry );
@@ -76,8 +78,6 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
         intentVehiclesSelectList = new Intent( ExpensesResgistryActivity.this, ExpensesVehiclesListActivity.class );
         intentTypeExpenses = new Intent( ExpensesResgistryActivity.this, TypeExpensesActivity.class );
 
-        final Expense expense = new Expense( );
-
         loadFieldEditTextRegistrationNumber();
         loadFieldEditTextTypeExpense();
         loadFieldEditTextTickectNumber();
@@ -88,6 +88,19 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
         loadFieldButtonAcceptExpenses();
         loadFieldButtonCancelExpenses();
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == android.R.id.home ){
+            finish();
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
     /*
@@ -149,8 +162,6 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
     public void loadFieldEditTextRegistrationNumber(){
 
@@ -341,7 +352,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 expenseTemp.removeExpenseTemp();
-                restartActivity();
+                finish();
             }
         } );
     }

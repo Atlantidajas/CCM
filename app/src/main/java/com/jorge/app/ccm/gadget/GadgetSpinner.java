@@ -21,8 +21,8 @@ public class GadgetSpinner extends DialogFragment {
         this.title = titleResource;
         this.cancelable = false;
         this.items = items;
-        this.textButtonPositive = R.string.form_registry_brans_button_next;
-        this.textButtonNegative = R.string.form_registry_brans_button_return;
+        this.textButtonPositive = R.string.button_next;
+        this.textButtonNegative = R.string.button_return;
         this.dialogFragmentSpinner = new DialogFragmentSpinner(this.title,
                 this.items,
                 this.textButtonPositive,
@@ -40,8 +40,8 @@ public class GadgetSpinner extends DialogFragment {
         for( int i = 0; i < items.size(); i++ ){
             this.items[i] = items.get( i );
         }
-        this.textButtonPositive = R.string.form_registry_brans_button_next;
-        this.textButtonNegative = R.string.form_registry_brans_button_return;
+        this.textButtonPositive = R.string.button_next;
+        this.textButtonNegative = R.string.button_return;
         this.dialogFragmentSpinner = new DialogFragmentSpinner(this.title,
                 this.items,
                 this.textButtonPositive,

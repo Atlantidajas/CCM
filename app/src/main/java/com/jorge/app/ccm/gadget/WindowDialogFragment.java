@@ -8,19 +8,19 @@ public class WindowDialogFragment extends DialogFragmentNotice {
     DialogFragmentNotice dialogFragmentNotice;
 
     public WindowDialogFragment(String menssage ) {
-        dialogFragmentNotice = new DialogFragmentNotice( R.string.windows_init_session_vehicle_title,
+        dialogFragmentNotice = new DialogFragmentNotice( R.string.fieldAttention,
                 menssage,
-                R.string.windows_init_session_vehicle_button_aceptar,
-                R.string.windows_init_session_vehicle_button_cancel,
+                R.string.button_accept,
+                R.string.button_cancel,
                 false);
     }
 
     public WindowDialogFragment(int messageResorce ) {
 
-        dialogFragmentNotice = new DialogFragmentNotice( R.string.windows_init_session_vehicle_title,
+        dialogFragmentNotice = new DialogFragmentNotice( R.string.fieldAttention,
                 messageResorce,
-                R.string.windows_init_session_vehicle_button_aceptar,
-                R.string.windows_init_session_vehicle_button_cancel,
+                R.string.button_accept,
+                R.string.button_cancel,
                 false);
     }
 

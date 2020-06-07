@@ -31,14 +31,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableLeft="@mipmap/ic_launcher_ticket_expense"
-            android:hint="@string/editText_ticket_expense_registry" />
+            android:hint="@string/fieldNumberTickect" />
 
         <EditText
             android:id="@+id/editText_ticket_provider_name_expense_registry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableLeft="@mipmap/ic_launcher_provider"
-            android:hint="@string/editText_ticket_provider_name_expense_registry" />
+            android:hint="@string/fieldProviderName" />
 
         <EditText
             android:id="@+id/editText_date_expense_registry"
@@ -46,7 +46,7 @@
             android:layout_height="60dp"
             android:inputType="date"
             android:drawableLeft="@mipmap/ic_launcher_calendar"
-            android:hint="@string/editText_date_expense_registry" />
+            android:hint="@string/fieldDateTickect" />
 
 
         <LinearLayout
@@ -82,7 +82,7 @@
             android:layout_height="60dp"
             android:inputType="numberDecimal"
             android:drawableLeft="@mipmap/ic_launcher_total_expense"
-            android:hint="@string/editText_total_expense_expense_registry" />
+            android:hint="@string/fieldTotalTickect" />
 
         <LinearLayout
             android:id="@+id/linear_layout_field_buttons_expense_registry"
@@ -97,14 +97,14 @@
                 android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="45dp"
-                android:text="@string/button_cancel_expense_registry" />
+                android:text="@string/button_cancel" />
 
             <Button
                 android:id="@+id/button_accept_expense_registry"
                 android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="45dp"
-                android:text="@string/button_accept_expense_registry" />
+                android:text="@string/button_accept" />
 
         </LinearLayout>
 

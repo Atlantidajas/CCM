@@ -6,7 +6,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
 
 
         <LinearLayout
@@ -18,8 +19,7 @@
                 android:id="@+id/imageView_image_item_vehicles"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="8dp"
-                android:src="@mipmap/ic_launcher_brand"/>
+                android:layout_marginLeft="8dp"/>
             <Spinner
                 android:id="@+id/spinner_brand_registry_vehicle"
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:drawableLeft="@mipmap/ic_launcher_car"
-            android:hint="@string/edit_text_model_registry_vehicle" />
+            android:hint="@string/fieldVehicleModel" />
 
 
         <EditText
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:drawableLeft="@mipmap/ic_launcher_license_plate"
-            android:hint="@string/edit_text_registry_number_registry_vehicle" />
+            android:hint="@string/fieldVehicleRegistration" />
 
         <EditText
             android:id="@+id/edit_text_registry_date_itv_vehicle"
@@ -58,27 +58,28 @@
             android:layout_height="60dp"
             android:inputType="date"
             android:drawableLeft="@mipmap/ic_launcher_calendar"
-            android:hint="@string/edit_text_registry_date_itv_vehicle" />
+            android:hint="@string/fieldVehicleDateITV" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="88dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="100dp"
+            android:weightSum="2">
 
 
             <Button
                 android:id="@+id/button_cancel_vehicleRegistry"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="45dp"
+                android:layout_height="50dp"
+                android:layout_width="10dp"
+                android:layout_weight="1"
                 android:text="@string/button_cancel" />
 
             <Button
                 android:id="@+id/button_accept_vehicleRegistry"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="45dp"
+                android:layout_height="50dp"
+                android:layout_width="10dp"
+                android:layout_weight="1"
                 android:text="@string/button_accept" />
 
         </LinearLayout>

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Buttoms -->
     <string name="button_accept">Aceptar</string>
     <string name="button_cancel">Cancelar</string>
+    <string name="button_save">Guardar</string>
+    <string name="button_next">Siguiente</string>
+    <string name="button_return">Atrás</string>
+    <string name="button_close_session">Cerrar sesión</string>
+    <string name="spiner_buttom_neutral_records_vehicles_expense_registry">No existe</string>
+
+
+    <!-- Formulario registro de marcas -->
+    <string name="form_registry_brans_title">Selecione una marca</string>
+
+
+
+    <string name="button_vehicles_status">Flota</string>
+    <string name="button_expenses">Gastos</string>
+    <string name="button_historic_sesions">Históricos</string>
+    <string name="button_location">Localizaciones</string>
+
 </resources>

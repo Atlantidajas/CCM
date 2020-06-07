@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import com.jorge.app.ccm.utils.BrandsUtil;
 public class RegistryVehiclesActivity extends AppCompatActivity{
 
     private String TAG = "RegistryVehiclesActivity";
+    private ImageView imageViewBrand;
     private Spinner spinnerBrand;
     private EditText editTextModel;
     private EditText editTextRegistryNumber;
@@ -42,7 +45,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView(R.layout.activity_registry_vehicles);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
+        imageViewBrand = findViewById( R.id.imageView_image_item_vehicles );
         spinnerBrand = findViewById( R.id.spinner_brand_registry_vehicle);
         editTextModel = findViewById( R.id.edit_text_model_registry_vehicle );
         editTextRegistryNumber = findViewById( R.id.edit_text_registry_number_registry_vehicle );
@@ -64,6 +69,18 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if ( id == android.R.id.home ){
+            finish();
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
+    }
+
     public void loadFieldEditTextSpinnerBrand(){
 
         Resources res = getResources();
@@ -82,20 +99,26 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
                 if( brands[i] != null ) {
                     vehicleTemp.setVehicleBrand( brands[i] );
                     vehicleTemp.setVehiclelogo( brandsUtil.getIdResource( brands[i] ) );
+                    imageViewBrand.setImageResource( vehicleTemp.getVehiclelogo() );
+
                     Log.i( TAG, "spinnerBrand -> Item pulsado -> (Valor)" + brands[i] );
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                spinnerBrand.setSelection( 0 );
+                spinnerBrand.setSelection( 0 );//<-- No puede seleccionar la opción primera, es el mensaje
+
             }
         });
 
         //Cargo los datos del fichero temporal.
         String brand = vehicleTemp.getVehicleBrand();
 
-        //La primera vez que se carga la actividad methodOfPlayment será nula,
+
+
+
+        //La primera vez que se carga la actividad brand será nula,
         if ( ( brand == null) || ( brand.equals( "" ) ) ) {
             brand = "";
         }
@@ -104,6 +127,7 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
 
                 if ( brands[i].equals( brand ) ){
                     spinnerBrand.setSelection( i );
+
                 }
             }
         }
@@ -198,15 +222,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 vehicleTemp.removeExpenseTemp();
-                restartActivity();
+                finish();
             }
         } );
-    }
-
-    public void restartActivity(){
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
     }
 
     public boolean validateFieldTypeEditText( EditText editText ){

@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +30,7 @@ import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.gadget.notices.DialogFragmentNotice;
 import com.jorge.app.ccm.gadget.WindowDialogFragment;
 import com.jorge.app.ccm.models.SessionDriving;
+import com.jorge.app.ccm.ui.home.HomeActivity;
 import com.jorge.app.ccm.ui.sessionCrurrent.SessionCurrentActivity;
 import com.jorge.app.ccm.models.User;
 
@@ -44,7 +44,9 @@ import java.util.Iterator;
  */
 public class VehiclesStatusListActivity extends AppCompatActivity {
 
+
     private final String TAG = "VehiclesListActivity";
+    public Intent intentHome;
     public Intent intentSesionDriving;
     public Intent intentForUpdate;
     public Intent intentForDelete;
@@ -53,7 +55,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
     public static final String VEHICLE_FOR_DELETE_VEHICLE = "com.jorge.app.ccm.ui.vehiclesStatus.VehiclesStatusListActivity.VEHICLE_FOR_DELETE_VEHICLE";
     public static final int REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE = 0;
     public static final int REQUEST_INTENT_VEHICLE_FOR_DELETE_VEHICLE = 1;
-
 
     private AdapterVehicleStatus arrayAdapterVehicleStatus;
     private TextView textView;
@@ -66,7 +67,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vehicles_status_list );
         textView = findViewById(R.id.testView_title_registrarion_numbre);
         listView = findViewById(R.id.listView_vehicles_status_list);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
         //Si es la primera vez que usa la app, creo una primera sesión de tipo Create (Esta no será mostrada al usuario)
         onSesionDrinvingCreate();
@@ -78,6 +79,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         onclickItemList();
 
         //Intens
+        intentHome = new Intent( VehiclesStatusListActivity.this, HomeActivity.class);
         intentForRegistryVehicles = new Intent ( VehiclesStatusListActivity.this, RegistryVehiclesActivity.class);
         intentForUpdate = new Intent ( VehiclesStatusListActivity.this, UpdateVehicleActivity.class);
         intentForDelete = new Intent ( VehiclesStatusListActivity.this, DeleteVehicleActivity.class);
@@ -114,7 +116,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * Inicializa sessionDrivingCurrent
      */
@@ -150,6 +151,11 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
 
         if ( id == R.id.resgistreVehicle ) {
             startActivity(intentForRegistryVehicles);
+        }
+        if ( id == android.R.id.home ){
+            finish();
+            startActivity( intentHome );
+            return true;
         }
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
@@ -235,7 +241,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
                         Log.i( TAG, "onclickItemList() -> sesionDrivingsCurrents -> typeSesion (Valor) : " + sessionDrivingCurrent.getSessionTypeSesion() );
 
                         if (sessionDrivingCurrent.getSessionTypeSesion().equals( "Create" ) ) {
-                            Toast.makeText( getApplicationContext(), "Este vehículo está siendo usado por otro usuario, no puede iniciar sesión", Toast.LENGTH_SHORT ).show();
+                            Toast.makeText( getApplicationContext(), R.string.windowSesionNo, Toast.LENGTH_SHORT ).show();
                         }
                         else {
 
@@ -273,7 +279,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
 
         //Si puede iniciar
         if ( sessionDrivingCurrent.checkSesion() ){
-            WindowDialogFragment windowInitSesion = new WindowDialogFragment( "Deses iniciar sesión" );
+            WindowDialogFragment windowInitSesion = new WindowDialogFragment( R.string.windowInitSession );
             windowInitSesion.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
@@ -296,7 +302,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         else {
             Log.i( TAG, "checkSesion() -> Condición 1 -> sesionDrivings -> typeSesion (Valor) " + sessionDrivingCurrent.getSessionTypeSesion() );
 
-            WindowDialogFragment windowForActivictiSesionDriving = new WindowDialogFragment( "Ya tiene una sesión abierta con otro vehículo, cierrela primero." );
+            WindowDialogFragment windowForActivictiSesionDriving = new WindowDialogFragment( R.string.windowInitOnUser );
             windowForActivictiSesionDriving.getDialogFragmentNotice().setListener( new DialogFragmentNotice.DialogNoticeListerner() {
                 @Override
                 public void onDialogFragmentNoticePositiveClick(DialogFragment dialog) {
@@ -376,5 +382,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
             windowCloseRedirecSesionDriving.getDialogFragmentNotice().show( getSupportFragmentManager(), TAG );
         }
     }
+
 
 }

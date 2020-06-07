@@ -13,12 +13,14 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity.VEHI
 public class UpdateVehicleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = "UpdateVehicleActivity";
+    private ImageView imageViewBrand;
     private Spinner spinnerBrand;
     private EditText editTextModel;
     private EditText editTextRegistryNumber;
@@ -48,7 +51,9 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
     protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView(R.layout.activity_registry_vehicles);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
 
+        imageViewBrand = findViewById( R.id.imageView_image_item_vehicles );
         spinnerBrand = findViewById( R.id.spinner_brand_registry_vehicle);
         editTextModel = findViewById( R.id.edit_text_model_registry_vehicle );
         editTextRegistryNumber = findViewById( R.id.edit_text_registry_number_registry_vehicle );
@@ -64,7 +69,17 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
        onActivityResult( REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE, RESULT_OK, getIntent() );
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if ( id == android.R.id.home ){
+            finish();
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
+    }
 
 
     /*
@@ -128,6 +143,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
                 if( brands[i] != null ) {
                     vehicleTemp.setVehicleBrand( brands[i] );
                     vehicleTemp.setVehiclelogo( brandsUtil.getIdResource( brands[i] ) );
+                    imageViewBrand.setImageResource( vehicleTemp.getVehiclelogo() );
                     Log.i( TAG, "spinnerBrand -> Item pulsado -> (Valor)" + brands[i] );
                 }
             }
@@ -143,6 +159,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         //La primera vez que se carga la actividad será nula,
         if ( ( brandTemp == null) || ( brandTemp.equals( "" ) ) ) {
             brandTemp = "";
+            imageViewBrand.setImageResource( vehicleTemp.getVehiclelogo() );
         }
         else {
             for( int i = 0; i < brands.length; i++ ){
