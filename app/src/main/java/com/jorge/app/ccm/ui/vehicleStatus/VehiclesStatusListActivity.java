@@ -153,8 +153,8 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
             startActivity(intentForRegistryVehicles);
         }
         if ( id == android.R.id.home ){
-            finish();
             startActivity( intentHome );
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
