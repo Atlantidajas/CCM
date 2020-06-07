@@ -1,2 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="tokenMapBox" tools:ignore="MissingTranslation">pk.eyJ1Ijoiam9yZ2VhdGxhbnRpZGFqYXMiLCJhIjoiY2tiNWNvYWM5MG9lbzJzbnN0cHVraG5tMCJ9.XQaQNP18XQ3wdtqyCNHylw</string>
 </resources>

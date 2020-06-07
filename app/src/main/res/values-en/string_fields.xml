@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Car Control Manager</string>
     <string name="dummy_content">Car Control\nManager</string>
     <string name="fieldNumberTickect">Tickect number</string>
