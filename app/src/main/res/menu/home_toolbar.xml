@@ -8,7 +8,7 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/disconnectButton"
-        android:icon="@drawable/ic_action_arrow_forward_ios_red"
+        android:icon="@mipmap/ic_launcher_close_end"
         android:title="@string/home_toolbar_toolbar_button_disconnect_title"
         app:showAsAction="always"/>
 </menu>

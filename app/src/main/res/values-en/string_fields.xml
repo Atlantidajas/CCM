@@ -87,4 +87,6 @@
 
     <string name="textView_vehicles_select_list_activity_true">There is no vehicle, create it</string>
     <string name="textView_vehicles_select_list_activity_false">Select a vehicle</string>
+
+    <string name="attentionDeleteVehicle">Are you sure to erase the vehicle?</string>
 </resources>

@@ -105,7 +105,6 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
             public void onClick(View v) {
 
                 if ( controllerDBStatus.removeStatusVehicle( vehicle ) ){
-
                     mProgressDialog.show();
                     buttonDeleteAcceptVehicle.setVisibility( View.INVISIBLE );
                     buttonDeleteCancelVehicle.setVisibility( View.INVISIBLE );

@@ -369,7 +369,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
 
         if (TextUtils.isEmpty( textForValidate ) || textForValidate.equals( "0.0" ) ){
             //Cambio color
-            editText.setBackgroundColor(Color.MAGENTA);
+            editText.setBackgroundColor( Color.parseColor("#A1F9A825"));
 
             //Posiciono el foco sobre el editText
             editText.requestFocus();
@@ -393,7 +393,7 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
         // Compruebo que no sea la primera posición. Ya que esta, es el mensaje de campo.
         if ( TextUtils.isEmpty( textForValidate ) || textForValidate.equals( methodPlayment[0] ) ){
             //Cambio color
-            spinner.setBackgroundColor(Color.BLUE);
+            spinner.setBackgroundColor( Color.parseColor("#A1F9A825"));
 
             //Posiciono el foco sobre el editText
             spinner.requestFocus();

@@ -14,6 +14,7 @@
         android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="@string/fieldSelectIcon"
+        android:textColor="@color/headListView"
         android:textAlignment="center"
         android:textStyle="bold"
         android:drawableLeft="@mipmap/ic_launcher_arrow_bottom"
@@ -42,7 +43,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_fuel"
                 android:padding="10dp"
-                android:text="@string/fieldFuel" />
+                android:text="@string/fieldFuel"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_2_activity_type_expenses"
@@ -51,7 +53,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_wash"
                 android:padding="10dp"
-                android:text="@string/fieldScouring" />
+                android:text="@string/fieldScouring"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_3_activity_type_expenses"
@@ -60,7 +63,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_repair"
                 android:padding="10dp"
-                android:text="@string/fieldRepair" />
+                android:text="@string/fieldRepair"
+                android:textColor="@color/buttonPrimaryText"/>
         </TableRow>
 
         <TableRow
@@ -74,7 +78,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_revision"
                 android:padding="10dp"
-                android:text="@string/fieldMaintenance" />
+                android:text="@string/fieldMaintenance"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_5_activity_type_expenses"
@@ -83,7 +88,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_oil"
                 android:padding="10dp"
-                android:text="@string/fieldOil" />
+                android:text="@string/fieldOil"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_6_activity_type_expenses"
@@ -92,7 +98,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_parking"
                 android:padding="10dp"
-                android:text="@string/fieldParking" />
+                android:text="@string/fieldParking"
+                android:textColor="@color/buttonPrimaryText"/>
         </TableRow>
 
         <TableRow
@@ -106,7 +113,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_dolallar"
                 android:padding="10dp"
-                android:text="@string/fieldSpecify" />
+                android:text="@string/fieldSpecify"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_8_activity_type_expenses"
@@ -115,7 +123,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_indicator"
                 android:padding="10dp"
-                android:text="@string/fieldWiperWasher" />
+                android:text="@string/fieldWiperWasher"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_9_activity_type_expenses"
@@ -124,7 +133,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_wheel"
                 android:padding="10dp"
-                android:text="@string/fieldWheel" />
+                android:text="@string/fieldWheel"
+                android:textColor="@color/buttonPrimaryText"/>
 
         </TableRow>
 
@@ -139,7 +149,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_brakes"
                 android:padding="10dp"
-                android:text="@string/fieldBrakes" />
+                android:text="@string/fieldBrakes"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_11_activity_type_expenses"
@@ -148,7 +159,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_road"
                 android:padding="10dp"
-                android:text="@string/fieldTollHighway" />
+                android:text="@string/fieldTollHighway"
+                android:textColor="@color/buttonPrimaryText"/>
 
             <Button
                 android:id="@+id/button_12_activity_type_expenses"
@@ -157,7 +169,8 @@
                 android:background="#0003A9F4"
                 android:drawableTop="@mipmap/ic_launcher_lamp"
                 android:padding="10dp"
-                android:text="@string/fieldLamp" />
+                android:text="@string/fieldLamp"
+                android:textColor="@color/buttonPrimaryText"/>
 
         </TableRow>
 
@@ -184,11 +197,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="44dp"
         android:text="Siguiente"
+        android:background="@color/buttonSecundaryBrangroung"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_activity_type_expenses"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:textColor="@color/buttonSecundaryText"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

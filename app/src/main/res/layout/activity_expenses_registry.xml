@@ -6,7 +6,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:padding="10dp">
 
         <EditText
             android:id="@+id/editText_vehicle_expense_registry"
@@ -84,30 +85,36 @@
             android:drawableLeft="@mipmap/ic_launcher_total_expense"
             android:hint="@string/fieldTotalTickect" />
 
+
         <LinearLayout
             android:id="@+id/linear_layout_field_buttons_expense_registry"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginBottom="88dp"
-            android:orientation="horizontal">
+            android:weightSum="2">
 
 
             <Button
                 android:id="@+id/button_cancel_expense_registry"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="45dp"
-                android:text="@string/button_cancel" />
+                android:layout_height="50dp"
+                android:layout_width="10dp"
+                android:layout_weight="1"
+                android:background="@color/buttonSecundaryBrangroung"
+                android:textColor="@color/buttonSecundaryText"
+                android:text="@string/button_cancel"/>
 
             <Button
                 android:id="@+id/button_accept_expense_registry"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="45dp"
-                android:text="@string/button_accept" />
+                android:layout_height="50dp"
+                android:layout_width="10dp"
+                android:layout_weight="1"
+                android:background="@color/buttonSecundaryBrangroung"
+                android:textColor="@color/buttonSecundaryText"
+                android:text="@string/button_accept"
+                android:layout_marginLeft="2dp"/>
 
         </LinearLayout>
-
 
     </LinearLayout>
 

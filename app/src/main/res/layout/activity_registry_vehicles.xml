@@ -7,7 +7,8 @@
         android:layout_width="fill_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="50dp"
+        android:padding="10dp">
 
 
         <LinearLayout
@@ -25,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:spinnerMode="dialog"
-                app:backgroundTint="#03A9F4">
+                app:backgroundTint="@color/buttonSecundaryBrangroung">
             </Spinner>
 
         </LinearLayout>
@@ -73,14 +74,19 @@
                 android:layout_height="50dp"
                 android:layout_width="10dp"
                 android:layout_weight="1"
-                android:text="@string/button_cancel" />
+                android:background="@color/buttonSecundaryBrangroung"
+                android:textColor="@color/buttonSecundaryText"
+                android:text="@string/button_cancel"/>
 
             <Button
                 android:id="@+id/button_accept_vehicleRegistry"
                 android:layout_height="50dp"
                 android:layout_width="10dp"
                 android:layout_weight="1"
-                android:text="@string/button_accept" />
+                android:background="@color/buttonSecundaryBrangroung"
+                android:textColor="@color/buttonSecundaryText"
+                android:text="@string/button_accept"
+                android:layout_marginLeft="2dp"/>
 
         </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.jorge.app.ccm.ui.vehicleStatus;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -227,18 +228,18 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         finish();
     }
 
-    private boolean validateFieldTypeEditText( EditText editText ){
+    private boolean validateFieldTypeEditText(EditText editText ){
 
         String textForValidate = editText.getText().toString();
 
         if (TextUtils.isEmpty( textForValidate ) || textForValidate.equals( "0.0" ) ){
             //Cambio color
-            editText.setBackgroundColor(Color.MAGENTA);
+            editText.setBackgroundColor( Color.parseColor("#A1F9A825"));
 
             //Posiciono el foco sobre el editText
             editText.requestFocus();
 
-            Toast.makeText(this, "Ha dejado el campo vacio", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.toast_message_empty_fields, Toast.LENGTH_LONG).show();
 
             return false;
         }
@@ -257,7 +258,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         // Compruebo que no sea la primera posición. Ya que esta, es el mensaje de campo.
         if ( TextUtils.isEmpty( textForValidate ) || textForValidate.equals( brands[0] ) ){
             //Cambio color
-            spinner.setBackgroundColor(Color.BLUE);
+            spinner.setBackgroundColor( Color.parseColor("#A1F9A825"));
 
             //Posiciono el foco sobre el editText
             spinner.requestFocus();

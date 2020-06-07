@@ -91,5 +91,7 @@
 
     <string name="textView_vehicles_select_list_activity_true">No existen nungún vehículo, créalo</string>
     <string name="textView_vehicles_select_list_activity_false">Seleccione un vehículo</string>
+    
+    <string name="attentionDeleteVehicle">Está seguro de borrar el vehículo</string>
 
 </resources>

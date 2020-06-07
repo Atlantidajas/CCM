@@ -10,9 +10,9 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:gravity="center"
-            android:textColor="#F44336"
+            android:textColor="@color/headListView"
             android:layout_marginTop="100dp"
-            android:hint="Está seguro de borrar el vehículo" />
+            android:text="@string/attentionDeleteVehicle" />
 
     <ImageView
         android:id="@+id/image_alert_delete_vehicle"
@@ -32,6 +32,8 @@
 
         <Button
             android:id="@+id/buttonDeleteCancelVehicle"
+            android:background="@color/buttonSecundaryBrangroung"
+            android:textColor="@color/buttonSecundaryText"
             android:text="@string/button_cancel"
             android:layout_weight="1"
             android:layout_height="50dp"
@@ -41,9 +43,13 @@
             android:id="@+id/buttonDeleteAcceptVehicle"
             android:layout_height="50dp"
             android:layout_width="10dp"
+            android:background="@color/buttonSecundaryBrangroung"
+            android:textColor="@color/buttonSecundaryText"
             android:text="@string/button_accept"
+            android:layout_marginLeft="2dp"
             android:layout_weight="1"/>
 
     </LinearLayout>
+
 
 </RelativeLayout>

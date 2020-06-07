@@ -193,11 +193,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/textViewButoms"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
+        android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -205,20 +206,26 @@
 
         <Button
             android:id="@+id/button_return_session_session_driving_crurrent"
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="50dp"
+            android:layout_height="50dp"
+            android:layout_width="10dp"
+            android:layout_weight="1"
+            android:background="@color/buttonSecundaryBrangroung"
+            android:textColor="@color/buttonSecundaryText"
             android:text="@string/button_return" />
 
         <Button
             android:id="@+id/button_close_session_session_driving_crurrent"
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="40dp"
+            android:layout_height="50dp"
+            android:layout_width="10dp"
+            android:layout_weight="1"
+            android:background="@color/buttonSecundaryBrangroung"
+            android:textColor="@color/buttonSecundaryText"
+            android:layout_marginLeft="2dp"
             android:text="@string/button_close_session" />
 
 
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
