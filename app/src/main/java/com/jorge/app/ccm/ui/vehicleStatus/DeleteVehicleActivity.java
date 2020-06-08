@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 
 import android.os.Bundle;
 
@@ -16,17 +15,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
-import com.jorge.app.ccm.controllers.ControllerDBStatus;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.models.Vehicle;
 
 import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity.REQUEST_INTENT_VEHICLE_FOR_DELETE_VEHICLE;
 import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity.VEHICLE_FOR_DELETE_VEHICLE;
 import static java.lang.Thread.sleep;
 
+
+/**
+ * @author Jorge.HL
+ * Actividad que permite eliminar un vehículo a un usuario
+ *
+ */
 public class DeleteVehicleActivity extends AppCompatActivity implements Runnable{
 
     private final String TAG = "DeleteVehicleActivity";
@@ -36,6 +40,7 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
     private Button buttonDeleteAcceptVehicle;
     @VisibleForTesting
     private ProgressDialog mProgressDialog;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,17 +99,18 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
     }
 
 
+    /**
+     * Carga DeleteVehicle con el vehículo a eliminar
+     * @param vehicle vehículo que se pretende borrar
+     */
     public void loadButtonDeleteVehicle( final Vehicle vehicle ){
 
-
-        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-        final int count = controllerDBStatus.getCountChildStatus();
         final Thread thread = new Thread( this );
         buttonDeleteAcceptVehicle.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if ( controllerDBStatus.removeStatusVehicle( vehicle ) ){
+                if ( controllerDBSessionsHistoric.removeStatusVehicle( vehicle ) ){
 
                     mProgressDialog.show();
                     buttonDeleteAcceptVehicle.setVisibility( View.INVISIBLE );
@@ -114,11 +120,17 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
 
 
                 }
+                else{
+
+                }
             }
         } );
 
     }
 
+    /**
+     * Carga campoButtonCancelExpenses
+     */
     public void loadFieldButtonCancelExpenses(){
 
         buttonDeleteCancelVehicle.setOnClickListener( new View.OnClickListener() {
@@ -130,6 +142,9 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
         } );
     }
 
+    /**
+     * Inicia un hilo
+     */
     @Override
     public void run( ) {
 
@@ -142,8 +157,6 @@ public class DeleteVehicleActivity extends AppCompatActivity implements Runnable
         catch (InterruptedException e) {
         }
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+
+
 }

@@ -23,6 +23,11 @@ import com.jorge.app.ccm.ui.sessionStatus.SessionStatusActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+/**
+ * @author Jorge.HL
+ * Muestra al usuario listado de sessiones realizadas por el en el sistema
+ */
 public class SessionHistoricActivity extends AppCompatActivity {
 
     private final String TAG = "SessionHistoricActivity";
@@ -38,17 +43,17 @@ public class SessionHistoricActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sesion_historic );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
         textView = findViewById(R.id.textView_Sesions_historic);
         listView = findViewById(R.id.listView_sessions_historic);
         intentHome = new Intent( SessionHistoricActivity.this, HomeActivity.class);
         intentSessionStatus  = new Intent( SessionHistoricActivity.this, SessionStatusActivity.class );
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
+
 
         //Inizializao Adapter para mostrar lista de sesiones
         adapterSessionHistoric = new AdapterSessionHistoric( getApplication(), textView, listView, TAG);
         sesionsDrivings = new ArrayList<>(  );
         sesionsDrivings = adapterSessionHistoric.getListIntemSesions();
-
     }
 
 

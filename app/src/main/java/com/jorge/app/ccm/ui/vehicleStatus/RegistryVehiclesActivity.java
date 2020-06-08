@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DatePickerFragment;
 import com.jorge.app.ccm.models.ExpenseTemp;
@@ -29,6 +30,10 @@ import com.jorge.app.ccm.models.User;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.utils.BrandsUtil;
 
+/**
+ * @author Jorge.HL
+ * Permite registrar un vehículo
+ */
 public class RegistryVehiclesActivity extends AppCompatActivity{
 
     private String TAG = "RegistryVehiclesActivity";
@@ -40,12 +45,14 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
     private Button buttonSave;
     private Button buttonCancel;
     private ExpenseTemp vehicleTemp;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView(R.layout.activity_registry_vehicles);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
         imageViewBrand = findViewById( R.id.imageView_image_item_vehicles );
         spinnerBrand = findViewById( R.id.spinner_brand_registry_vehicle);
@@ -69,6 +76,11 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
 
     }
 
+
+    /**
+     * @param item id del botón
+     * @return true en caso de realizarce
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -81,6 +93,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
+    /**
+     * Carga el campo EditTextSpinnerBrand
+     */
     public void loadFieldEditTextSpinnerBrand(){
 
         Resources res = getResources();
@@ -134,6 +149,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
 
     }
 
+    /**
+     * Carga el campo EditTextModel
+     */
     public void loadFieldEditTextModel(){
 
         editTextModel.setOnKeyListener( new View.OnKeyListener() {
@@ -150,6 +168,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
         editTextModel.setText( model );
     }
 
+    /**
+     * Carga el campo EditTextRegistryNumber
+     */
     public void loadFieldEditTextRegistryNumber(){
 
         editTextRegistryNumber.setOnKeyListener( new View.OnKeyListener() {
@@ -167,6 +188,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
 
     }
 
+    /**
+     * Carga el campo EditTextDateITV
+     */
     public void loadFieldEditTextDateITV(){
 
         editTextDateITV.setOnClickListener( new View.OnClickListener() {
@@ -179,6 +203,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
         editTextDateITV.setText( vehicleTemp.getVehicleDateITV() );
     }
 
+    /**
+     * Carga el campo DatePickerDialog
+     */
     private void showDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance( new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -193,6 +220,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
         newFragment.show(getSupportFragmentManager(), TAG + "datePickerDateItvVehicle");
     }
 
+    /**
+     * Carga el campo ButtonAcceptRegistry
+     */
     public void loadFieldButtonAcceptRegistry(){
 
         buttonSave.setOnClickListener( new View.OnClickListener() {
@@ -216,6 +246,9 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
 
     }
 
+    /**
+     * carga el campo ButtonCancelRegistry
+     */
     public void loadFieldButtonCancelRegistry(){
 
         buttonCancel.setOnClickListener( new View.OnClickListener() {
@@ -227,6 +260,11 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
         } );
     }
 
+    /**
+     * Valída campos de tipo editText
+     * @param editText el editText a validad
+     * @return true en caso de ser correcto y false en el contrario
+     */
     public boolean validateFieldTypeEditText( EditText editText ){
 
         String textForValidate = editText.getText().toString();
@@ -247,6 +285,11 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * Valída campos de tipo spinner
+     * @param spinner el spinner a validad
+     * @return true en caso de ser correcto y false en el contrario
+     */
     public boolean validateFieldTypeSpinner( Spinner spinner ){
 
         String textForValidate = spinner.getSelectedItem().toString();
@@ -276,9 +319,7 @@ public class RegistryVehiclesActivity extends AppCompatActivity{
      * Guarda objeto de tipo Vehicle en la DB
      */
     public void saveDatesFormForDB( Vehicle vehicle ){
-
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-        controllerDBStatus.setStatusVehicle( vehicle );
+        controllerDBSessionsHistoric.updateStatusVehicle( vehicle );
     }
 }
 

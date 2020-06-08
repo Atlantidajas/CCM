@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
 
@@ -36,17 +37,17 @@ public class AdapterExpensesVehicles extends BaseAdapter {
     private TextView textView;
     private ListView listView;
     private Vehicle vehicle;
-    ControllerDBStatus controllerDBStatus;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
     public AdapterExpensesVehicles(final Context context, ListView listView, String TAG) {
         this.context = context;
         this.listView = listView;
         this.TAG = TAG;
-        this.controllerDBStatus = new ControllerDBStatus( context, TAG );
+        this.controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( context, TAG );
 
 
         //Eventos de cambios sobre el adaptador
-        controllerDBStatus.getDatabaseReference().addChildEventListener( new ChildEventListener() {
+        controllerDBSessionsHistoric.getDatabaseReferenceStatus().addChildEventListener( new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 getListIntemVehicles().clear();
@@ -78,7 +79,7 @@ public class AdapterExpensesVehicles extends BaseAdapter {
         } );
 
         //Cargo con los datos de la db el adapter
-        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        controllerDBSessionsHistoric.getDatabaseReferenceStatus().addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

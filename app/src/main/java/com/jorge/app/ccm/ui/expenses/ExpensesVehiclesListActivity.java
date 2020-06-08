@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.models.Vehicle;
 import com.jorge.app.ccm.ui.vehicleStatus.RegistryVehiclesActivity;
@@ -35,6 +36,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
     private TextView textView;
     private ListView listView;
     public static final String VEHICLE_SELECT = "com.jorge.app.ccm.ui.vehiclesSelect.VehiclesSelectListActivity.VEHICLE_SELECT";
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
 
     @Override
@@ -43,6 +45,7 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
         setContentView(R.layout.activity_vehicles_select_list );
         textView = findViewById(R.id.textView_vehicles_vehicle_select_list);
         listView = findViewById(R.id.listView_vehicles_vehicle_select_list);
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
         //Inizializao Adapter para mostrar lista de vehículos
         this.adapterVehicleSelect = new AdapterExpensesVehicles( getApplication(), listView, TAG);
@@ -58,9 +61,8 @@ public class ExpensesVehiclesListActivity extends AppCompatActivity implements S
      */
     public void fieldLoadTextViewTitle(){
 
-        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
         //Cargo con los datos de la db el adapter
-        controllerDBStatus.getDatabaseReference().addValueEventListener( new ValueEventListener() {
+        controllerDBSessionsHistoric.getDatabaseReferenceStatus().addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

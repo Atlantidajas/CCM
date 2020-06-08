@@ -53,6 +53,7 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
     public static final String EXPENSE_SELECT_TYPE_EXPENSE = "com.jorge.app.ccm.ui.expense.ExpenseHistoricActivity.EXPENSE_SELECT_TYPE_EXPENSE";
     public static final String EXPENSE_SELECT_VEHICLE = "com.jorge.app.ccm.ui.expense.ExpenseHistoricActivity.EXPENSE_SELECT_VEHICLE";
     static final int EXPENSE_SELECT_REQUEST = 1;
+    private ControllerDBExpense controllerDBExpense;
 
 
     @Override
@@ -62,6 +63,7 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
         listView = findViewById(R.id.listView_expense_historic);
         adapterExpenseHistoric = new AdapterExpenseHistoric( getApplicationContext(), expenses );
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
+        controllerDBExpense = new ControllerDBExpense( getApplicationContext() );
 
         intentHome = new Intent( ExpenseHistoricActivity.this, HomeActivity.class);
         intentExpenseEspecific  = new Intent( ExpenseHistoricActivity.this, ExpenseEspecificActivity.class );
@@ -70,7 +72,7 @@ public class ExpenseHistoricActivity extends AppCompatActivity{
 
         //Cargo con los datos de la db el adapter con datos de la db
         final User user = new User( true );
-        ControllerDBExpense controllerDBExpense = new ControllerDBExpense( getApplicationContext() );
+
         controllerDBExpense.getDatabaseReference().child( user.getIdUser() ).addChildEventListener( new ChildEventListener() {
 
             @Override

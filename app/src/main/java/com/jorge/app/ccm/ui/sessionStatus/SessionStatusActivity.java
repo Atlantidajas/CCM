@@ -39,13 +39,15 @@ import java.util.Iterator;
 
 import static com.jorge.app.ccm.ui.sessionHistoric.SessionHistoricActivity.SESSION_HISTORIC;
 
+
+/**
+ * @author Jorge.HL
+ */
 public class SessionStatusActivity extends AppCompatActivity {
 
     private final String TAG = "SessionStatusActivity";
-    private ControllerDBStatus controllerDBStatus;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
     private SessionDriving sessionDriving;
-
 
     private ImageView imageViewTypeSession;
     private TextView textViewTypeSession;
@@ -67,6 +69,7 @@ public class SessionStatusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_session_status );
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
         imageViewTypeSession = findViewById( R.id.imageViewTypeSession );
         textViewTypeSession = findViewById( R.id.textViewTypeSession );
@@ -80,8 +83,6 @@ public class SessionStatusActivity extends AppCompatActivity {
         textViewRegistrationNumber = findViewById(R.id.textViewRegistrationNumber);
         buttonCloseSesionCurrent = findViewById( R.id.button_close_session_session_driving_crurrent );
 
-        controllerDBStatus = new ControllerDBStatus( getApplication(), TAG );
-        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         user = new User( true );
 
         intentCloseSesion  = new Intent( SessionStatusActivity.this, SessionHistoricActivity.class );
@@ -165,6 +166,9 @@ public class SessionStatusActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
+    /**
+     * Carga campo UserSession
+     */
     public void loadFieldUserSession( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String userSession = resources.getString( R.string.fieldUserNameUser );
@@ -172,6 +176,9 @@ public class SessionStatusActivity extends AppCompatActivity {
         textViewUserDate.setText( userSession + " " + sessionDriving.getUserName() );
     }
 
+    /**
+     * Carga campo StatuSession
+     */
     public void loadFieldStatuSession( boolean realStatusSesion ){
         Resources resources = getResources();
         String typeSessionStart = resources.getString( R.string.fieldSessionTypeSessionStart );
@@ -189,18 +196,27 @@ public class SessionStatusActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Carga campo DateSession
+     */
     public void loadFieldDateSession( SessionDriving sessionDriving){
         Resources resources = getResources();
         String dateSession = resources.getString( R.string.fieldSessionDate );
         textViewDate.setText( dateSession + " " + sessionDriving.getSessionDate() );
     }
 
+    /**
+     * Carga campo HoursSession
+     */
     public void loadFieldHoursSession( SessionDriving sessionDriving){
         Resources resources = getResources();
         String hoursSession = resources.getString( R.string.fieldSessionHours );
         textViewHours.setText( hoursSession  + " " + sessionDriving.getSessionHours() );
     }
 
+    /**
+     * Carga campo BrandVehicle
+     */
     public void loadFieldBrandVehicle( SessionDriving sessionDriving ){
         Resources resources = getResources();
         String brandVehicleSession = resources.getString( R.string.fieldVehicleBrand );
@@ -208,18 +224,29 @@ public class SessionStatusActivity extends AppCompatActivity {
         imageViewBrand.setImageResource( sessionDriving.getVehiclelogo() );
     }
 
+    /**
+     * Carga campo ModelVehicle
+     */
     public void loadFieldModelVehicle( SessionDriving sessionDriving){
         Resources resources = getResources();
         String modelVehicleSession = resources.getString( R.string.fieldVehicleModel );
         textViewModel.setText( modelVehicleSession + " " + sessionDriving.getVehicleModel() );
     }
 
+    /**
+     * Carga campo RegistrationNumberVehicle
+     */
     public void loadFieldRegistrationNumberVehicle(){
         Resources resources = getResources();
         String registrationNumberVehicleSession = resources.getString( R.string.fieldVehicleRegistration );
         textViewRegistrationNumber.setText( registrationNumberVehicleSession + " " + sessionDriving.getVehicleRegistrationNumber() );
     }
 
+    /**
+     * Carga campo ButtonCloseSession, permite cerrar session de conducción de un vehiculo
+     * @param sessionDriving Session actual
+     * @param REAL_STATUS_SESSION
+     */
     public void loadButtonCloseSession(final SessionDriving sessionDriving, final boolean REAL_STATUS_SESSION ){
 
         buttonCloseSesionCurrent.setOnClickListener( new View.OnClickListener() {
@@ -275,7 +302,12 @@ public class SessionStatusActivity extends AppCompatActivity {
     }
 
 
-    // Devuelve true si el resultado es par, si es impar false
+    /**
+     * Devuelve true si el resultado es par, si es impar false
+     * @param index indice que ocupa en el list
+     * @param listSize tamaño des list
+     * @return
+     */
     public boolean realEstateSessionHistoric( int index, int listSize ){
 
         index++;//<-- Incremento en 1 ya que enpieza en 0 por ser un indice
@@ -293,14 +325,4 @@ public class SessionStatusActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-    }
 }

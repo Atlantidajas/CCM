@@ -41,6 +41,7 @@ import java.util.Iterator;
 
 /**
  * @author Jorge.HL
+ * Muestra al usuario listado de vehículos del sistema e información de ellos, también le permite diferentes oreraciones sobre cada uno de ellos
  */
 public class VehiclesStatusListActivity extends AppCompatActivity {
 
@@ -55,6 +56,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
     public static final String VEHICLE_FOR_DELETE_VEHICLE = "com.jorge.app.ccm.ui.vehiclesStatus.VehiclesStatusListActivity.VEHICLE_FOR_DELETE_VEHICLE";
     public static final int REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE = 0;
     public static final int REQUEST_INTENT_VEHICLE_FOR_DELETE_VEHICLE = 1;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
 
     private AdapterVehicleStatus arrayAdapterVehicleStatus;
     private TextView textView;
@@ -68,6 +70,7 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         textView = findViewById(R.id.testView_title_registrarion_numbre);
         listView = findViewById(R.id.listView_vehicles_status_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
         //Si es la primera vez que usa la app, creo una primera sesión de tipo Create (Esta no será mostrada al usuario)
         onSesionDrinvingCreate();
@@ -85,11 +88,11 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         intentForDelete = new Intent ( VehiclesStatusListActivity.this, DeleteVehicleActivity.class);
         intentSesionDriving = new Intent( VehiclesStatusListActivity.this, SessionCurrentActivity.class );
         arrayAdapterVehicleStatus = new AdapterVehicleStatus( getApplicationContext() );
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
 
 
-       DatabaseReference databaseReference = controllerDBStatus.getDatabaseReference();
-       databaseReference.addValueEventListener(  new ValueEventListener() {
+
+
+        controllerDBSessionsHistoric.getDatabaseReferenceStatus().addValueEventListener(  new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -123,7 +126,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
     public void readSesionCurrent(){
 
         User user = new User( true );
-        ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         controllerDBSessionsHistoric.getDatabaseReferenceSessionsCurrents().child( user.getIdUser() ).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -140,12 +142,22 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         } );
     }
 
+    /**
+     * Carga menu
+     * @param menu menu para toolbar
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate( R.menu.vehicles_toolbar, menu );
         return true;
     }
 
+    /**
+     * Permite acciones según que item mediante su id
+     * @param item item del menu
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -161,6 +173,12 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);//<-- Devuelve una opción de menú la pulsada (Método de la clase padre).
     }
 
+    /**
+     * Menu Contextual del listView
+     * @param menu
+     * @param v
+     * @param menuInfo
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo ) {
 
@@ -184,6 +202,11 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
+    /**
+     * Acciones sobre los item del menu contextual del listView
+     * @param item
+     * @return
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
@@ -216,7 +239,6 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
     public void onSesionDrinvingCreate(){
 
         //Sesion de inicio por si es la primera ves que inicia sesión
-        ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         controllerDBSessionsHistoric.onSesionDrinvingCreate();
     }
 
@@ -273,10 +295,12 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         });
     }
 
-    public void checkSesion( final SessionDriving sessionDrivingStart) {
+    /**
+     * Chequea el estado de la sesión de cada vehículo
+     * @param sessionDrivingStart sesion de tipo START
+     */
 
-        final ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-        final ControllerDBSessionsHistoric controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
+    public void checkSesion( final SessionDriving sessionDrivingStart) {
 
         //Si puede iniciar
         if ( sessionDrivingCurrent.checkSesion() ){
@@ -320,6 +344,10 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Envíalos datos a la actividad Update para actualizar el vehículo
+     * @param vehicleForEdit vehículo para actualizar
+     */
     public void editVehicle( Vehicle vehicleForEdit){
 
         //Si se puede editar.
@@ -352,6 +380,10 @@ public class VehiclesStatusListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Envíalos datos a la actividad Update para actualizar el vehículo
+     * @param vehicleForDelete vehículo a borrar
+     */
     public void deleteVehicle(Vehicle vehicleForDelete){
 
         //Si se puede editar.

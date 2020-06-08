@@ -53,12 +53,14 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
     private ExpenseTemp expenseTemp;
     private static final int REQUEST_INTENT_VEHICLE_SELECT = 1;
     private static final int REQUEST_INTENT_TYPE_EXPENSE = 2;
+    private ControllerDBExpense controllerDBExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_expenses_registry );
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
+        controllerDBExpense = new ControllerDBExpense( getApplicationContext() );
 
         editTextSelectVehicle = findViewById( R.id.editText_vehicle_expense_registry );
         editTextTypeExpense = findViewById( R.id.editText_type_expense_expense_registry );
@@ -411,7 +413,6 @@ public class ExpensesResgistryActivity extends AppCompatActivity{
      * Guarda objeto de tipo Expense en la DB
      */
     public void saveDatesFormForDB( Expense expense ){
-        ControllerDBExpense controllerDBExpense = new ControllerDBExpense( getApplicationContext() );
         controllerDBExpense.setValue( expense );
     }
 

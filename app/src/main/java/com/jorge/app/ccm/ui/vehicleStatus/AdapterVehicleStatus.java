@@ -24,6 +24,7 @@ import java.util.Date;
 
 /**
  * @author Jorge.HL
+ * Adaptador para vehiclesStatus
  */
 
 public class AdapterVehicleStatus extends BaseAdapter {
@@ -52,16 +53,33 @@ public class AdapterVehicleStatus extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    /**
+     * Retorna un vehículo seleccionado de la lista
+     * @param position posición de la lista
+     * @return vehículo según la posición
+     */
     @Override
     public Vehicle getItem(int position) {
         return listIntemVehicles.get( position );
     }
 
+    /**
+     * Retorna un id de un vehículo seleccionado de la lista
+     * @param position posición de la lista
+     * @return id del vehículo según la posición
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * Varga las vistas
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -122,7 +140,10 @@ public class AdapterVehicleStatus extends BaseAdapter {
         return convertView;
     }
 
-
+    /**
+     * Retorna todos los vehículos cargados
+     * @return ArrayList <Vehicles> Vehicles
+     */
     public ArrayList<Vehicle> getListIntemVehicles() {
         return listIntemVehicles;
     }

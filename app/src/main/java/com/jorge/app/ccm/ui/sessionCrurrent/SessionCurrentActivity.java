@@ -36,9 +36,7 @@ import com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity;
 public class SessionCurrentActivity extends AppCompatActivity{
 
     private final String TAG = "SessionDrivingActivity";
-    private ControllerDBStatus controllerDBStatus;
     private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
-
     private ImageView imageViewTypeSession;
     private TextView textViewTypeSession;
     private ImageView imageViewUserDate;
@@ -60,7 +58,7 @@ public class SessionCurrentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_session_current );
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
-
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
         imageViewTypeSession = findViewById( R.id.imageViewTypeSession );
         textViewTypeSession = findViewById( R.id.textViewTypeSession );
@@ -75,9 +73,6 @@ public class SessionCurrentActivity extends AppCompatActivity{
         buttonReturnSessionCrurrent = findViewById( R.id.button_return_session_session_driving_crurrent );
         buttonCloseSesionCurrent = findViewById( R.id.button_close_session_session_driving_crurrent );
 
-
-        controllerDBStatus = new ControllerDBStatus( getApplication(), TAG );
-        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
         user = new User( true );
 
         intentCloseSesion  = new Intent( SessionCurrentActivity.this, VehiclesStatusListActivity.class );

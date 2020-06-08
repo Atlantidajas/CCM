@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.jorge.app.ccm.R;
+import com.jorge.app.ccm.controllers.ControllerDBSessionsHistoric;
 import com.jorge.app.ccm.controllers.ControllerDBStatus;
 import com.jorge.app.ccm.gadget.notices.DatePickerFragment;
 import com.jorge.app.ccm.models.ExpenseTemp;
@@ -36,6 +37,11 @@ import com.jorge.app.ccm.utils.BrandsUtil;
 import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity.REQUEST_INTENT_VEHICLE_FOR_UPDATE_VEHICLE;
 import static com.jorge.app.ccm.ui.vehicleStatus.VehiclesStatusListActivity.VEHICLE_FOR_UPDATE_VEHICLE;
 
+
+/**
+ * @author Jorge.HL
+ * Permite actualizar todos los campos de un vehículo a excepción de su matrícula
+ */
 public class UpdateVehicleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = "UpdateVehicleActivity";
@@ -47,12 +53,15 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
     private Button buttonSave;
     private Button buttonCancel;
     private ExpenseTemp vehicleTemp;
+    private ControllerDBSessionsHistoric controllerDBSessionsHistoric;
+
 
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView(R.layout.activity_registry_vehicles);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//<-- añado flecha retroseso
+        controllerDBSessionsHistoric = new ControllerDBSessionsHistoric( getApplicationContext(), TAG );
 
         imageViewBrand = findViewById( R.id.imageView_image_item_vehicles );
         spinnerBrand = findViewById( R.id.spinner_brand_registry_vehicle);
@@ -83,7 +92,7 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    /*
+    /**
      * Guardo comprueba la correcta recepción de los datos recibidos por medio de Items, cargo los campos
      */
     protected  void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -126,6 +135,10 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    /**
+     * Carga los datos del campo marca
+     * @param brandTemp String marca del vehícilulo contenida en fichero temporal
+     */
     private void loadFieldEditTextSpinnerBrand( String brandTemp ){
 
         Resources res = getResources();
@@ -172,6 +185,10 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    /**
+     * Carga los datos del campo modelo
+     * @param modelTemp String modelo del vehícilulo contenida en fichero temporal
+     */
     private void loadFieldEditTextModel( String modelTemp ){
 
         //Cargo los datos del fichero temporal, que se guardarón por el intent
@@ -188,6 +205,10 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    /**
+     * Carga los datos del campo matrícula
+     * @param registrationNumbreTemp String matrícula del vehículo contenida en fichero temporal
+     */
     private void loadFieldEditTextRegistryNumber( String registrationNumbreTemp ){
 
         editTextRegistryNumber.setEnabled( false );//<-- No se puede cambiar matrícula (Se trata tambien del id del vehículo)
@@ -196,6 +217,10 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    /**
+     * Carga los datos del campo fecha ITV
+     * @param dateITVTemp String matrícula del vehículo contenida en fichero temporal
+     */
     private void loadFieldEditTextDateITV( String dateITVTemp ){
 
         editTextDateITV.setOnClickListener( new View.OnClickListener() {
@@ -208,6 +233,9 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         editTextDateITV.setText( dateITVTemp );
     }
 
+    /**
+     * Mustra dialog DatePincker
+     */
     private void showDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance( new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -223,11 +251,20 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
 
     }
 
+
+    /**
+     * Restaura la actividad
+     */
     private void restartActivity(){
         Intent intent = getIntent();
         finish();
     }
 
+    /**
+     * Valída campos de tipo editText
+     * @param editText el editText a validad
+     * @return true en caso de ser correcto y false en el contrario
+     */
     private boolean validateFieldTypeEditText(EditText editText ){
 
         String textForValidate = editText.getText().toString();
@@ -248,6 +285,11 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    /**
+     * Valída campos de tipo spinner
+     * @param spinner el spinner a validad
+     * @return true en caso de ser correcto y false en el contrario
+     */
     private boolean validateFieldTypeSpinner( Spinner spinner ){
 
         String textForValidate = spinner.getSelectedItem().toString();
@@ -276,11 +318,15 @@ public class UpdateVehicleActivity extends AppCompatActivity implements View.OnC
      * Guarda objeto de tipo Vehicle en la DB
      */
     private void saveDatesFormForDB( Vehicle vehicle ){
-        ControllerDBStatus controllerDBStatus = new ControllerDBStatus( getApplicationContext(), TAG );
-        controllerDBStatus.updateStatusVehicle( vehicle );
+        controllerDBSessionsHistoric.updateStatusVehicle( vehicle );
         finish();
     }
 
+
+    /**
+     * Distingue a que vista se le realizo el onclick
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 

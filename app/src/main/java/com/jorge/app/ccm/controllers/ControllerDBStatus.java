@@ -27,8 +27,6 @@ public class ControllerDBStatus  {
         this.context = context;
         this.TAG = TAG;
         this.databaseReferenceStatus = FirebaseDatabase.getInstance().getReference( "VehiclesDB" ).child( "Status" );
-
-        databaseReferenceStatus.keepSynced(true);
     }
 
     public void setStatusVehicle( final Vehicle vehicle ){
@@ -163,7 +161,7 @@ public class ControllerDBStatus  {
         return databaseReferenceStatus.child( vehicle.getVehicleRegistrationNumber() );
     }
 
-    public DatabaseReference getDatabaseReference() {
+    public DatabaseReference getDatabaseReferenceStatus() {
         return databaseReferenceStatus;
     }
 
