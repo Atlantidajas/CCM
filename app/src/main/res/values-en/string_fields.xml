@@ -44,7 +44,7 @@
     <string name="fieldTypeExpenseEmpty">Fill in the required field</string>
 
     <string name="spiner_title_records_vehicles">Vehicles in the system</string>
-    <string name="editText_vehicle_expense_registry">Select a vehecle</string>
+    <string name="editText_vehicle_expense_registry">Select a vehicle</string>
     <string name="editText_type_expense_expense_registry">Expense type</string>
     <string name="editText_concept_expense_registry">Concept</string>
 

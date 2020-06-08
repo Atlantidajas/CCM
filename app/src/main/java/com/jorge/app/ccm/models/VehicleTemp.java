@@ -24,12 +24,23 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
     private String KEY_VEHICLE_DRIVING = PRIMARY_KEY + "Driving";
     private String KEY_VEHICLE_DRIVING_CURRENT = PRIMARY_KEY + "DrivingCurrent";
 
+    /**
+     * Crea un objeto de tipo VehicleTemp que permite almacenar objetos de tipo Vehicle en un fichero
+     * @param context Contexto en el se va ha ejecutar
+     * @param TAG Nombre de la actividad donde se va a ejecutar
+     */
     public VehicleTemp(Context context,
                        final String TAG){
         super( context, TAG );
 
     }
 
+    /**
+     * Crea un objeto de tipo VehicleTemp que permite almacenar objetos de tipo Vehicle en un fichero
+     * @param context Contexto en el se va ha ejecutar
+     * @param TAG Nombre de la actividad donde se va a ejecutar
+     * @param vehicle objeto con el que se va a travajar el el fichero
+     */
     public VehicleTemp(Context context,
                        final String TAG,
                        Vehicle vehicle ) {
@@ -42,6 +53,17 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
         this.setDateInt( KEY_VEHICLE_DRIVING, vehicle.getVehicleDriving() );
     }
 
+    /**
+     * Crea un objeto de tipo VehicleTemp que permite almacenar objetos de tipo Vehicle en un fichero
+     * @param context Contexto en el se va ha ejecutar
+     * @param TAG Nombre de la actividad donde se va a ejecutar
+     * @param logoVehicle atributo de un objeto Vehicle, este de tipo int
+     * @param registrationNumber atributo de un objeto Vehicle, este de tipo String
+     * @param brand atributo de un objeto Vehicle, este de tipo String
+     * @param model atributo de un objeto Vehicle, este de tipo String
+     * @param dateITV atributo de un objeto Vehicle, este de tipo String
+     * @param driving atributo de un objeto Vehicle, este de tipo int
+     */
     public VehicleTemp(Context context,
                        final String TAG,
                        int logoVehicle,
@@ -60,60 +82,72 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
     }
 
 
+    /**
+     * @See DatesTemp setDateInt.  Guarda en fichero temporal el vehiclelogo de un un objeto Vehicle
+     * @param vehiclelogo número del recurso con el que se almacena el logo de la marca de un vehículo
+     */
     @Override
     public void setVehiclelogo(int vehiclelogo) {
         this.setDateInt( KEY_VEHICLE_LOGO, vehiclelogo );
     }
 
+    /**
+     * @See DatesTemp setDateString.  Guarda en fichero temporal el vehicleRegistrationNumber de un un objeto Vehicle
+     * @param vehicleRegistrationNumber número de la matrícula del vehículos
+     */
     @Override
     public void setVehicleRegistrationNumber(String vehicleRegistrationNumber) {
         this.setDateString( KEY_VEHICLE_REGISTRATION_NUMBER, vehicleRegistrationNumber );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Guarda en fichero temporal el atributo brand de un un objeto Vehicle
+    /**
+     * @See DatesTemp setDateString.  Guarda en fichero temporal el vehicleBrand de un un objeto Vehicle
+     * @param vehicleBrand marca del vehículo que se pretende almacenar
      */
     @Override
     public void setVehicleBrand(String vehicleBrand) {
         this.setDateString( KEY_VEHICLE_BRAND, vehicleBrand );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Guarda en fichero temporal el atributo model de un un objeto Vehicle
+    /**
+     * @See DatesTemp setDateString.  Guarda en fichero temporal el vehicleModel de un un objeto Vehicle
+     * @param vehicleModel modelo del vehículo que se pretende almacenar
      */
     @Override
     public void setVehicleModel(String vehicleModel) {
         this.setDateString( KEY_VEHICLE_MODEL, vehicleModel );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Guarda en fichero temporal el atributo driving de un un objeto Vehicle
+    /**
+     * @See DatesTemp setDateString.  Guarda en fichero temporal el vehicleDateITV de un un objeto Vehicle
+     * @param vehicleDateITV fecha de la próxima itv del vehículo que se pretende almacenar
      */
     @Override
     public void setVehicleDateITV(String vehicleDateITV) {
         this.setDateString( KEY_VEHICLE_DATE_ITV, vehicleDateITV );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Guarda en fichero temporal el atributo driving de un un objeto Vehicle
+    /**
+     * @See DatesTemp setDateInt.  Guarda en fichero temporal el vehicleDriving de un un objeto Vehicle
+     * @param vehicleDriving valor que identifica si el vehículo está en uso o libre y que se pretende almacenar
      */
     @Override
     public void setVehicleDriving(int vehicleDriving) {
         this.setDateInt( KEY_VEHICLE_DRIVING, vehicleDriving );
     }
 
+    /**
+     * @See DatesTemp setDateString.  Guarda en fichero temporal el vehicleDrivingCurrent de un un objeto Vehicle
+     * @param vehicleDrivingCurrent nombre del conductor que utilizó o utiliza en la actualidad el vehículo y se pretende almacenar
+     */
     @Override
     public void setVehicleDrivingCurrent(String vehicleDrivingCurrent) {
         this.setDateString( KEY_VEHICLE_DRIVING, vehicleDrivingCurrent );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Devuelve después de leer en fichero temporal objeto vehicle
+     * @return objeto de tipo Vehicle
      */
     @Exclude
     public Vehicle getVehicleTemp(){
@@ -127,67 +161,70 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
         return vehicle;
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Obtiene del fichero temporal el atributo logoVehicle de un un objeto Vehicle
+     * @return valor int con el número del recurso del logo del vehículo almacenado en el fichero
      */
     @Override @Exclude
     public int getVehiclelogo() {
         return this.getDateInt( KEY_VEHICLE_LOGO );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Obtiene del fichero temporal el atributo registrationNumber de un un objeto Vehicle
+    /**
+     * Obtiene del fichero temporal el atributo registration de un un objeto Vehicle
+     * @return valor String con la matrícula del vehículo almacenado en el fichero
      */
     @Override @Exclude
     public String getVehicleRegistrationNumber() {
         return this.getDateString( KEY_VEHICLE_REGISTRATION_NUMBER );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Obtiene del fichero temporal el atributo brand de un un objeto Vehicle
+     * @return valor String con la marca del vehículo almacenado en el fichero
      */
     @Override @Exclude
     public String getVehicleBrand() {
         return  this.getDateString( KEY_VEHICLE_BRAND );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Obtiene del fichero temporal el atributo modelVehicle de un un objeto Vehicle
+    /**
+     * Obtiene del fichero temporal el atributo modelo de un un objeto Vehicle
+     * @return valor String con la modelo del vehículo almacenado en el fichero
      */
     @Override @Exclude
     public String getVehicleModel() {
         return  this.getDateString( KEY_VEHICLE_MODEL );
     }
 
-    /*
-     * @Author: Jorge.HL
-     * Obtiene del fichero temporal el atributo dateItv de un un objeto Vehicle
+    /**
+     * Obtiene del fichero temporal el atributo dateITV de un un objeto Vehicle
+     * @return valor String con la fecha de la próxima ITV del vehículo almacenado en el fichero
      */
     @Override @Exclude
     public String getVehicleDateITV() {
         return  this.getDateString( KEY_VEHICLE_DATE_ITV );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Obtiene del fichero temporal el atributo driving de un un objeto Vehicle
+     * @return valor int con el driving que permite saber si un vehículo está en uso o libre del vehículo almacenado en el fichero
      */
     @Override
     public int getVehicleDriving() {
         return  this.getDateInt( KEY_VEHICLE_DRIVING );
     }
 
+    /**
+     * Obtiene del fichero temporal el atributo drivingCurrent de un un objeto Vehicle
+     * @return valor String con el nombre del usuario que utilizó o utiliza el vehículo almacenado en el fichero
+     */
     @Override @Exclude
     public String getVehicleDrivingCurrent() {
         return this.getDateString( KEY_VEHICLE_DRIVING_CURRENT );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal los datos correspodiente al objeto Vehicle
      */
     public void removeVehicle(){
@@ -201,48 +238,42 @@ public class VehicleTemp extends DatesTemp implements iVehicle {
 
     }
 
-    /*
-     * * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_LOGO_VHEICLE
      */
     public void removeVehicleLogo(){
         this.removeDate( KEY_VEHICLE_LOGO );
     }
 
-    /*
-     * * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_REGISTRATION_NUMBER_VEHICLE
      */
     public void removeVehicleRegistrationNumber(){
         this.removeDate( KEY_VEHICLE_REGISTRATION_NUMBER );
     }
 
-    /*
-     * * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_BRAND_VEHICLE
      */
     public void removeVehicleBrand(){
         this.removeDate( KEY_VEHICLE_BRAND );
     }
 
-    /*
-     * * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_BRAND_VEHICLE
      */
     public void removeVehicleModel(){
         this.removeDate( KEY_VEHICLE_MODEL );
     }
 
-    /*
-     * * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_DATE_ITV
      */
     public void removeVehicleDateItv(){
         this.removeDate( KEY_VEHICLE_DATE_ITV );
     }
 
-    /*
-     * * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave KEY_DRIVING_VEHICLE
      */
     public void removeVehicleDriving(){

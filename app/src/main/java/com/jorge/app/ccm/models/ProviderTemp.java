@@ -2,6 +2,11 @@ package com.jorge.app.ccm.models;
 
 import android.content.Context;
 
+
+/**
+ *  @Author: Jorge.HL
+ *  Clase que almacena los datos de un proveedor y hereda atributos de la clase MethodOfPlaymentTemp en un fichero
+ */
 public class ProviderTemp extends MethodOfPlaymentTemp {
 
     private final String PRIMARY_KEY = getFILE_NAME() + "provider";
@@ -13,6 +18,7 @@ public class ProviderTemp extends MethodOfPlaymentTemp {
                                 String TAG ){
         super(context, TAG);
     }
+
 
     protected ProviderTemp(Context context,
                         String TAG,

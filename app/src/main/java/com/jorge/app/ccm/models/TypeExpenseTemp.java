@@ -23,6 +23,12 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
 
     }
 
+    /**
+     * Permite construir un objeto de tipo TypeExpenseTemp para almacenar en un fichero uno de tipo TypeExpense
+     * @param context Context Contexto donde se va a crear
+     * @param TAG String Nombre de la actividad donde se va a crear
+     * @param typeExpense String tipo de gasto
+     */
     public TypeExpenseTemp( Context context,
                             final String TAG,
                             TypeExpense typeExpense ) {
@@ -32,6 +38,13 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
 
     }
 
+    /**
+     * Permite construir un objeto de tipo TypeExpenseTemp para almacenar en un fichero uno de tipo TypeExpense
+     * @param context Context Contexto donde se va a crear
+     * @param TAG String Nombre de la actividad donde se va a crear
+     * @param typeExpenseLogo int identificador del recurso con el que se almacena el logo del tipo de gasto
+     * @param typeExpenseName nombre que se le asigna al tipo de gasto
+     */
     public TypeExpenseTemp( Context context,
                             final String TAG,
                             int typeExpenseLogo,
@@ -41,8 +54,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
         this.setDateString( KEY_TYPE_EXPENSE_NAME, typeExpenseName );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Guarda en fichero temporal el atributo logo de un un objeto TypeExpense
      */
     @Override
@@ -50,8 +62,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
         this.setDateInt( KEY_TYPE_EXPENSE_LOGO, typeExpenseLogo );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Guarda en fichero temporal el atributo typeName de un un objeto TypeExpense
      */
     @Override
@@ -59,8 +70,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
         this.setDateString( KEY_TYPE_EXPENSE_NAME, typeExpenseName );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Obtiene del fichero temporal el atributo logo de un un objeto TypeExpense
      */
     @Override
@@ -68,8 +78,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
         return this.getDateInt( KEY_TYPE_EXPENSE_LOGO );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Obtiene del fichero temporal el atributo typeName de un un objeto TypeExpense
      */
     @Override
@@ -77,8 +86,7 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
         return this.getDateString( KEY_TYPE_EXPENSE_NAME );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal los datos correspodiente al objeto TypeExpense
      */
     public void removeTypeExpense(){
@@ -86,16 +94,14 @@ public class TypeExpenseTemp extends DatesTemp implements iTypeExpense {
         this.removeDate( KEY_TYPE_EXPENSE_LOGO );
     }
 
-    /*
-     * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave TYPE_NAME
      */
     public void removeTypeExpenseName(){
         this.removeDate( KEY_TYPE_EXPENSE_NAME );
     }
 
-    /*
-     * * @Author: Jorge.HL
+    /**
      * Borrar del fichero temporal el dato correspodiente a la clave lOGO
      */
     public void removeTypeExpenseLogo(){

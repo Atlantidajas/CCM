@@ -7,7 +7,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
- * @Author Jorge H
+ *@Author Jorge HL
+ * Permite trabajar con los logotipos de marcas de vehículos almacenados como recursos del sistema
  */
 
 public class BrandsUtil {
@@ -19,6 +20,11 @@ public class BrandsUtil {
     private String typeNameResource;
     private int idResource;
 
+
+    /**
+     *
+     * @param resources recurso del sistema
+     */
     public BrandsUtil( Resources resources ) {
         this.resources = resources;
         this.brands = this.resources.getStringArray( R.array.manufactures );
@@ -27,31 +33,61 @@ public class BrandsUtil {
 
     }
 
+
+    /**
+     *
+     * @return array contenido en los recursos con todas las marcas de vehículos
+     */
     public String[] getBrands() {
         return brands;
     }
 
+    /**
+     *
+     * @param idResource identificador del recurso almacenado en el sistema
+     * @return nombre del recurso almacenado.
+     */
     public String getNameResource( int idResource ) {
         return nameResource = this.resources.getResourceName( idResource );
     }
 
+    /**
+     *
+     * @return devuelve el nombre de paquete que contine el recurso
+     */
     public String getPackegeNameResource( ) {
         return packegeNameResource;
     }
 
+    /**
+     *
+     * @return devuelve el nombre del tipo de recurso
+     */
     public String getTypeNameResource() {
         return typeNameResource;
     }
+
+    /**
+     *
+     * @param nameResource nombre completo en minúsculas del recurso sobre el que se quiere obtener el id
+     * @return devuelve el identificador de recurso buscado
+     */
 
     public int getIdResource( String nameResource ) {
         return idResource = this.resources.getIdentifier( "ic_launcher_logo_brand_" + nameResource.toLowerCase(),
                 typeNameResource, packegeNameResource);
     }
 
+
     public int getIdResourceTypeExpense( String nameResource ) {
         return idResource = this.resources.getIdentifier( nameResource,
                 typeNameResource, packegeNameResource);
     }
+
+    /**
+     *
+     * @return  Devuelve un arrayList con todas las marcas de vehículos almacenados
+     */
 
     public ArrayList<String> namesLogosMipMap(){
 
@@ -65,6 +101,11 @@ public class BrandsUtil {
         return namesLogos;
     }
 
+
+    /**
+     *
+     * @return devuelve un arrayList cin todos los identificadores de los recursos buscados
+     */
     public ArrayList<Integer> idsLogosMipMap(){
 
         ArrayList<Integer>idsLogosMipMap = new ArrayList<>(  );
